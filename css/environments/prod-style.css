@@ -1,0 +1,10 @@
+.envBackgroundColor
+{
+	background-color: rgb(58, 62, 77);
+	color: black;
+}
+
+.envBorderColor
+{
+	border: 1px solid rgb(86,93,103);
+}

@@ -1,0 +1,15 @@
+etc/configuration.ini
+
+
+# Ignore log files
+logs/*
+requests.log
+error.log
+
+
+# Eclipse settings
+/.settings/*
+.settings
+.classpath
+.project
+.buildpath

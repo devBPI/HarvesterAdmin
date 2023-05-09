@@ -1,0 +1,22 @@
+- il faut telecharger wamp (pour windows, lamp pour linux)
+- lancer wamp
+- definir alias pour le projet harvesteradmin ("/harvesteradmin" --> c:/Eclipse-PDT/workspace/harvesteradmin/")
+- appeler l'url suivante depuis navigateur : http://localhost/harvesteradmin/Controlleur/Accueil.php
+
+Potentiels soucis avec pg_connect (connexion Postgres) :
+
+ Il faut preparer l'activation des librairies PHP de postgres :
+ - dans fichier php.ini (repertoire analogue C:\wamp64\bin\php\php7.2.18)
+   * decommenter extension=pgsql  
+   * decommenter extension=pdo_pgsql
+ - verifier que les deux librairies (fichiers php_XXX.dll) sont bien presentes dans C:\wamp64\bin\php\php7.2.18\ext
+ 
+ Du cote d'apache verifier que l'on a bien la librairie libpq.dll dans apache/bin (C:\wamp64\bin\apache\apache2.4.39\bin)
+ Ajouter (si necessaire) la ligne suivante dans httpd.conf (C:\wamp64\bin\apache\apache2.4.39\conf) LoadFile "${APACHE_DIR}/bin/libpq.dll"
+ 
+ Pour verifier si les librairies sont bien prises en compte, creer une page php a la racine avec le contenu <?php phpinfo();?>
+ Si une section dediee a pgsql n'apparait pas, c'est qu'il reste a activer les librairies.
+ 
+ Pour cela aller sur l'icone wamp, puis PHP -> Extension PHP --> selectionner pgsql et pdo_pgsql
+ Normalement cette fois-ci une section dediee au pgsql apparait bien quand on fait phpinfo.
+

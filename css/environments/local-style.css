@@ -1,0 +1,15 @@
+.envBackgroundColor
+{
+	background-color: #2391d1;
+	color: black;
+}
+
+.envBackgroundColor-dark
+{
+	background-color: #4b6a7c;
+}
+
+.envBorderColor
+{
+	border: 1px solid #44b9df;
+}

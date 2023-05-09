@@ -1,0 +1,92 @@
+
+.but{
+	border:none;
+	background-color:rgba(0,0,0,0);
+}
+.button {
+	border: none;
+	color: white;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+padding: 7 7;	
+}
+.button:hover{
+	cursor:pointer;
+}
+th.button{
+	text-align:center;
+	padding:0 !important;
+}
+.full-width{
+	width:100%;
+}
+.full-height{
+	height:100%;
+}
+.primairy-color,.custom-select,th{
+	background-color: #77b8dd;
+	color:white;
+}
+.secondary-color{
+	background-color: rgb(80,120,210);
+}
+
+
+
+.error-light-color{
+	background-color: rgb(240,200,200);
+}
+
+
+.select-items div{
+	border-top: 1px solid #6ba5c7;
+}
+
+.center{
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.right{
+	float:right;
+	margin-right:5%;
+}
+
+.left{
+	float:left;
+	margin-left:5%;
+}
+.round{
+	border-radius: 25px;
+}
+.progress{
+	width: 100%;
+}
+.progress div{
+	overflow: auto;
+	width: 100%;
+	overflow: hidden;
+	height:30px;
+	background-color: rgb(190, 190, 190);
+}
+
+.bar {
+	margin-top:-32px;
+	height: 20px !important;
+	background-color: green !important;
+	overflow: auto;
+}
+.prog{
+	width:0;
+	height:0;
+	text-align:center;
+	margin-top:7px;
+	z-index:2;
+	background-color: rgba(0,0,0,0) !important;
+}
+
+
+.hidden_field{
+	display:none;
+}

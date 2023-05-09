@@ -1,0 +1,67 @@
+Voir les fichiers:
+grep -R "Revue Stage 01" *
+Controlleur/Accueil.php:<!-- Revue Stage 01 -->
+index.php:<!-- Revue Stage 01 -->
+index.php:	<!-- Revue Stage 01 -->
+Vue/Entete.php:<!-- Revue Stage 01 -->
+Vue/Entete.php:<!-- Revue Stage 01 -->
+
+
+<!------------------------------------------------------------------------------------------------------------------->
+
+
+Serait-il possible de déplacer les liens suivants vers:
+<script src="js/JavaScript.js" />
+<link rel="stylesheet" href=css/styleSheet.css" />
+
+Controlleur/Accueil.php:<link rel="stylesheet" href="../Vue/Style/DEVstyle.css" />
+Controlleur/Accueil.php:<link rel="stylesheet" href="../Vue/Style/style.css" />
+index.php:	<!-- Est-ce que <link rel="stylesheet" href="/Vue/Style/style.css" /> ne fonctionne pas? -->
+index.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageTranslation.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageTranslation.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageTranslation.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageTranslation.php:        <script src="../Vue/Style/select-item.js"></script> 
+Vue/ModifParamétrage.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/PlanificationMoisson.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/PlanificationMoisson.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/PlanificationMoisson.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/PlanificationMoisson.php:        <script src="../Vue/Style/select-item.js"></script> 
+Vue/affichageAccueil.php:	<script src="../Vue/Style/toTop.js"></script>
+Vue/affichageAccueil.php:	<link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageAccueil.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageMapping.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageMapping.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageMapping.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageMapping.php:        <script src="../Vue/Style/select-item.js"></script> 
+Vue/affichageJournalLogs.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageJournalLogs.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageJournalLogs.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageAlertesReporting.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageAlertesReporting.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageAlertesReporting.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/FicheIndividuelle.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/FicheIndividuelle.php:    <link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/FicheIndividuelle.php:	<link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/Entete.php:<link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/Entete.php:<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/ajoutParamétrage.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/ajoutParamétrage.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/ajoutParamétrage.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageHistoriqueMoisson.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageHistoriqueMoisson.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageHistoriqueMoisson.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageExclusion.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageExclusion.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageExclusion.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichageExclusion.php:        <script src="../Vue/Style/select-item.js"></script> 
+Vue/affichageStatus.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichageStatus.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichageStatus.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/ajoutConfiguration.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/ajoutConfiguration.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/ajoutConfiguration.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+Vue/affichagePlanningMoisson.php:    <script src="../Vue/Style/toTop.js"></script>
+Vue/affichagePlanningMoisson.php:    <link rel="stylesheet" href="../Vue/Style/<?php echo $ini['version'];?>style.css" />
+Vue/affichagePlanningMoisson.php:	<link rel="stylesheet" href="../Vue/Style/style.css" />
+

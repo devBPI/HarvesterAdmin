@@ -1,0 +1,122 @@
+/*Source https://www.pierre-giraud.com/html-css-apprendre-coder-cours/creation-menu-deroulant/ */
+
+
+.allMenus{
+	width: 25%;
+	color : black;
+	
+}
+
+.navMenus{
+	width: 98%;
+	margin: 0 auto;
+	position: sticky;
+	top: 0px;
+}
+
+
+
+.mainMenu{
+	float: left;
+	width: 50%;
+	text-align: left;
+	position: relative;
+}
+
+
+.navMenus ul::after{
+	content: "";
+	display : table;
+	clear: both;
+}
+
+
+
+.navMenus a{
+	display: block;
+	text-decoration: none;
+	color: black;
+	border-bottom: 2px solid transparent;
+	padding : 10px 0px;
+}
+
+
+/* Cacher les sous-menus si pas de passage par dessus */
+.menuContent{
+	display: none;
+	position: absolute;
+	width: 105%;
+	z-index: 1000;
+}
+
+.navMenus > ul li:hover .menuContent{
+	display: block;
+}
+
+
+.menuContent li{
+	float: none;
+	width: 100%;
+	text-align: left;
+}
+
+
+.lienItem{
+	padding: 10px;
+	border-bottom: none;
+	border-left: 10px;	
+}
+
+
+.lienItem:hover{
+	color: #0062c4;
+	/*border-bottom: none;*/
+	/*background-color: red;*/
+	text-decoration: underline;
+}
+
+.submenuContent{
+	position:absolute;
+	left:200px;
+	width:200px;
+}
+
+
+.submenuContent{
+	position:fixed;
+	left:300px;
+}
+
+
+.submenuContent:hover{
+	display:block;
+}
+
+.submenuContent{
+	display:none;
+}
+
+.itemDeroulable > a::after{
+	content: "                 ► ";
+	font-size: 12px;
+}
+
+
+.submenuContent{
+	position:absolute;
+	left:200px;
+	width:200px;
+}
+
+.submenuContent{
+	display:none;
+}
+.submenuContent{
+	position:fixed;
+	left:200px;
+}
+
+.itemDeroulable:hover ul{
+	border-left: 10px;	
+	display:block;
+}

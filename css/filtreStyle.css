@@ -1,0 +1,15 @@
+﻿.operation{
+	border: 1px solid black;
+	width: auto;
+	margin-top:20px;
+	margin-left:20px;
+	display:inline-grid;
+	/* background-color:rgba(22, 84, 109, 0.295) */
+}
+.operation select{
+	max-width:400px;
+}
+.operation {
+	margin-right:20px;
+	margin-bottom:20px;
+}

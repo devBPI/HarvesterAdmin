@@ -1,0 +1,19 @@
+.urgent_level{
+	background-color:#ffcaca;
+	text-align:center; 
+	color: red;  
+	font-weight : bold
+}
+
+
+.important_level{
+	background-color:#ffdeb0;
+	text-align:center; 
+	color: #fb7d00;  
+	font-weight : bold
+}
+
+.basique_level{
+	text-align:center; 
+}
+

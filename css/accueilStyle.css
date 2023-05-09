@@ -1,0 +1,259 @@
+﻿.content{
+	margin : 0 auto;
+	width:80%;
+	margin-top:2%
+}
+
+.column {
+	height: 150px;
+	padding: 10px;
+	margin: 5px;
+	text-align: center;
+  }
+  .column-full {
+	height: auto;
+	text-align: center;
+	margin-bottom: 5%;
+  }
+  .triple-column-container {
+	display: grid;
+	grid-template-columns: 33.33% 33.33% 33.33%;
+	text-align: center;
+  }
+
+  .double-column-container {
+	display: grid;
+	grid-template-columns: 66.66% 33.33%;
+   text-align: center;
+ }
+
+ .double-eq-column-container {
+	display: grid;
+	grid-template-columns: 50% 50%;
+   text-align: center;
+ }
+
+ .quadra-eq-column-container {
+	display: grid;
+	grid-template-columns: 25% 25% 25% 25%;
+   text-align: center;
+ }
+
+ .cartouche-double {
+	background-color : white;
+	width : 95%;
+	margin-left: 5%;
+	margin-top: 5%;
+	height: 40%;
+ }
+
+ .cartouche-solo {
+	background-color : white;
+	width : 95%;
+	margin-top: 2.5%;
+	height: 85%;
+ }
+
+/* Style inputs, select elements and textareas */
+input[type=text],input[type=number], select, textarea{
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: none;
+  }
+  
+  /* Style the label to display next to the inputs */
+  label {
+	padding: 12px 12px 12px 0;
+	display: inline-block;
+  }
+  
+  /* Style the submit button */
+  input[type=submit], .submit-button {
+	background-color: #77b8dd;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: right;
+	text-decoration: none;
+	font-size : 14px;
+  }
+
+   /* Style the submit button */
+.custom-file-upload {
+	background-color: #77b8dd;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: right;
+	font-size : 14px;
+  }
+
+  input[type=button] {
+	background-color: #77b8dd;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: right;
+  }
+
+  input[type=file] {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: none;
+	height: 43px;
+  }
+
+.buttonlink {
+	background-color: #4bb947;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: left;
+	text-decoration: none;
+	text-align: center;
+	font-size:14px;
+  }
+
+  .buttonpage {
+	background-color: #77b8dd;
+	color: white;
+	padding: 12px 12px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	font-size:14px;
+  }
+
+  .buttontable {
+	background-color: #77b8dd;
+	color: white;
+	padding: 5px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	font-size:14px;
+	width:100%;
+	margin-top:105px;
+  }
+
+  .button-hover {
+	opacity: 0;
+  }
+  
+  tr:hover .button-hover {
+	opacity: 1;
+  }
+
+  	/* Floating column for labels: 10% width */
+	.col-10 {
+		float: left;
+		width: 10%;
+		margin-top: 6px;
+	}
+
+	/* Floating column for labels: 20% width */
+	.col-20 {
+		float: left;
+		width: 20%;
+		margin-top: 6px;
+	}
+  
+  /* Floating column for labels: 25% width */
+  .col-25 {
+	float: left;
+	width: 25%;
+	margin-top: 6px;
+  }
+
+   /* Floating column for labels: 25% width */
+   .col-30 {
+	float: left;
+	width: 30%;
+	margin-top: 6px;
+  }
+
+   /* Floating column for labels: 40% width */
+   .col-40 {
+	float: left;
+	width: 40%;
+	margin-top: 6px;
+  }
+
+   /* Floating column for labels: 50% width */
+   .col-50 {
+	float: left;
+	width: 50%;
+	margin-top: 6px;
+  }
+  
+  /* Floating column for inputs: 75% width */
+  .col-75 {
+	float: left;
+	width: 75%;
+	margin-top: 6px;
+  }
+
+	/* Floating column for inputs: 90% width */
+	.col-90 {
+		float: left;
+		width: 90%;
+		margin-top: 6px;
+	}
+  
+  /* Clear floats after the columns */
+  .row:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
+  
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+
+	@media screen and (max-width: 1600px) {
+		.quadra-eq-column-container {
+			grid-template-columns: 33% 33% 33%;
+		}
+	}
+
+	@media screen and (max-width: 1200px) {
+		.quadra-eq-column-container {
+			grid-template-columns: 50% 50%;
+		}
+	}
+
+  @media screen and (max-width: 600px) {
+	.col-10, .col-20, .col-25, .col-30, .col-40, .col-50, .col-75, .col-90, input[type=submit], input[type=file], .buttonlink , .buttontable{
+		width: 100%;
+		margin-top: 0;
+	}
+
+	.custom-file-upload {
+		width: 100%;
+		margin-top:0;
+		padding: 12px 0;
+	}
+
+	.quadra-eq-column-container, .triple-column-container, .double-column-container {
+		grid-template-columns: 100%;
+	}
+  } 
+
+
