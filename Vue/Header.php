@@ -5,7 +5,7 @@ if (! $ini) {
 }
 ?>
 <link rel="stylesheet" href="../css/header.css" />
-<link rel="stylesheet" href="../css/environments/<?php echo strtolower($ini['version']);?>-style.css" />
+<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css" />
 
 <div class="envBackgroundColor">
     <nav>
@@ -63,14 +63,14 @@ if (! $ini) {
 		<?php
 		if($ini['version']=="DEV")
 		{
-			echo '<button class="boutonlink" onclick="restart()"><img style="width:20px;height:20px;"src="../ressources/stop.png"/></button>';
-		}
-        include("../Vue/Tricolor.php");
+			echo '<button class="boutonlink" onclick="restart()"><img style="width:20px;height:20px;" src="../ressources/stop.png"/></button>';
+            require_once("../Vue/Tricolor.php");
+        }
         ?>
 	    </div>
 
-        <label class="titleMenu"><?php echo $ini['version']; ?></label>
+        <h2 class="titleMenu" onclick="window.location='../Controlleur/Accueil.php';"><?= $ini['version'] ?></h2>
     </nav>
 </div>
 
-<h1 class="header"><?php echo $section; ?></h1>
+<h1 class="header"><?= $section ?></h1>

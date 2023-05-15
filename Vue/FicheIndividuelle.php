@@ -46,7 +46,7 @@ if (! $ini) {
 						</center>
 					</div>
 					<div>
-						<?php include '../Vue/CartouchePlanning.php' ?>
+						<?php include '../Vue/planning_moissons/CartouchePlanning.php' ?>
 					</div>
 				</div>
 
@@ -57,7 +57,7 @@ if (! $ini) {
 						</center>
 					</div>
 					<div>
-						<?php include '../Vue/CartoucheHistorique.php' ?> 
+						<?php include '../Vue/planning_moissons/CartoucheHistorique.php' ?>
 					</div>
 				</div>
 

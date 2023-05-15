@@ -52,7 +52,7 @@ if (! $ini) {
 	</div>
 
 
-	<h2 class="enteteTitle" style="top:-27px"><?php echo $ini['version']; ?> </h2>
+	<a href="../Controlleur/Accueil.php"><h2 class="enteteTitle" style="top:-27px"><?php echo $ini['version']; ?></h2></a>
 	<h1 class="enteteTitle" style="top:-8px"> <?php echo $section; ?></h1>
 	<div style="float:right;text-align:right;margin-top:-45px">
 		<?php

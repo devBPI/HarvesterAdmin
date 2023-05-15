@@ -16,14 +16,14 @@ if (! $ini) {
 <body name="haut" id="haut">
 <?php
 $section = "Planifier une Tâche annexe";
-include ('../Vue/Header.php');
-require_once ("../Gateway.php");
+include('../Vue/Header.php');
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 $codes = Gateway::getConfigCodes();
 $i;
 
 if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || isset($_POST["month"])) {
-	include ('../Controlleur/CmPlanificationSideTask.php');
+	include('../Controlleur/CmPlanificationSideTask.php');
 }
 
 ?>
@@ -34,7 +34,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 			<a href="../Controlleur/PlanningTachesAnnexes.php" class="buttonlink">&laquo; Retour</a>
 		</div>
 	</div>
-	<FORM  method="post" action="PlanificationSideTask.php" onsubmit="return confirm('Voulez vous vraiment ajouter cette planification ?');">
+	<FORM method="post" action="PlanificationSideTask.php" onsubmit="return confirm('Voulez vous vraiment ajouter cette planification ?');">
 		<div class="cartouche-solo" style="width:auto;height:auto;padding:5%;">
 			<div class="row">
 				<div class="col-25">
@@ -79,17 +79,17 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<h3>Quotidienne</h3>
 				<select id="heureQuot" name="heureQuot">
 					<!-- <option value="null">Heure</option> -->
-					<?php include '../Vue/ComboBoxHeure.php'; ?>
+					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
 				</select>
 				<input type="submit" name="quot" value="Valider">
 			</div>
 			<div class="column">
 				<h3>Hebdomadaire</h3>
 				<select id="heureHebdo" name="heureHebdo">
-					<?php include '../Vue/ComboBoxHeure.php'; ?>
+					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
 				</select>
 				<select id="jourHebdo" name="jourHebdo">
-					<?php include '../Vue/ComboBoxJour.php'; ?>
+					<?php include '../Vue/combobox/ComboBoxJour.php'; ?>
 				</select>
 				<input type="submit" name="hebdo" value="Valider">
 			</div>
@@ -97,13 +97,13 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<h3>Mensuelle</h3>
 				<!-- <input type="text" id="datepicker" size="30" readonly> -->
 				<select id="heureMonth" name="heureMonth">
-					<?php include '../Vue/ComboBoxHeure.php'; ?>
+					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
 				</select>
 				<select id="jourMonth" name="jourMonth">
-					<?php include '../Vue/ComboBoxJour.php'; ?>
+					<?php include '../Vue/combobox/ComboBoxJour.php'; ?>
 				</select>
 				<select id="semaine" name="semaine">
-					<?php include '../Vue/ComboBoxSemaine.php'; ?>
+					<?php include '../Vue/combobox/ComboBoxSemaine.php'; ?>
 				</select>
 				<input type="submit" name="month" value="Valider">
 			</div>
@@ -159,7 +159,7 @@ if (isset($_POST["now"])) {
 				<div class="custom-select" style="width: 55%; left: 0;">
 					<select id="heureQuot" name="heureQuot" class="select-hide">
 				   <php
-    include '../Vue/ComboBoxHeure.php';
+    include '../Vue/combobox/ComboBoxHeure.php';
     ?>
 				</select>
 				</div>
@@ -182,7 +182,7 @@ if (isset($_POST["now"])) {
 				<div class="custom-select" style="width: 55%; left: 0;">
 					<select id="heureHebdo" name="heureHebdo" class="select-hide">
 					<php
-    include '../Vue/ComboBoxHeure.php';
+    include '../Vue/combobox/ComboBoxHeure.php';
     ?>
 				</select>
 				</div>
@@ -191,7 +191,7 @@ if (isset($_POST["now"])) {
 				<div class="custom-select" style="width: 55%; left: 0;">
 					<select id="jourHebdo" name="jourHebdo" class="select-hide">
 					<php
-    include '../Vue/ComboBoxJour.php';
+    include '../Vue/combobox/ComboBoxJour.php';
     ?>
 				</select>
 				</div>
@@ -214,7 +214,7 @@ if (isset($_POST["now"])) {
 				<div class="custom-select" style="width: 55%; left: 0;">
 					<select id="heureMonth" name="heureMonth" class="select-hide">
 					<php
-    include '../Vue/ComboBoxHeure.php';
+    include '../Vue/combobox/ComboBoxHeure.php';
     ?>
 				</select>
 				</div>
@@ -223,7 +223,7 @@ if (isset($_POST["now"])) {
 				<div class="custom-select" style="width: 55%; left: 0;">
 					<select id="jourMonth" name="jourMonth" class="select-hide">
 					<php
-    include '../Vue/ComboBoxJour.php';
+    include '../Vue/combobox/ComboBoxJour.php';
     ?>
 				</select>
 				</div>
@@ -231,7 +231,7 @@ if (isset($_POST["now"])) {
 				<br>
 				<div class="custom-select" style="width: 55%; left: 0;">
 				<php
-    include '../Vue/ComboBoxSemaine.php';
+    include '../Vue/combobox/ComboBoxSemaine.php';
     ?>
 			</div>
 				<input class="button primairy-color round" style="margin-top: 5%"

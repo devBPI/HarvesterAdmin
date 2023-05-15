@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 
 $rows = 20;
 
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 if(isset($_GET['id']))
 {

@@ -20,7 +20,7 @@ if (! $ini) {
 </head>
 
 <?php
-include ('../Vue/Header.php');
+include('../Vue/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">
@@ -45,7 +45,7 @@ include ('../Vue/Header.php');
 				<?php
 					echo "<td><input type='text' name='input' style='height:20px;'></input></td>
 					<td><select name='rep' class='select_destination'>";
-					echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td>";
+					echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
 				?>
 			</tr>
 			<?php
@@ -57,16 +57,16 @@ include ('../Vue/Header.php');
 					{
 						echo "<tr><td><input type='text' name='input".$key."' style='height:20px;' value=\"".$rule['input']."\"/></td>
 						<td><select name='rep".$key."' class='select_destination' id='".$rule['rep']."'>";
-						echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+						echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 					}
 				}
 				else
 				{
 					echo "<tr><td><input type='text' name='input-1' style='height:20px;'></input></td>
 					<td><select name='rep-1' class='select_destination'>";
-					echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+					echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 				}
-				echo "<tr style='background-color:#dbe0e0'><td/><td/><td><button class='ajout but' type='button' title='Ajouter une traduction' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../ressources/add.png' width='30px' height='30px'/></button></td></tr>";
+				echo "<tr style='background-color:#dbe0e0'><td/><td/><td><button class='ajout but' type='button' title='Ajouter une traduction' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>";
 				echo '</table>
 				<input type="submit" value="Valider" class="button primairy-color round"/>';
 			}

@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $table = "translation";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $name = (isset($_GET['cat'])) ? $_GET['cat'] : $_GET['modify'];
 $t=Gateway::getDestination($name);
@@ -27,7 +27,7 @@ if(isset($_GET['modify']) and !isset($_GET['f']))
 	$trads = $_POST;
 }
 $section = "Traduction";
-include ('../Vue/TraductionDestination.php');
+include ('../Vue/traduction/TraductionDestination.php');
 ?>
 
 

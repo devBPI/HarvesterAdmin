@@ -18,7 +18,7 @@
 			$trads[$key]=$value;
 		}
 	}
-	require_once("../Gateway.php");
+	require_once("../PDO/Gateway.php");
 	Gateway::connection();
     $name=$_POST['textName']; 
     $publicName=$_POST['textNomPublic'];

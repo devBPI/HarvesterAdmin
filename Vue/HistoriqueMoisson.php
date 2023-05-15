@@ -145,22 +145,27 @@ foreach ($tasks as $task) {
 
     			    // Libelle Statut (en gras car pas de plus recent indexe)
     			    
-    			    echo "  <div style = 'color:red; font-weight : bold;'>".$task['status']."</div>";
+    			    echo " <div style='color:red;font-weight:bold'>".$task['status']."</div>";
 			    } else{
 			        
 			        // Libelle Statut (pas en gras)
 			        
-			        echo "  <div style='color:red;>".$task['status']."</div>";
+			        echo " <div style='color:red;font-weight:bold'>".$task['status']."</div>";
 			        
 			    }
 
 					// Bouton Relance
-	
-					echo "    <button name='reload-button' class='error-light-color'>";
-					echo "      <img src='../ressources/reload.png' width='15px' height='15px'/>";
-					echo "    </button></div>";
-	    	    
-			    // Fin Formulaire englobant		
+					echo "<form method='post' action='MoissonSurDemande.php' onsubmit='return confirm('Relancer la moisson maintenant ?')>
+    						<input name='suppr' type='hidden' value='".$task['id']."'>
+    						<select style='display: none' id='configuration-select-whithout-file' name='configuration-select-whithout-file'>
+								<option value='".$task['configuration_id']."' selected></option>
+							</select>
+    						<!----<input class='error-light-color' type='submit' name='launch-without-file-button' value='↻'/> -->
+    						<input class='error-light-color' type='image' name='launch-without-file-button' src='../ressources/reload.png' style='width:15px;height:15px'/>
+    						</form>";
+					echo "</div>";
+
+			    // Fin Formulaire englobant
 			    // echo "</FORM>";
 			    
 			    echo "</div>";
@@ -242,9 +247,19 @@ foreach ($tasks as $task) {
 			<td data-label="Message"><?php
 			if("Erreur" !== '' && strncmp($task['message'], "Erreur", strlen("Erreur")) === 0){
 				$message=str_replace(CHR(10),"</br>",$task['message']);
-				$message=str_replace(CHR(13),"</br>",$message);  
-				$message = htmlspecialchars($message, ENT_QUOTES);
-				echo "<div onclick='openForm(\"".$message."\")' style=\"color:red; font-weight:bold;\">ERROR  <img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
+				$message=str_replace(CHR(13),"</br>",$message);
+				$message=str_replace("- ", "</br>", $message);
+				//$message = htmlspecialchars($message, ENT_QUOTES);
+				echo "<div class='form-popup' id='messageForm" . $task['id'] ."'>
+						<div class='form-container' id='formProperty'>
+							<h3>Message d'erreur</h3>
+								<div class='form-popup-corps'>
+									<p id='msgAlert" . $task['id'] . "'>" . $message ."</p>
+									<button onclick='closeForm(". $task['id'] .")' class='buttonlink'>OK</button>
+								</div>
+						</div>
+					</div>";
+				echo "<div onclick='openForm(".$task['id'].")' style=\"color:red;font-weight:bold;cursor:pointer\">ERROR  <img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
 			} else {
 				echo $task['message'];
 			}
@@ -285,28 +300,20 @@ foreach ($tasks as $task) {
 	</div>
 
 	<div id="page-mask"></div>
-	<div class="form-popup" id="messageForm">
-		<div class="form-container" id="formProperty">
-			<h3>Message d'erreur</h3>
-			<p id="msgAlert"></p>
-			<div class="row">
-				<div onclick="closeForm()" class="buttonlink" style="float:right">OK</div>
-			</div>
-		</div>
-	</div>
 
 	<script src='../js/progress.js'></script>
 	<script src='../js/histo-task-status.js'></script>
 	<script>
-		function openForm(message) {
-            document.getElementById("messageForm").style.display = "block";
+		function openForm(id) {
+            document.getElementById("messageForm" + id).style.display = "block";
             document.getElementById("page-mask").style.display = "block";
-			document.getElementById("msgAlert").innerHTML = message;
+			//document.getElementById("msgAlert" + id).innerHTML = message.replaceAll("- ","<br/>");
         }
 
-		function closeForm() {
-			document.getElementById("messageForm").style.display = "none";
+		function closeForm(id) {
+			document.getElementById("messageForm" + id).style.display = "none";
 			document.getElementById("page-mask").style.display = "none";
+			//document.getElementById("msgAlert" + id).innerHTML = "";
 		}
 	</script>
 </body>

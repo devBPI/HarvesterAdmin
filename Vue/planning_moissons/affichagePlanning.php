@@ -62,9 +62,9 @@
 		<td>
 			<form
 				onsubmit="return confirm('Voulez vous vraiment supprimer cette planification ?');"
-				action="../Controlleur/PlanningMoisson.php?id=<?php echo $var['id']; ?>"
+				action="../../Controlleur/PlanningMoisson.php?id=<?php echo $var['id']; ?>"
 				method="post">
-				<input type="image" id="cross" name="cross" src="../ressources/cross.png" width="20px" height="20px">
+				<input type="image" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
 			</form>
 			</tr>
 	<?php

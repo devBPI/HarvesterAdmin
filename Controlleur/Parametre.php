@@ -19,7 +19,7 @@ if (isset($id_param)) {
     $id = $id_param;
 }
 
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 if (! isset($id)) {
     $id = 0;

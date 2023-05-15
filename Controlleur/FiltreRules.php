@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $table = "translation";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getFilterRules();
 $entities=Gateway::getEntities();
@@ -45,7 +45,7 @@ else
 	$mod='true';
 }
 $section = "Filtre - Édition des règles";
-include ('../Vue/FiltreRules.php');
+include ('../Vue/filtre/FiltreRules.php');
 ?>
 
 

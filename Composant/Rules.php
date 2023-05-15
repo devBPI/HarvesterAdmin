@@ -1,5 +1,5 @@
 <?php
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getFilterRules($_POST['id']);
 $selected = (isset($_POST['selected']))?$_POST['selected']:null;

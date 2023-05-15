@@ -50,7 +50,7 @@
 			<select id="list_grabber" name="list_grabber">
 				<option value="0">Aucun choisi</option>
 				<?php
-				include '../Vue/ComboBox.php';
+				include '../Vue/combobox/ComboBox.php';
 				?>
 			</select>
 				<br>
@@ -65,7 +65,7 @@
 			<select id="list_mapping" name="list_mapping">
 				<option value="0">Aucun choisi</option>
 				<?php
-				include '../Vue/ComboBox.php';
+				include '../Vue/combobox/ComboBox.php';
 				?>
 			</select>
 				<br>
@@ -84,7 +84,7 @@
 					<select name='select'>
 						<option value="0">Aucun choisi</option>
 						<?php
-						include '../Vue/ComboBox.php';
+						include '../Vue/combobox/ComboBox.php';
 						?>
 					</select>
 					<a href="javascript:void(0);" class="filtre_add" title="Ajouter une exclusion"><img src="../ressources/add.png"/></a>

@@ -1,5 +1,5 @@
 <?php
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 if(!empty($_GET['add']) and $_GET['add']=="true" and $_POST['code']!='')
 {

@@ -13,3 +13,6 @@ error.log
 .classpath
 .project
 .buildpath
+
+# PHPStorm settings
+.idea

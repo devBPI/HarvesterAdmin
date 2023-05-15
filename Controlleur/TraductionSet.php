@@ -5,8 +5,9 @@ if (! $ini) {
 }
 $special_char = array(1=>'(',2=>')');
 $table = "translation";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
+// id == modifify ?
 $set=(isset($_GET['set']))?$_GET['set']:urldecode($_GET['modify']);
 if(isset($_GET['modify']) and !isset($_GET['f']))
 {
@@ -38,7 +39,7 @@ foreach($c as $k => $n)
 	$checked[$k]=$n['name'];
 }
 $section = "Traduction";
-include ('../Vue/TraductionSet.php');
+include ('../Vue/traduction/TraductionSet.php');
 ?>
 
 

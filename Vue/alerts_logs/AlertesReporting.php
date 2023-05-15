@@ -15,7 +15,7 @@ if (! $ini) {
 </head>
 <body name="haut" id="haut">
 	<?php
-	include ('../Vue/Header.php');
+	include('../Vue/Header.php');
 	$url = "AlertesReporting.php?&order=";
 	?>
 	<div class="content" style="width:90%">
@@ -89,7 +89,6 @@ if ($order == "status") {
 } else if ($order == "status DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" width=10%' onclick = 'location.href=\"" . $url . "status " . $sens . "\"'>Statut " . $arrow . "</th>";
 
 echo "<th scope=\"col\" width=5% onclick=\"suppressAlert()\"</th></thead>";
 
@@ -97,8 +96,8 @@ echo"<tbody id=\"displaytbody\">";
 
 foreach ($alerts as $alert) {
     
-    $creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time'])) . " ";
-
+    //$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time'])) . " AlertesReporting.php";
+	$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time']));
     ?><tr>
 				
 		<td><?php
@@ -161,30 +160,16 @@ foreach ($alerts as $alert) {
     		    echo "<div style='text-align:left; margin-left:10px;'>".$message."</div>";
     		}
         ?></td>
-        
-        
-        <td><?php
-		    $status = $alert['status'];
-            if(empty($status)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:center;'>".$status."</div>";
-    		}
-        ?></td>
 
-		<td><?php
-			echo "<div class=\"button-hover\" onclick=\"deleteRow(".$alert['id'].")\" id=\"".$alert['id']."\" style=\"cursor:pointer\"><img src=\"../ressources/cross.png\" width='20px' height='20px'/></div>";
-		?></td>
-		
-		
+		<td>
+			<div class="button-hover" onclick="deleteRow(<?= $alert["id"]?>)" id="<?= $alert['id']?>" style="cursor:pointer">
+				<img src="../ressources/cross.png" width="20px" height="20px">
+			</div>
+		</td>
 
-        <?php
 
-    
-   
-    ?></tr><?php
-}
-?>
+	</tr>
+	<?php } ?>
 	</tbody>
 	</table>
 

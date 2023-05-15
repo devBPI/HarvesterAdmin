@@ -1,5 +1,5 @@
 <?php
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getSetByConf($_POST['id']);
 echo 	"<th>Entité</th><th>Règles de traduction</th>";

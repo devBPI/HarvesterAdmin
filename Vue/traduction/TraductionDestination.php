@@ -20,15 +20,15 @@ if (! $ini) {
 </head>
 
 <?php
-include ('../Vue/Header.php');
+include('../Vue/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">
 	<?php
 		if(isset($_GET['modify']))
 		{
-			echo "<div style='margin-top:5%;margin-left:5%'><h2>Cibles de traduction</h2><h3>".$name."</h3>
-			<a href='../Controlleur/Traduction.php'>Retour traduction</a><table class='table-backoffice'>";
+			echo "<div style='margin-top:5%;margin-left:5%'><h2>Cibles de traduction</h2><h3>".$name. "</h3>
+			<a href='../../Controlleur/Traduction.php'>Retour traduction</a><table class='table-backoffice'>";
 			foreach($trads as $t)
 			{
 				echo "<tr><td>".$t."<td></tr>";

@@ -16,7 +16,7 @@ if (! $ini) {
 </head>
 
 <body>
-	<?php include ('../Vue/Header.php'); ?>
+	<?php include('../Vue/Header.php'); ?>
 
 	<div class="content">
 		<div class="triple-column-container">
@@ -26,7 +26,7 @@ if (! $ini) {
 					<select id="rule" name="Filter" class="select-hide" onchange="changeHref(this)">
 					<option value="0">Aucune configuration choisie</option>
 						<?php
-							include '../Vue/ComboBox.php';
+							include '../Vue/combobox/ComboBox.php';
 						?>
 					</select>
 					<div style="overflow-y: auto; height:450px">

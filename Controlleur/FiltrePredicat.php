@@ -1,5 +1,5 @@
 <?php
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $entities = Gateway::getEntities();
 $section="Filtre - Définition des prédicats";
@@ -50,7 +50,7 @@ if(!empty($_POST))
 }
 $value = Gateway::getPredicats();
 $functions = Gateway::getFilterCode();
-include("../Vue/FiltrePredicat.php");
+include("../Vue/filtre/FiltrePredicat.php");
 ?>
 
 

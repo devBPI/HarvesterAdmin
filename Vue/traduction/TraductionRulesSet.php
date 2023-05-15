@@ -20,7 +20,7 @@ if (! $ini) {
 </head>
 
 <?php
-include ('../Vue/Header.php');
+include('../Vue/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">
@@ -29,7 +29,7 @@ include ('../Vue/Header.php');
 		<a href="../Controlleur/Traduction.php">Retour traduction</a>
 		<div class="sizeable_table">
 			<div class="hidden_field">
-				<input type='text' name='t' style='height:30px;width:300px;'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button>
+				<input type='text' name='t' style='height:30px;width:300px;'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png' width='30px' height='30px'/></button>
 			</div>
 			<div>
 				<?php
@@ -39,12 +39,13 @@ include ('../Vue/Header.php');
 						{
 							foreach($set as $key => $value)
 							{
-								echo "<div><input style='height:30px;width:300px;' type='text' name='".$key."' value=\"".$value."\"/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></div>";
+								echo "<div><input style='height:30px;width:300px;' type='text' name='".$key."' value=\"".$value. "\">";
+								echo "<button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png' width='30px' height='30px'/></button></div>";
 							}
 						}
 						else
 						{
-							echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></div>";
+							//echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png' width='30px' height='30px'/></button></div>";
 						}
 				?>
 			</div>

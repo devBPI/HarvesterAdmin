@@ -9,7 +9,7 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 
 $section = "Moisson sur Demande";
@@ -51,7 +51,11 @@ if($_POST['formIgnoreValues']!=''){
 
 // echo '<div>ACTION='.$action.'</div>';
 
-
+// Si reload (voir HistoriqueMoisson.php)
+if (isset($_POST['suppr']) && $_POST['suppr']) {
+    Moisson::deleteMoisson($_POST['suppr']);
+    $action='launch_without_file';
+}
 switch ($action) {
     case 'launch_without_file':
         {

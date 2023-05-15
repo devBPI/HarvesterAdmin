@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $table = "translation";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 if(isset($_GET['id']))
 {
@@ -36,7 +36,7 @@ $conf = Gateway::getFilterByConf($id);
 $data = Gateway::getFilterRule();
 $configname = Gateway::getConfigurationName($id);
 $section = "Filtre - Association règles-configuration";
-include "../Vue/FiltreConfiguration.php";
+include "../Vue/filtre/FiltreConfiguration.php";
 ?>
 
 

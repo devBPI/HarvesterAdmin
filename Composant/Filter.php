@@ -1,5 +1,5 @@
 <?php
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getFilterByConf($_POST['id']);
 echo 	"<th width=30%>Entité</th><th width=70%>Règles de filtrage</th>";

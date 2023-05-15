@@ -1,13 +1,47 @@
+/* Style formulaire pop-up: Vue/HistoriqueMoisson.php et Vue/Accueil.php */
 /* The popup form - hidden by default */
 .form-popup {
     display: none;
     position: fixed;
     top:50%;
     left:50%;
+    border:2px solid black;
     transform: translate(-50%, -50%);
     z-index: 9;
-  }
-  
+    background-color: white;
+}
+
+.form-popup .form-container {
+    width: 900px;
+    padding:0;
+    margin:0;
+}
+
+.form-popup .form-container h3 {
+    text-align: center;
+    padding: 10px 10px 10px 20px;
+    margin:0;
+    background-color: lightgrey;
+}
+
+.form-popup .form-container .form-popup-corps {
+    padding: 0 10px 10px;
+    height: 100%;
+}
+
+.form-popup .form-container .form-popup-corps p {
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.form-popup .form-container .form-popup-corps .buttonlink {
+    width:100%;
+    display:inline-block;
+}
+
+/* ----------------------------------------------------------------------------
+
   /* Add styles to the form container */
   .form-container {
     width: 800px;
@@ -71,14 +105,30 @@
     top: 5px;
 }
 
+/* Style formulaire d'erreur de moisson : Vue/HistoriqueMoisson.php  */
+
+form .error-light-color {
+    background-color: rgb(240,200,200); /* Couleur de style.css -> .error-light-color, redéfinition de la priorité pour neutraliser acceuilStyle.css */
+    font-weight: bold;
+    margin-top: 2px;
+    margin-bottom: 0;
+    border: 1px solid black;
+    padding: 1px 10px 1px 10px; /* Neutralise padding de accueilStyle.css */
+    float:none; /* Neutralise float de accueilStyle.css */
+}
+
 @media screen and (max-width: 1200px) {
     .form-container, .form-container .btn {
         width:600px;
     }
+
+    .form-popup .form-container { width: 600px; }
 }
 
 @media screen and (max-width: 600px) {
     .form-container, .form-container .btn {
         width:400px;
     }
+
+    .form-popup .form-container { width: 300px; }
 }

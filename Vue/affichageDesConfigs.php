@@ -68,35 +68,24 @@
         ?>
         
         
-        <tr><?php
-        ?><td scope="row" data-label="ID"><?php
-        echo $var['id'];
-        ?></td>
-        <td data-label="Code"><?php
-        echo $var['code'];
-        ?></td>
+        <tr>
+            <td scope="row" data-label="ID"><?= $var['id'] ?></td>
+            <td data-label="Code"><?= $var['code'] ?></td>
             <td data-label="Nom Abrégé"><a
-                href="../Vue/FicheIndividuelle.php?param=<?php echo $var['id'];?>"><?php
-        echo $var['name'];
-        ?></a></td>
-            <td data-label="Base de recherche"><?php
-        echo $var['public_name'];
-        ?></a></td>
-            <td data-label="Type de connecteur"><?php
-        echo $var['grabber'];
-        ?></a></td>
+                href="../Vue/FicheIndividuelle.php?param=<?= $var['id'] ?>"><?= $var['name'] ?></a></td>
+            <td data-label="Base de recherche"><?= $var['public_name'] ?></a></td>
+            <td data-label="Type de connecteur"><?= $var['grabber'] ?></a></td>
             <td data-label="Dernière moisson"><?php
-        if ($var['date'] == null) {
-            echo 'Jamais ou réinitialisé';
-        } else {
-            $modificationDateSyst = date('Y-m-d H:i:s', strtotime($var['date'])) . " ";
-            $creationDateSyst = date("Y-m-d H:i:s");
-            $date1 = date_create($creationDateSyst);
-            $date2 = date_create($modificationDateSyst);
-            $diff = date_diff($date1, $date2);
-            echo $diff->format('Il y a %d jours ');
-        }
-        echo "</td></tr>";
-    }
-    ?>
+                if ($var['date'] == null) {
+                    echo 'Jamais ou réinitialisé';
+                } else {
+                    $modificationDateSyst = date('Y-m-d H:i:s', strtotime($var['date'])) . " ";
+                    $creationDateSyst = date("Y-m-d H:i:s");
+                    $date1 = date_create($creationDateSyst);
+                    $date2 = date_create($modificationDateSyst);
+                    $diff = date_diff($date1, $date2);
+                    echo $diff->format('Il y a %d jours ');
+                } ?></td>
+        </tr>
+    <?php } ?>
 </table>

@@ -74,7 +74,7 @@
 		</div>
 
 
-		<?php include ("../Vue/affichageDesConfigs.php");?>	
+		<?php include ("../Vue/affichageDesConfigs.php");?>
 		<div class="triple-column-container">
 			<div class="column" style="text-align:left">
 				<a href="../Vue/ajoutConfiguration.php"class="buttonpage">Ajouter une Configuration</a>
@@ -97,9 +97,9 @@
 	<div class="form-popup" id="validateForm">
 		<div class="form-container" id="formProperty">
 			<h3>Modification</h3>
-			<p id="msgAlert"></p>
-			<div class="row">
-				<div onclick="closeForm()" class="buttonlink" style="float:right">OK</div>
+			<div class="form-popup-corps">
+				<p id="msgAlert"></p>
+				<button onclick="closeForm()" class="buttonlink">OK</button>
 			</div>
 		</div>
 	</div>

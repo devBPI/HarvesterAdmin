@@ -51,7 +51,7 @@ if (! empty($name)) {
 				ORDER BY " . $order . " LIMIT " . $limit . " OFFSET " . $start_from . ";";
     }
 }
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getConfigurationGrabber();
 $conf = Gateway::select($query);

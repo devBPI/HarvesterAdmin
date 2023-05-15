@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $table = "translation";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $rules_set = Gateway::getRulesSet();
 $categories = Gateway::getTranslationCategory();
@@ -19,7 +19,7 @@ if(isset($_POST['trad']))
 }
 $data = Gateway::getConf();
 $section = "Traduction";
-include ('../Vue/Traduction.php');
+include ('../Vue/traduction/Traduction.php');
 ?>
 
 

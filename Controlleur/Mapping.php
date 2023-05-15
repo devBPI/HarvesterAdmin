@@ -11,7 +11,7 @@ if (isset($_GET['param'])) {
 $table = "mapping";
 $id;
 $def;
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getMapping();
 include ('../Controlleur/Parametre.php');

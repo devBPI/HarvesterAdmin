@@ -1,6 +1,6 @@
 <html>
 <?php
-require_once("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 if(isset($_POST["ajouter"])){
     $insQuery = "INSERT INTO configuration." . $_GET["table"] . " (name, definition) VALUES ( '" . $_POST["map_name"] . "', '" . $_POST["map_content"] . "' ) RETURNING id;";

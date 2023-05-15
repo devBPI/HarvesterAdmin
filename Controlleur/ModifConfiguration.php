@@ -8,7 +8,7 @@ if (isset($_GET['param'])) {
     $id = $_GET['param'];
 }
 
-require_once("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 $dataConf = Gateway::getInfoConfig($id);
 $dataConf['parcours']=Gateway::getParcours($id);

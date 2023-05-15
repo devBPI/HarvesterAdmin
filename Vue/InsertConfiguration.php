@@ -1,6 +1,6 @@
 <?php
 // Connexion et récupération des variables
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 
 $codeConfig=$_POST['textCodeConfig']; 

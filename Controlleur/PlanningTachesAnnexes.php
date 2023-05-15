@@ -5,7 +5,7 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 
 if (! empty($_GET['id'])) {
@@ -17,5 +17,5 @@ for ($i = 1; $i <= 7; $i ++) {
     $dowData[$i] = Gateway::getSideTaskPlanifForEveryDayOfWeek($i);
 }
 $section = "Planning des Tâches Annexes";
-include ("../Vue/PlanningTachesAnnexes.php");
+include("../Vue/planning_annexes/PlanningTachesAnnexes.php");
 ?>

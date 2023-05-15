@@ -20,7 +20,7 @@ if (! $ini) {
 </head>
 
 <?php
-include ('../Vue/Header.php');
+include('../Vue/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">
@@ -39,12 +39,13 @@ include ('../Vue/Header.php');
 						{
 							foreach($set as $key => $value)
 							{
-								echo "<div><input style='height:30px;width:300px;' type='text' name='".$key."' value=\"".$value."\"/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></div>";
+								echo "<div><input style='height:30px;width:300px;' type='text' name='".$key."' value='".$value. "'/>";
+								echo "<button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png' width='30px' height='30px'/></button></div>";
 							}
 						}
 						else
 						{
-							echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></div>";
+							//echo "<input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png' width='30px' height='30px'/></button></div>";
 						}
 				?>
 			</div>

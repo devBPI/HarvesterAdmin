@@ -43,26 +43,26 @@
 				<?php
 				echo "Connecteur * :  <select id='list_grabber' name='list_grabber'><option value='0'>Aucun choisi</option>";
 				$data=$grabber;
-				include '../Vue/ComboBox.php';
+				include '../Vue/combobox/ComboBox.php';
 
 				?>
 				</select>
 				<?php
 				echo "Nom Mapping * : <select id='list_mapping' name='list_mapping'><option value='0'>Aucun choisi</option>";
 				$data=$mapping;
-				include '../Vue/ComboBox.php';
+				include '../Vue/combobox/ComboBox.php';
 				?>
 				</select>
 				<?php
 				echo "Nom Filtre : <select id='list_exclusion' name='list_exclusion'><option value='0'>Aucun choisi</option>";
 				$data=$filtre;
-				include '../Vue/ComboBox.php';
+				include '../Vue/combobox/ComboBox.php';
 				?>
 				</select>
 				<?php
 				echo "Nom Traduction : <select id='list_translation' name='list_translation'><option value='0'>Aucun choisi</option>";
 				$data=$traduction;
-				include '../Vue/ComboBox.php';
+				include '../Vue/combobox/ComboBox.php';
 				?>
 				</select>
 				<?php
@@ -91,7 +91,7 @@
 				?> <input type="text" name="textBusiness" /> 
 					<?php
 					echo "Subordonnée à :";
-					include '../Vue/ComboBoxConfigs.php';
+					include '../Vue/combobox/ComboBoxConfigs.php';
 					?>
 					<?php
 					echo "Format Natif des données exposées : ";

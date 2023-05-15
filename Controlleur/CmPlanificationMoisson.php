@@ -19,7 +19,7 @@ if (isset($_POST['now'])) {
 }
 
 $action = $_REQUEST['action'];
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 
 switch ($action) {

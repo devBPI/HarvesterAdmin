@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $table = "translation";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getRulesSet();
 $set=[];
@@ -31,7 +31,7 @@ else{
 	$mod='true';
 }
 $section = "Traduction";
-include ('../Vue/TraductionRulesSet.php');
+include ('../Vue/traduction/TraductionRulesSet.php');
 ?>
 
 

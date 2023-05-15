@@ -3,7 +3,7 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
-require_once("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 if(isset($_GET['niv']) or isset($_GET['n']))
 {
@@ -34,6 +34,6 @@ else
 $nb=ceil(Gateway::countLogs($n)/15);
 $section = "Logs";
 
-include ("../Vue/JournalLogs.php");
+include("../Vue/alerts_logs/JournalLogs.php");
 ?>
 

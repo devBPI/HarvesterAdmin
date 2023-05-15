@@ -15,7 +15,7 @@ if (! $ini) {
 </head>
 
 <?php
-include ('../Vue/Header.php');
+include('../Vue/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">
@@ -27,7 +27,7 @@ include ('../Vue/Header.php');
 				<select id="rule" name="Trad">
 				<option value="0">Aucune configuration choisie</option>
 					<?php
-						include '../Vue/ComboBox.php';
+						include '../Vue/combobox/ComboBox.php';
 					?>
 				</select>
 				<div style="overflow-y: auto; height:400px">
@@ -82,7 +82,7 @@ include ('../Vue/Header.php');
 				<select id="rule" name="Trad" class="select-hide">
 					<option value="0">Aucune configuration choisie</option>
 						<php
-							include '../Vue/ComboBox.php';
+							include '../Vue/combobox/ComboBox.php';
 						?>
 				</select>
 			</div>

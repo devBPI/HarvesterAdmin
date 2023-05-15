@@ -109,6 +109,7 @@ h1.header{
     border: none;
     margin: 0 40%;
     text-align: center;
+    cursor:pointer;
   }
   
   

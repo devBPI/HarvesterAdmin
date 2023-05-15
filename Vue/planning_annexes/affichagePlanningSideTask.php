@@ -38,9 +38,9 @@ foreach ($dowData[$dow] as $var) { // $dow est le jour de la semaine souhaite, d
 		<td>
 			<form
 				onsubmit="return confirm('Voulez vous vraiment supprimer cette planification ?');"
-				action="../Controlleur/PlanningTachesAnnexes.php?id=<?php echo $var['id']; ?>"
+				action="../../Controlleur/PlanningTachesAnnexes.php?id=<?php echo $var['id']; ?>"
 				method="post">
-				<input type="image" id="cross" name="cross" src="../ressources/cross.png" width="20px" height="20px">
+				<input type="image" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
 			</form>
 	<?php
 	   

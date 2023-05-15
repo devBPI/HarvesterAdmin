@@ -6,7 +6,7 @@ function treeSet()
 		return;
 	}
 	$value=array_pop($_POST);
-	$d;
+	$d=null;
 	$d['operator']=$value;
 	if($value=='OPERATION')
 	{
@@ -21,13 +21,14 @@ function treeSet()
 }
 function treeDisplay($d)
 {
-
 	if(!$d)
 	{
 		return;
 	}
 	$op=$d['operator'];
 	$GLOBALS['nb']++;
+	if (sizeof($d)<3)
+		$op='';
 	echo "<div class='operation'><select name ='operator".$GLOBALS['nb']."' onchange='update_operation(this)'>
 				<option value='OPERATION' ".(($op=='')?'selected':'').">OPERATION</option>
 				<option value='OR' ".(($op=='OR')?'selected':'').">OR</option>
@@ -48,9 +49,9 @@ function treeDisplay($d)
 }
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
-    $ini = @parse_ini_file("../etc/default.ini", true);
+	$ini = @parse_ini_file("../etc/default.ini", true);
 }
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $section = "Filtre - Définition d'une règle";
 if(isset($_GET['id']))
@@ -76,14 +77,15 @@ else if(isset($_GET['modify']))
 	header('Location: ../Controlleur/FiltreTree.php?id='.$id.'&f=true');
 }
 $name=$val['name'];
-$data=Gateway::getRuleTree($idR);
+$data=null;
+if($idR!=null)
+	$data=Gateway::getRuleTree($idR);
 if($data==null){
 	$data = array(
-		"operator" => "",
-		"pred" => "",
+		"operator" => null,
+		"pred" => null,
 	);
 }
-include ('../Vue/FiltreTree.php');
+include ('../Vue/filtre/FiltreTree.php');
 ?>
-
 

@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $section = "Ajouter une configuration";
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $mapping=Gateway::getMapping();
 $filtre=Gateway::getExclusion();

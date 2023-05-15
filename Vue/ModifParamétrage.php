@@ -30,7 +30,7 @@ $table = $_GET['table'];
 $id = $_GET['id'];
 $text = @str_replace("'", "''", $_POST['textArea']);
 $name = @str_replace("'", "''", $_POST['name']);
-require_once("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 
 

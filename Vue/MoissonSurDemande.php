@@ -17,7 +17,7 @@ if (! $ini) {
 <?php
 $section = "Moisson sur Demande";
 include ('../Vue/Header.php');
-require_once ("../Gateway.php");
+require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $datawithoutfile = Gateway::getConfigurationsWithoutFileToUpload();
 $datawithfiles = Gateway::getConfigurationsWithFilesToUpload();
@@ -53,12 +53,12 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 
 <div class="content">
 	
-	<FORM  method="post" action="MoissonSurDemande.php" enctype="multipart/form-data" onsubmit="return confirm('Voulez vous vraiment lancer la moisson maintenant ?');">
+	<form method="post">
 		<div class="cartouche-solo" style="width:auto;height:auto;padding:5%;">
 			<h3 style="margin:0 auto;">Lancement sans fichier</h3>
 			<div class="row">
 				<div class="col-50">
-				<select id="configuration-select-whithout-file" name="configuration-select-whithout-file" onChange="window.location=getTextArea.php" required>
+				<select id="configuration-select-whithout-file" name="configuration-select-whithout-file" onChange="disableMsgAborted()" required>
     					<option value="" disabled selected>Choisissez une configuration</option>
     					<?php
     					$i = 0;
@@ -84,14 +84,15 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
                     </div>
 				</div>
 				<div class="col-20">
-					<input type="submit" name="launch-without-file-button" value="Démarrer maintenant">
+					<input type="submit" name="launch-without-file-button" onclick="return formSubmit()" value="Démarrer maintenant">
 				</div>
-				
+				<br/>
 			</div>
 		</div>
-	</FORM>
+	</form>
+	<div class="avertissement" id="msgAborted"></div>
 
-	<FORM id="formFiles" method="post" action="MoissonSurDemande.php" enctype="multipart/form-data">
+	<form id="formFiles" method="post" enctype="multipart/form-data">
 		<input id="file-to-upload" name="file-to-upload[]" type="hidden" value=""/>
 		<input type="hidden" name="MAX_FILE_SIZE" value="10000000">  <!-- On limite le fichier à 10Mo -->
 		<!-- ATTENTION : la taille max du fichier doit etre bien compatible avec la valeur de upload_max_filesize (et post_max_size) dans php.ini -->
@@ -144,9 +145,8 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 		</div>
 		<input id="formIgnoreValues" name="formIgnoreValues" type="hidden" value=""/>
 		<input id="formTypeCSV" name="formTypeCSV" type="hidden" value=""/>
-	</FORM>
-
-	<div id="divCSV" style="text-align:center; font-size:18px; font-weight:bold; color:tomato;"></div>
+	</form>
+	<div id="divCSV" class="avertissement"></div>
 
 	<table class="table-planning" id="moissonTable" style="margin-bottom:50px">
         <thead>
@@ -160,6 +160,23 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
 	<script>
+
+		function disableMsgAborted() {
+            document.getElementById("msgAborted").innerText = "";
+		}
+
+		// Valide la soumisson du formulaire si type-moisson-without-file est coché
+		function formSubmit() {
+            if (document.getElementById('type-moisson-without-file').checked) {
+                if (confirm("Vous souhaitez effectuer une moisson sans grab. Confirmer ?")) {
+                    return true;
+                } else {
+                    document.getElementById("msgAborted").innerHTML = "La moisson ne sera pas réalisée.";
+                    return false;
+                }
+            } else return true;
+		}
+
 		function deleteRow(i){
 			document.getElementById('displaytbody').rows[i].style.display = "none";
 			document.getElementById('formIgnoreValues').value += i;
@@ -180,8 +197,8 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 				cell3.innerHTML = "<div class=\"button-hover\" onclick=\"deleteRow(" + nbRow + ")\" id=\"" + nbRow + "\" style=\"cursor:pointer\"><img src=\"../ressources/cross.png\" width='20px' height='20px'/></div>"
 				$(obj).class = 'file-input-used';
 				nbRow++;
-			};
-		};
+			}
+		}
 
 		var nbButton = 1;
 		function appendInput(obj) {	

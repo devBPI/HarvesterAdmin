@@ -64,9 +64,9 @@ if (! $ini) {
 			foreach ($data as $var) {
 			?>
 				<tr>
-					<FORM action="EtatsDispo.php?code=<?php echo $var['code'];?>" method="post" onsubmit="return confirm('Voulez vous vraiment modifier ce status ?');">
+					<FORM action="EtatsDispo.php?code=<?= $var['code']?>" method="post" onsubmit="return confirm('Voulez vous vraiment modifier ce status ?');">
 						<td scope="row" data-label="Code">
-							<?php echo $var['code'];?>
+							<?= $var['code']?>
 						</td>
 						<?php if($modify=="true"){?>
 							<td data-label="Disponibilité">
@@ -89,24 +89,24 @@ if (! $ini) {
 									</option>
 								</select>
 							</td>
-						<td data-label="Label"><TEXTAREA name="label"><?php echo $var['label'];?></TEXTAREA></td>
+						<td data-label="Label"><TEXTAREA name="label"><?= $var['label']?></TEXTAREA></td>
 						<th>
 							<input type='submit' class='button primairy-color' style='width:100%' value="Modifier"/>
 						</th>
 						<?php } else{?>
 							<td data-label="Disponibilité">
-								<?php echo $var['dispo_flag'];?>
+								<?= $var['dispo_flag'];?>
 							</td>
 						<td data-label="Â moissonner">
 							<?php echo ($var['select_to_harvest']=="f")?"False":"True";?>
 						</td>
 						<td data-label="Label">
-							<?php echo $var['label'];?>
+							<?= $var['label'];?>
 						</td>
 						<?php } ?>
 					</FORM>
-					<?php if($modify=="true"){?>
-						<form onsubmit="return confirm('Voulez vous vraiment supprimer ce status ?');" action="EtatsDispo.php?delete=<?php echo $var['code'] ?>" method="post">
+					<?php if($modify=="true") {?>
+						<form onsubmit="return confirm('Voulez vous vraiment supprimer ce status ?');" action="EtatsDispo.php?delete=<?= $var['code'] ?>" method="post">
 							<td style="background-color:#1fe0;"><input type="image" id="cross" name="cross" src="../ressources/cross.png" width="20px" height="20px"></td>
 						</form>
 					<?php }?>

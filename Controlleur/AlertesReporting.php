@@ -8,7 +8,7 @@ if (! $ini) {
 
 
 
-require_once ("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 
 if(isset($_POST['deleteRow']) && $_POST['deleteRow']!=''){
@@ -27,6 +27,6 @@ if (isset($_GET["page"])) {
 ;
 $start_from = ($page - 1) * $limit;
 $section = "Alertes";
-include ("../Vue/AlertesReporting.php");
+include("../Vue/alerts_logs/AlertesReporting.php");
 ?>
 

@@ -1,7 +1,7 @@
 <html>
 <?php
 session_start();
-require_once("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 if(isset($_POST["submitted"])){
     Gateway::insert("UPDATE configuration." . $_GET['table'] . " SET name = '" . $_SESSION['new_name'] . "',definition = '" . implode(PHP_EOL,$_SESSION["session_properties"]) . "' WHERE id='" . $_GET['id'] . "'");

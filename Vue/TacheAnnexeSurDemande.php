@@ -19,7 +19,7 @@ if (! $ini) {
 
  $section = "Tâche Annexe sur Demande";
  include ('../Vue/Header.php');
- require_once ("../Gateway.php");
+ require_once ("../PDO/Gateway.php");
  Gateway::connection();
 ?>
 

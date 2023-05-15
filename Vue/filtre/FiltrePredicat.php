@@ -7,20 +7,20 @@ if (! $ini) {
 <html>
 <head>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="../css/style.css" />
-	<link rel="stylesheet" href="../css/composants.css" />
-	<link rel="stylesheet" href="../css/selectStyle.css" />
-	<link rel="stylesheet" href="../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../css/formStyle.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="../../css/composants.css" />
+	<link rel="stylesheet" href="../../css/selectStyle.css" />
+	<link rel="stylesheet" href="../../css/accueilStyle.css" />
+	<link rel="stylesheet" href="../../css/formStyle.css" />
 
 	<title>Paramétrage</title>
 </head>
 
 <body>
-	<?php include ('../Vue/Header.php'); ?>
+	<?php include('../Vue/Header.php'); ?>
 
 	<div class="content">
-			<a href="../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour filtre</a><br>
+			<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour filtre</a><br>
 			<?php
 			if(isset($_GET['set']))
 			{
@@ -52,7 +52,7 @@ if (! $ini) {
 						?>
 							</select></td>
 						<td><input name='value-1' type='text'/></td>
-						<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
+						<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
 
 				<?php
 					if(isset($value))
@@ -72,8 +72,8 @@ if (! $ini) {
 							{
 								echo "<option value='".$f['code']."' ".(($v['function_code']==$f['code'])?'selected':'').">".$f['code']."</option>";
 							}					
-							echo "</select></td><td><input name='value".$k."' type='text' value='".$v['val']."'/></td>
-							<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+							echo "</select></td><td><input name='value".$k."' type='text' value='".$v['val']. "'/></td>
+							<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 						}
 					}
 					else
@@ -93,11 +93,11 @@ if (! $ini) {
 							echo "<option value='".$f['code']."' ".(($v['function_code']==$f['code'])?'selected':'').">".$f['code']."</option>";
 						}					
 						echo "</select></td><td><input name='value-1' type='text'/></td>
-							<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+							<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 
 					}
 				?>	
-				<tr style="background-color:rgba(0,0,0,0);" id="add_row"><td><button class='ajout but' type='button' title='Ajouter un prédicat' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../ressources/add.png' width='30px' height='30px'/></button></td><td></td><td></td><td></td><td></td><td><input type='submit'/></td></tr>
+				<tr style="background-color:rgba(0,0,0,0);" id="add_row"><td><button class='ajout but' type='button' title='Ajouter un prédicat' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td><td></td><td></td><td></td><td></td><td><input type='submit'/></td></tr>
 			</table>
 		</FORM>
 	</div>
@@ -105,7 +105,7 @@ if (! $ini) {
 	<?php if(!empty($_POST)) : ?>
 	<div id="page-mask" style="display:block"></div>
 	<div class="form-popup" id="validateForm" style="display:block">
-		<form action="../Controlleur/Filtre.php" class="form-container" id="formProperty">
+		<form action="../../Controlleur/Filtre.php" class="form-container" id="formProperty">
 			<h3>Modification</h3>
 			<p>Les modifications ont été enregistrées.</p>
 			<div class="row">
@@ -116,9 +116,9 @@ if (! $ini) {
 	<?php endif; ?>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="../js/toTop.js"></script>
-	<script src="../js/add_fields.js"></script>
-	<script src="../js/entities.js"></script>
+	<script src="../../js/toTop.js"></script>
+	<script src="../../js/add_fields.js"></script>
+	<script src="../../js/entities.js"></script>
 	<script>
 		function openForm() {
             document.getElementById("validateForm").style.display = "block";

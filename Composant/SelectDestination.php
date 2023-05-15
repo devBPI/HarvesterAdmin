@@ -1,5 +1,5 @@
 <?php
-require_once("../Gateway.php");
+require_once("../PDO/Gateway.php");
 Gateway::connection();
 echo "<option value=0>Aucun choisi</option>";
 foreach($_POST as $c)
