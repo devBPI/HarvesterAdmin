@@ -93,14 +93,19 @@ th.button{
 .config_name_and_sub_title {
 	border-top: 2px solid white;
 	border-bottom: 2px solid white;
+	max-width:400px;
+	margin:  0 auto;
 	line-height: 0;
 }
 
 .config_name_and_sub_title .config_name {
 	font-weight: bold;
 	font-size: 22px;
+	margin-bottom:0;
 }
 
 .config_name_and_sub_title .sub_title {
 	font-style: italic;
+	line-height: 15px;
+	margin-bottom:5px;
 }

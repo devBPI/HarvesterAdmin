@@ -77,7 +77,9 @@ if (!$ini) {
 			</tr>
 			<?php foreach ($data as $var) {
 				?>
+				<form action="EtatsDispo.php?code=<?= $var['code'] ?>" method="post" onsubmit="return confirm('Voulez vous vraiment modifier ce status ?');">
 				<tr>
+					<td data-label="Code"> <?= $var['code'] ?></td>
 					<td data-label="Disponibilité">
 						<select name="list_dispo" style="width: 100%">
 							<option value=""

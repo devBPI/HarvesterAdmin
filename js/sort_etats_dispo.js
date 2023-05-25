@@ -21,7 +21,8 @@ function remplir_tableau(title_cell = null, order = null) {
 }
 
 window.onload = function () {
-    remplir_tableau();
+    if ((new URLSearchParams(window.location.search)).get("modify")!== "true")
+        remplir_tableau();
 }
 
 function maj_col(title_cell) {

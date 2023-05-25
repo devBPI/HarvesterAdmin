@@ -29,7 +29,7 @@ if(isset($_GET['modify']))
 else{
 	$mod='true';
 }
-$section = "Traduction";
+$section = "Ensembles de cibles de traduction";
 include ('../Vue/traduction/TraductionCategory.php');
 ?>
 

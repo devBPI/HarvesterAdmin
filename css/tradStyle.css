@@ -1,5 +1,4 @@
-﻿
-.divs_regles_cibles div {
+﻿.divs_regles_cibles div {
 	margin-bottom:3px;
 }
 
@@ -19,6 +18,9 @@
 .traduction .td_cross { padding-left: 0; width: 60px; }
 .traduction .td_cross button { cursor: pointer; }
 
+.traduction .border_div .table-config { margin: 0; }
+.traduction .table-config { margin: 10px 0; }
+
 .traduction form { margin-left: 0; } /* Neutralise style.css */
 
 .border_div {
@@ -27,7 +29,7 @@
 }
 
 
-.part{
+.part {
 	background-color:white !important;
 	border: 1px solid black;
 }

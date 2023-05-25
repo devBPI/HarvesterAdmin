@@ -46,11 +46,14 @@ include('../Vue/Header.php');
 							<th style="width:80%">Nom</th><th></th>
 							<?php
 								foreach($rules_set as $r)
-								{
-									echo "<tr><td>".$r['name']."</td>
-									<td><a href='../Controlleur/TraductionSet.php?id=".$r['id']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td>
-									</tr>";
-								}
+								{ ?>
+									<tr><td> <?= $r['name'] ?></td>
+									<td>
+										<a href="../Controlleur/TraductionSet.php?id=<?= $r['id'] ?>" title="Éditer l'ensemble de règles de traduction"><img src="../ressources/edit.png" alt="pictogramme d'édition" width="30px" height="30px"/>
+										</a>
+									</td>
+									</tr>
+								<?php }
 								?>
 						</table>
 					</div>
@@ -63,11 +66,15 @@ include('../Vue/Header.php');
 							<th style="width:80%">Nom</th><th></th>
 							<?php
 								foreach($categories as $value)
-								{
-									echo "<tr><td>".$value['name']."</td>
-									<td><a href='../Controlleur/TraductionDestination.php?modify=".$value['name']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td></tr>";
-								}
-							?>
+								{ ?>
+									<tr>
+										<td> <?= $value['name'] ?></td>
+										<td><a href="../Controlleur/TraductionDestination.php?id=<?= $value['name'] ?>" title="Éditer l'ensemble de cibles de traduction">
+												<img src="../ressources/edit.png" alt="pictogramme d'édition" width="30px" height="30px"/>
+											</a>
+										</td>
+									</tr>
+								<?php } ?>
 						</table>
 					</div>
 					<a href="../Controlleur/TraductionCategory.php" class="buttonpage">Modifier les ensembles de cible</a>
