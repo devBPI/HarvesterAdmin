@@ -29,7 +29,7 @@ if(isset($_GET['modify']))
 			$donnee[$nb]['rule']=$value;
 		}
 	}
-	Gateway::updateFilterConfiguration($id,$donnee);
+	$array_error = Gateway::updateFilterConfiguration($id,$donnee);
 }
 $entities = Gateway::getEntities();
 $conf = Gateway::getFilterByConf($id);

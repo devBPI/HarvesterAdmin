@@ -6,12 +6,13 @@ if (! $ini) {
 ?>
 <html>
 <head>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../css/style.css" />
-<link rel="stylesheet" href="../../css/composants.css" />
-<link rel="stylesheet" href="../../css/selectStyle.css" />
-<link rel="stylesheet" href="../../css/accueilStyle.css" />
-<title>Paramétrage</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="../../css/composants.css" />
+	<link rel="stylesheet" href="../../css/selectStyle.css" />
+	<link rel="stylesheet" href="../../css/accueilStyle.css" />
+	<link rel="stylesheet" href="../../css/formStyle.css" />
+	<title>Paramétrage</title>
 </head>
 
 <?php
@@ -21,27 +22,37 @@ include('../Vue/Header.php');
 <body>
 	<div class="content">
 		<div class="triple-column-container">
-				<div class="column">
-					<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour filtre</a>
+				<div>
+					<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
 				</div>
 				<div class="column">
-					<h3><?php echo $configname['name']; ?></h3>
+					<div class="config_name_and_sub_title">
+						<h3 class="config_name">Configuration : <?= $configname['name'] ?></h3>
+					</div>
 				</div>
 		</div>
-
-		<FORM action="FiltreConfiguration.php?modify=<?php echo $id;?>" method="post" id='conf' onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
-		<h3><?php echo $name;?></h3>
+		<?php if (!empty($array_error)) { ?>
+			<div class="avertissement">
+				<p style="text-align:left">ERREURS :<br/>
+				<?php foreach ($array_error as $error) { ?>
+				Il existe déjà une règle associée à l'entité <?= $error["entity"] ?> pour la configuration <?= $configname['name'] ?>. Une seule a été conservée.</br>
+				<?php } ?>
+				</p>
+			</div>
+		<?php } ?>
+		<form action="FiltreConfiguration.php?modify=<?= $id ?>" method="post" id='conf' onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
+		<h3><?= $name ?></h3>
 			<table class="table-config" id="conf">
 				<tr><th width=30%>Entité</th><th width=50%>Règles de filtrage</th><th></th><th></th><th></th></tr>
 				<tr class="hidden_field"><?php
-						echo "<td><select name='entity' onchange='display_rules(this)'><option value=''>Aucun choisi</option>";
+						echo "<td><select name='entity' onchange='display_rules(this)'><option value=''>Sélectionnez une entité</option>";
 						foreach($entities as $e)
 						{
 							echo "<option value='".$e."'>".$e."</option>";
 						}
-						echo "</select></td><td><select name='rule' hidden><option value=''>Aucun choisi</option></select>";
+						echo "</select></td><td><select name='rule' hidden><option value=''>Sélectionnez une entité</option></select>";
 						echo "<td><input type='checkbox' name='case'/></td><td><input type='checkbox' name='trim'/></td>";
-						echo "<td><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
+						echo "<td><button style='cursor:pointer' class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
 					?>
 				</tr>
 				<?php
@@ -50,43 +61,71 @@ include('../Vue/Header.php');
 						foreach($conf as $key => $value)
 						{
 							echo "<tr id='".$value['id']."'>";
-							echo "<td><select name='entity".$key."' onchange='display_rules(this)'><option value=''>Aucun choisi</option>";
-							foreach($entities as $e)
-							{
+							echo "<td><select name='entity".$key."' onchange='display_rules(this)' required><option value=''>Sélectionnez une entité</option>";
+							foreach($entities as $e) {
 								echo "<option value='".$e."' ".(($e==$value['entity'])?'selected':'').">".$e."</option>";
 							}
-							echo "</select></td><td><select name='rule".$key."'><option value=''>Aucun choisi</option>";
+							echo "</select></td><td><select name='rule".$key."' required><option value=''>Sélectionnez une règle</option>";
 							foreach($data as $d)
 							{
 								echo (($d['entity']==$value['entity'])?"<option value='".$d['id']."' ".(($d['name']==$value['name'])?'selected':'').">".$d['name']."</option>":"");
 							}
 							echo "</select></td>
 							<td><input type='checkbox' name='case'/></td><td><input type='checkbox' name='trim'/></td>
-							<td><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+							<td><button style='cursor:pointer' class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 						}
 					}
 					else
 					{
 						echo "<tr id='new'>";
-						echo "<td><select name='entitynew' onchange='display_rules(this)'><option value='0'>Aucun choisi</option>";
+						echo "<td><select name='entitynew' onchange='display_rules(this)' required><option value=''>Sélectionnez une entité</option>";
 						foreach($entities as $e)
 						{
 							echo "<option value='".$e."'>".$e."</option>";
 						}
-						echo "</select></td><td><select name='rule' hidden><option value='0'>Aucun choisi</option>";
+						echo "</select></td><td><select name='rule' hidden><option value=''>Sélectionnez une entité</option>";
 						echo "</select></td>
 						<td><input type='checkbox' name='case'/></td><td><input type='checkbox' name='trim'/></td>
-						<td><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+						<td><button style='cursor:pointer' class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 					}
 				?>
-				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td></td><td></td><td><button class='ajout but' type='button' title='Ajouter une traduction' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
+				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td></td><td></td><td><button style='cursor:pointer' class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
 			</table>
 			<input type="submit" value="Modifier" class="button primairy-color round"/>
-		</FORM>
+		</form>
 	</div>
+
+	<?php  // $_POST est rempli après envoi du formulaire (bouton "Enregistrer")
+	if(!empty($_POST)) : ?>
+		<div id="page-mask" style="display:block"></div>
+		<div class="form-popup" id="validateForm" style="display:block">
+			<div class='form-container' id='formProperty'>
+				<?php if (isset($array_error) && $array_error != null) { ?>
+					<!--<form action="#" class="form-container" id="formProperty">-->
+				<?php } else { ?>
+				<form action="../../Controlleur/Filtre.php" class="form-container" id="formProperty">
+					<?php } ?>
+					<h3>Modification</h3>
+					<div class='form-popup-corps'>
+						<?php if (!(isset($array_error) && $array_error != null)) { ?>
+						<p>Les modifications ont bien été enregistrées.</p>
+						<button type="submit" class="buttonlink">OK</button>
+					</div>
+				</form>
+			<?php } else { ?>
+				<p>Les modifications valides ont bien été enregistrées.</p>
+				<p class="avertissement_light">Certaines modifications n'ont pas été prises en compte.<br/>
+				</p>
+				<button class="buttonlink" onclick="closeForm()">OK</button>
+			<?php } ?>
+			</div>
+		</div>
+		</div>
+	<?php endif; ?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../../js/toTop.js"></script>
+	<script src="../../js/pop_up.js"></script>
 	<script src="../../js/add_fields.js"></script>
 	<script src="../../js/entities.js"></script>
 	<script>

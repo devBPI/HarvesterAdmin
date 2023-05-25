@@ -8,49 +8,42 @@ unset($_POST['function-1']);
 unset($_POST['value-1']);
 if(!empty($_POST))
 {
-	$a=false;
 	$donnee=array();
 	$nb=0;
-	foreach($_POST as $key => $value)
-	{
+	/* On enlève les 4 premières valeurs de $_POST (celles du champ hidden) */
+	array_shift($_POST);
+	array_shift($_POST);
+	array_shift($_POST);
+	array_shift($_POST);
+	foreach($_POST as $key => $value) {
 		$k = str_replace('_',' ',$key);
-		if(preg_match('/(id)/',$k))
-		{
-			if(preg_match('/(new)/',$k))
-			{
-				$nb=-abs($nb)-1;
-			}
-			else
-			{
-				$nb=$value;
+		if (preg_match('/(id)/', $k)) {
+			if (preg_match('/(new)/', $k)) {
+				$nb = -abs($nb) - 1;
+			} else {
+				$nb = $value;
 			}
 		}
-		if(preg_match('/(code)/',$k))
-		{
-			$donnee[$nb]['code']=$value;
+		if (preg_match('/(code)/', $k)) {
+			$donnee[$nb]['code'] = $value;
 		}
-		if(preg_match('/(property)/',$k))
-		{
-			$donnee[$nb]['property']=$value;
+		if (preg_match('/(property)/', $k)) {
+			$donnee[$nb]['property'] = $value;
 		}
-		if(preg_match('/(entity)/',$k))
-		{
-			$donnee[$nb]['entity']=$value;
+		if (preg_match('/(entity)/', $k)) {
+			$donnee[$nb]['entity'] = $value;
 		}
-		if(preg_match('/(function)/',$k))
-		{
-			$donnee[$nb]['function_code']=$value;
+		if (preg_match('/(function)/', $k)) {
+			$donnee[$nb]['function_code'] = $value;
 		}
-		if(preg_match('/(value)/',$k))
-		{
-			$donnee[$nb]['value']=$value;
+		if (preg_match('/(value)/', $k)) {
+			$donnee[$nb]['value'] = $value;
 		}
 	}
-	Gateway::updatePredicats($donnee);
+	$array_error = array();
+	$array_error = Gateway::updatePredicats($donnee);
 }
-$value = Gateway::getPredicats();
+$value = Gateway::getPredicatsOrderBy12();
 $functions = Gateway::getFilterCode();
 include("../Vue/filtre/FiltrePredicat.php");
 ?>
-
-

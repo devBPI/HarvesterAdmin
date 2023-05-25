@@ -3,6 +3,8 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
+
+require '../Composant/ComboBox.php';
 ?>
 <html>
 <head>
@@ -22,13 +24,11 @@ include('../Vue/Header.php');
 	<div class="content">
 		<div class="double-column-container">
 			<div class="column" style="height:450px">
-			<H3>Association Configuration-Règle</H3>
-			<div class="cartouche-solo" style="width:auto;padding:5%;">
+			<H3>Configurations et règles de traduction associées</H3>
+			<div class="cartouche-solo" style="width:auto;height:435px;padding:5%;">
 				<select id="rule" name="Trad">
-				<option value="0">Aucune configuration choisie</option>
-					<?php
-						include '../Vue/combobox/ComboBox.php';
-					?>
+				<option value="0">Choisissez une configuration</option>
+					<?= Combobox::makeComboBox($data) ?>
 				</select>
 				<div style="overflow-y: auto; height:400px">
 					<table class="table-planning" id="conf">
@@ -39,35 +39,39 @@ include('../Vue/Header.php');
 			</div>
 			</div>
 			<div class="column">
-				<H3>Règles de traduction</H3>
-				<div style="overflow-y: auto; height:200px">
-					<table class="table-planning">
-						<th style="width:80%">Nom</th><th></th>
-						<?php
-							foreach($rules_set as $r)
-							{
-								echo "<tr><td>".$r['name']."</td>
-								<td><a href='../Controlleur/TraductionSet.php?id=".$r['id']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td>
-								</tr>";
-							}
+				<div class="divs_regles_cibles">
+					<h3>Règles de traduction</h3>
+					<div style="overflow-y:auto;height:200px;background-color:#f8f8f8">
+						<table class="table-planning">
+							<th style="width:80%">Nom</th><th></th>
+							<?php
+								foreach($rules_set as $r)
+								{
+									echo "<tr><td>".$r['name']."</td>
+									<td><a href='../Controlleur/TraductionSet.php?id=".$r['id']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td>
+									</tr>";
+								}
+								?>
+						</table>
+					</div>
+					<a href="../Controlleur/TraductionRulesSet.php" class="buttonpage">Modifier les ensembles de règles</a>
+				</div>
+				<div class="divs_regles_cibles">
+					<h3>Cibles de traduction</h3>
+					<div style="overflow-y: auto;height:200px;background-color:#f8f8f8">
+						<table class="table-planning">
+							<th style="width:80%">Nom</th><th></th>
+							<?php
+								foreach($categories as $value)
+								{
+									echo "<tr><td>".$value['name']."</td>
+									<td><a href='../Controlleur/TraductionDestination.php?modify=".$value['name']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td></tr>";
+								}
 							?>
-					</table>
-				</div>
-				<a href='../Controlleur/TraductionRulesSet.php'>Modifier les règles</a>
-				<H3>Cibles de traduction</H3>
-				<div style="overflow-y: auto; height:200px">
-					<table class="table-planning">
-						<th style="width:80%">Nom</th><th></th>
-						<?php
-							foreach($categories as $value)
-							{
-								echo "<tr><td>".$value['name']."</td>
-								<td><a href='../Controlleur/TraductionDestination.php?modify=".$value['name']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td></tr>";
-							}
-						?>
-					</table>
-				</div>
-				<a href='../Controlleur/TraductionCategory.php'>Modifier les ensembles de cible</a>
+						</table>
+					</div>
+					<a href="../Controlleur/TraductionCategory.php" class="buttonpage">Modifier les ensembles de cible</a>
+					</div>
 			</div>
 		</div>
 	</div>

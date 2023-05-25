@@ -7,6 +7,7 @@
 	<title>Ajout de Configuration</title>
 </head>
 <?php
+	require '../Composant/ComboBox.php';
 	include ('../Vue/Header.php');
 ?>
 <body>
@@ -36,41 +37,26 @@
 				echo "Nom Public * : ";
 				?>
 				<input type="text" name="textNomPublic" />
-				<?php
-				echo "URL Publique * : ";
-				?>
+				URL Publique * :
 				<input type="text" name="textUrlPublique" />
-				<?php
-				echo "Connecteur * :  <select id='list_grabber' name='list_grabber'><option value='0'>Aucun choisi</option>";
-				$data=$grabber;
-				include '../Vue/combobox/ComboBox.php';
-
-				?>
+				Connecteur * :
+				<select id='list_grabber' name='list_grabber'><option value='0'>Aucun choisi</option>
+					<?= ComboBox::makeComboBox($grabber); ?>
 				</select>
-				<?php
-				echo "Nom Mapping * : <select id='list_mapping' name='list_mapping'><option value='0'>Aucun choisi</option>";
-				$data=$mapping;
-				include '../Vue/combobox/ComboBox.php';
-				?>
+				Nom Mapping * :
+				<select id='list_mapping' name='list_mapping'><option value='0'>Aucun choisi</option>
+					<?= ComboBox::makeComboBox($mapping); ?>
 				</select>
-				<?php
-				echo "Nom Filtre : <select id='list_exclusion' name='list_exclusion'><option value='0'>Aucun choisi</option>";
-				$data=$filtre;
-				include '../Vue/combobox/ComboBox.php';
-				?>
+				Nom Filtre :
+				<select id='list_exclusion' name='list_exclusion'><option value='0'>Aucun choisi</option>
+					<?= ComboBox::makeComboBox($filtre); ?>
 				</select>
-				<?php
-				echo "Nom Traduction : <select id='list_translation' name='list_translation'><option value='0'>Aucun choisi</option>";
-				$data=$traduction;
-				include '../Vue/combobox/ComboBox.php';
-				?>
+				Nom Traduction :
+				<select id='list_translation' name='list_translation'><option value='0'>Aucun choisi</option>
+					<?= ComboBox::makeComboBox($traduction); ?>
 				</select>
-				<?php
-				echo "Url : ";
-				?> <input type="text" name="textUrl" size="78" />
-				<?php
-				echo "Url set : ";
-				?> <input type="text" name="textUrlSet" size="78" />
+				Url :<input type="text" name="textUrl" size="78" />
+				Url set : <input type="text" name="textUrlSet" size="78" />
 				<?php
 				echo "Separateur CSV : ";
 				?> <input type="text" name="textSeparateur" />
@@ -93,12 +79,8 @@
 					echo "Subordonnée à :";
 					include '../Vue/combobox/ComboBoxConfigs.php';
 					?>
-					<?php
-					echo "Format Natif des données exposées : ";
-					?> <input type="text" name="textFormatNatif" /> 
-					<?php
-					echo "Commentaire : ";
-					?>
+					Format Natif des données exposées : <input type="text" name="textFormatNatif" />
+					Commentaire :
 					<TEXTAREA style="box-shadow: 0px 0px 0px;" id="textNote" name="textNote" rows=10 cols=50></TEXTAREA>
 				<?php
 				include '../Vue/InsertConfiguration.php';

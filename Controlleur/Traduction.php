@@ -18,6 +18,9 @@ if(isset($_POST['trad']))
 	}
 }
 $data = Gateway::getConf();
+for ($i=0; $i < count($data); $i++) {
+	$data[$i]["confname"] = Gateway::getConfigurationName($data[$i]["id"])["name"];
+}
 $section = "Traduction";
 include ('../Vue/traduction/Traduction.php');
 ?>

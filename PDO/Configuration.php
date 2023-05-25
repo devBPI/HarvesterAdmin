@@ -32,6 +32,11 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
         return pg_fetch_all($query);
     }
 
+	static function getCodeConfig($id)
+	{
+		return @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT code FROM configuration.harvest_configuration WHERE id=".$id))[0]["code"];
+	}
+
     /** Retourne la configuration selon son code
      * @param $code
      * @return mixed|void
@@ -152,15 +157,28 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
 	 */
     static function getProfileConfig($id)
     {
-        $query = pg_query(Gateway::getConnexion(), "SELECT p.description,p.code 
+        /*$query = pg_query(Gateway::getConnexion(), "SELECT p.description,p.code
 			FROM configuration.configuration_access_mapping m, configuration.user_profile p
-			WHERE p.code=m.configuration_code AND m.configuration_code='".$id."';");
-        if (!$query)
-        {
+			WHERE p.code=m.configuration_code AND m.configuration_code='".$id."';");*/
+		$code = Gateway::getCodeConfig($id);
+		$query = pg_query(Gateway::getConnexion(), "SELECT is_external_access_allowed, is_internal_virtualized_access_allowed, is_internal_wifi_access_allowed
+															FROM configuration.configuration_access_mapping m WHERE m.configuration_code='".$code."';");
+        if (!$query) {
             echo "Erreur durant la requête de getProfileConfig .\n";
             exit;
         }
-        return pg_fetch_all($query);
+		$queryResult = pg_fetch_all($query);
+		$resultat = array();
+		if ($queryResult) {
+			$queryResult = $queryResult[0];
+			if ($queryResult['is_external_access_allowed'] == "t")
+				$resultat[] = "EXTERNAL";
+			if ($queryResult['is_internal_virtualized_access_allowed'] == "t")
+				$resultat[] = "INTERNAL";
+			if ($queryResult['is_internal_wifi_access_allowed'] == "t")
+				$resultat[] = "WIFI-BPI";
+		}
+        return $resultat;
     }
 
     static function getProfile()
@@ -238,6 +256,109 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
         }
         return pg_fetch_all($query);
     }
+
+	/** Compte le nombre de configurations
+	 * @param $str requête SQL
+	 * @return mixed|void le nombre de configurations trouvées
+	 */
+	static function countHarvestConfiguration($str)
+	{
+		$query = pg_query(Gateway::getConnexion(), $str);
+		if (!$query)
+		{
+			echo "Erreur durant la requête de countHarvestConfiguration .\n";
+			echo $str;
+			exit;
+		}
+		return pg_fetch_all($query)[0]['count'];
+	}
+
+	/** Retourne tous les mappings de la base
+	 * @return array contenant les id et name des mappings
+	 * 			| false s'il n'y a aucun mapping dans la base
+	 * 			| void si erreur dans la requête
+	 */
+	static function getMapping()
+	{
+		$query = pg_query (Gateway::getConnexion(), "SELECT id,name FROM configuration.mapping ORDER BY id ASC;");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getMapping.\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
+	/* cree pour CTLG-378 */
+	static function getMappingWithId($id)
+	{
+		$query = pg_query(Gateway::getConnexion(), "SELECT configuration.mapping.name, configuration.mapping.definition FROM configuration.mapping WHERE id=" . $id . ";");
+		if (! $query) {
+			echo "Erreur durant la requête de getMappingWithId.\n";
+			exit();
+		}
+		$res = pg_fetch_all($query);
+		if($res!=null){
+			$res = $res[0];
+		}
+		return $res;
+	}
+
+	/** Met à jour les modalités d'accès à la configuration
+	 * Ne fonctionne pas car droits d'ajout et modification à configuration.configuration_profile_mapping refusé
+	 * @param $code string code de la configuration
+	 * @param $acces array liste des accès
+	 * @return void
+	 */
+	static function accesUpdate($code,$acces) {
+		/* pg_query(Gateway::getConnexion(),"DELETE FROM configuration.configuration_profile_mapping where configuration_id=".$id);
+		foreach($acces as $a)
+		{
+			if(!empty($a)){self::insert("INSERT INTO configuration.configuration_profile_mapping VALUES(".$id.",'".$a."')");}
+		}
+		*/
+		foreach($acces as $a) {
+			if (!empty($a)){
+				switch ($a) {
+					case "EXTERNAL":
+						pg_query(Gateway::getConnexion(),"UPDATE configuration.configuration_access_mapping
+											SET is_external_access_allowed=true WHERE configuration_code='" . $code . "'");
+						break;
+					case "INTERNAL":
+						pg_query(Gateway::getConnexion(),"UPDATE configuration.configuration_access_mapping
+											SET is_internal_virtualized_access_allowed=true WHERE configuration_code='" . $code . "'");
+						break;
+					default:
+						pg_query(Gateway::getConnexion(),"UPDATE configuration.configuration_access_mapping
+											SET is_internal_wifi_access_allowed=true WHERE configuration_code='" . $code . "'");
+						break;
+				}
+
+			}
+		}
+	}
+
+	static function updateParcours($parcours, $id)
+	{
+		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.search_base_parcours_mapping sbpm WHERE exists (select * from configuration.harvest_configuration hc WHERE sbpm.search_base_code = hc.search_base_code AND hc.id = ".$id.")");
+		foreach($parcours as $parcour)
+		{
+			// pg_query(Gateway::getConnexion(),"INSERT INTO configuration.configuration_parcours_mapping VALUES('".$id."','".$parcour."')");
+			pg_query(Gateway::getConnexion(),"insert into configuration.search_base_parcours_mapping(search_base_code, parcours_code) (SELECT search_base_code , '".$parcour."' as parcours_code FROM configuration.harvest_configuration hc where hc.id = ".$id.")");
+		}
+	}
+
+	static function getParcours($id)
+	{
+		$query = pg_query(Gateway::getConnexion(), "SELECT parcours_code as parcours FROM configuration.harvest_configuration hc JOIN configuration.search_base_parcours_mapping sbpm ON sbpm.search_base_code = hc.search_base_code WHERE hc.id = " . $id . ";");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getParcours .\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
 }
 
 

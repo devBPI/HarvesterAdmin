@@ -155,7 +155,7 @@ foreach ($tasks as $task) {
 			    }
 
 					// Bouton Relance
-					echo "<form method='post' action='MoissonSurDemande.php' onsubmit='return confirm('Relancer la moisson maintenant ?')>
+					echo "<form method='post' action='MoissonSurDemande.php' class='hmForm' onsubmit='return confirm('Relancer la moisson maintenant ?')>
     						<input name='suppr' type='hidden' value='".$task['id']."'>
     						<select style='display: none' id='configuration-select-whithout-file' name='configuration-select-whithout-file'>
 								<option value='".$task['configuration_id']."' selected></option>
@@ -250,7 +250,7 @@ foreach ($tasks as $task) {
 				$message=str_replace(CHR(13),"</br>",$message);
 				$message=str_replace("- ", "</br>", $message);
 				//$message = htmlspecialchars($message, ENT_QUOTES);
-				echo "<div class='form-popup' id='messageForm" . $task['id'] ."'>
+				echo "<div class='form-popup' id='validateForm" . $task['id'] ."'>
 						<div class='form-container' id='formProperty'>
 							<h3>Message d'erreur</h3>
 								<div class='form-popup-corps'>
@@ -259,7 +259,7 @@ foreach ($tasks as $task) {
 								</div>
 						</div>
 					</div>";
-				echo "<div onclick='openForm(".$task['id'].")' style=\"color:red;font-weight:bold;cursor:pointer\">ERROR  <img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
+				echo "<div onclick='openFormWithId(".$task['id'].")' style=\"color:red;font-weight:bold;cursor:pointer\">ERROR  <img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
 			} else {
 				echo $task['message'];
 			}
@@ -301,20 +301,8 @@ foreach ($tasks as $task) {
 
 	<div id="page-mask"></div>
 
-	<script src='../js/progress.js'></script>
-	<script src='../js/histo-task-status.js'></script>
-	<script>
-		function openForm(id) {
-            document.getElementById("messageForm" + id).style.display = "block";
-            document.getElementById("page-mask").style.display = "block";
-			//document.getElementById("msgAlert" + id).innerHTML = message.replaceAll("- ","<br/>");
-        }
-
-		function closeForm(id) {
-			document.getElementById("messageForm" + id).style.display = "none";
-			document.getElementById("page-mask").style.display = "none";
-			//document.getElementById("msgAlert" + id).innerHTML = "";
-		}
-	</script>
+	<script src="../js/progress.js"></script>
+	<script src="../js/histo-task-status.js"></script>
+	<script src="../js/pop_up.js"></script>
 </body>
 </html>

@@ -25,7 +25,7 @@ include ('../Vue/Header.php');
 	<div class="content">
 		<FORM action="FiltreRules.php?modify=true" method="post" onsubmit="return confirm('Voulez vous vraiment modifier les ensembles de règles ?');">
 			<h2>Règles de filtrage</h2>
-			<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour filtre</a>
+			<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
 			<div class="sizeable_table">
 				<div>
 					<?php
@@ -37,7 +37,7 @@ include ('../Vue/Header.php');
 									<input type='text' name='namenew'/>
 								</td>
 								<td>
-									<select name='entitynew'><option value='0'>Aucune choisie</option>
+									<select name='entitynew'><option value='0'>Sélectionnez une entité</option>
 										<?php foreach($entities as $e)
 										{
 											echo "<option value='".$e."'>".$e."</option>";
@@ -53,7 +53,7 @@ include ('../Vue/Header.php');
 								foreach($data as $k => $value)
 								{ ?>
 									<tr><td><input type='text' name='name<?= $value['id'] ?>' value='<?= $value['name']?>'/></td>
-									<td><select name='entity<?= $k?>'><option value='0'>Aucune choisie</option>
+									<td><select name='entity<?= $k?>'><option value='0'>Sélectionnez une entité</option>
 										<?php foreach($entities as $e)
 										{
 											echo "<option value='".$e."' ".(($e==$value['entity'])?'selected':'').">".$e."</option>";
@@ -84,13 +84,15 @@ include ('../Vue/Header.php');
 	<?php if($_GET['modify']=='true') : ?>
 	<div id="page-mask" style="display:block"></div>
 	<div class="form-popup" id="validateForm" style="display:block">
+		<div class='form-container' id='formProperty'>
 		<form action="../Controlleur/Filtre.php" class="form-container" id="formProperty">
 			<h3>Modification</h3>
-			<p>Les modifications ont été enregistrées.</p>
-			<div class="row">
-				<button type="submit" name="submitted" class="btn" style="float:right">OK</button>
+			<div class='form-popup-corps'>
+				<p>Les modifications ont bien été enregistrées.</p>
+				<button type="submit" name="submitted" class="buttonlink">OK</button>
 			</div>
 		</form>
+		</div>
 	</div>
 	<?php endif; ?>
 

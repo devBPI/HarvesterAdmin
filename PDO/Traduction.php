@@ -210,6 +210,86 @@ class Traduction
         }
         return pg_fetch_all($query);
     }
+
+	static function deleteCategory($data)
+	{
+		foreach($data as $row)
+		{
+			$var = str_replace("'","''",$row);
+			pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rule_id in
+				(SELECT id FROM configuration.translation_rule WHERE destination_id in
+				(SELECT id FROM configuration.translation_destination WHERE category_id=
+				(SELECT id FROM configuration.translation_category WHERE name='".$var."')))");
+			pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE destination_id in
+				(SELECT id FROM configuration.translation_destination WHERE category_id=
+				(SELECT id FROM configuration.translation_category WHERE name='".$var."'))");
+			pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_destination WHERE category_id=
+				(SELECT id FROM configuration.translation_category WHERE name='".$var."')");
+			pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_category WHERE name='".$var."'");
+
+		}
+	}
+
+	static function getSetByConf($id)
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT E.property, entity, name, S.id, ignore_case AS case, trim FROM configuration.translation AS T, configuration.translation_rules_set AS S, configuration.entity_properties AS E
+				WHERE S.id=translation_rules_set_id AND T.property=E.property AND configuration_id=".$id." ORDER BY entity,property");
+		return pg_fetch_all($query);
+	}
+
+	static function getCategory()
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.translation_category");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getCategory .\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
+	static function getCategoryBySet($set)
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT DISTINCT C.name FROM configuration.translation_destination D, configuration.translation_category C,
+			configuration.translation_rules_set_mapping M, configuration.translation_rule R, configuration.translation_rules_set S
+			WHERE category_id=C.id AND D.id=R.destination_id AND R.id=M.translation_rule_id AND S.id=M.translation_rules_set_id
+			AND S.name='".$set."'");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getCategoryBySet .\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
+	static function updateCategory($data,$cmp)
+	{
+		foreach($data as $key => $row)
+		{
+			$var = str_replace("'","''",$row);
+			if(is_numeric($key) and $key>=0)
+			{
+				$v = str_replace("'","''",$cmp[$key]);
+				@pg_query(Gateway::getConnexion(),"UPDATE configuration.translation_category SET name='".$var."' WHERE name='".$v."'");
+			}
+			else if($row!='')
+			{
+				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_category(name) VALUES('".$var."')");
+			}
+		}
+	}
+
+	static function getConfBySet($set)
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT DISTINCT name FROM configuration.translation T, configuration.harvest_configuration C WHERE T.configuration_id = C.id AND
+		translation_rules_set_id = (SELECT id FROM configuration.translation_rules_set WHERE name='".$set."')");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getConfBySet .\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
 }
 
 ?>

@@ -30,7 +30,7 @@ if (! $ini) {
 						<li onclick="window.location='../Controlleur/MoissonSurDemande.php';"><a class="lienItem" href=#>Moisson sur Demande</a></li>
 						<li onclick="window.location='../Controlleur/PlanningMoisson.php';"><a class="lienItem" href=#>Planning des Moissons</a></li>
 						<li onclick="window.location='../Controlleur/HistoriqueMoisson.php';"><a class="lienItem" href=#>Historique des Moissons</a></li>
-						<li class="itemDeroulable"><a class="lienItem" href=#>Alertes et Reporting</a>
+						<li class="itemDeroulable"><a class="lienItem" href=#>Alertes, Logs et Reporting</a>
 							<ul class="submenuContent envBackgroundColor envBorderColor" style="top:180px;left:300px;">
 									<li onclick="window.location='../Controlleur/AlertesReporting.php';"><a class="lienItem" href=#>Alertes</a></li>
 					                <li onclick="window.location='../Controlleur/JournalLogs.php';"><a class="lienItem" href=#>Logs</a></li>

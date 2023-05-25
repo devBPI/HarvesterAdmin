@@ -12,10 +12,11 @@ require_once("../PDO/Gateway.php");
 Gateway::connection();
 $dataConf = Gateway::getInfoConfig($id);
 $dataConf['parcours']=Gateway::getParcours($id);
-foreach($dataConf['profile'] as $p)
+/*foreach($dataConf['profile'] as $p)
 {
-	$dataConf['profile'][$p['code']]="";
-}
+	//$dataConf['profile'][$p['code']]="";
+
+}*/
 $mapping=Gateway::getMapping();
 $exclusion=Gateway::getExclusion();
 $grabber=Gateway::getConfigurationGrabber();

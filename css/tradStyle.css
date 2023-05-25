@@ -1,4 +1,33 @@
-﻿.part{
+﻿
+.divs_regles_cibles div {
+	margin-bottom:3px;
+}
+
+.divs_regles_cibles .buttonpage {
+	margin: 0 auto;
+	display: block;
+	width: 75%;
+}
+
+.traduction .buttonpage, .traduction .buttonlink {
+	display: unset;
+	float:none; /* Neutralise accueilStyle.css */
+}
+
+.traduction .sizeable_table { margin: 10px 0; }
+.traduction td { text-align: left; padding-left: 5%; }
+.traduction .td_cross { padding-left: 0; width: 60px; }
+.traduction .td_cross button { cursor: pointer; }
+
+.traduction form { margin-left: 0; } /* Neutralise style.css */
+
+.border_div {
+	border:1px solid black;
+	margin: 15px 0;
+}
+
+
+.part{
 	background-color:white !important;
 	border: 1px solid black;
 }

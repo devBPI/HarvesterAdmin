@@ -1,11 +1,17 @@
-﻿.operation{
-	border: 1px solid black;
+﻿.operation {
+	border: 1px solid white;
 	width: auto;
 	margin-top:20px;
 	margin-left:20px;
 	display:inline-grid;
-	/* background-color:rgba(22, 84, 109, 0.295) */
+	background-color:rgba(255, 255, 255, 0.295);
 }
+
+.operation_even {
+	background-color:rgba(107, 165, 198, 0.295);
+	border: 1px solid black;
+}
+
 .operation select{
 	max-width:400px;
 }

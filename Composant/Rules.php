@@ -1,9 +1,9 @@
 <?php
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
-$data = Gateway::getFilterRules($_POST['id']);
+$data = Gateway::getFilterRules();
 $selected = (isset($_POST['selected']))?$_POST['selected']:null;
-echo "<select><option value=''>Aucune sélection</option>";
+echo "<select><option value=''>Sélectionnez une règle</option>";
 if(!empty($data))
 {
 	foreach($data as $d)

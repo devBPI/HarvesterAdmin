@@ -3,6 +3,8 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
+
+require '../Composant/ComboBox.php';
 ?>
 <html>
 <head>
@@ -21,15 +23,13 @@ if (! $ini) {
 	<div class="content">
 		<div class="triple-column-container">
 			<div class="column">
-			<H3>Association Configuration-Règle</H3>
+			<h3>Configurations et leurs règles</h3>
 				<div style="height:450px;width:auto;margin-bottom:30px">
 					<select id="rule" name="Filter" class="select-hide" onchange="changeHref(this)">
-					<option value="0">Aucune configuration choisie</option>
-						<?php
-							include '../Vue/combobox/ComboBox.php';
-						?>
+					<option value="0">Choisissez une configuration</option>
+						<?= Combobox::makeComboBox($data) ?>
 					</select>
-					<div style="overflow-y: auto; height:450px">
+					<div style="overflow-y: auto; height:409px; background-color:#f8f8f8">
 						<table class="table-planning" id="conf">
 							<th width=30%>Entité</th>
 							<th width=70%>Règles de filtrage</th>
@@ -40,32 +40,35 @@ if (! $ini) {
 			</div>
 			<div class="column">
 				<H3>Règles de filtrage</H3>
-				<div style="overflow-y: auto; height:450px; margin-bottom:30px">
+				<div style="overflow-y: auto;height:450px;margin-bottom:30px;background-color:#f8f8f8"">
 					<table class="table-planning">
-						<th width=40%>Entité</th><th width=40%>Règle</th><th width=20%></th>
+						<tr style="position:sticky;top:0;padding-top:-1px">
+						<th style="width=40%">Entité</th>
+						<th style="width=40%">Règle</th>
+						<th style="width:20%"></th>
+						</tr>
 						<?php
 							foreach($rule as $r)
-							{
-								echo "<tr><td>".$r['entity']."</td><td>".$r['name']."</td>
-								<td><a href='../Controlleur/FiltreTree.php?id=".$r['id']."&f=true' title='éditer'><img src='../ressources/edit.png' width='30px' height='30px'/></a></td>
-								</tr>";
-							}
-							?>
+							{ ?>
+							<tr>
+								<td><?= str_replace("_", "_<wbr>", $r["entity"]) ?></td><td><?= $r["name"] ?></td>
+								<td><a href="../Controlleur/FiltreTree.php?id=<?= $r["id"] ?>" title="éditer"><img src="../ressources/edit.png" width="30px" height="30px"/></a></td>
+								</tr>
+							<?php } ?>
 					</table>
 				</div>
 				<a href='../Controlleur/FiltreRules.php' class="buttonpage">Ajout / Suppression</a>
 			</div>
 			<div class="column">
 				<H3>Prédicats</H3>
-				<div style="overflow-y: auto; height:450px; margin-bottom:30px">
-					<table class="table-planning">
-						<th width=80%>Nom</th>
+				<div style="overflow-y: auto;height:450px;margin-bottom:30px;background-color:#f8f8f8"">
+					<table class="table-planning" style="border-collapse:separate">
+						<th style="position:sticky;top:0;">Nom</th>
 						<?php
 							foreach($categories as $value)
-							{
-								echo "<tr><td>".$value['code']."</td></tr>";
-							}
-						?>
+							{ ?>
+								<tr><td><?=  str_replace("_", "_<wbr>",$value['code']) ?></td></tr>
+							<?php } ?>
 					</table>
 				</div>
 				<a href='../Controlleur/FiltrePredicat.php' class="buttonpage">Ajout / Suppression</a>

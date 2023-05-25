@@ -72,5 +72,4 @@ if (! $ini) {
         <h2 class="titleMenu" onclick="window.location='../Controlleur/Accueil.php';"><?= $ini['version'] ?></h2>
     </nav>
 </div>
-
 <h1 class="header"><?= $section ?></h1>

@@ -5,6 +5,8 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
+
+require '../Composant/ComboBox.php';
 ?>
 <head>
 <meta charset="utf-8" />
@@ -40,7 +42,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 <div class="content">
 
 	<div class="triple-column-container" style="height:50px">
-		<div class="column">
+		<div>
 			<a href="../Controlleur/PlanningMoisson.php" class="buttonlink">&laquo; Retour</a>
 		</div>
 	</div>
@@ -53,20 +55,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<div class="col-50">
 					<select id="template" name="template">
 						<option value="0">Choisissez une configuration</option>
-						<?php
-							$i = 0;
-							foreach ($data as $combo_key => $var) {
-								$i ++;
-								if(isset($var['id']))
-								{
-									echo '<option value="' . $var['id'] . '"' . (($id_param == $var['id']) ? ' selected' : '') . '>' . $var['name'] . '</option>';
-								}
-								else
-								{
-									echo '<option value="' . $combo_key . '"' . (($id_param == $combo_key) ? ' selected' : '') . '>' . $var['name'] . '</option>';
-								}
-							}
-						?>
+						<?= ComboBox::makeComboBox($data); ?>
 					</select>
 				</div>
 				<div class="col-25">
@@ -79,18 +68,17 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 			<div class="column">
 				<h3>Quotidienne</h3>
 				<select id="heureQuot" name="heureQuot">
-					<!-- <option value="null">Heure</option> -->
-					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
+					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<input type="submit" name="quot" value="Valider">
 			</div>
 			<div class="column">
 				<h3>Hebdomadaire</h3>
 				<select id="heureHebdo" name="heureHebdo">
-					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
+					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<select id="jourHebdo" name="jourHebdo">
-					<?php include '../Vue/combobox/ComboBoxJour.php'; ?>
+					<?= Combobox::makeComboBoxJour() ?>
 				</select>
 				<input type="submit" name="hebdo" value="Valider">
 			</div>
@@ -98,13 +86,13 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<h3>Mensuelle</h3>
 				<!-- <input type="text" id="datepicker" size="30" readonly> -->
 				<select id="heureMonth" name="heureMonth">
-					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
+					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<select id="jourMonth" name="jourMonth">
-					<?php include '../Vue/combobox/ComboBoxJour.php'; ?>
+					<?= Combobox::makeComboBoxJour() ?>
 				</select>
 				<select id="semaine" name="semaine">
-					<?php include '../Vue/combobox/ComboBoxOccurence.php'; ?>
+					<?= Combobox::makeComboBoxOccurence() ?>
 				</select>
 				<input type="submit" name="month" value="Valider">
 			</div>

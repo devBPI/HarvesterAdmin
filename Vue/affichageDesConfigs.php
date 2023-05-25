@@ -70,9 +70,9 @@
         
         <tr>
             <td scope="row" data-label="ID"><?= $var['id'] ?></td>
-            <td data-label="Code"><?= $var['code'] ?></td>
+            <td data-label="Code"><?= str_replace("_", "_<wbr>", $var['code']) ?></td>
             <td data-label="Nom Abrégé"><a
-                href="../Vue/FicheIndividuelle.php?param=<?= $var['id'] ?>"><?= $var['name'] ?></a></td>
+                href="../Vue/FicheIndividuelle.php?param=<?= $var['id'] ?>"><?= str_replace("_", "_<wbr>", $var['name']) ?></a></td>
             <td data-label="Base de recherche"><?= $var['public_name'] ?></a></td>
             <td data-label="Type de connecteur"><?= $var['grabber'] ?></a></td>
             <td data-label="Dernière moisson"><?php

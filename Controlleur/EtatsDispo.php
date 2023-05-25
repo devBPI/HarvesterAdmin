@@ -10,11 +10,12 @@ else if(!empty($_GET['delete']))
 {
 	Gateway::deleteStatus($_GET['delete']);
 }
-else if (! empty($_POST)) {
+else if (!empty($_POST)) {
     Gateway::updateStatus($_GET['code'], $_POST['list_dispo'], $_POST['to_harvest'], $_POST['label']);
 }
+
 $data = Gateway::getStatus();
 $modify = (isset($_GET['modify'])) ? $_GET['modify'] : "false";
 $section = "États de Disponibilité";
-include ("../Vue/EtatsDispo.php");
+include("../Vue/etats_dispo/EtatsDispo.php");
 ?>

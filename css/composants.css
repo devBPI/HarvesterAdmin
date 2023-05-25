@@ -2,20 +2,20 @@
 /* HTML Basique */
 /* ------------ */
 
-html
-{
-	height:100%;
+html {
+    height: 100%;
 }
+
 body {
-	background: #e6e9e9;
+    background: #e6e9e9;
     background-image: linear-gradient(270deg, rgb(230, 233, 233) 0%, rgb(216, 221, 221) 100%);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
     overflow: auto;
     overflow-x: hidden;
-	height:100%;
-  margin:0;
+    height: 100%;
+    margin: 0;
 }
 
 
@@ -23,228 +23,245 @@ body {
 /* TABLES (balises table, td, tr) */
 /* ------------------------------- */
 .table-config {
-  border: 1px solid #ccc;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .table-config tr {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: .35em;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
 }
 
 .table-config th, td {
-  padding: .625em;
-  text-align: center;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
+    padding: .625em;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .table-config th {
-  font-size: .85em;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  word-wrap: break-word;
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    word-wrap: break-word;
 }
 
 @media screen and (max-width: 600px) {
-  .table-config {
-    border: 0;
-  }
-  
-  .table-config thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  
-  .table-config tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: .625em;
-  }
-  
-  .table-config td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
-  
-  .table-config td::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  .table-config td:last-child {
-    border-bottom: 0;
-  }
+    .table-config {
+        border: 0;
+    }
+
+    .table-config thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .table-config tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    .table-config td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    .table-config td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .table-config td:last-child {
+        border-bottom: 0;
+    }
 }
 
 /* Alternance des couleurs de lignes */
-.table-config tr:nth-child(even){background-color: #f2f2f2}
+.table-config tr:nth-child(even) {
+    background-color: #f2f2f2
+}
 
 /* Surlignage de la ligne survolee par la souris */
-.table-config tr:hover {background-color: #e4e7ec;}
+.table-config tr:hover {
+    background-color: #e4e7ec;
+}
 
 .table-planning {
-  border: 1px solid #ccc;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
-  overflow-y: auto;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+    overflow-y: auto;
 }
 
 .table-planning tr {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: .35em;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
 }
 
 .table-planning th, td {
-  padding: .625em;
-  text-align: center;
-  hyphens: auto;
+    padding: .625em;
+    text-align: center;
+    hyphens: auto;
 }
 
 .table-planning th {
-  font-size: .85em;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  overflow: hidden;
-  white-space: nowrap;
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /* Alternance des couleurs de lignes */
-.table-planning tr:nth-child(even){background-color: #f2f2f2}
+.table-planning tr:nth-child(even) {
+    background-color: #f2f2f2
+}
 
 /* Surlignage de la ligne survolee par la souris */
-.table-planning tr:hover {background-color: #e4e7ec;}
+.table-planning tr:hover {
+    background-color: #e4e7ec;
+}
 
 
 .table-mapping {
-  border: 1px solid #ccc;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .table-mapping tr {
-  background-color: #f8f8f8;
+    background-color: #f8f8f8;
 }
 
 .table-mapping td {
-  padding: 0 .625em;
-  text-align: left;
+    padding: 0 .625em;
+    text-align: left;
 }
 
 .table-mapping th, td {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .table-mapping th {
-  text-align:center;
-  padding: .625em;
-  font-size: .85em;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  word-wrap: break-word;
+    text-align: center;
+    padding: .625em;
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    word-wrap: break-word;
 }
 
 @media screen and (max-width: 600px) {
-  .table-mapping {
-    border: 0;
-  }
-  
-  .table-mapping thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  
-  .table-mapping tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: .625em;
-  }
-  
-  .table-mapping td {
-    padding: .625em;
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
-  
-  .table-mapping td::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  .table-mapping td:last-child {
-    border-bottom: 0;
-  }
+    .table-mapping {
+        border: 0;
+    }
+
+    .table-mapping thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .table-mapping tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    .table-mapping td {
+        padding: .625em;
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    .table-mapping td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .table-mapping td:last-child {
+        border-bottom: 0;
+    }
 }
 
 /* Alternance des couleurs de lignes */
-.table-mapping tr:nth-child(even){background-color: #f2f2f2}
+.table-mapping tr:nth-child(even) {
+    background-color: #f2f2f2
+}
 
 /* Surlignage de la ligne survolee par la souris */
-.table-mapping tr:hover {background-color: #e4e7ec;}
+.table-mapping tr:hover {
+    background-color: #e4e7ec;
+}
 
+/* Tableaux des cartouches : Vue/FicheIndividuelle.php */
 
+.table-backoffice {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
 
+.table-backoffice td {
+    padding: 15px 5px;
+}
 
-
-
-
-
-
-.table-backoffice
-{
-	border-collapse: collapse;
-	table-layout:fixed;
-  width: 100%;
+.table-backoffice th {
+    padding: 5px;
 }
 
 /* Alternance des couleurs de lignes */
-.table-backoffice tr:nth-child(even){background-color: #f2f2f2}
+.table-backoffice tr:nth-child(even) {
+    background-color: #f2f2f2
+}
 
 /* Surlignage de la ligne survolee par la souris */
-.table-backoffice tr:hover {background-color: #96a3b7;}
+.table-backoffice tr:hover {
+    background-color: #96a3b7;
+}
 
 /* .table-backoffice td, th {
   border: 1px solid #ddd;
@@ -255,37 +272,97 @@ body {
 } */
 
 
-.table-standard
-{
-	border-collapse: collapse;
-	table-layout:fixed;
+/*-------------------------------------------*/
+
+.table-standard {
+    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .table-standard td, th {
-  border: 0px;
-  padding: 0px;
+    border: 0px;
+    padding: 0px;
 }
 
-.planning table tr:nth-child(even){background-color: #f2f2f2}
-.planning table tr:hover {background-color: #96a3b7;}
+.planning table tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.planning table tr:hover {
+    background-color: #96a3b7;
+}
 
 .planning table td, #planning table th {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+
+/* Tableau de fiche individuelle : Vue/RecuperationInfosConfig, Vue/RecuperationModifConfig */
+.tab_fiche_individuelle {
+    background-color: #f2f2f2;
+    border: 1px solid black;
+    padding: 5px;
+    border-top-left-radius: 30px;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.tab_fiche_individuelle .left_column {
+    width: 180px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.tab_fiche_individuelle .right_column {
+    padding-left: 12%;
+    text-align: left;
+}
+
+.tab_fiche_individuelle thead th {
+    overflow-wrap: break-word;
+    background-color: inherit;
+    padding-left: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: black;
+    border-bottom: 1px solid grey;
+    font-size: 20px;
+}
+
+.tab_fiche_individuelle tbody th {
+    background-color: #b6b6b6;
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.tab_fiche_individuelle_separation {
+    padding: 5px 0;
+    border-top: 1px solid grey;
+}
+
+.tab_fiche_individuelle fieldset legend {
+    text-align:left;
+    font-weight: bold;
+    color: black;
+}
+
+.tab_fiche_individuelle fieldset span {
+    margin-left: -180px;
 }
 
 
 /* ----- */
 /* IMAGE */
 /* ----- */
-.medium-image{
-	width:23px;
-	height:23px;
+.medium-image {
+    width: 23px;
+    height: 23px;
 }
 
-.small-image{
-	width:23px;
-	height:23px;
+.small-image {
+    width: 23px;
+    height: 23px;
 }
 
 

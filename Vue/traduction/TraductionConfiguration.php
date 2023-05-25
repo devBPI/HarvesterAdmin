@@ -14,6 +14,7 @@ if (! $ini) {
 </head>
 
 <?php
+require '../Composant/ComboBox.php';
 include('../Vue/Header.php');
 ?>
 
@@ -39,53 +40,78 @@ include('../Vue/Header.php');
 				</tr></thead>
 
 				<tr class="hidden_field">
-					<?php
-						echo "<td scope=\"row\" data-label=\"Entité\"><select onclick='display_entity(this)'><option value='0'>Aucun choisi</option>";
-						foreach($entities as $e)
+					<td scope="row" data-label="Entité">
+						<select onclick='display_entity(this)'><option value='0'>Aucun choisi</option>
+						<?php foreach($entities as $e)
 						{
 							echo "<option value='".$e."'>".$e."</option>";
-						}
-						echo "</select></td><td/><td data-label=\"Règles de traduction\"><select name='set'><option value='0'>Aucun choisi</option>";
-						include("../Vue/combobox/ComboBox.php");
-						echo "</td><td><input type='checkbox' name='trim'/></td>
-							<td><button class='but' type='button' title='Supprimer un set' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
-					?>
+						} ?>
+						</select>
+					</td>
+					<td/>
+					<td data-label="Règles de traduction">
+						<select name='set'><option value='0'>Aucun choisi</option>
+						<?= ComboBox::makeComboBox($data) ?>
+						</td>
+					<td><input type='checkbox' name='trim'/></td>
+					<td>
+						<button class='but' type='button' title='Supprimer un set' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png' width='30px' height='30px'></button>
+					</td>
 				</tr>
 				<?php
-					if(!empty($conf))
-					{
-						foreach($conf as $key => $value)
-						{
-							echo "<tr class='entity' id='".$value['property']."'>";
-							echo "<td scope=\"row\" data-label=\"Entité\"><select onclick='display_entity(this)'><option value='0'>Aucun choisi</option>";
-							foreach($entities as $e)
-							{
-								echo "<option value='".$e."' ".(($e==$value['entity'])?'selected':'').">".$e."</option>";
-							}
-							echo "</select></td><td/><td data-label=\"Règles de traduction\"><select name='set".$key."'><option value='0'>Aucun choisi</option>";
-							$id_param=$value['id'];
-							include("../Vue/combobox/ComboBox.php");
-							echo "</select></td>
-							<td data-label=\"Insensible à la casse\"><input type='checkbox' name='case".$key."' value='".(($value['case']!='f')?'':'checked')."'/></td>
-							<td data-label=\"Suppression des espaces\"><input type='checkbox' name='trim".$key."' value='".(($value['trim']!='f')?'':'checked'). "'/></td>
-							<td><button class='but' type='button' title='Supprimer un set' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png' width='30px' height='30px'/></button></td></tr>";
-						}
-					}
-					else
-					{
-						echo "<tr class='entity' id='new'>";
-						echo "<td scope=\"row\" data-label=\"Entité\"><select onclick='display_entity(this)'><option value='0'>Aucun choisi</option>";
-						foreach($entities as $e)
+					if(!empty($conf)) {
+						foreach($conf as $key => $value) { ?>
+				<tr class="entity" id="<?= $value['property'] ?>">
+					<td data-label="Entité">
+						<select onclick='display_entity(this)'><option value='0'>Aucun choisi</option>
+						<?php foreach($entities as $e) {
+							echo "<option value='".$e."' ".(($e==$value['entity'])?'selected':'').">".$e."</option>";
+						} ?>
+						</select>
+					</td>
+					<td/>
+					<td data-label="Règles de traduction">
+						<select name="set<?= $key ?>">
+							<option value='0'>Aucun choisi</option>
+							<?= ComboBox::makeComboBox($data, $value['id']) ?>
+						</select>
+					</td>
+					<td data-label="Insensible à la casse"><input type="checkbox" name="case<?= $key ?>" value="<?= (($value['case']!='f')?'':'checked') ?>"/></td>
+					<td data-label="Suppression des espaces"><input type="checkbox" name="trim<?= $key ?>" value="<?= (($value['trim']!='f')?'':'checked') ?>"/></td>
+					<td>
+						<button class="but" type="button" title="Supprimer un set" onclick="delete_field(this.parentElement.parentElement)"><img src='../../ressources/cross.png' width='30px' height='30px'/></button>
+					</td>
+				</tr>
+						<?php }
+					} else
+					{ ?>
+				<tr class="entity" id="new">
+					<td data-label="Entité">
+						<select onclick='display_entity(this)'>
+							<option value='0'>Aucun choisi</option>
+						<?php foreach($entities as $e)
 						{
 							echo "<option value='".$e."'>".$e."</option>";
-						}
-						echo "</select></td><td/><td data-label=\"Règles de traduction\"><select name='set-1'><option value='0'>Aucun choisi</option>";
-						include("../Vue/combobox/ComboBox.php");
-						echo "<td data-label=\"Insensible à la casse\"><input type='checkbox' name='case'/></td>
-							<td><input type='checkbox' name='trim'/></td>
-						<td><button class='but' type='button' title='Supprimer un set' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png' width='30px' height='30px'/></button></td></tr>";
-					}
-				?>
+						} ?>
+						</select>
+					</td>
+					<td/>
+					<td data-label="Règles de traduction">
+						<select name="set-1"><option value="0">Aucun choisi</option>
+							<?= ComboBox::makeComboBox($data) ?>
+						</select>
+					</td>
+					<td data-label="Insensible à la casse">
+						<input type='checkbox' name='case'/>
+					</td>
+					<td>
+						<input type='checkbox' name='trim'/>
+					</td>
+					<td>
+						<button class='but' type='button' title='Supprimer un set' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png' width='30px' height='30px'/></button>
+					</td>
+				</tr>
+				<?php } ?>
 				<tr style="background-color:#dbe0e0"><td/><td/><td/><td/><td/><td><button class='ajout but' type='button' title='Ajouter une traduction' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
 			</table>
 			<input type="submit" value="Modifier" class="buttonlink"/>

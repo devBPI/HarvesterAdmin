@@ -110,13 +110,9 @@ $def_preview = implode(PHP_EOL,$properties_list);
 	<script language="javascript" type="text/javascript" src="https://codemirror.net/5/mode/perl/perl.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
+	<script src="../js/pop_up.js"></script>
     <script src="../js/mapping.js"></script>
 	<script>
-        function openForm() {
-            document.getElementById("validateForm").style.display = "block";
-            document.getElementById("page-mask").style.display = "block";
-        }
-
 		$('select[name="list_exist_propriety"]').on('change',function(){
 			var selectIndex=$('select option:selected').val();
 			var content = <?php echo json_encode($properties_content); ?>;
@@ -171,7 +167,6 @@ $def_preview = implode(PHP_EOL,$properties_list);
 			}
 			<?php $properties_content["list_exist_propriety"] = $_POST['list_exist_propriety']; ?>
 		});
-
 	</script>
 </body>
 <!-- Fin du body -->

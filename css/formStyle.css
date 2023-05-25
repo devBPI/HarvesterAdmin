@@ -38,9 +38,17 @@
 .form-popup .form-container .form-popup-corps .buttonlink {
     width:100%;
     display:inline-block;
+    float:none;
 }
 
-/* ----------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------- */
+/* Style formulaire : Vue/HistoriqueMoisson */
+.hmForm {
+    margin-block-end: 0; /* Neutralise le style par défaut */
+}
+
+/* ---------------------------------------------------------------------------- */
+
 
   /* Add styles to the form container */
   .form-container {
@@ -97,12 +105,16 @@
     left: 0;
   }
 
-  .cross-close {
+.cross-close {
     font-size: 1.5em;
     cursor: pointer;
     position: absolute;
     right: 10px;
     top: 5px;
+}
+
+input[type=text].input-error {
+    border: 1px solid red;
 }
 
 /* Style formulaire d'erreur de moisson : Vue/HistoriqueMoisson.php  */
@@ -116,6 +128,8 @@ form .error-light-color {
     padding: 1px 10px 1px 10px; /* Neutralise padding de accueilStyle.css */
     float:none; /* Neutralise float de accueilStyle.css */
 }
+
+/* ---------------------------------------------------------------------------- */
 
 @media screen and (max-width: 1200px) {
     .form-container, .form-container .btn {

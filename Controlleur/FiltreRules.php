@@ -6,10 +6,9 @@ if (! $ini) {
 $table = "translation";
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
-$data = Gateway::getFilterRules();
+$data = Gateway::getFilterRuleOrderBy32();
 $entities=Gateway::getEntities();
-if(isset($_GET['modify']))
-{
+if(isset($_GET['modify'])) {
 	$mod = $_GET['modify'];
 	if($mod=='true')
 	{

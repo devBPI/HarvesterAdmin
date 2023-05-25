@@ -78,7 +78,7 @@ include ('../Vue/Header.php');
         <div class="form-popup" id="validateForm">
             <form action="" method="post" class="form-container" id="formProperty">
                 <h3>Modification</h3>
-                <p>Les modifications ont étés enregistrées.</p>
+                <p>Les modifications ont été enregistrées.</p>
                 <div class="row">
                     <button type="submit" name="ajouter" class="btn" style="float:right" value="submit">OK</button>
                 </div>

@@ -9,7 +9,7 @@
 	text-decoration: none;
 	font-size: 16px;
 	cursor: pointer;
-padding: 7 7;	
+	padding: 7 7;
 }
 .button:hover{
 	cursor:pointer;
@@ -86,7 +86,21 @@ th.button{
 	background-color: rgba(0,0,0,0) !important;
 }
 
-
 .hidden_field{
 	display:none;
+}
+
+.config_name_and_sub_title {
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	line-height: 0;
+}
+
+.config_name_and_sub_title .config_name {
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.config_name_and_sub_title .sub_title {
+	font-style: italic;
 }

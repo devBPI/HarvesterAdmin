@@ -4,6 +4,8 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
+
+require '../Composant/ComboBox.php';
 ?>
 <head>
 <meta charset="utf-8" />
@@ -22,6 +24,12 @@ Gateway::connection();
 $codes = Gateway::getConfigCodes();
 $i;
 
+$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL");  /* voir SideTaskName (java) pour les valeurs */
+$array_formatee = [];
+foreach ($array as $item) {
+	$array_formatee[] = ["id" => $item, "name" => $item];
+}
+
 if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || isset($_POST["month"])) {
 	include('../Controlleur/CmPlanificationSideTask.php');
 }
@@ -30,7 +38,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 
 <div class="content">
 	<div class="triple-column-container" style="height:50px">
-		<div class="column">
+		<div>
 			<a href="../Controlleur/PlanningTachesAnnexes.php" class="buttonlink">&laquo; Retour</a>
 		</div>
 	</div>
@@ -43,15 +51,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<div class="col-50">
 					<select id="taskname" name="taskname">
 						<option value="0">Choisissez une tâche annexe</option>
-						<?php
-							$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL");  /* voir SideTaskName (java) pour les valeurs */
-							
-							$i = 0;
-							foreach ($array as $combo_key => $var) {
-								$i ++;
-								echo '<option value="' . $var . '"' . (($id_param == $combo_key) ? ' selected ' : '') . '>' . $var . '</option>';
-							}
-						?>
+						<?= ComboBox::makeComboBox($array_formatee); ?>
 					</select>
 				</div>
 				<div class="col-25">
@@ -78,18 +78,17 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 			<div class="column">
 				<h3>Quotidienne</h3>
 				<select id="heureQuot" name="heureQuot">
-					<!-- <option value="null">Heure</option> -->
-					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
+					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<input type="submit" name="quot" value="Valider">
 			</div>
 			<div class="column">
 				<h3>Hebdomadaire</h3>
 				<select id="heureHebdo" name="heureHebdo">
-					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
+					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<select id="jourHebdo" name="jourHebdo">
-					<?php include '../Vue/combobox/ComboBoxJour.php'; ?>
+					<?= Combobox::makeComboBoxJour() ?>
 				</select>
 				<input type="submit" name="hebdo" value="Valider">
 			</div>
@@ -97,13 +96,13 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<h3>Mensuelle</h3>
 				<!-- <input type="text" id="datepicker" size="30" readonly> -->
 				<select id="heureMonth" name="heureMonth">
-					<?php include '../Vue/combobox/ComboBoxHeure.php'; ?>
+					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<select id="jourMonth" name="jourMonth">
-					<?php include '../Vue/combobox/ComboBoxJour.php'; ?>
+					<?= Combobox::makeComboBoxJour() ?>
 				</select>
 				<select id="semaine" name="semaine">
-					<?php include '../Vue/combobox/ComboBoxSemaine.php'; ?>
+					<?= Combobox::makeComboBoxSemaine() ?>
 				</select>
 				<input type="submit" name="month" value="Valider">
 			</div>

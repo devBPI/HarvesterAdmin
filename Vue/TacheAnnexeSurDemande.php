@@ -5,6 +5,14 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
+
+require '../Composant/ComboBox.php';
+
+$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL");  /* voir SideTaskName (java) pour les valeurs */
+$array_formatee = [];
+foreach ($array as $item) {
+	$array_formatee[] = ["id" => $item, "name" => $item];
+}
 ?>
 <head>
 <meta charset="utf-8" />
@@ -33,28 +41,14 @@ if (! $ini) {
 				<div class="col-50">
 					<select id="taskname" name="taskname">
 						<option value="0">Choisissez une tâche annexe</option>
-						<?php
-							$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "BIBLIO_DATA_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL");  /* voir SideTaskName (java) pour les valeurs */
-							
-							$i = 0;
-							foreach ($array as $combo_key => $var) {
-								$i ++;
-								if($i == 1){
-									// Par defaut la premiere option renseignee est selectionnee
-									echo '<option value="' . $var . '"' . ' selected>' . $var . '</option>';
-								}else{
-									echo '<option value="' . $var . '"' . '>' . $var . '</option>';
-								}
-								
-							}
-						?>
+						<?= ComboBox::makeComboBox($array_formatee) ?>
 					</select>
 				</div>
 				<div class="col-25">
 					<input type="submit" name="launch" value="Démarrer maintenant">
 				</div>
 			</div>
-			<div class="row" id="parametre">
+			<div class="row" id="parametre" style="display:none">
 				<div class="col-25">
 					<label for="taskparameter">Paramètre</label>
 				</div>
@@ -114,9 +108,7 @@ if (! $ini) {
 
     				i++;
 				}
-			
 
-				document.getElementById("taskparameter").style.display = 'block';
 				document.getElementById("parametre").style.display = 'block';
 			} else if (this.value=="BIBLIO_DATA_FULLFILLMENT"){
 				// Remplissage des items specifiques a la tache
@@ -142,12 +134,9 @@ if (! $ini) {
 
     				i++;
 				}
-			
 
-				document.getElementById("taskparameter").style.display = 'block';
 				document.getElementById("parametre").style.display = 'block';
 			} else{
-				document.getElementById("taskparameter").style.display = 'none';
 				document.getElementById("parametre").style.display = 'none';
 			}
 		});

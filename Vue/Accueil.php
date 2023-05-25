@@ -15,7 +15,7 @@
 		<div class="double-column-container">
 			<div class="column" style="height:400px">
 				<div class="cartouche-solo">
-					<FORM action="../Controlleur/Accueil.php" method="post" style="padding:5%">
+					<form action="../Controlleur/Accueil.php" method="post" style="padding:5%">
 						<H3>Recherche</H3>
 						<div class="row">
 							<div class="col-25">
@@ -43,9 +43,9 @@
 							</div>
 						</div>
 						<div class="row">
-							<input type="submit" value="Rechercher">
+							<input type="submit" class="buttonpage" value="Rechercher">
 						</div>
-					</FORM>
+					</form>
 				</div>
 			</div>
 			<div class="column" style="height:400px">
@@ -63,7 +63,7 @@
 								echo "<div style='text-align:center;'>".$alert['id']." - (".date('H:i', strtotime($alert['creation_time'])).") ". $alert['level'] ." - ". $alert['category'] ."</div>";
 								echo "</div>";
 								echo "<div class='col-25'>";
-								echo "<div onclick='openForm(\"".$alert['message']."\")'><img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
+								echo "<div onclick='openFormWithMsg(\"".$alert['message']."\")'><img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
 								echo "</div>";
 								echo "</div>";							
 							}
@@ -107,18 +107,7 @@
 	<!-- Ajout des scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
-	<script>
-		function openForm(message) {
-            document.getElementById("validateForm").style.display = "block";
-            document.getElementById("page-mask").style.display = "block";
-			document.getElementById("msgAlert").innerHTML = message;
-        }
-
-		function closeForm() {
-			document.getElementById("validateForm").style.display = "none";
-			document.getElementById("page-mask").style.display = "none";
-		}
-	</script>
+	<script src="../js/pop_up.js"></script>
 	
 </body>
 </html>

@@ -1,11 +1,11 @@
 <?php
-	$parcours;
-	$filtres;
-	$trads;
+	$parcours = array();
+	$filtres = array();
+	$trads = array();
 	$acces = array("INTERNAL"=>$_POST['INTERNAL'],"EXTERNAL"=>$_POST['EXTERNAL'],"WIFI-BPI"=>$_POST['WIFI-BPI']);
 	foreach($_POST as $key => $value)
 	{
-		if(preg_match('/(parcour)/',$key))
+		if(preg_match('/(parcours)/',$key))
 		{
 			$parcours[$key]=$value;
 		}
@@ -20,23 +20,23 @@
 	}
 	require_once("../PDO/Gateway.php");
 	Gateway::connection();
-    $name=$_POST['textName']; 
-    $publicName=$_POST['textNomPublic'];
-    $publicUrl=$_POST['textUrlPublique'];
-    $grabber=$_POST['list_grabber'];
-    $mapping=$_POST['list_mapping'];
-    $exclusion=$_POST['list_exclusion']; 
-    $translation=$_POST['list_translation']; 
-    $url=$_POST['textUrl']; 
-    $urlSet=$_POST['textUrlSet']; 
+    $name=$_POST['form_nom_abrege'];
+    $publicName=$_POST['form_nom_public'];
+    $publicUrl=$_POST['form_url_publique'];
+    $grabber=$_POST['form_list_grabber'];
+    $mapping=$_POST['form_list_mapping'];
+    $exclusion=$_POST['list_exclusion'];  // *
+    $translation=$_POST['list_translation']; // *
+    $url=$_POST['form_URL'];
+    $urlSet=$_POST['form_URL_set'];
     $urlAdd="&set=".$urlSet; 
-    $separateur=$_POST['textSeparateur']; 
-    $dif=$_POST['differential']; 
-    $attempts=$_POST['textAttempts']; 
-    $timeout=$_POST['texTimeout']; 
-    $business=$_POST['textBusiness']; 
-    $liaison=$_POST['textAdditionalConfigOf']; 
-    $commentaire=$_POST['textNote'];
+    $separateur=$_POST['form_separateur'];
+    $dif=$_POST['form_differentiel'];
+    $attempts=$_POST['form_max_attempts'];
+    $timeout=$_POST['form_timeout'];
+    $business=$_POST['form_business_id'];
+    $liaison=$_POST['form_additional_configuration_of'];
+    $commentaire=$_POST['form_commentaires'];
 
     if($exclusion==0){
         $exclusion=NULL;
@@ -98,22 +98,21 @@
             
             
             Gateway::accesUpdate($id,$acces);
-			
 			Gateway::updateParcours($parcours, $id);
             
-			if($upt1 && $upt2 && $upt3){
+			if($upt1 && $upt2 && $upt3) {
                 echo "<script type='text/javascript'>document.location.replace('../Vue/FicheIndividuelle.php?param=".$id."');</script>";
             }
-            else{
+            else {
                 ?>
                 <div id="divAccepter" style="top:-3%; left:0%;width:100%; position:absolute;">
-                <font color="red">Erreur durant la requête (Veuillez vérifier les données rentrées)</font>
+                <font color="red">Erreur durant la requête (Veuillez vérifier les données saisies)</font>
                 </div>
                 <?php
             }
         }
         
-        else{
+        else {
         ?>
         <div id="divAccepter" style="top:-3%; left:0%;width:100%; position:absolute;">
             <font color="red">Veuillez remplir tous les champs.</font>

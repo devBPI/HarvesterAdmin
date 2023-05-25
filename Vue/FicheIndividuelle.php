@@ -19,14 +19,15 @@ if (! $ini) {
 	include ('../Vue/Header.php');
 ?>
 	<div class="content">
-		<div class="triple-column-container" style="height:100px">
-            <div class="column">
-                <a href="../Controlleur/Accueil.php" class="buttonlink">&laquo; Retour</a>
-            </div>
-			<div></div>
+		<div class="triple-column-container" style="height:50px">
 			<div>
-				<a href="../Controlleur/ModifConfiguration.php?param=<?php echo $_GET['param'] ?>" class="buttonlink" style="float:right">Modifier la configuration</a>
+                <a href="../Controlleur/Accueil.php" class="buttonlink">&laquo; Retour</a>
 			</div>
+			<div>
+			</div>
+			<!--<div>
+				<a href="../Controlleur/ModifConfiguration.php?param=<?php echo $_GET['param'] ?>" class="buttonlink" style="float:right">Modifier la configuration</a>
+			</div>-->
         </div>
 		<div class="double-column-container">
 			<div class="column">

@@ -1,7 +1,6 @@
 var elt;
 var nb=0;
-function setPredicate(response)
-{
+function setPredicate(response) {
 	elt.innerHTML=response;
 }
 $(document).ready(function(){
@@ -20,8 +19,7 @@ $(document).ready(function(){
 		nb++;
 	});
 });
-function init_predicate(element)
-{
+function init_predicate(element){
 	elt=element;
 	var parts = window.location.search.substr(1).split("&");
 	var $_GET = {};
