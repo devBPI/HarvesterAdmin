@@ -117,7 +117,7 @@ foreach ($tasks as $task) {
     ?></thead><tr><?php
 
         ?><td scope="row" data-label="Nom"><?php
-        echo $task['name'];
+        echo str_replace("_", "_<wbr>",$task['name']);
         ?></td>
 			<td data-label="Progression"><?php
 			if(isset($task['progress']))

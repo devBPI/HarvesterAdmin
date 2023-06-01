@@ -12,7 +12,7 @@ if (! $ini) {
 	<link rel="stylesheet" href="../../css/selectStyle.css" />
 	<link rel="stylesheet" href="../../css/accueilStyle.css" />
 	<link rel="stylesheet" href="../../css/formStyle.css" />
-	<title>Paramétrage</title>
+	<title>Configuration et règles de filtrage</title>
 </head>
 
 <?php
@@ -28,6 +28,7 @@ include('../Vue/Header.php');
 				<div class="column">
 					<div class="config_name_and_sub_title">
 						<h3 class="config_name">Configuration : <?= $configname['name'] ?></h3>
+						<p class="sub_title"></p>
 					</div>
 				</div>
 		</div>

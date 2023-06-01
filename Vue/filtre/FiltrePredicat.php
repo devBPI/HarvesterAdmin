@@ -13,7 +13,7 @@ if (! $ini) {
 	<link rel="stylesheet" href="../../css/accueilStyle.css" />
 	<link rel="stylesheet" href="../../css/formStyle.css" />
 
-	<title>Paramétrage</title>
+	<title>Définition des prédicats</title>
 </head>
 
 <body>
@@ -37,7 +37,7 @@ if (! $ini) {
 			<tr class='hidden_field' id='new' name='pred'>
 				<td style='display:none'><input name='idnew' value='vide'/></td>
 				<td><input type='text' name='code'/></td>
-				<td><select name='newEnt' onchange='display_entity(this)'><option value=''>Aucun choisi</option>
+				<td><select name='newEnt' onchange='display_entity(this)'><option value=''>Sélectionnez une entité</option>
 				<?php foreach($entities as $e)
 				{
 					echo "<option value='".$e."'>".$e."</option>";
@@ -79,7 +79,7 @@ if (! $ini) {
 							} else {
 								echo "<td><input type='text' value='" . $v['code'] . "' name='code" . $k . "' required /></td>";
 							}
-							echo "<td><select name='entity".$k."' onchange='display_entity(this)' required><option value=''>Aucun choisi</option>";
+							echo "<td><select name='entity".$k."' onchange='display_entity(this)' required><option value=''>Sélectionnez une entité</option>";
 							foreach($entities as $e)
 							{
 								echo "<option value='".$e."' ".(($e==$v['entity'])?'selected':'').">".$e."</option>";
@@ -149,7 +149,7 @@ if (! $ini) {
 		<form action="../../Controlleur/Filtre.php" class="form-container" id="formProperty">
 		<?php } ?>
 			<h3>Modification</h3>
-			<div class='form-popup-corps'>
+			<div class="form-popup-corps">
 				<?php if (!(isset($array_error) && $array_error != null)) { ?>
 				<p>Les modifications ont bien été enregistrées.</p>
 				<button type="submit" class="buttonlink">OK</button>

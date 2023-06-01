@@ -73,7 +73,7 @@ function setNewName(element,nb)
 }
 function delete_field(elt)
 {
-	if((elt.parentElement.tagName!="TBODY" && elt.parentElement.childElementCount>1) || elt.parentElement.childElementCount>4)
+	if((elt.parentElement.tagName!="tbody" && elt.parentElement.childElementCount>0) || elt.parentElement.childElementCount>4)
 	{
 		elt.parentElement.removeChild(elt);
 	}

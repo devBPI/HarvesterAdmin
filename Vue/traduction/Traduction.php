@@ -13,7 +13,7 @@ require '../Composant/ComboBox.php';
 	<link rel="stylesheet" href="../css/composants.css" />
 	<link rel="stylesheet" href="../css/accueilStyle.css" />
 	<link rel="stylesheet" href="../css/tradStyle.css" />
-	<title>Paramétrage</title>
+	<title>Traduction</title>
 </head>
 
 <?php

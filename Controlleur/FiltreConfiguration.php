@@ -35,7 +35,7 @@ $entities = Gateway::getEntities();
 $conf = Gateway::getFilterByConf($id);
 $data = Gateway::getFilterRule();
 $configname = Gateway::getConfigurationName($id);
-$section = "Filtre - Association règles-configuration";
+$section = "Configuration et règles de filtrage";
 include "../Vue/filtre/FiltreConfiguration.php";
 ?>
 

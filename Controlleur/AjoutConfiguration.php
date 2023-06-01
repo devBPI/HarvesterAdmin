@@ -10,6 +10,6 @@ $mapping=Gateway::getMapping();
 $filtre=Gateway::getExclusion();
 $traduction=Gateway::getAllTranslations();
 $grabber=Gateway::getConfigurationGrabber();
-include '../Vue/FormulaireAjoutConfig.php';
+include '../Vue/configuration/FormulaireAjoutConfig.php';
 ?>
 

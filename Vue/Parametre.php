@@ -70,7 +70,7 @@ session_destroy();
 					<TEXTAREA id="textArea" name="textArea" rows=32 readonly><?php echo (isset($def))? $def:"";?></TEXTAREA>
 			</div>
 			<div class="column" style="height:600px">
-					<?php include '../Vue/affichageNomConfigs.php'; ?>
+					<?php include '../Vue/configuration/affichageNomConfigs.php'; ?>
 			</div>
 		</div>
 	<?php endif; ?>

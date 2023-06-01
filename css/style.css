@@ -1,3 +1,12 @@
+body {
+	padding-bottom: 15px;
+}
+
+.content {
+	width: 80%;
+	margin: 2% auto 0;
+	padding-bottom: 25px;
+}
 
 .but{
 	border:none;
@@ -95,7 +104,7 @@ th.button{
 	border-bottom: 2px solid white;
 	max-width:400px;
 	margin:  0 auto;
-	line-height: 0;
+	line-height: 22px;
 }
 
 .config_name_and_sub_title .config_name {
@@ -108,4 +117,9 @@ th.button{
 	font-style: italic;
 	line-height: 15px;
 	margin-bottom:5px;
+}
+
+.border_div {
+	border:1px solid black;
+	margin: 15px 0;
 }

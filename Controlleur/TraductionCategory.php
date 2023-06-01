@@ -6,7 +6,7 @@ if (! $ini) {
 $table = "translation";
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
-$data = Gateway::getCategory();
+$data = Gateway::getCategories();
 $set=[];
 foreach($data as $k => $v)
 {

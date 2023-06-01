@@ -56,8 +56,7 @@ if (! $ini) {
 	$ini = @parse_ini_file("../etc/default.ini", true);
 }
 require_once ("../PDO/Gateway.php");
-Gateway::connection();
-$section = "Filtre - Définition d'une règle";
+
 /* Si affichage de l'arbre de la règle */
 if(isset($_GET["id"]))
 {
@@ -92,6 +91,10 @@ if($data==null){
 	);
 }
 $profondeur = 0;
+
+$configurations = Gateway::getConfigurationByFilterRule($_GET["id"]);
+
+$section = "Définition d'une règle";
 
 include ('../Vue/filtre/FiltreTree.php');
 ?>

@@ -12,16 +12,17 @@ if (! $ini) {
 	<link rel="stylesheet" href="../../css/filtreStyle.css" />
 	<link rel="stylesheet" href="../../css/accueilStyle.css" />
 	<link rel="stylesheet" href="../../css/formStyle.css" />
-	<title>Paramétrage</title>
+	<title><?= $name ?></title>
 </head>
 
 <?php
+require '../Vue/configuration/TabConfigsAssociees.php';
 include('../Vue/Header.php');
 ?>
 
 <body>
-<div class='content'>
-	<div class='hidden_field' id='operation'><select class='profondeur<?= $profondeur ?>' name ='operator' onchange='update_operation(this,<?= $profondeur ?>)'>
+<div class="content">
+	<div class="hidden_field" id="operation"><select class="profondeur<?= $profondeur ?>" name ="operator" onchange="update_operation(this,<?= $profondeur ?>)">
 			<option value='OPERATION'>OPERATION</option>
 			<option value='OR'>OR</option>
 			<option value='AND'>AND</option>
@@ -49,8 +50,10 @@ include('../Vue/Header.php');
 		}
 		?>
 	</form>
-</div>
 
+	<?= TabConfigsAssociees::makeTab($configurations) ?>
+
+</div>
 <?php if(isset($_GET["success"]) && $_GET["success"]) { ?>
 	<div id="page-mask" style="display:block"></div>
 	<div class="form-popup" id="validateForm" style="display:block">

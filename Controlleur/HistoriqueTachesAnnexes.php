@@ -30,5 +30,5 @@ $order = (isset($_GET['order']))?$_GET['order']:"id DESC";
 $tasks = Gateway::getSideTasksPagined($order, $rows, $page);
 
 $section = "Historique des Tâches Annexes";
-include ("../Vue/HistoriqueTachesAnnexes.php");
+include ("../Vue/taches_annexes/HistoriqueTachesAnnexes.php");
 ?>

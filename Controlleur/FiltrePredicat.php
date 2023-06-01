@@ -2,7 +2,7 @@
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $entities = Gateway::getEntities();
-$section="Filtre - Définition des prédicats";
+$section="Définition des prédicats";
 unset($_POST['code']);
 unset($_POST['function-1']);
 unset($_POST['value-1']);

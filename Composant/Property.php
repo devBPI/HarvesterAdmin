@@ -3,7 +3,7 @@ require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getNotice($_POST['id']);
 $selected = (isset($_POST['selected']))?$_POST['selected']:null;
-echo "<select><option value=''>Aucun choisi</option>";
+echo "<select><option value=''>Sélectionnez une propriété</option>";
 if(!empty($data))
 {
 	foreach($data as $d)

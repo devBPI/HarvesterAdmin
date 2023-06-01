@@ -3,6 +3,38 @@
 include_once("../PDO/Gateway.php");
 class Traduction
 {
+
+	/** Permet d'obtenir un Rules_Set par son id
+	 * @param $id integer identifiant du set
+	 * @return mixed
+	 */
+	static function getTranslationRulesSet($id) {
+		return pg_fetch_all(pg_query(Gateway::getConnexion(),
+							"SELECT * FROM configuration.translation_rules_set WHERE id=" . $id)
+							)[0];
+	}
+
+	static function getTranslationRulesBySet($id) {
+		return pg_fetch_all(pg_query(Gateway::getConnexion(),
+							"SELECT trsm.translation_rules_set_id AS set_id,
+									tr.id AS rule_id, tr.input_value AS rule_input_value,
+    								td.id AS cible_id, td.value AS cible_value, td.category_id AS cible_category
+									FROM configuration.translation_rules_set_mapping trsm,
+									     configuration.translation_rule tr, configuration.translation_destination td
+									WHERE trsm.translation_rules_set_id = " . $id . " AND trsm.translation_rule_id = tr.id
+									AND tr.destination_id = td.id ORDER BY  cible_value, rule_input_value ASC")
+							);
+	}
+
+	static function getTranslationDestinations() {
+		return pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT * FROM configuration.translation_destination"));
+	}
+
+	static function getTranslationDestinationsByCategory($id) {
+		return pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT * FROM configuration.translation_destination WHERE category_id=" . $id . " ORDER BY value"));
+	}
+
+
     /** Permet d'obtenir toutes les traductions
      * @return array de nom,id de chaque traduction trouvée | false si aucune traduction n'a été trouvée
      */
@@ -40,7 +72,7 @@ class Traduction
 
     static function getTranslationCategory()
     {
-        $query = pg_query(Gateway::getConnexion(),"SELECT name FROM configuration.translation_category");
+        $query = pg_query(Gateway::getConnexion(),"SELECT name FROM configuration.translation_category ORDER BY name");
         if (!$query)
         {
             echo "Erreur durant la requête de getTranslationCategory .\n";
@@ -106,7 +138,7 @@ class Traduction
 
     static function getRulesSet()
     {
-        $query = pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.translation_rules_set");
+        $query = pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.translation_rules_set ORDER BY name");
         if (!$query)
         {
             echo "Erreur durant la requête de getRulesSet .\n";
@@ -115,20 +147,18 @@ class Traduction
         return pg_fetch_all($query);
     }
 
-    static function updateTranslationRule($data,$name)
-    {
-        $id = self::getTranslationSetId($name);
-        pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=".$id);
-        pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id not in 
+    static function updateTranslationRule($data,$id)
+	{
+		// Suppression de toutes les associations règle / set
+		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=".$id);
+		// Suppression de toutes les règles qui ne sont pas dans la table configuration.translation_rules_set_mapping
+		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id not in 
 			(SELECT translation_rule_id FROM configuration.translation_rules_set_mapping)");
-        foreach($data as $row)
-        {
-            $var = str_replace("'","''",$row['rep']);
-            $input = str_replace("'","''",$row['input']);
-            pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rule(input_value,destination_id) 
-				VALUES('".$input."',(SELECT id FROM configuration.translation_destination WHERE value = '".$var."'))");
-        }
-        $ids=self::getNewRules();
+		foreach ($data as $row) {
+			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rule(input_value,destination_id) 
+				VALUES('".$row["input"] . "', " . $row["destination"] . ")");
+		}
+		$ids=self::getNewRules();
         foreach($ids as $rowid)
         {
             pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rules_set_mapping VALUES(".$id.",".$rowid['id'].")");
@@ -158,16 +188,22 @@ class Traduction
     }
     static function updateTranslationConfiguration($id,$data)
     {
+		$array_error = array();
+		$i = 0;
         pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation WHERE configuration_id=".$id);
-        foreach($data as $value)
-        {
-            if(isset($value['property']) and isset($value['set']))
-            {
-                $q=
-                    pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation(configuration_id,property,translation_rules_set_id,ignore_case,trim) 
-				VALUES(".$id.",'".$value['property']."',".$value['set'].",".((isset($value['case']))?'true':'false').",".((isset($value['trim']))?'true':'false').")");
+        foreach($data as $value) {
+            if(isset($value['property']) and isset($value['set'])) {
+				$assoc_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT configuration_id FROM configuration.translation WHERE property='" . $value['property'] ."' AND configuration_id=" . $id));
+				if ($assoc_existe) {
+					$array_error[$i]['msg'] = "Erreur : un ensemble est déjà associé au champ " . $value['property'] . " (problème d'unicité de l'association)";
+					$array_error[$i++]['id'] = $value['property'];
+				} else {
+					pg_query(Gateway::getConnexion(), "INSERT INTO configuration.translation(configuration_id,property,translation_rules_set_id,ignore_case,trim) 
+														VALUES(" . $id . ",'" . $value['property'] . "'," . $value['set'] . "," . json_encode($value['case']) . "," . json_encode($value['trim']) . ")");
+				}
             }
         }
+		return $array_error;
     }
     static function updateRulesSet($data,$cmp)
     {
@@ -190,10 +226,12 @@ class Traduction
         foreach($data as $row)
         {
             $var = str_replace("'","''",$row);
-            pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id=
+			pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=
+				(SELECT id FROM configuration.translation_rules_set WHERE name='".$var."')");
+            pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id IN
 				(SELECT translation_rule_id FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=
 					(SELECT id FROM configuration.translation_rules_set WHERE name='".$var."'))");
-            pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=
+			pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation WHERE translation_rules_set_id=
 				(SELECT id FROM configuration.translation_rules_set WHERE name='".$var."')");
             pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set WHERE name='".$var."'");
 
@@ -237,7 +275,7 @@ class Traduction
 		return pg_fetch_all($query);
 	}
 
-	static function getCategory()
+	static function getCategories()
 	{
 		$query = pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.translation_category");
 		if (!$query)
@@ -262,6 +300,22 @@ class Traduction
 		return pg_fetch_all($query);
 	}
 
+	static function getCategoryBySetId($id)
+	{
+		$query = pg_query(Gateway::getConnexion(),
+			"SELECT DISTINCT tc.id, tc.name
+			FROM configuration.translation_destination td, configuration.translation_category tc,
+			configuration.translation_rules_set_mapping trsm, configuration.translation_rule tr, configuration.translation_rules_set trs
+			WHERE category_id=tc.id AND td.id=tr.destination_id AND tr.id=trsm.translation_rule_id AND trs.id=trsm.translation_rules_set_id
+			AND trs.id='".$id."'");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getCategoryBySet .\n";
+			exit;
+		}
+		return pg_fetch_all($query)[0];
+	}
+
 	static function updateCategory($data,$cmp)
 	{
 		foreach($data as $key => $row)
@@ -279,13 +333,15 @@ class Traduction
 		}
 	}
 
-	static function getConfBySet($set)
+	static function getConfigurationBySet($id)
 	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT DISTINCT name FROM configuration.translation T, configuration.harvest_configuration C WHERE T.configuration_id = C.id AND
-		translation_rules_set_id = (SELECT id FROM configuration.translation_rules_set WHERE name='".$set."')");
+		$query = pg_query(Gateway::getConnexion(),
+			"SELECT DISTINCT hc.*
+					FROM configuration.translation t, configuration.harvest_configuration hc, configuration.translation_rules_set trs
+					WHERE t.configuration_id = hc.id AND trs.id = t.translation_rules_set_id AND trs.id = ".$id);
 		if (!$query)
 		{
-			echo "Erreur durant la requête de getConfBySet .\n";
+			echo "Erreur durant la requête de getConfigurationBySet .\n";
 			exit;
 		}
 		return pg_fetch_all($query);

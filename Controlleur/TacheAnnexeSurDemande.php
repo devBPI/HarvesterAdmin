@@ -10,7 +10,7 @@ Gateway::connection();
 $codes = Gateway::getConfigCodes();
 
 $section = "Tâche Annexe sur Demande";
-include ("../Vue/TacheAnnexeSurDemande.php");
+include ("../Vue/taches_annexes/TacheAnnexeSurDemande.php");
 
 $name = $_POST['taskname'];
 $param = $_POST['taskparameter'];

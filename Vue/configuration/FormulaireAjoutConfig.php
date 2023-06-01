@@ -63,9 +63,8 @@
 					<?php
 					echo "Differentiel : ";
 					?>
-						<input type="radio" name="differential" value="false"
-						checked> Non-Différentiel <input type="radio" name="differential"
-						value="true" disabled="disabled"> Différentiel
+					<input type="radio" name="differential" value="false" checked> Non-Différentiel
+					<input type="radio" name="differential" value="true" disabled="disabled"> Différentiel
 				<?php
 				echo "Nombre de tentatives : ";
 				?> <input type="text" name="textAttempts" />
@@ -83,7 +82,7 @@
 					Commentaire :
 					<TEXTAREA style="box-shadow: 0px 0px 0px;" id="textNote" name="textNote" rows=10 cols=50></TEXTAREA>
 				<?php
-				include '../Vue/InsertConfiguration.php';
+				include '../Vue/configuration/InsertConfiguration.php';
 				?>
 			</div>
 		</FORM>

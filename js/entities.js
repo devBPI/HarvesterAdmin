@@ -3,14 +3,14 @@ var nb=0;
 function display_entity(element)
 {
 	elt=element;
-	elt.parentElement.nextSibling.innerHTML=null;
+	$(elt).removeClass("input-error");
 	if(elt.value!=0)
 	{
 		elt=elt.parentNode;
 		var request = $.ajax({
 			url: "../Composant/Property.php",
 			type: "post",
-			data: 'id='+elt.childNodes[0].value,
+			data: 'id='+elt.children[0].value,
 			success: function(response){
 			  replace(response);
 			}
@@ -44,31 +44,29 @@ function replace(response)
 	d.setAttribute('required', '');
 	nb++;
 	d.innerHTML=response;
-	elt.nextSibling.appendChild(d);
+	elt.nextElementSibling.innerHTML = "";
+	elt.nextElementSibling.appendChild(d);
 }
 
 $(document).ready(function(){
 	var doc = document.getElementsByClassName('entity');
-	Array.prototype.forEach.call(doc,function(element){
-		if(element.getAttribute('name')=='pred')
-		{
-			elt=element.childNodes[2];
+	Array.prototype.forEach.call(doc,function(element) {
+		if(element.getAttribute('name')=='pred') {
+			elt=element.children[2];
 		}
-		else
-		{
-			elt=element.childNodes[0];
+		else {
+			elt=element.children[0];
 		}
-		if(element.id!="new")
-		{
+		if(element.id!="new") {
 			var request = $.ajax({
 				url: "../Composant/Property.php",
 				type: "post",
-				data: 'id='+elt.childNodes[0].value+'&selected='+element.id,
+				data: "id="+elt.children[0].value+"&selected="+element.id,
 				success: function(response){
-				  replace(response);
+					replace(response);
 				},
 				async:false
 			});
-		}	
+		}
 	});
 });

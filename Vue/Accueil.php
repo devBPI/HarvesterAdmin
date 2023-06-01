@@ -74,10 +74,10 @@
 		</div>
 
 
-		<?php include ("../Vue/affichageDesConfigs.php");?>
+		<?php include ("../Vue/configuration/affichageDesConfigs.php");?>
 		<div class="triple-column-container">
 			<div class="column" style="text-align:left">
-				<a href="../Vue/ajoutConfiguration.php"class="buttonpage">Ajouter une Configuration</a>
+				<a href="../Controlleur/AjoutConfiguration.php"class="buttonpage">Ajouter une Configuration</a>
 			</div>
 			<div class="column">
 				<?php

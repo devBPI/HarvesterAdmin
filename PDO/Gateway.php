@@ -59,6 +59,11 @@ class Gateway
 	static function updateParcours($parcours, $id) { Configuration::updateParcours($parcours, $id); }
 
 	// ------------------------------- Traduction
+	static function getTranslationDestinations() { return Traduction::getTranslationDestinations(); }
+	static function getTranslationDestinationsByCategory($id) { return Traduction::getTranslationDestinationsByCategory($id); }
+	static function getTranslationRulesSet($id) { return Traduction::getTranslationRulesSet($id); }
+	static function getTranslationRulesBySet($id) { return Traduction::getTranslationRulesBySet($id); }
+
 	static function getAllTranslations() // ancien code sans configuration_id en parametre pour les avoir tous (notamment appele dans ajoutConfig.php, voir CTLG-356)
 	{
 		return Traduction::getAllTranslations();
@@ -75,15 +80,16 @@ class Gateway
 	static function updateTranslationRule($data,$name) { Traduction::updateTranslationRule($data,$name); }
 	static function getTranslationSetId($name) { return Traduction::getTranslationSetId($name); }
 	static function getNewRules() { return Traduction::getNewRules(); }
-	static function updateTranslationConfiguration($id,$data) { Traduction::updateTranslationConfiguration($id,$data); }
+	static function updateTranslationConfiguration($id,$data) { return Traduction::updateTranslationConfiguration($id,$data); }
 	static function updateRulesSet($data,$cmp) { Traduction::updateRulesSet($data,$cmp); }
 	static function deleteRulesSet($data) { Traduction::deleteRulesSet($data); }
 	static function deleteCategory($data) { Traduction::deleteCategory($data); }
 	static function getSetByConf($id) { return Traduction::getSetByConf($id); }
-	static function getCategory() { return Traduction::getCategory(); }
+	static function getCategories() { return Traduction::getCategories(); }
 	static function getCategoryBySet($set) { return Traduction::getCategoryBySet($set); }
 	static function updateCategory($data,$cmp) { Traduction::updateCategory($data,$cmp); }
-	static function getConfBySet($set) { return Traduction::getConfBySet($set); }
+	static function getConfigurationBySet($id) { return Traduction::getConfigurationBySet($id); }
+	static function getCategoryBySetId($id) { return Traduction::getCategoryBySetId($id); }
 
 	// ------------------------------- Moisson
 	static function getMoissonPlanifForEveryDayOfWeek($dow) { return Moisson::getMoissonPlanifForEveryDayOfWeek($dow); }
@@ -105,6 +111,7 @@ class Gateway
 	static function insertDate($m, $h, $day, $jour, $id) { return Moisson::insertDate($m,$h,$day,$jour,$id); }
 	static function getHarvestDate($id) { return Moisson::getHarvestDate($id); }
 	static function reloadMoisson($id) { return Moisson::reloadMoisson($id); }
+	static function getAllStatus() { return Moisson::getAllStatus(); }
 
 	// ------------------------------- Filtre
 	static function getRuleNameRootEntity($id) { return Filtre::getRuleNameRootEntity($id); }
@@ -135,7 +142,7 @@ class Gateway
 	static function getPredicats() { return Filtre::getPredicats(); }
 	static function getPredicatsOrderBy12() { return Filtre::getPredicatsOrderBy12(); }
 	static function getPredicatsByEntity($entity) { return Filtre::getPredicatsByEntity($entity); }
-
+	public static function getConfigurationByFilterRule($id) { return Filtre::getConfigurationByFilterRule($id); }
 
 	// ------------------------------- Tâche annexe
 
@@ -213,7 +220,7 @@ class Gateway
 
 	static function select($str)
 	{
-		$query = pg_query(self::$conn, $str);
+		$query = pg_query(self::getConnexion(), $str);
 		if (!$query)
 		{
 			echo "Erreur durant la requête de select .\n";
@@ -388,6 +395,7 @@ class Gateway
 	{
 	    return pg_query(self::$conn, "INSERT into configuration.search_base(code, name) values ('".$code."','".$name."');")or die ('Erreur insertSearchBase'. pg_last_error(self::$conn));
 	}
+
 }
 ?>
 

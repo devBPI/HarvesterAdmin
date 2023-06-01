@@ -23,12 +23,6 @@
 
 .traduction form { margin-left: 0; } /* Neutralise style.css */
 
-.border_div {
-	border:1px solid black;
-	margin: 15px 0;
-}
-
-
 .part {
 	background-color:white !important;
 	border: 1px solid black;

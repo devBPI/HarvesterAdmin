@@ -20,7 +20,7 @@ function openFormWithId(id) {
     //document.getElementById("msgAlert" + id).innerHTML = message.replaceAll("- ","<br/>");
 }
 
-// Accueil.php, HistoriqueMoisson.php, FiltreConfiguration.php, FiltrePredicat.php
+// Accueil.php, HistoriqueMoisson.php, FiltreConfiguration.php, FiltrePredicat.php, TraductionConfiguration.php
 function closeForm(id=null) {
     if (id == null)
         document.getElementById("validateForm").style.display = "none";

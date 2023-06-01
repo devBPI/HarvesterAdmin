@@ -6,92 +6,188 @@ if (! $ini) {
 ?>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="../js/toTop.js"></script>
-<script src="../js/add_fields.js"></script>
-<script src="../js/select_destination.js"></script>
-<!-- Ajout du ou des fichiers javaScript-->
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../css/style.css" />
-<link rel="stylesheet" href="../css/composants.css" />
-<link rel="stylesheet" href="../css/selectStyle.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="../js/toTop.js"></script>
+	<script src="../js/add_fields.js"></script>
+	<script src="../js/select_destination.js"></script>
+	<script src="../js/update_tab_traduction_set.js"></script>
+	<!-- Ajout du ou des fichiers javaScript-->
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="../css/style.css"/>
+	<link rel="stylesheet" href="../css/accueilStyle.css"/>
+	<link rel="stylesheet" href="../css/composants.css"/>
+	<link rel="stylesheet" href="../css/selectStyle.css"/>
+	<link rel="stylesheet" href="../css/tradStyle.css"/>
 
-<title>Paramétrage</title>
+	<title>Règles de traduction : <?= $rules_set["name"] ?></title>
 </head>
 
 <?php
+require '../Vue/configuration/TabConfigsAssociees.php';
 include('../Vue/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">
-	<div id='category' style='margin-top:5%;width:auto;margin-left:5%;'>
-		<h2>Règles de traduction</h2>
-		<h3><?php echo $set;?></h3>
-		<a href="../Controlleur/Traduction.php">Retour traduction</a><br>
-		<?php
-		if(isset($_GET['set']) and !empty($cat))
-		{
-			foreach($cat as $c)
-			{
-				echo "<input type='checkbox' id='".$c['name']."' onclick='display()' ".((in_array($c['name'],$checked))?'checked':'').">".$c['name']."</input>";
-			}
-		}
-		?>
+<div class="content traduction">
+	<div class="config_name_and_sub_title">
+		<h3 class="config_name" style="text-align:center">Ensemble : <?= $rules_set["name"] ?></h3>
+		<p class="sub_title">Contenu de l'ensemble de règles de traduction</p>
 	</div>
-	<FORM action="TraductionSet.php?modify=<?php echo urlencode($set);?>" method="post" class="left"  onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
-		<table id="rule" class="sizeable_field table-backoffice">
-			<th>Entrée</th><th>Cible de traduction</th><th/>
-			<tr class="hidden_field">
-				<?php
-					echo "<td><input type='text' name='input' style='height:20px;'></input></td>
-					<td><select name='rep' class='select_destination'>";
-					echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
-				?>
+	<div class="btn_div">
+		<a href="../Controlleur/Traduction.php" class="buttonlink">« Retour aux traductions</a>
+	</div>
+
+	<div class="sizeable_table">
+		<div class="hidden_field">
+			<input type="text" name="t" style="width:300px;"/>
+			<button class="but" type="button" title="Supprimer une cible" onclick="delete_field(this.parentElement)">
+				<img src="../ressources/cross.png" width="30px" height="30px">
+			</button>
+		</div>
+		<?php if (isset($_GET["modify"]) && $_GET["modify"] == "false") { ?>
+		<table class="table-config">
+			<tbody>
+			<tr>
+				<th>Catégorie</th>
+				<th>
+					<select onchange="update_tab_cibles(this, <?= $rules_set["id"] ?>)" required>
+						<option value="">Sélectionnez une catégorie de cibles</option>
+						<?php foreach ($categories as $category) {
+							if ($category["id"] == $rules_set["category"]["id"]) { ?>
+								<option value="<?= $category["id"] ?>" selected><?= $category["name"] ?></option>
+							<?php } else { ?>
+								<option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
+							<?php } ?>
+						<?php } ?>
+					</select>
+				</th>
+				<th style="display:none"></th>
 			</tr>
-			<?php
-			if(isset($_GET['set']))
-			{
-				if(!empty($data))
-				{
-					foreach($data as $key => $rule)
-					{
-						echo "<tr><td><input type='text' name='input".$key."' style='height:20px;' value=\"".$rule['input']."\"/></td>
-						<td><select name='rep".$key."' class='select_destination' id='".$rule['rep']."'>";
-						echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
-					}
-				}
-				else
-				{
-					echo "<tr><td><input type='text' name='input-1' style='height:20px;'></input></td>
-					<td><select name='rep-1' class='select_destination'>";
-					echo "</select></td><td><button class='but' type='button' title='Supprimer une traduction' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
-				}
-				echo "<tr style='background-color:#dbe0e0'><td/><td/><td><button class='ajout but' type='button' title='Ajouter une traduction' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>";
-				echo '</table>
-				<input type="submit" value="Valider" class="button primairy-color round"/>';
-			}
-			else
-			{
-				foreach($data as $rule)
-				{
-					echo "<tr><td>".$rule['input']."</td>
-					<td>".$rule['rep']."</td></tr>";
-				}
-				echo '</table>
-				<a href="TraductionSet.php?set='.$set.'" value="Modifier" class="button primairy-color round">Modifier</a>';
-			}
-			?>
-	</FORM>
-	
-	<div class="right" style="margin-top:10%;border:1px solid black">
-		<table class="table-backoffice" ><th>Configuration associée</th>
-			<?php
-			foreach($conf as $c)
-			{
-				echo "<tr><td>".$c['name']."</td></tr>";
-			}
-			?>
+			<tr>
+				<th>Valeur d'entrée</th>
+				<th>Cible de traduction</th>
+			</tr>
+			</tbody>
 		</table>
+		<form action="TraductionSet.php?id=<?= $rules_set["id"] ?>&modify=true" method="post"
+			  onsubmit="return confirm('Confirmer les modifications ?');">
+			<input name='sent_via_form' type='hidden' value=""/>
+			<table class="table-config">
+				<tbody id="interieur_tableau">
+				<tr class="hidden_field" id="new">
+					<td>
+						<input type="text" name="rule_input_value_"/>
+					</td>
+					<td>
+						<select name="destination_">
+						<?php foreach ($cibles as $cible) {
+							if ($cible["category_id"] == $rules_set["category"]["id"]) { ?>
+							<option value="<?= $cible["id"] ?>"><?= $cible["value"] ?></option>
+						<?php }
+						} ?>
+						</select>
+					</td>
+					<td class="td_cross">
+						<button class="but" type="button" title="Supprimer une cible"
+								onclick="delete_field(this.parentElement.parentElement)"><img src="../ressources/cross.png"
+																							  width="30px" height="30px"/>
+						</button>
+					</td>
+				</tr>
+				<?php if(!empty($rules)) {
+				foreach($rules as $key => $rule) { ?>
+					<tr>
+						<td>
+							<input type="text" name="rule_input_value_<?= $key ?>" value="<?= $rule["rule_input_value"] ?>"/>
+						</td>
+						<td>
+							<select name="destination_<?= $key ?>" required>
+								<?php foreach ($cibles as $cible) {
+									if ($cible["category_id"] == $rules_set["category"]["id"]) {
+										if ($cible["id"] == $rule["cible_id"]) { ?>
+										<option value="<?= $cible["id"] ?>" selected><?= $cible["value"] ?></option>
+										<?php } else { ?>
+										<option value="<?= $cible["id"] ?>"><?= $cible["value"] ?></option>
+									<?php }
+									}
+								} ?>
+							</select>
+						</td>
+						<td class="td_cross">
+							<button class="but" type="button" title="Supprimer une cible"
+									onclick="delete_field(this.parentElement.parentElement)"><img src="../ressources/cross.png"
+																								  width="30px" height="30px"/>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
+				<?php }
+				?>
+				<tr style="background-color:rgba(0,0,0,0);" id="add_row">
+					<td></td>
+					<td></td>
+					<td class="td_cross">
+						<button class="ajout but" type="button" title="Ajouter une ligne"
+								style="cursor:pointer"
+								onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
+							<img src="../ressources/add.png" width="30px" height="30px"/></button>
+					</td>
+				</tr>
+				</tbody>
+				</table>
+			<input type="submit" value="Valider les modifications" class="button primairy-color round"/>
+		</form>
+		<?php } else { ?>
+		<table class="table-config">
+		<tbody>
+			<tr>
+				<th>Catégorie</th>
+				<th>
+			<?php
+			if ($rules_set["category"]["id"] != -1) {
+			foreach ($categories as $category) {
+			if ($category["id"] == $rules_set["category"]["id"]) { ?>
+					<input type="text" value="<?= $category["name"] ?>" readonly>
+			<?php }
+			}
+			} else { ?>
+				<input type="text" value="Aucune catégorie de cibles" readonly>
+			<?php } ?>
+			</th>
+		</tr>
+		<tr>
+			<th>Valeur d'entrée</th>
+			<th>Cible de traduction</th>
+		</tr>
+			<?php if(!empty($rules)) {
+			foreach($rules as $key => $rule) { ?>
+				<tr>
+					<td>
+						<p><?= $rule["rule_input_value"] ?></p>
+					</td>
+					<td>
+						<?php foreach ($cibles as $cible) {
+							if ($cible["category_id"] == $rules_set["category"]["id"]) {
+								if ($cible["id"] == $rule["cible_id"]) { ?>
+									<p><?= $cible["value"] ?></p>
+								<?php }
+							}
+						} ?>
+						</td>
+					</tr>
+			<?php } ?>
+			<?php }
+			?>
+		</tbody>
+		</table>
+			<div class="btn_div">
+				<a href="TraductionSet.php?id=<?= $rules_set["id"] ?>&modify=false" class="buttonpage">Éditer l'ensemble de règles</a>
+			</div>
+		<?php }?>
 	</div>
+
+	<?= TabConfigsAssociees::makeTab($configurations) ?>
+
+</div>
 </body>
 </html>

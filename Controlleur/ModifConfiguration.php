@@ -20,6 +20,6 @@ $dataConf['parcours']=Gateway::getParcours($id);
 $mapping=Gateway::getMapping();
 $exclusion=Gateway::getExclusion();
 $grabber=Gateway::getConfigurationGrabber();
-include("../Vue/RecuperationModifConfig.php");
+include("../Vue/configuration/RecuperationModifConfig.php");
 ?>
 

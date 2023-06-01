@@ -14,7 +14,7 @@ require '../Composant/ComboBox.php';
 	<link rel="stylesheet" href="../css/accueilStyle.css" />
 	<link rel="stylesheet" href="../css/filtreStyle.css" />
 	<link rel="stylesheet" href="../css/tradStyle.css" />
-	<title>Paramétrage</title>
+	<title>Filtre</title>
 </head>
 
 <body>
@@ -42,7 +42,7 @@ require '../Composant/ComboBox.php';
 				<H3>Règles de filtrage</H3>
 				<div style="overflow-y: auto;height:450px;margin-bottom:30px;background-color:#f8f8f8"">
 					<table class="table-planning">
-						<tr style="position:sticky;top:0;padding-top:-1px">
+						<tr>
 						<th style="width=40%">Entité</th>
 						<th style="width=40%">Règle</th>
 						<th style="width:20%"></th>
@@ -63,11 +63,11 @@ require '../Composant/ComboBox.php';
 				<H3>Prédicats</H3>
 				<div style="overflow-y: auto;height:450px;margin-bottom:30px;background-color:#f8f8f8"">
 					<table class="table-planning" style="border-collapse:separate">
-						<th style="position:sticky;top:0;">Nom</th>
+						<th>Nom</th>
 						<?php
 							foreach($categories as $value)
 							{ ?>
-								<tr><td><?=  str_replace("_", "_<wbr>",$value['code']) ?></td></tr>
+								<tr><td><?= str_replace("_", "_<wbr>",$value['code']) ?></td></tr>
 							<?php } ?>
 					</table>
 				</div>

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/composants.css" />
 <link rel="stylesheet" href="../css/accueilStyle.css" />
-<title>Historique des Moissons</title>
+<title>Historique des tâches annexes</title>
 </head>
 <body name="haut" id="haut">
 	<?php

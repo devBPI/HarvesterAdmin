@@ -22,7 +22,7 @@ foreach ($dowData[$dow] as $var) { // $dow est le jour de la semaine souhaite, d
     // echo $var['name'] . " (dow = ".$var['dow'].")"." (dom = ".$var['dom'].")";
     
 		
-	$tasklabel = $var['name'];
+	$tasklabel = str_replace("_", "_<wbr>",$var['name']);
 	
 	if ($var['parameter'] != null){
 	    $tasklabel = $tasklabel."-".$var['parameter'];

@@ -475,4 +475,12 @@ class Filtre {
 		return pg_fetch_all($query);
 	}
 
+	public static function getConfigurationByFilterRule($id) {
+		return @pg_fetch_all(
+			pg_query(Gateway::getConnexion(), "SELECT DISTINCT hc.*
+													FROM configuration.harvest_configuration hc, configuration.filter f, configuration.filter_rule fr
+													WHERE f.configuration_id = hc.id AND f.filter_rule_id = fr.id AND fr.id = " . $id)
+		);
+	}
+
 }

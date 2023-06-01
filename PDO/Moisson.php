@@ -264,4 +264,13 @@ class Moisson
         if (self::deleteMoisson($id)) return self::insertMoisson($id);
         else return $suppr_ok;
     }
+
+	/** Récupère la liste des statuts de moissons
+	 * @return array Liste des statuts possibles pour une moisson
+	 */
+	static function getAllStatus() {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(), "SELECT DISTINCT status FROM configuration.harvest_task ORDER BY 1")
+		);
+	}
 }

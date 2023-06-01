@@ -4,40 +4,40 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 $special_char = array(1=>'(',2=>')');
-$table = "translation";
+$configurations = [];
 require_once ("../PDO/Gateway.php");
-Gateway::connection();
-// id == modifify ?
-$set=(isset($_GET['set']))?$_GET['set']:urldecode($_GET['modify']);
-if(isset($_GET['modify']) and !isset($_GET['f']))
-{
-	$donnee=array();
-	$nb=-1;
-	unset($_POST['input']);
-	foreach($_POST as $key => $value)
-	{
-		$k = str_replace('_',' ',$key);
-		if(preg_match('/(input)/',$k))
-		{
-			$nb++;
-			$donnee[$nb]['input']=$value;
-		}
-		if(preg_match('/(rep)/',$k))
-		{
-			$donnee[$nb]['rep']=$value;
+
+if (isset($_GET["id"]) && isset($_GET["modify"]) && $_GET["modify"] == "true") {
+	$donnees = array();
+	$nb = 0;
+	foreach ($_POST as $key => $value) {
+		$k = substr($key, strlen("rule_input_value_"));
+		if(is_numeric($k)) {
+			$donnees[$nb]['input']=$value;
+		} else {
+			$k = substr($key, strlen("destination_"));
+			if (is_numeric($k)) {
+				$donnees[$nb++]['destination']=$value;
+			}
 		}
 	}
-	Gateway::updateTranslationRule($donnee,$set);
+	if (isset($_POST["sent_via_form"]))
+		Gateway::updateTranslationRule($donnees,$_GET["id"]);
 }
-$cat = Gateway::getCategory();
-$data = Gateway::getTrads($set);
-$conf = Gateway::getConfBySet($set);
-$c = Gateway::getCategoryBySet($set);
-$checked;
-foreach($c as $k => $n)
-{
-	$checked[$k]=$n['name'];
+if (isset($_GET["id"])) {
+	$configurations = Gateway::getConfigurationBySet($_GET["id"]);
+	$rules_set = Gateway::getTranslationRulesSet($_GET["id"]);
+	$rules = Gateway::getTranslationRulesBySet($_GET["id"]);
+	if (count($rules) > 0) {
+		$rules_set["category"] = Gateway::getCategoryBySetId($_GET["id"]);
+	} else {
+		$rules_set["category"] = null;
+		$rules_set["category"]["id"] = -1;
+	}
 }
+$categories = Gateway::getCategories();
+$cibles = Gateway::getTranslationDestinations();
+
 $section = "Traduction";
 include ('../Vue/traduction/TraductionSet.php');
 ?>

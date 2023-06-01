@@ -41,5 +41,5 @@ foreach($tasks as $key => $t)
 	}
 }
 $section = "Historique des moissons";
-include("../Vue/HistoriqueMoisson.php");
+include("../Vue/moissons/HistoriqueMoisson.php");
 ?>

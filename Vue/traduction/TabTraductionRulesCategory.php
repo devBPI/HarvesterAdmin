@@ -2,6 +2,15 @@
 
 class TabTraductionRulesCategory
 {
+	/**
+	 * @param $mod string true ou false (mode modification ou non)
+	 * @param $set array données
+	 * @param $controller string nom du controlleur .php
+	 * @param $denomination string ce que contiendra l'en-tête du tableau
+	 * @param $msg_edition string message du bouton d'édition
+	 * @param $id string identifiant de l'ensemble de cibles si nécessaire
+	 * @return string le code HTML de <div class="sizeable_table">, qui contient un tableau
+	 */
 	static function makeTab($mod, $set, $controller, $denomination, $msg_edition, $id=null)
 	{
 		$str = '<div class="sizeable_table">
@@ -25,7 +34,7 @@ class TabTraductionRulesCategory
 					<tbody>
 					<tr class="hidden_field" id="new" name="pred">
 						<td>
-							<input type="text" name="t" style="width:300px;"/>
+							<input type="text" name="t" style="max-width:500px;"/>
 						</td>
 						<td class="td_cross">
 							<button class="but" type="button" title="Supprimer la ligne"
@@ -41,7 +50,7 @@ class TabTraductionRulesCategory
 				foreach ($set as $key => $value) {
 					$str = $str . '<tr>
 							<td>
-								<input style="width:300px;" type="text" name="' . $key . '" value="' . $value . '"/>
+								<input style="max-width:500px;" type="text" name="' . $key . '" value="' . $value . '"/>
 							</td>
 							<td class="td_cross">
 								<button class="but" type="button" title="Supprimer une cible"

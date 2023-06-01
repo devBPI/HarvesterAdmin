@@ -8,5 +8,5 @@
     $data['parcours']=Gateway::getParcours($id);
 	$data['trad']=Gateway::getTranslation($id);
     $data['filters']=Gateway::getFilterByConf($id);
-    include("../Vue/RecuperationInfosConfigs.php");
+    include("../Vue/configuration/RecuperationInfosConfigs.php");
 ?>
