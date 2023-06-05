@@ -134,13 +134,14 @@ class Gateway
 	static function updatePredicats($data) { return Filtre::updatePredicats($data); }
 	static function setRuleTreeRoot($id,$idR) { Filtre::setRuleTreeRoot($id, $idR); }
 	static function updateRuleTree($data) { Filtre::updateRuleTree($data); }
-	static function updateFilterRules($data) { Filtre::updateFilterRules($data); }
+	static function updateFilterRules($data) { return Filtre::updateFilterRules($data); }
 	static function updateFilterConfiguration($id,$donnee) { return Filtre::updateFilterConfiguration($id, $donnee); }
 	static function getFilterCode() { return Filtre::getFilterCode(); }
 	static function getPredicat($id) { return Filtre::getPredicat($id); }
 	static function getPredicatByCode($code) { return Filtre::getPredicatByCode($code); }
 	static function getPredicats() { return Filtre::getPredicats(); }
-	static function getPredicatsOrderBy12() { return Filtre::getPredicatsOrderBy12(); }
+	static function getPredicatsOrderByCode() { return Filtre::getPredicatsOrderByCode(); }
+	static function getPredicatsOrderByEntityCode() { return Filtre::getPredicatsOrderByEntityCode(); }
 	static function getPredicatsByEntity($entity) { return Filtre::getPredicatsByEntity($entity); }
 	public static function getConfigurationByFilterRule($id) { return Filtre::getConfigurationByFilterRule($id); }
 

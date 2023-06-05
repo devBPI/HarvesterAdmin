@@ -19,7 +19,7 @@ if(isset($d) && $d!=null) {
 		?>
 		<tr class="entity" id="<?= $value['property'] ?>">
 			<td>
-				<select onchange='update_predicat(this, <?= json_encode($predicats) ?>)' name='entity<?= $num ?>' required>
+				<select onchange='update_predicat(this, <?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required>
 					<option value=''>Choississez un prédicat</option>
 		<?php foreach($predicats as $p) { ?>
 			<option value='<?= $p["code"] ?>' <?= (($p['code']==$value['code'])?'selected':'') ?> ><?= $p["code"] ?></option>
@@ -36,7 +36,7 @@ if(isset($d) && $d!=null) {
 	else { ?>
 		<tr class="entity" id="new">
 			<td>
-				<select onchange='update_predicat(this,<?= json_encode($predicats) ?>)' name='entity<?= $num ?>' required>
+				<select onchange='update_predicat(this,<?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required>
 					<option value=''>Choississez un prédicat</option>
 		<?php foreach($predicats as $p) { ?>
 			<option value='<?= $p["code"] ?>'><?= $p["code"] ?></option>
@@ -49,7 +49,7 @@ if(isset($d) && $d!=null) {
 else { ?>
 	<tr class='entity' id='new'>
 	<td>
-	<select onchange='update_predicat(this,<?= json_encode($predicats) ?>)' name='entity<?= $num ?>' required><option value=''>Choississez un prédicat</option>
+	<select onchange='update_predicat(this,<?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required><option value=''>Choississez un prédicat</option>
 		<?php foreach($predicats as $p) { ?>
 			<option value='<?= $p['code'] ?>'><?= $p['code'] ?></option>
 		<?php } ?>

@@ -6,11 +6,10 @@ if (! $ini) {
 $table = "translation";
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
-$data = Gateway::getFilterRuleOrderBy32();
 $entities=Gateway::getEntities();
 if(isset($_GET['modify'])) {
 	$mod = $_GET['modify'];
-	if($mod=='true')
+	if(isset($_POST["submitted"]))
 	{
 		$nb=0;
 		unset($_POST['namenew']);
@@ -28,21 +27,33 @@ if(isset($_GET['modify'])) {
 				{
 					$nb=str_replace('name','',$k);
 				}
-				$donnee[$nb]['name']=$value;
+				$donnees[$nb]['name']=$value;
 			}
 			if(preg_match('/(entity)/',$k))
 			{
-				$donnee[$nb]['entity']=$value;
+				$donnees[$nb]['entity']=$value;
 			}
 		}
-		Gateway::updateFilterRules($donnee);
-		$data = Gateway::getFilterRules();
+		$array_error = Gateway::updateFilterRules($donnees);
+		// Remplissage du tableau $data (contient les données qui viennent d'être saisies)
+		foreach ($donnees as $key => $value) {
+			$data[] = [
+				"id" => $key,
+				"name" => $value["name"],
+				"entity" => $value["entity"]
+			];
+		}
 	}
 }
-else
+else if(!isset($array_error) || (count($array_error) == 0))
 {
 	$mod='true';
 }
+// Si on n'a pas effectué de modifications
+if (!isset($array_error) || (count($array_error) == 0)) {
+	$data = Gateway::getFilterRuleOrderBy32();
+}
+
 $section = "Filtre - Édition des règles";
 include ('../Vue/filtre/FiltreRules.php');
 ?>

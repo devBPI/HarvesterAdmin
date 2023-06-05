@@ -34,8 +34,7 @@ include('../Vue/Header.php');
 	</div>
 	<?php if (isset($array_error) && count($array_error) > 0) { ?>
 		<div>
-			<p class="avertissement" style="text-align:left; margin-bottom:0">Les modifications suivantes n'ont pas été
-				prises en compte :</p>
+			<p class="avertissement" style="text-align:left; margin-bottom:0">Les modifications suivantes n'ont pas été prises en compte :</p>
 			<p class="avertissement_light" style="text-align:left">
 				<?php foreach ($array_error as $error) { ?>
 					<?= $error['msg'] ?><br/>

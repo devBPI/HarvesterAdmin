@@ -4,7 +4,7 @@ Gateway::connection();
 $section = "Filtre";
 //$rule=Gateway::getFilterRule();
 $rule=Gateway::getFilterRuleOrderBy32();
-$categories=Gateway::getPredicatsOrderBy12();
+$categories=Gateway::getPredicatsOrderByCode();
 $data=Gateway::getConf();
 for ($i=0; $i < count($data); $i++) {
 	$data[$i]["confname"] = Gateway::getConfigurationName($data[$i]["id"])["name"];

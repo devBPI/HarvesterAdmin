@@ -260,7 +260,7 @@ class Filtre {
 					$array_error[$i++]['id'] = $id['id'];
 				} else {
 					@pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_predicate SET code='" . $d['code'] . "' , property='" . $d['property'] . "' , 
-				entity ='" . $d['entity'] . "' , function_code='" . $d['function_code'] . "' , value_to_compare='" . $d['value'] . "' WHERE id=" . $id['id']);
+				entity ='" . $d['entity'] . "' , function_code='" . $d['function_code'] . "' , value_to_compare=E'" . $d['value'] . "' WHERE id=" . $id['id']);
 				}
 			}
 			else
@@ -328,13 +328,24 @@ class Filtre {
 
 	static function updateFilterRules($data)
 	{
+		$array_error = array();
+		$i = 0;
 		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_rule"));
 		foreach($ids as $id)
 		{
-			if(array_key_exists($id['id'],$data))
-			{
-				$d=$data[$id['id']];
-				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_predicate SET name='".$d['name']."', entity='".$d['entity']."' WHERE id=".$id['id']);
+			if(array_key_exists($id['id'],$data)) {
+
+				$value=$data[$id['id']];
+				$name_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT name FROM configuration.filter_rule WHERE name='" . $value['name'] ."' AND id!=" . $id['id']));
+				if ($name_existe) {
+					var_dump($name_existe);
+					$array_error[$i]['msg'] = "Erreur : le nom " . $value['name'] . " n'est pas unique";
+					$array_error[$i++]['id'] = $value['name'];
+				} else {
+					pg_query(Gateway::getConnexion(),
+						"UPDATE configuration.filter_rule SET name='" . $value['name'] . "', entity='" . $value['entity'] . "' WHERE id=" . $id['id']
+					);
+				}
 			}
 			else
 			{
@@ -343,17 +354,24 @@ class Filtre {
 				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_rule WHERE id =".$id['id']);
 				if ($racine != null) {
 					self::deleteTree($racine);
-					pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id =" . $racine);
+					pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id !=" . $racine);
 				}
 			}
 		}
-		foreach($data as $k => $d)
+		foreach($data as $k => $value)
 		{
 			if($k<0)
 			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule(name,entity) VALUES('".$d['name']."', '".$d['entity']."')");
+				$name_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT name FROM configuration.filter_rule WHERE name='" . $value['name'] ."' AND id=" . $id['id']));
+				if ($name_existe) {
+					$array_error[$i]['msg'] = "Erreur : le nom " . $value['name'] . " n'est pas unique";
+					$array_error[$i++]['id'] = $value['name'];
+				} else {
+					pg_query(Gateway::getConnexion(), "INSERT INTO configuration.filter_rule(name,entity) VALUES('" . $value['name'] . "', '" . $value['entity'] . "')");
+				}
 			}
 		}
+		return $array_error;
 	}
 
 	static function updateFilterConfiguration($id,$donnee)
@@ -453,12 +471,23 @@ class Filtre {
 		return pg_fetch_all($query);
 	}
 
-	static function getPredicatsOrderBy12()
+	static function getPredicatsOrderByCode()
 	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY 2");
+		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY code");
 		if (!$query)
 		{
-			echo "Erreur durant la requête de getPredicatsOrderBy2.\n";
+			echo "Erreur durant la requête de getPredicatsOrderByCode.\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
+	static function getPredicatsOrderByEntityCode()
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY entity,code");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getPredicatsOrderByEntityCode.\n";
 			exit;
 		}
 		return pg_fetch_all($query);

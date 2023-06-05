@@ -37,13 +37,14 @@ if(!empty($_POST))
 			$donnee[$nb]['function_code'] = $value;
 		}
 		if (preg_match('/(value)/', $k)) {
-			$donnee[$nb]['value'] = $value;
+			// str_replace pour echapper l'apostrophe
+			$donnee[$nb]['value'] = str_replace("'", "\'", $value);
 		}
 	}
 	$array_error = array();
 	$array_error = Gateway::updatePredicats($donnee);
 }
-$value = Gateway::getPredicatsOrderBy12();
+$value = Gateway::getPredicatsOrderByEntityCode();
 $functions = Gateway::getFilterCode();
 include("../Vue/filtre/FiltrePredicat.php");
 ?>

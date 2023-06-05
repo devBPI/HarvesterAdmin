@@ -48,8 +48,8 @@ include('../Vue/Header.php');
 		<table class="table-config">
 			<tbody>
 			<tr>
-				<th>Catégorie</th>
-				<th>
+				<th style="background-color:#56acde">Catégorie</th>
+				<th style="background-color:#56acde">
 					<select onchange="update_tab_cibles(this, <?= $rules_set["id"] ?>)" required>
 						<option value="">Sélectionnez une catégorie de cibles</option>
 						<?php foreach ($categories as $category) {
@@ -141,8 +141,8 @@ include('../Vue/Header.php');
 		<table class="table-config">
 		<tbody>
 			<tr>
-				<th>Catégorie</th>
-				<th>
+				<th style="background-color:#56acde">Catégorie</th>
+				<th style="background-color:#56acde">
 			<?php
 			if ($rules_set["category"]["id"] != -1) {
 			foreach ($categories as $category) {

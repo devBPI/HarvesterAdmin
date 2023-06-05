@@ -22,13 +22,13 @@ class TabTraductionRulesCategory
 		</div>';
 		if ($mod == 'false') {
 			if ($id == null) {
-				$str = $str . '<form action="' . $controller . '?modify=true" method="post" class="left"
+				$str = $str . '<form action="' . $controller . '" method="post" class="left"
 			  onsubmit="return confirm(\'Confirmer les modifications ?\');">';
 			} else {
 				$str = $str . '<form action="' . $controller . '?id=' . $id . '&modify=true" method="post" class="left"
 			  onsubmit="return confirm(\'Confirmer les modifications ?\');">';
 			}
-			if (!empty($set)) {
+
 				$str = $str . '<div>
 				<table class="table-config">
 					<tbody>
@@ -47,6 +47,7 @@ class TabTraductionRulesCategory
 						<th>' . $denomination . '</th>
 						<th class="td_cross"></th>
 					</tr>';
+			if (!empty($set)) {
 				foreach ($set as $key => $value) {
 					$str = $str . '<tr>
 							<td>

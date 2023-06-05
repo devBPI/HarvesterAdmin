@@ -23,7 +23,7 @@ include ('../Vue/Header.php');
 
 <body>
 	<div class="content">
-		<FORM action="FiltreRules.php?modify=true" method="post" onsubmit="return confirm('Voulez vous vraiment modifier les ensembles de règles ?');">
+		<FORM action="FiltreRules.php?modify=false" method="post" onsubmit="return confirm('Voulez vous vraiment modifier les ensembles de règles ?');">
 			<h2>Règles de filtrage</h2>
 			<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
 			<div class="sizeable_table">
@@ -31,18 +31,22 @@ include ('../Vue/Header.php');
 					<?php
 						if($mod=='false')
 						{ ?>
-							<table class='table-config'> <tr><th scope=\"col\" width=50%>Nom</th><th scope=\"col\" width=40%>Entité</th><th scope=\"col\" width=10%/></tr>
-							<tr class='hidden_field'>
-								<td>
-									<input type='text' name='namenew'/>
-								</td>
-								<td>
-									<select name='entitynew'><option value='0'>Sélectionnez une entité</option>
+							<table class='table-config'>
+								<tr>
+									<th scope="col" width=50%>Nom</th>
+									<th scope="col" width=40%>Entité</th>
+									<th scope="col" width=10%/></tr>
+								<tr class='hidden_field'>
+									<td>
+										<input type='text' name='namenew'/>
+									</td>
+									<td>
+										<select name='entitynew'><option value='0'>Sélectionnez une entité</option>
 										<?php foreach($entities as $e)
 										{
 											echo "<option value='".$e."'>".$e."</option>";
 										} ?>
-									</select>
+										</select>
 									</td>
 									<td>
 										<button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button>
@@ -52,14 +56,32 @@ include ('../Vue/Header.php');
 							{
 								foreach($data as $k => $value)
 								{ ?>
-									<tr><td><input type='text' name='name<?= $value['id'] ?>' value='<?= $value['name']?>'/></td>
-									<td><select name='entity<?= $k?>'><option value='0'>Sélectionnez une entité</option>
+									<tr>
+										<td>
+										<?php
+										$est_error = false;
+										if (isset($array_error)) {
+											foreach ($array_error as $error) {
+											if ($error["id"] == $value["name"]) {
+											$est_error = true; ?>
+											<input type="text" class="input-error" name="name<?= $value['id'] ?>" value="<?= $value['name']?>"/>
+
+												<?php
+											}
+											}
+										}
+										if (!$est_error) { ?>
+											<input type="text" name="name<?= $value['id'] ?>" value="<?= $value['name']?>"/>
+
+										<?php } ?>
+										</td>
+										<td><select name='entity<?= $k?>'><option value='0'>Sélectionnez une entité</option>
 										<?php foreach($entities as $e)
 										{
 											echo "<option value='".$e."' ".(($e==$value['entity'])?'selected':'').">".$e."</option>";
 										}?>
-									</select></td>
-									<td><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td>
+										</select></td>
+										<td><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td>
 									</tr>
 								<?php }
 							}
@@ -67,7 +89,7 @@ include ('../Vue/Header.php');
 							{
 								echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></div>";
 							}?>
-							<tr style='background-color:#dbe0e0' id='add_row'><td><button class='ajout but' type='button' title='Ajouter' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)' style='float:left'><img src='../ressources/add.png' width='30px' height='30px'/></button></td><td/><td><input type='submit' value='Valider'/></td></tr></table>
+							<tr style='background-color:#dbe0e0' id='add_row'><td><button class='ajout but' type='button' title='Ajouter' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)' style='float:left'><img src='../ressources/add.png' width='30px' height='30px'/></button></td><td/><td><input name='submitted' type='hidden'><input type='submit' value='Valider'/></td></tr></table>
 					</div>
 				<?php }
 				else {
@@ -76,12 +98,14 @@ include ('../Vue/Header.php');
 					{
 						echo "<tr><td>".$value['name']."</td><td>".$value['entity']."</td></tr>";
 					}
-					echo "</table><a href='FiltreRules.php?modify=false' class=\"submit-button\">Modifier</a></div>";
+					echo "</table>
+							<a href='FiltreRules.php?modify=false' class=\"submit-button\">Modifier</a>
+							</div>";
 				}?>
 		</FORM>
 	</div>
 
-	<?php if($_GET['modify']=='true') : ?>
+	<?php if(!empty($_POST) && isset($array_error) && (count($array_error) == 0)) : ?>
 	<div id="page-mask" style="display:block"></div>
 	<div class="form-popup" id="validateForm" style="display:block">
 		<div class='form-container' id='formProperty'>

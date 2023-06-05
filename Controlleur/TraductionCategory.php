@@ -12,23 +12,24 @@ foreach($data as $k => $v)
 {
 	$set[$k]=$v['name'];
 }
-if(isset($_GET['modify']))
-{
-	$mod = $_GET['modify'];
-	if($mod=='true')
-	{
-		unset($_POST['t']);
-		$t1=array_diff($_POST,$set);
-		$t2=array_diff($set,$_POST);
-		$tr=array_diff_key($t2,$t1);
-		Gateway::updateCategory($t1,$t2);
-		Gateway::deleteCategory($tr);
-		$set = $_POST;
+
+// Vaut toujours "false" sauf quand !isset
+$mod = isset($_GET['modify'])?"false":"true";
+
+if(!empty($_POST)) {
+	unset($_POST['t']);
+	$t1=array_diff($_POST,$set);
+	$t2=array_diff($set,$_POST);
+	$tr=array_diff_key($t2,$t1);
+	Gateway::updateRulesSet($t1,$t2);
+	Gateway::deleteRulesSet($tr);
+	$set = $_POST;
+} else {
+	if($mod=="false") {
+		$section = "Édition des ensembles de cibles de traduction";
 	}
 }
-else{
-	$mod='true';
-}
+
 $section = "Ensembles de cibles de traduction";
 include ('../Vue/traduction/TraductionCategory.php');
 ?>
