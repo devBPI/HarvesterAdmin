@@ -68,7 +68,7 @@ if (! $ini) {
 							if (isset($array_error)) { // Le champ code s'affiche différemment s'il y a eu une erreur
 								$est_error = false;
 								foreach ($array_error as $error) {
-									if ($error["id"] == $v["id"]) {
+									if ($error["id"] == $v["code"]) {
 										echo "<td><input class='input-error' type='text' value='" . $v['code'] . "' name='code" . $k . "' required /></td>";
 										$est_error = true;
 									}

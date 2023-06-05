@@ -274,10 +274,10 @@ class Filtre {
 			if($k<0)
 			{
 				// Vérification de l'unicité du code du prédicat
-				$code_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT code FROM configuration.filter_predicate WHERE id !=" . $id['id'] . " AND code='" . $d['code'] . "'"));
+				$code_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT code FROM configuration.filter_predicate WHERE code='" . $d['code'] . "'"));
 				if ($code_existe) {
 					$array_error[$i]['msg'] = "Erreur lors de l'ajout du prédicat dont le code est " . $d['code'] . ". Le code n'est pas unique";
-					$array_error[$i++]['id'] = $id['id'];
+					$array_error[$i++]['id'] = $d['code'];
 				} else {
 					@pg_query(Gateway::getConnexion(), "INSERT INTO configuration.filter_predicate(code,property,entity,function_code,value_to_compare) VALUES('" . $d['code'] . "', '" . $d['property'] . "', 
 				'" . $d['entity'] . "' , '" . $d['function_code'] . "', '" . $d['value'] . "')");
@@ -333,6 +333,7 @@ class Filtre {
 		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_rule"));
 		foreach($ids as $id)
 		{
+			// Si modification
 			if(array_key_exists($id['id'],$data)) {
 
 				$value=$data[$id['id']];
@@ -347,6 +348,7 @@ class Filtre {
 					);
 				}
 			}
+			// Sinon, suppression
 			else
 			{
 				$racine = self::getRuleNameRootEntity($id['id'])['id'];
@@ -354,7 +356,7 @@ class Filtre {
 				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_rule WHERE id =".$id['id']);
 				if ($racine != null) {
 					self::deleteTree($racine);
-					pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id !=" . $racine);
+					pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id =" . $racine);
 				}
 			}
 		}
