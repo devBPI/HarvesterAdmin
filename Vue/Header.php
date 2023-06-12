@@ -54,16 +54,24 @@ if (! $ini) {
 					<input type="checkbox" id="drop-4"/>
 					<ul>
 						<li class="envBackgroundColor">
-							<label for="drop-5" class="toggle">Paramétrage</label>
-							<a href="#">Paramétrage</a>
+							<label for="drop-5" class="toggle">Rapports</label>
+							<a href="#">Rapports</a>
 							<input type="checkbox" id="drop-5"/>
 							<ul>
-								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/ParametrageRapports.php';" href="#">Reportings</a></li>
-								<li class="envBackgroundColor"><a onclick="" href="#">Alertes</a></li>
+								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/Rapports.php?id=processus';" href="#">Processus</a></li>
+								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/Rapports.php?id=donnees';" href="#">Données collectées</a></li>
 							</ul>
 						</li>
-						<li class="envBackgroundColor"><a onclick="" href="#">Reportings</a></li>
-						<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/AlertesReporting.php';" href="#">Alertes</a></li>
+						<li class="envBackgroundColor">
+							<label for="drop-6" class="toggle">Alertes</label>
+						<a href="#">Alertes</a>
+							<input type="checkbox" id="drop-6"/>
+							<ul>
+								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/AlertesReporting.php'" href="#">Liste des alertes</a></li>
+								<li class="envBackgroundColor"><a onclick="" href="#">Processus</a></li>
+								<li class="envBackgroundColor"><a onclick="" href="#">Données collectées</a></li>
+							</ul>
+						</li>
 						<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/JournalLogs.php';" href="#">Logs</a></li>
 					</ul>
 				</li>

@@ -7,6 +7,7 @@ include_once("../PDO/Logs.php");
 include_once("../PDO/TacheAnnexe.php");
 include_once("../PDO/Traduction.php");
 include_once("../PDO/Moisson.php");
+include_once("../PDO/Rapport.php");
 
 class Gateway
 {
@@ -170,6 +171,19 @@ class Gateway
 	static function getLog($limit,$start_from) { return Logs::getLog($limit, $start_from); }
 	static function countLog() { return Logs::countLog(); }
 
+	// ------------------------------- Rapports
+
+	static function getReports($type=null) { return Rapport::getReports($type); }
+	static function getReport($id) { return Rapport::getReport($id); }
+	static function getOperators() { return Rapport::getOperators(); }
+	static function getDataToShow($type, $is_null=true) { return Rapport::getDataToShow($type, $is_null); }
+	static function getDataToShowByGroup($type, $is_null, $group) { return Rapport::getDataToShowByGroup($type, $is_null, $group); }
+	static function getCriterias($report_id, $for=null) { return Rapport::getCriterias($report_id, $for); }
+	static function getDataToDisplay($report_id) { return Rapport::getDataToDisplay($report_id); }
+	static function getDataMappingByDisplay_Value($display_value) { return Rapport::getDataMappingByDisplay_Value($display_value); }
+	static function insertReport($report) { return Rapport::insertReport($report); }
+	static function updateReport($report) { return Rapport::updateReport($report); }
+	static function deleteReport($id) { Rapport::deleteReport($id); }
 
 	/**
 	 * @return array de type id,'Nom' contenant l'id et une chaîne "Nom"
@@ -395,6 +409,12 @@ class Gateway
 	static function insertSearchBase($code, $name)
 	{
 	    return pg_query(self::$conn, "INSERT into configuration.search_base(code, name) values ('".$code."','".$name."');")or die ('Erreur insertSearchBase'. pg_last_error(self::$conn));
+	}
+
+	static function getResourceTypes() {
+		return pg_fetch_all(
+			pg_query(self::getConnexion(), "SELECT DISTINCT type FROM public.notice ORDER BY type")
+		);
 	}
 
 }

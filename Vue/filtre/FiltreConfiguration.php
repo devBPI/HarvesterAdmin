@@ -41,10 +41,10 @@ include('../Vue/Header.php');
 				</p>
 			</div>
 		<?php } ?>
-		<form action="FiltreConfiguration.php?modify=<?= $id ?>" method="post" id='conf' onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
+		<form action="FiltreConfiguration.php?modify=<?= $id ?>" method="post" id="conf" onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
 		<h3><?= $name ?></h3>
 			<table class="table-config" id="conf">
-				<tr><th width=30%>Entité</th><th width=50%>Règles de filtrage</th><th></th><th></th><th></th></tr>
+				<tr><th width=30%>Entité</th><th width=50%>Règles de filtrage</th><th></th></tr>
 				<tr class="hidden_field"><?php
 						echo "<td><select name='entity' onchange='display_rules(this)'><option value=''>Sélectionnez une entité</option>";
 						foreach($entities as $e)
@@ -52,8 +52,7 @@ include('../Vue/Header.php');
 							echo "<option value='".$e."'>".$e."</option>";
 						}
 						echo "</select></td><td><select name='rule' hidden><option value=''>Sélectionnez une entité</option></select>";
-						echo "<td><input type='checkbox' name='case'/></td><td><input type='checkbox' name='trim'/></td>";
-						echo "<td><button style='cursor:pointer' class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
+						echo "<td style='text-align:right'><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>";
 					?>
 				</tr>
 				<?php
@@ -72,8 +71,7 @@ include('../Vue/Header.php');
 								echo (($d['entity']==$value['entity'])?"<option value='".$d['id']."' ".(($d['name']==$value['name'])?'selected':'').">".$d['name']."</option>":"");
 							}
 							echo "</select></td>
-							<td><input type='checkbox' name='case'/></td><td><input type='checkbox' name='trim'/></td>
-							<td><button style='cursor:pointer' class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+							<td style='text-align:right'><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 						}
 					}
 					else
@@ -86,11 +84,10 @@ include('../Vue/Header.php');
 						}
 						echo "</select></td><td><select name='rule' hidden><option value=''>Sélectionnez une entité</option>";
 						echo "</select></td>
-						<td><input type='checkbox' name='case'/></td><td><input type='checkbox' name='trim'/></td>
-						<td><button style='cursor:pointer' class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+						<td style='text-align:right'><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 					}
 				?>
-				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td></td><td></td><td><button style='cursor:pointer' class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
+				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td style='text-align:right'><button class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
 			</table>
 			<input type="submit" value="Modifier" class="button primairy-color round"/>
 		</form>

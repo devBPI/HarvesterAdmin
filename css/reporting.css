@@ -1,0 +1,128 @@
+.param_content_div {
+    background-color: whitesmoke;
+}
+
+.param_content_div label {
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.param_content_div input {
+    display: inline-block;
+    width: 100%;
+}
+
+.champ_donnee, input[type=text].champ_donnee {
+    display: inline-block;
+    width: 45%;
+}
+
+.champ, input[type=text].valeur, input[type=date].valeur, input[type=datetime-local].valeur {
+    display: inline-block;
+    width: 40%;
+}
+
+input[type=date].valeur, input[type=datetime-local].valeur {
+    height: 42px;
+}
+
+.operateur {
+    display: inline-block;
+    width: 10%;
+}
+
+.delete {
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+}
+
+.delete img {
+    position:relative;
+    bottom:-10px;
+}
+
+.param_fieldset {
+    margin:5px;
+    padding: 5px;
+}
+
+.param_fieldset legend {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button[type=submit].submit_disabled {
+    cursor: unset;
+    color: #9A9A9A;
+    font-weight: bold;
+    background-color: #D5D5D5;
+    border: 2px solid #B9B9B9;
+    border-radius: unset;
+}
+
+select:disabled, input:disabled {
+    color: black;
+    opacity: 1;
+    border: 0;
+    background-color: transparent;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+select:disabled::-ms-expand { display: none; }
+
+input[type=submit].buttonlinkdanger {
+    float:none;
+    background-color:red;
+}
+
+input[type=submit].buttonlinkdanger:hover {
+    float:none;
+    background-color:#e20000;
+}
+
+.critere_rapport_posting {
+    display: flex;
+}
+
+.critere_rapport_posting .criteria_left {
+    width: 40%;
+    padding: 12px;
+}
+
+.critere_rapport_posting .criteria_right {
+    width: 40%;
+    padding: 12px;
+}
+
+.critere_rapport_posting .criteria_middle {
+    width: 10%;
+    padding: 12px;
+}
+
+.donnee_affichee_posting .data_to_display_left {
+    padding: 12px;
+}
+
+.donnee_affichee_posting, .critere_rapport_posting {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    margin: 1px;
+}
+
+.div_decorative_left {
+    background-color: #77b8dd;
+    border-right: 3px solid dimgrey;
+    width:25px;
+    height: 50px;
+}
+
+.report_name_posting {
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+}

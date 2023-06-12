@@ -50,7 +50,7 @@ require '../Composant/ComboBox.php';
 						<?php
 							foreach($rule as $r)
 							{ ?>
-							<tr>
+							<tr style="border:none">
 								<td><?= str_replace("_", "_<wbr>", $r["entity"]) ?></td><td><?= $r["name"] ?></td>
 								<td><a href="../Controlleur/FiltreTree.php?id=<?= $r["id"] ?>" title="éditer"><img src="../ressources/edit.png" width="30px" height="30px"/></a></td>
 								</tr>
@@ -62,12 +62,12 @@ require '../Composant/ComboBox.php';
 			<div class="column">
 				<H3>Prédicats</H3>
 				<div style="overflow-y: auto;height:450px;margin-bottom:30px;background-color:#f8f8f8"">
-					<table class="table-planning" style="border-collapse:separate">
+					<table class="table-planning">
 						<th>Nom</th>
 						<?php
 							foreach($categories as $value)
 							{ ?>
-								<tr><td><?= str_replace("_", "_<wbr>",$value['code']) ?></td></tr>
+								<tr style="border:none"><td><?= str_replace("_", "_<wbr>",$value['code']) ?></td></tr>
 							<?php } ?>
 					</table>
 				</div>

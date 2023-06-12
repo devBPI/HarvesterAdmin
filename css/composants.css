@@ -31,6 +31,8 @@ body {
     table-layout: fixed;
 }
 
+.table-config button { cursor: pointer; }
+
 .table-config tr {
     background-color: #f8f8f8;
     border: 1px solid #ddd;

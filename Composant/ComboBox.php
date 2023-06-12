@@ -7,14 +7,18 @@ class ComboBox
 		foreach ($data as $combo_key => $var) {
 			if (isset($var['confname'])) {
 				if(isset($var['id']))
-					$str = $str . '<option value="' . $var['id'] . '"' . (($id_param == $var['id']) ? ' selected' : '') . '>' . $var['confname'] . '</option>';
+					$str = $str . '
+					<option value="' . $var['id'] . '"' . (($id_param == $var['id']) ? ' selected' : '') . '>' . $var['confname'] . '</option>';
 				else
-					$str = $str . '<option value="' . $combo_key . '"' . (($id_param == $combo_key) ? ' selected' : '') . '>' . $var['confname'] . '</option>';
+					$str = $str . '
+					<option value="' . $combo_key . '"' . (($id_param == $combo_key) ? ' selected' : '') . '>' . $var['confname'] . '</option>';
 			} else {
 				if(isset($var['id']))
-					$str = $str . '<option value="' . $var['id'] . '"' . (($id_param == $var['id']) ? ' selected' : '') . '>' . $var['name'] . '</option>';
+					$str = $str . '
+					<option value="' . $var['id'] . '"' . (($id_param == $var['id']) ? ' selected' : '') . '>' . $var['name'] . '</option>';
 				else
-					$str = $str . '<option value="' . $combo_key . '"' . (($id_param == $combo_key) ? ' selected' : '') . '>' . $var['name'] . '</option>';
+					$str = $str . '
+					<option value="' . $combo_key . '"' . (($id_param == $combo_key) ? ' selected' : '') . '>' . $var['name'] . '</option>';
 			}
 		}
 		return $str;

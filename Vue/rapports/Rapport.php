@@ -1,0 +1,48 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/composants.css" />
+	<link rel="stylesheet" href="../css/accueilStyle.css" />
+	<link rel="stylesheet" href="../css/formStyle.css" />
+	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css" />
+	<title>Rapport</title>
+</head>
+
+<body>
+<?php
+include('../Vue/Header.php');
+if ($type=="processus") $page = "RapportsProcessus";
+else $page = "RapportsDonnees";
+date_default_timezone_set('Europe/Paris');
+?>
+<div class="content">
+	<p style="text-align: right; margin-top:0">Version du <?= date("d/m/Y \à H:i:s") ?></p>
+	<table class="table-config">
+		<thead>
+		<tr>
+			<?php foreach ($data_to_display as $dtd) { ?>
+				<th><?= $dtd["display_name"] ?></th>
+			<?php } ?>
+		</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($report["result"] as $ligne) { ?>
+			<tr>
+				<?php foreach ($ligne as $key => $value) { ?>
+				<td><?= str_replace("_", "_<wbr>", $value) ?></td>
+				<?php } ?>
+			</tr>
+		<?php } ?>
+		</tbody>
+	</table>
+</div>
+
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</html>
