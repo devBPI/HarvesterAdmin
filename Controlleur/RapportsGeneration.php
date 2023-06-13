@@ -7,6 +7,8 @@ if (! $ini) {
 
 require_once ("../PDO/Gateway.php");
 
+date_default_timezone_set('Europe/Paris');
+
 $type = $_POST["report_type"] ?? "";
 
 if(!empty($_POST) && $_POST["submit_value"] == "generate") {
@@ -99,19 +101,11 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	}
 	//var_dump($report);
 
-	/*$tab_header = [];
-	foreach ($data_to_display as $dtd) {
-		$tab_header[] = $dtd["display_name"];
-	}*/
+	$tab_header = [];
+	foreach ($report["result"][0] as $key => $value) {
+		$tab_header[] = $key;
+	}
 	//var_dump($report_result);
-	/*header('Content-Type: text/csv');
-	header('Content-Disposition: attachment; filename="'. $configuration["name"] .'.csv";');
-	$out = fopen("php://output", 'w');
-	fputcsv($out, $tab_header, ";");
-	foreach ($report_result as $fields) {
-		fputcsv($out, $fields, ";");
-	}*/
-	// Envoie un csv, mais capture tous les outputs (même les echo et var_dump, ce qui me pose problème)
 
 	$section = $configuration["name"];
 

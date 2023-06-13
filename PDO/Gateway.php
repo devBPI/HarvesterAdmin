@@ -1,13 +1,14 @@
 <?php
 
+include_once("../PDO/Alertes.php");
 include_once("../PDO/Configuration.php");
 include_once("../PDO/ExemplaryStatus.php");
 include_once("../PDO/Filtre.php");
 include_once("../PDO/Logs.php");
-include_once("../PDO/TacheAnnexe.php");
-include_once("../PDO/Traduction.php");
 include_once("../PDO/Moisson.php");
 include_once("../PDO/Rapport.php");
+include_once("../PDO/TacheAnnexe.php");
+include_once("../PDO/Traduction.php");
 
 class Gateway
 {
@@ -35,6 +36,11 @@ class Gateway
 			self::connection();
 		return self::$conn;
 	}
+
+	// ------------------------------- Alertes
+	static function getAlerts($order) { return Alertes::getAlerts($order); }
+	static function getAlertsForCartridge($config_id) { return Alertes::getAlertsForCartridge($config_id); }
+	static function deleteAlert($id) { Alertes::deleteAlert($id); }
 
 	// ------------------------------- Configuration
 	static function getIdFromCode($code) { return Configuration::getIdFromCode($code); }
@@ -202,26 +208,6 @@ class Gateway
 		return pg_fetch_all($query);
 	}
 	
-	static function getAlerts($order)
-	{
-	    $query = pg_query (self::$conn, "SELECT a.id, level, category, message, b.name as configuration_name, configuration_id,  creation_time, modification_time, status
-        FROM monitoring.alert a
-        LEFT JOIN configuration.harvest_configuration c on c.id = a.configuration_id		
-        LEFT JOIN configuration.search_base b on b.code = c.search_base_code 	
-        WHERE 1=1
-		ORDER BY ".$order);
-	    if (!$query)
-	    {
-	        echo "Erreur durant la requête de getAlerts .\n";
-	        exit;
-	    }
-	    return pg_fetch_all($query);
-	}
-
-	static function deleteAlert($id)
-	{
-		pg_query(self::$conn, "DELETE FROM monitoring.alert where id='".$id."';");
-	}
 
 	static function getConfigurationGrabber()
 	{

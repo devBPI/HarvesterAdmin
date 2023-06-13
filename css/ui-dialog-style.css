@@ -1,0 +1,35 @@
+.ui-dialog {
+    background-color: white;
+    border: 1px solid grey;
+    box-shadow: 5px 5px 5px #4D4D4D;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    background-color: #77b8dd;
+    display: flex;
+    justify-content: space-between;
+    padding:5px 10px;
+    color: white;
+    font-weight: bold;
+    border-bottom: 1px solid grey;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 10px;
+}
+
+.ui-button {
+    width:25px;
+    font-size: 0px;
+    background-color: transparent;
+    background-image: url('../ressources/cross.png');
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: center;
+    border: 0;
+    cursor:pointer;
+}
+
+.ui-button::before {
+    content: '✖';
+}

@@ -279,4 +279,28 @@ tr:hover .button-hover {
     }
 }
 
+/* Cartouche "Alertes du jour" dans Accueil.php */
+.alertes_du_jour .row {
+    margin-left:15px;
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+    text-align: left;
+    margin-bottom:5px;
+}
 
+.alertes_du_jour h3 {
+    background-color: #77b8dd;
+    color: white;
+    margin-top:0;
+    padding-top: 5px;
+    height: 35px;
+}
+
+.alertes_du_jour .alertes_du_jour_left {
+    width: 80%;
+}
+
+.alertes_du_jour .alertes_du_jour_right {
+    width: 20%;
+}

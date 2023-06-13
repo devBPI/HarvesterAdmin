@@ -11,10 +11,10 @@ if (isset($_GET['param'])) {
 
 $data = Gateway::getPlanifsForCartridge($id);
 
-if (! $data) {
-    echo "Aucune planification.\n";
-} 
-else {
+if (! $data) { ?>
+    Aucune moisson n'est planifiée.
+<?php
+} else {
     /* Création du tableau */
     ?><table class="table-backoffice" style="width: 100.15%;">
 	<th>Jour de la Moisson</th>

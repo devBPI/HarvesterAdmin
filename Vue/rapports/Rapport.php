@@ -14,7 +14,6 @@
 include('../Vue/Header.php');
 if ($type=="processus") $page = "RapportsProcessus";
 else $page = "RapportsDonnees";
-date_default_timezone_set('Europe/Paris');
 ?>
 <div class="content">
 	<div style="display:flex;justify-content: space-between;">
@@ -34,13 +33,13 @@ date_default_timezone_set('Europe/Paris');
 		</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($report["result"] as $ligne) { ?>
+			<?php foreach ($report["result"] as $ligne) { ?>
 			<tr>
-				<?php foreach ($ligne as $key => $value) { ?>
+			<?php foreach ($ligne as $key => $value) { ?>
 				<td><?= str_replace("_", "_<wbr>", $value) ?></td>
-				<?php } ?>
+			<?php } ?>
 			</tr>
-		<?php } ?>
+			<?php } ?>
 		</tbody>
 	</table>
 </div>

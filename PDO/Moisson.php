@@ -218,30 +218,6 @@ class Moisson
         }
     }
 
-    static function getTasksForCartridge($confid)
-    {
-        $query = pg_query (Gateway::getConnexion(), "SELECT * FROM configuration.harvest_task WHERE configuration_id=" . $confid . " ORDER BY modification_date DESC LIMIT 3;");
-        if (!$query)
-        {
-            echo "Erreur durant la requête de getTasksForCartridge .\n";
-            exit;
-        }
-
-        return pg_fetch_all($query);
-    }
-
-    static function getPlanifsForCartridge($confid)
-    {
-        $query = pg_query (Gateway::getConnexion(), "SELECT h,m,dow FROM configuration.harvest_task_cron_line WHERE configuration_id=" . $confid . " ORDER BY h,m ASC");
-        if (!$query)
-        {
-            echo "Erreur durant la requête de getPlanifsForCartridge .\n";
-            exit;
-        }
-
-        return pg_fetch_all($query);
-    }
-
     static function insertDate($m, $h, $day, $jour, $id)
     {
         return pg_query (Gateway::getConnexion(), "INSERT INTO configuration.harvest_task_cron_line(m,h,dom,mon,dow,configuration_id) VALUES (".$m.",".$h.",".$day.",NULL,".$jour.",".$id.") RETURNING id")or die ('Erreur insertDate'. pg_last_error(Gateway::getConnexion()));
@@ -272,5 +248,29 @@ class Moisson
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(), "SELECT DISTINCT status FROM configuration.harvest_task ORDER BY 1")
 		);
+	}
+
+	static function getTasksForCartridge($confid)
+	{
+		$query = pg_query (Gateway::getConnexion(), "SELECT * FROM configuration.harvest_task WHERE configuration_id=" . $confid . " ORDER BY modification_date DESC LIMIT 3;");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getTasksForCartridge .\n";
+			exit;
+		}
+
+		return pg_fetch_all($query);
+	}
+
+	static function getPlanifsForCartridge($confid)
+	{
+		$query = pg_query (Gateway::getConnexion(), "SELECT h,m,dow FROM configuration.harvest_task_cron_line WHERE configuration_id=" . $confid . " ORDER BY h,m ASC");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getPlanifsForCartridge .\n";
+			exit;
+		}
+
+		return pg_fetch_all($query);
 	}
 }

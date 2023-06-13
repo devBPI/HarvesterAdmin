@@ -10,6 +10,7 @@ if (! $ini) {
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/composants.css" />
 <link rel="stylesheet" href="../css/accueilStyle.css" />
+<link rel="stylesheet" href="../css/ui-dialog-style.css">
 <!-- ajout du ou des fichiers CSS-->
 <title>Fiche Individuelle</title>
 </head>
@@ -35,28 +36,23 @@ if (! $ini) {
 					include '../Controlleur/RecuperationInfosConfigs.php';
 				?>
 			</div>
-
 			<div class="column">
-					<center>Cartouche : Alerte sur Moisson</center>
-
-					<center>Cartouche : Reporting</center>
-				<div>
 					<div>
-						<center>
-							<h2>Planning des Moissons</h2>
-						</center>
+						<h2>Alertes</h2>
+						<div>
+							<?php include '../Vue/alerts_logs/CartoucheAlertes.php' ?>
+						</div>
 					</div>
+				<i>Cartouche : Reporting</i>
+				<div>
+					<h2>Planning des Moissons</h2>
 					<div>
 						<?php include '../Vue/planning_moissons/CartouchePlanning.php' ?>
 					</div>
 				</div>
 
 				<div>
-					<div>
-						<center>
-							<h2>Historique des Moissons</h2>
-						</center>
-					</div>
+					<h2>Historique des Moissons</h2>
 					<div>
 						<?php include '../Vue/planning_moissons/CartoucheHistorique.php' ?>
 					</div>
@@ -66,8 +62,14 @@ if (! $ini) {
 		</div>
 	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="../js/toTop.js"></script>
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="../js/toTop.js"></script>
+<script type="text/javascript">
+    let number_of_alerts = <?= count($alerts)+1 ?? 1 ?>;
+</script>
+<script src="../js/fiche_individuelle.js"></script>
 
 </html>

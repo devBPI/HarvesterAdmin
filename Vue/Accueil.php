@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			<div class="column" style="height:400px">
-				<div class="cartouche-solo" style="overflow-x:auto;">
+				<div class="cartouche-solo alertes_du_jour" style="overflow-x:auto;">
 					<H3>Alertes du jour</H3>
 					<?php 
 						$alerts = Gateway::getAlerts("creation_time DESC");
@@ -57,16 +57,18 @@
 						$today = date('d-m-Y');
 						foreach ($alerts as $alert) {
 							$creationTimeSyst = date('d-m-Y', strtotime($alert['creation_time']));
-							if($creationTimeSyst == $today){
-								echo "<div class='row' style='white-space: nowrap;'>";
-								echo "<div class='col-75'>";
-								echo "<div style='text-align:center;'>".$alert['id']." - (".date('H:i', strtotime($alert['creation_time'])).") ". $alert['level'] ." - ". $alert['category'] ."</div>";
-								echo "</div>";
-								echo "<div class='col-25'>";
-								echo "<div onclick='openFormWithMsg(\"".$alert['message']."\")'><img src=\"../ressources/message.png\" width='20px' height='20px'/></div>";
-								echo "</div>";
-								echo "</div>";							
-							}
+							if($creationTimeSyst == $today) { ?>
+					<div class="row">
+						<div class="alertes_du_jour_left">
+							<?=$alert['id']?> - <wbr/>(<?=date('H:i', strtotime($alert['creation_time']))?>) <wbr/>
+ 								<span style='color:<?= $alert['level']=='URGENT'?"#fb7d00":"red"?>;font-weight:bold'>
+									<?= $alert['level'] ?></span> - <wbr/><?= $alert['category'] ?>
+						</div>
+						<div class="alertes_du_jour_right" onclick="openFormWithMsg('<?= $alert['message'] ?>')">
+							<img style="cursor:pointer" src="../ressources/message.png" width="20px" height="20px"/>
+						</div>
+					</div>
+							<?php }
 						}
 					?>
 				</div>
@@ -96,7 +98,7 @@
 	<div id="page-mask"></div>
 	<div class="form-popup" id="validateForm">
 		<div class="form-container" id="formProperty">
-			<h3>Modification</h3>
+			<h3>Information</h3>
 			<div class="form-popup-corps">
 				<p id="msgAlert"></p>
 				<button onclick="closeForm()" class="buttonlink">OK</button>
