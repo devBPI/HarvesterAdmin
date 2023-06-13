@@ -14,10 +14,10 @@ $type = "donnees";
 if (isset($_GET["viewonly"])) {
 	$section = $section . "détails de la configuration";
 } else if (isset($_GET["id"])) {
-	$section = $section . "modification du rapport sur les données collectées";
+	$section = $section . "modification de la configuration du rapport sur les données collectées";
 	$configuration = Gateway::getReport($_GET["id"]);
 } else {
-	$section = $section . "nouveau rapport sur les données collectées";
+	$section = $section . "nouvelle configuration de rapport sur les données collectées";
 }
 
 $operators_old = Gateway::getOperators();

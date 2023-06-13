@@ -17,12 +17,19 @@ else $page = "RapportsDonnees";
 date_default_timezone_set('Europe/Paris');
 ?>
 <div class="content">
-	<p style="text-align: right; margin-top:0">Version du <?= date("d/m/Y \à H:i:s") ?></p>
+	<div style="display:flex;justify-content: space-between;">
+		<?php if ($type == "processus") { ?>
+			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les processus</a>
+		<?php } else { ?>
+			<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux rapports sur les métadonnées</a>
+		<?php } ?>
+		<p style="text-align:right;margin:0;padding-top:12px">Version du <?= date("d/m/Y \à H:i:s") ?></p>
+	</div>
 	<table class="table-config">
 		<thead>
 		<tr>
-			<?php foreach ($data_to_display as $dtd) { ?>
-				<th><?= $dtd["display_name"] ?></th>
+			<?php foreach ($report["result"][0] as $key => $value) { ?>
+				<th><?= $key ?></th>
 			<?php } ?>
 		</tr>
 		</thead>

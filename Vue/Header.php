@@ -68,8 +68,7 @@ if (! $ini) {
 							<input type="checkbox" id="drop-6"/>
 							<ul>
 								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/AlertesReporting.php'" href="#">Liste des alertes</a></li>
-								<li class="envBackgroundColor"><a onclick="" href="#">Processus</a></li>
-								<li class="envBackgroundColor"><a onclick="" href="#">Données collectées</a></li>
+								<li class="envBackgroundColor"><a onclick="" href="#">Paramétrage</a></li>
 							</ul>
 						</li>
 						<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/JournalLogs.php';" href="#">Logs</a></li>

@@ -78,6 +78,7 @@ else $page = "Donnees";
 						</optgroup>
 						<optgroup label="Suivi de la moisson">
 							<?= ComboBox::makeComboBox($data_to_show["follow_up"]) ?>
+							<option value="inserted_external_link" disabled>Nombre d'insertions dans external_link</option>
 							<option value="inserted_solr" disabled>Nombre d'insertions dans Solr'</option>
 						</optgroup>
 						<optgroup label="Nombre de moissons">
@@ -156,10 +157,6 @@ else $page = "Donnees";
 	</div>
 		<button class="submit_disabled" id="input_save" type="submit" name="submit_value" value="save" disabled>Enregistrer la configuration</button>
 	</form>
-	<form action="../../Controlleur/RapportsGeneration.php" method="post">
-		<input type="hidden" id="input_generate_id" name="report_id" value="<?= $_GET["id"] ?>">
-		<button id="input_generate" type="submit" name="submit_value" value="generate" style="display:none">Générer le rapport</button>
-	</form>
 </div>
 </body>
 
@@ -178,29 +175,6 @@ else $page = "Donnees";
 	<?php if(!empty($_POST) && $msg_error==null) { ?>
 		window.location='../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= ($_GET["id"]!=""?$_GET["id"]:$new_id) ?>&viewonly';
     <?php } ?>
-		// Script permettant l'affichage du formulaire de détails
-	<?php if(isset($_GET["viewonly"])) { ?>
-		$("#formRapport").attr("class", "formDisabled");
-        $("#formRapport input, #formRapport select").each(
-            function() {
-                $(this).attr("disabled", true);
-            }
-        );
-        $("#formRapport img").each(
-            function() {
-                $(this).hide();
-            }
-        );
-        $(".critere_rapport .champ").each(
-            function() {
-                $(this).css("font-weight","bold").css("font-size","medium");
-            }
-        );
-
-        $("#formRapport #input_save").hide();
-        $("#input_generate").removeAttr("disabled").show();
-
-		<?php } ?>
     })
 </script>
 <script src="/js/reporting.js"></script>

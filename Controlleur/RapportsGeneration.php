@@ -7,110 +7,98 @@ if (! $ini) {
 
 require_once ("../PDO/Gateway.php");
 
+$type = $_POST["report_type"] ?? "";
+
 if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	//var_dump($_POST);
 	$configuration = Gateway::getReport($_POST["report_id"]);
 	$configuration["criterias"] = Gateway::getCriterias($_POST["report_id"], "query");
-	$data_to_display = Gateway::getDataToDisplay($_POST["report_id"]);
-	$configuration["data_to_display"] = [];
-	foreach ($data_to_display as $data_to_disp) {
-		$configuration["data_to_display"][] = Gateway::getDataMappingByDisplay_Value($data_to_disp["display_value"]);
+	$configuration["data_to_display"] = Gateway::getDataToDisplay($_POST["report_id"]);
+	foreach ($configuration["data_to_display"] as $key => $dtd) {
+		$configuration["data_to_display"][$key] = array_unique(
+			array_merge($dtd,Gateway::getDataMappingByDisplay_Value($dtd["display_value"])),
+			SORT_REGULAR
+		);
 	}
 	//var_dump($configuration);
+
+	$select = "SELECT configuration.harvest_task.id AS task_id";
+	$from_where = " FROM configuration.harvest_task, configuration.harvest_configuration
+    WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
 	$end_query = "";
-	$query = "SELECT ";
-	$join_public_external_link = false;
-	$join_public_notice = false;
+	$join_external_link = false;
+	$display_name_external_link = "";
+	$join_notice = false;
+	$display_name_notice = "";
+
 	for ($i = 0; $i < count($configuration["data_to_display"]); $i++) {
-		if (!preg_match('/(public.)/',$configuration["data_to_display"][$i]["data_table"])) {
-			if (preg_match('/(\([^)]*\))/', $configuration["data_to_display"][$i]["table_field"])) {
-				if ($i == 0) $query = $query.$configuration["data_to_display"][$i]["table_field"];
-				else $query = $query.", ".$configuration["data_to_display"][$i]["table_field"];
-			} else {
-				if ($i == 0) $query = $query.$configuration["data_to_display"][$i]["data_table"].".".$configuration["data_to_display"][$i]["table_field"];
-				else $query = $query.", ".$configuration["data_to_display"][$i]["data_table"].".".$configuration["data_to_display"][$i]["table_field"];
+		if (preg_match('/(public.)/',$configuration["data_to_display"][$i]["data_table"])) {
+			if ($configuration["data_to_display"][$i]["data_table"] == "public.notice") {
+				$join_notice = true;
+				$display_name_notice = $configuration["data_to_display"][$i]["display_name"];
+			}
+			else {
+				$join_external_link = true;
+				$display_name_external_link = $configuration["data_to_display"][$i]["display_name"];
 			}
 		} else {
-			if ($configuration["data_to_display"][$i]["data_table"] == "public.notice")
-				$join_public_notice = true;
-			else
-				$join_public_external_link = true;
-			if ($i == 0) $query = $query.$configuration["data_to_display"][$i]["table_field"];
-				else $query = $query.", ".$configuration["data_to_display"][$i]["table_field"];
-		}
-	}
-
-	if ($join_public_notice || $join_public_external_link) {
-		$end_query = $end_query." GROUP BY ";
-		for ($i = 0; $i < count($configuration["data_to_display"]); $i++) {
-			if (!preg_match('/(public.)/', $configuration["data_to_display"][$i]["data_table"])) {
-				if (preg_match('/(\([^)]*\))/', $configuration["data_to_display"][$i]["table_field"])) {
-					if ($i == 0) $end_query = $end_query . $configuration["data_to_display"][$i]["table_field"];
-					else $end_query = $end_query . ", " . $configuration["data_to_display"][$i]["table_field"];
-				} else {
-					if ($i == 0) $end_query = $end_query . $configuration["data_to_display"][$i]["data_table"] . "." . $configuration["data_to_display"][$i]["table_field"];
-					else $end_query = $end_query . ", " . $configuration["data_to_display"][$i]["data_table"] . "." . $configuration["data_to_display"][$i]["table_field"];
-				}
+			if (preg_match('/(\([^)]*\))/', $configuration["data_to_display"][$i]["table_field"])) {
+				$select = $select . ", " . $configuration["data_to_display"][$i]["table_field"] . " AS \"" . $configuration["data_to_display"][$i]["display_name"] . "\"";
+			} else {
+				$select = $select . ", " . $configuration["data_to_display"][$i]["data_table"] . "." . $configuration["data_to_display"][$i]["table_field"] . " AS \"" . $configuration["data_to_display"][$i]["display_name"] . "\"";
 			}
 		}
 	}
 
-	if (!$join_public_notice && !$join_public_external_link) {
-		$query = $query . " FROM configuration.harvest_task, configuration.harvest_configuration
-    WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
-	} else if ($join_public_notice && !$join_public_external_link) {
-		$query = $query . " FROM configuration.harvest_task, configuration.harvest_configuration, public.notice
-    WHERE configuration.harvest_task.configuration_id=configuration.harvest_configuration.id
-    AND configuration.harvest_configuration.id=public.notice.configuration_id
-    AND public.notice.harvesting_date BETWEEN configuration.harvest_task.start_time AND configuration.harvest_task.end_time AND ";
-	} else if(!$join_public_notice && $join_public_external_link) {
-		$query = $query . " FROM configuration.harvest_task, configuration.harvest_configuration, public.external_link
-    WHERE configuration.harvest_task.configuration_id=configuration.harvest_configuration.id
-    AND configuration.harvest_configuration.id=public.external_link.configuration_id
-    AND public.external_link.harvesting_date BETWEEN configuration.harvest_task.start_time AND configuration.harvest_task.end_time AND ";
-	} else {
-		$query = $query . " FROM configuration.harvest_task, configuration.harvest_configuration, public.external_link, public.notice 
-    WHERE configuration.harvest_task.configuration_id=configuration.harvest_configuration.id
-    AND configuration.harvest_configuration.id=public.external_link.configuration_id
-    AND public.external_link.harvesting_date BETWEEN configuration.harvest_task.start_time AND configuration.harvest_task.end_time
-    AND public.notice.harvesting_date BETWEEN configuration.harvest_task.start_time AND configuration.harvest_task.end_time AND ";
-	}
+	//print_r($select);
+
 	$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
 	for ($i = 0; $i < count($configuration["criterias"]); $i++) {
 		// Cas 1 : fonction (par exemple : abs)
 		if (preg_match('/(\([^)]*\))/', $configuration["criterias"][$i]["table_field"])) {
 			// Cas où abs(expected_notices_number-notices_number) est en %
 			if (preg_match('/(%)/', $configuration["criterias"][$i]["value_to_compare"])) {
-				$v = (rtrim($configuration["criterias"][$i]["value_to_compare"],"%"))/100;
-				$value_to_compare = "(".$v."*expected_notices_number)";
+				$v = (rtrim($configuration["criterias"][$i]["value_to_compare"], "%")) / 100;
+				$value_to_compare = "(" . $v . "*expected_notices_number)";
 			} else
 				$value_to_compare = $configuration["criterias"][$i]["value_to_compare"];
 
 			if ($increment_non_vide == 0) {
-				$query = $query.$configuration["criterias"][$i]["table_field"]
-					.$configuration["criterias"][$i]["query_code"].$value_to_compare;
-			}
-			else {
-				$query = $query." AND ".$configuration["criterias"][$i]["table_field"]
-					.$configuration["criterias"][$i]["query_code"].$value_to_compare;
+				$from_where = $from_where . $configuration["criterias"][$i]["table_field"]
+					. $configuration["criterias"][$i]["query_code"] . $value_to_compare;
+			} else {
+				$from_where = $from_where . " AND " . $configuration["criterias"][$i]["table_field"]
+					. $configuration["criterias"][$i]["query_code"] . $value_to_compare;
 			}
 			$increment_non_vide++;
-		}
-		// Cas 2 : nombre de moissons = dernière uniquement
+		} // Cas 2 : nombre de moissons = dernière uniquement
 		else if ($configuration["criterias"][$i]["table_field"] == null) {
-			$end_query = $end_query." ORDER BY harvest_task.id DESC LIMIT 1";
-		}
-		// Autres cas
+			$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
+		} // Autres cas
 		else {
-			if ($increment_non_vide == 0) $query = $query.$configuration["criterias"][$i]["data_table"].".".$configuration["criterias"][$i]["table_field"]
-				.$configuration["criterias"][$i]["query_code"]."'".$configuration["criterias"][$i]["value_to_compare"]."'";
-			else $query = $query." AND ".$configuration["criterias"][$i]["data_table"].".".$configuration["criterias"][$i]["table_field"]
-				.$configuration["criterias"][$i]["query_code"]."'".$configuration["criterias"][$i]["value_to_compare"]."'";
+			if ($increment_non_vide == 0) $from_where = $from_where . $configuration["criterias"][$i]["data_table"] . "." . $configuration["criterias"][$i]["table_field"]
+				. $configuration["criterias"][$i]["query_code"] . "'" . $configuration["criterias"][$i]["value_to_compare"] . "'";
+			else $from_where = $from_where . " AND " . $configuration["criterias"][$i]["data_table"] . "." . $configuration["criterias"][$i]["table_field"]
+				. $configuration["criterias"][$i]["query_code"] . "'" . $configuration["criterias"][$i]["value_to_compare"] . "'";
 			$increment_non_vide++;
 		}
 	}
-	//print_r($query . $end_query);
-	$report["result"] = Gateway::select($query . $end_query);
+
+	//print_r($from_where);
+
+	$report["result"] = Gateway::select($select.$from_where.$end_query);
+	if ($join_notice) {
+		foreach ($report["result"] as $key => $line) {
+			$report["result"][$key][$display_name_notice] = Gateway::getNumberNotices($line["task_id"]);
+			unset($report["result"][$key]["task_id"]);
+		}
+	} else {
+		foreach ($report["result"] as $key => $line) {
+			unset($report["result"][$key]["task_id"]);
+		}
+	}
+	//var_dump($report);
+
 	/*$tab_header = [];
 	foreach ($data_to_display as $dtd) {
 		$tab_header[] = $dtd["display_name"];

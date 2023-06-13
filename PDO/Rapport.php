@@ -46,7 +46,7 @@ class Rapport
 		pg_query(Gateway::getConnexion(), "UPDATE configuration.interface_report SET name='". $name ."' WHERE id=". $id);
 	}
 
-	/** Retourne l'id, le code et le label des opérateurs
+	/** Retourne l'id, le code, le label et le code en format "bdd" des opérateurs
 	 * @return array|false
 	 */
 	static function getOperators() {
@@ -55,12 +55,27 @@ class Rapport
 		);
 	}
 
+	/** Retourne l'id, le code, le label et le code en format "bdd" de l'opérateur
+	 * @param $code string de l'opérateur dont on souhaite récupérer les informations
+	 * @return mixed
+	 */
 	static function getOperatorByCode($code) {
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(), "SELECT * FROM configuration.interface_criteria_operator WHERE code='". $code . "'")
 		)[0];
 	}
 
+	/**
+	 * @param $type
+	 * @param $is_null
+	 * @return array|false
+	 */
+
+	/** Retourne les données selon le type (PROCESS ou METADATA)
+	 * @param $type string PROCESS ou METADATA
+	 * @param $is_null boolean a vrai si la colonne data_type peut être nulle
+	 * @return array|false
+	 */
 	static function getDataToShow($type, $is_null=true) {
 		if ($is_null)
 			return pg_fetch_all(
@@ -76,6 +91,12 @@ class Rapport
 			);
 	}
 
+	/** Retourne les données selon le type (PROCESS ou METADATA)
+	 * @param $type string PROCESS ou METADATA
+	 * @param $is_null boolean a vrai si la colonne data_type peut être nulle
+	 * @param $group string groupe de la donnée (pour division de la liste des données à afficher)
+	 * @return array|false
+	 */
 	static function getDataToShowByGroup($type, $is_null, $group) {
 		if ($is_null)
 			return pg_fetch_all(
@@ -258,6 +279,19 @@ class Rapport
 		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_criteria WHERE interface_report_id=". $id);
 		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_data_to_display WHERE interface_report_id=". $id);
 		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_report WHERE id=". $id);
+	}
+
+	static function getNumberNotices($task_id) {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"SELECT COUNT(n.id)
+						FROM configuration.harvest_task ht, configuration.harvest_configuration hc, public.notice n
+    					WHERE ht.configuration_id=hc.id
+    					AND hc.id=n.configuration_id
+    					AND (n.harvesting_date BETWEEN ht.start_time AND ht.end_time)
+    					AND ht.id=".$task_id
+			)
+		)[0]["count"];
 	}
 
 }

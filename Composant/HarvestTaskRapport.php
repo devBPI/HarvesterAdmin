@@ -48,6 +48,7 @@ function insert_criterias($criterias, $data_to_show, $operators, $operators_shor
 			<optgroup label="Suivi de la moisson">';
 		$str = $str . ComboBox::makeComboBox($data_to_show["follow_up"], $criteria["display_value"]);
 		$str = $str . '
+				<option value="inserted_external_link" disabled>Nombre d\'insertions dans external_link</option>
 				<option value="inserted_solr" disabled>Nombre d\'insertions dans Solr\'</option>
 			</optgroup>
 				<optgroup label="Nombre de moissons">';

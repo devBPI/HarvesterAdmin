@@ -105,9 +105,9 @@ if (!isset($_GET["viewonly"])) {
 
 // ------------------------------------------------------------- Sinon
 	if (isset($_GET["id"])) {
-		$section = $section . "modification du rapport sur les processus";
+		$section = $section . "modification de la configuration de rapport";
 	} else {
-		$section = $section . "nouveau rapport sur les processus";
+		$section = $section . "nouvelle configuration de rapport sur les processus";
 	}
 	if (isset($_GET["id"])) {
 		$configuration = Gateway::getReport($_GET["id"]);
