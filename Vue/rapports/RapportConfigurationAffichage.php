@@ -14,7 +14,7 @@
 <body>
 <?php
 require "../Composant/ComboBox.php";
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 if ($type == "processus") $page = "Processus";
 else $page = "Donnees";
 ?>
@@ -102,4 +102,7 @@ else $page = "Donnees";
 		</button>
 	</form>
 </div>
+
+<?php include "../Vue/common/Footer.php" ?>
+
 </body>

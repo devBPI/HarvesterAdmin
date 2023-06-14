@@ -16,7 +16,7 @@ if (! $ini) {
 <body>
 <?php
 $section = "Moisson sur Demande";
-include ('../Vue/Header.php');
+include ('../Vue/common/Header.php');
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $datawithoutfile = Gateway::getConfigurationsWithoutFileToUpload();

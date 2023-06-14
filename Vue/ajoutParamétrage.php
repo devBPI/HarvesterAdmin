@@ -46,7 +46,7 @@ if ($table == "exclusion") {
     $title = "un Mapping";
 }
 $section = "Ajout d'" . $title;
-include ('../Vue/Header.php');
+include ('../Vue/common/Header.php');
 
 ?>
 

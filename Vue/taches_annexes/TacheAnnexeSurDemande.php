@@ -26,7 +26,7 @@ foreach ($array as $item) {
 <?php
 
  $section = "Tâche Annexe sur Demande";
- include ('../Vue/Header.php');
+ include ('../Vue/common/Header.php');
  require_once ("../PDO/Gateway.php");
  Gateway::connection();
 ?>

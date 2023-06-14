@@ -14,7 +14,7 @@ if (!$ini) {
 	<title>États de Disponibilité</title>
 </head>
 <body>
-<?php include('../Vue/Header.php'); ?>
+<?php include('../Vue/common/Header.php'); ?>
 
 <div class="content" style="width:90%">
 	<div class="column" style="height:80px;float:right">

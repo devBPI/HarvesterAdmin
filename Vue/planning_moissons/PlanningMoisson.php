@@ -15,7 +15,7 @@ if (! $ini) {
 </head>
 
 <body name="haut" style="overflow:visible">
-	<?php include('../Vue/Header.php'); ?>
+	<?php include('../Vue/common/Header.php'); ?>
 
 	<div class="content" style="width:90%">
 		<div class="triple-column-container" style="height:50px">

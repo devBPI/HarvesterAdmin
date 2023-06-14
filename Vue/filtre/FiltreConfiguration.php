@@ -16,7 +16,7 @@ if (! $ini) {
 </head>
 
 <?php
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 ?>
 
 <body>

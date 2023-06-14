@@ -18,7 +18,7 @@ session_destroy();
 <!-- Body (Div contenant tout (ou presque)) -->
 
 <body>
-<?php include('../Vue/Header.php'); ?>
+<?php include('../Vue/common/Header.php'); ?>
 <div class="content">
 	<div class="cartouche-solo" style="width:100%;height:auto">
 		<FORM action="<?php echo $section;?>.php" method="post" style="padding:5%">

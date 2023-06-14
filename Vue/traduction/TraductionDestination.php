@@ -23,7 +23,7 @@ if (!$ini) {
 
 <?php
 require('../Vue/traduction/TabTraductionRulesCategory.php');
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 ?>
 
 <body name="haut" id="haut" style="height: auto; width: auto;">

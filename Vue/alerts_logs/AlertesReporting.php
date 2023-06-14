@@ -15,7 +15,7 @@ if (! $ini) {
 </head>
 <body name="haut" id="haut">
 	<?php
-	include('../Vue/Header.php');
+	include('../Vue/common/Header.php');
 	$url = "AlertesReporting.php?&order=";
 	?>
 	<div class="content" style="width:90%">

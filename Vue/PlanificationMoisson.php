@@ -20,7 +20,7 @@ require '../Composant/ComboBox.php';
 <body name="haut" id="haut">
 <?php
 $section = "Planifier une Moisson";
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 require_once("../PDO/Gateway.php");
 Gateway::connection();
 $data = Gateway::getHarvestConfigurationP();

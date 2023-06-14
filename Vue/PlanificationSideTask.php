@@ -18,7 +18,7 @@ require '../Composant/ComboBox.php';
 <body name="haut" id="haut">
 <?php
 $section = "Planifier une Tâche annexe";
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 require_once("../PDO/Gateway.php");
 Gateway::connection();
 $codes = Gateway::getConfigCodes();

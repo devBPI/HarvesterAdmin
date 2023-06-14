@@ -8,7 +8,7 @@
 </head>
 <?php
 	require '../Composant/ComboBox.php';
-	include ('../Vue/Header.php');
+	include ('../Vue/common/Header.php');
 ?>
 <body>
 	<div class="content">

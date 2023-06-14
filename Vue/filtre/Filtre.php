@@ -18,7 +18,7 @@ require '../Composant/ComboBox.php';
 </head>
 
 <body>
-	<?php include('../Vue/Header.php'); ?>
+	<?php include('../Vue/common/Header.php'); ?>
 
 	<div class="content">
 		<div class="triple-column-container">

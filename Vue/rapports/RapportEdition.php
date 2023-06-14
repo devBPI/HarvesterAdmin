@@ -14,7 +14,7 @@
 <body>
 <?php
 require "../Composant/ComboBox.php";
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 if ($type == "processus") $page = "Processus";
 else $page = "Donnees";
 ?>
@@ -158,6 +158,9 @@ else $page = "Donnees";
 		<button class="submit_disabled" id="input_save" type="submit" name="submit_value" value="save" disabled>Enregistrer la configuration</button>
 	</form>
 </div>
+
+<?php include "../Vue/common/Footer.php" ?>
+
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

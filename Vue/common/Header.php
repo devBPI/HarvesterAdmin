@@ -85,7 +85,7 @@ if (! $ini) {
 		if($ini['version']=="DEV")
 		{
 			echo '<button class="boutonlink" onclick="restart()"><img style="width:20px;height:20px;" src="../ressources/stop.png"/></button>';
-			require_once("../Vue/Tricolor.php");
+			require_once("../Vue/common/Tricolor.php");
 		}
 		?>
 	</div>

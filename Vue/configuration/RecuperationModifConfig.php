@@ -14,7 +14,7 @@
 
 <body>
 	<?php
-	include ('../Vue/Header.php');
+	include ('../Vue/common/Header.php');
 	?>
 	<div class="content">
 		<form class="form-modif-config" action="#" method="post" onsubmit="return confirm('Voulez vous vraiment modifier cette configuration ?');">

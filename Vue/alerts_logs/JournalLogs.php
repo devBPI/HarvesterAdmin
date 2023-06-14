@@ -13,7 +13,7 @@
 <title>Accueil</title>
 </head>
 <body name="haut">
-	<?php include('../Vue/Header.php'); ?>
+	<?php include('../Vue/common/Header.php'); ?>
 	<div class="content" style="width:90%">
 		<table class="table-config">
 			<thead>

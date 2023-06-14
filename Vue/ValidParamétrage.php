@@ -62,7 +62,7 @@ if ($table == "exclusion") {
     $title = "un Mapping";
 }
 $section = "Modification d'" . $title;
-include ('../Vue/Header.php');
+include ('../Vue/common/Header.php');
 include 'affichageParamétrage.php';
 
 $properties_list = $_SESSION["session_properties"];

@@ -17,7 +17,7 @@ if (! $ini) {
 <body>
 <?php
 	$section="Détails de la configuration";
-	include ('../Vue/Header.php');
+	include ('../Vue/common/Header.php');
 ?>
 	<div class="content">
 		<div class="triple-column-container" style="height:50px">

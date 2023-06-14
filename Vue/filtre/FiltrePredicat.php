@@ -17,7 +17,7 @@ if (! $ini) {
 </head>
 
 <body>
-	<?php include('../Vue/Header.php'); ?>
+	<?php include('../Vue/common/Header.php'); ?>
 
 	<div class="content">
 		<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a><br/><br/>

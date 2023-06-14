@@ -11,7 +11,7 @@
 
 <body>
 <?php
-include('../Vue/Header.php');
+include('../Vue/common/Header.php');
 if ($type=="processus") $page = "RapportsProcessus";
 else $page = "RapportsDonnees";
 ?>

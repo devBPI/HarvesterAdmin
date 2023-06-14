@@ -240,6 +240,7 @@ class Rapport
 		$name_exists = pg_fetch_all(pg_query(Gateway::getConnexion(),
 				"SELECT name FROM configuration.interface_report WHERE name='". $report["infos"]["name"] ."' AND id!=". $report["infos"]["id"])
 		);
+		var_dump($name_exists);
 		if (count($name_exists) > 0)
 			return -1;
 

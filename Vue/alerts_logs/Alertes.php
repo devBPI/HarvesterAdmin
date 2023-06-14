@@ -11,7 +11,7 @@
 </head>
 <body name="haut" id="haut">
 <?php
-include ('../Vue/Entete.php');
+include ('../Vue/Header.php');
 ?>
     <div style="width: 100%; height: 100%; position: absolute;">
 		<div id="divTable"
