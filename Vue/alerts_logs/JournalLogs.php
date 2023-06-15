@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/composants.css" />
 <link rel="stylesheet" href="../css/accueilStyle.css" />
-<link rel="stylesheet" href="../css/alerteStyle.css" />
+<link rel="stylesheet" href="../css/alertes.css" />
 
 <title>Accueil</title>
 </head>

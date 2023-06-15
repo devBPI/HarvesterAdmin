@@ -57,6 +57,7 @@ $data = Gateway::getConfigurationGrabber();
 $conf = Gateway::select($query);
 $total_records = Gateway::countHarvestConfiguration($sql);
 $total_pages = ceil($total_records / $limit);
+$alerts = Gateway::getAlerts("creation_time DESC", date('Y-m-d'));
 $section = "Accueil";
 include ("../Vue/Accueil.php");
 ?>

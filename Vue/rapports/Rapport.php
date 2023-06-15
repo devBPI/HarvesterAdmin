@@ -42,6 +42,7 @@ else $page = "RapportsDonnees";
 			<?php } ?>
 		</tbody>
 	</table>
+	<?= str_replace(["WHERE", "FROM", "GROUP BY"], ["</br>WHERE", "</br>FROM", "</br>GROUP BY"], $requete_generee ?? "") ?>
 </div>
 
 

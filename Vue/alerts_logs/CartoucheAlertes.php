@@ -25,13 +25,12 @@ if (!$alerts) { ?>
 		<?php foreach ($alerts as $alert) { ?>
 		<tr>
 			<td><?= date("d-m-Y", strtotime($alert["creation_time"])) ?></td>
-			<td><?= $alert["level"] ?></td>
+			<td style="color:<?= $alert['level']=='URGENT'?"red":"#fb7d00"?>;font-weight:bold"><?= $alert["level"] ?></td>
 			<td><?= $alert["category"] ?></td>
 			<td><img id="alertOpener<?= $i ?>" alt="Message de l'alerte" src="../../ressources/message.png" style="cursor:pointer" width="20px" height="20px">
-			<div style="display:none" id="alertPopUp<?= $i++ ?>" title="Détails de l'alerte">
-				<p><?= $alert["message"] ?></p>
-			</div>
-
+				<div style="display:none" id="alertPopUp<?= $i++ ?>" title="Détails de l'alerte">
+					<p><?= $alert["message"] ?></p>
+				</div>
 			</td>
 		</tr>
 		<?php } ?>

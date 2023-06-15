@@ -5,14 +5,23 @@ include_once("../PDO/Gateway.php");
 class Alertes
 {
 
-	static function getAlerts($order)
+	static function getAlerts($order, $date=null)
 	{
-		$query = pg_query (Gateway::getConnexion(), "SELECT a.id, level, category, message, b.name as configuration_name, configuration_id,  creation_time, modification_time, status
+		if (!$date) {
+			$query = pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, b.name as configuration_name, configuration_id,  creation_time, modification_time, status
         FROM monitoring.alert a
         LEFT JOIN configuration.harvest_configuration c on c.id = a.configuration_id		
         LEFT JOIN configuration.search_base b on b.code = c.search_base_code 	
         WHERE 1=1
-		ORDER BY ".$order);
+		ORDER BY " . $order);
+		} else {
+			$query = pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, b.name as configuration_name, configuration_id,  creation_time, modification_time, status
+        FROM monitoring.alert a
+        LEFT JOIN configuration.harvest_configuration c on c.id = a.configuration_id		
+        LEFT JOIN configuration.search_base b on b.code = c.search_base_code 
+        WHERE 1=1 AND to_date(creation_time::TEXT,'YYYY-mm-dd')=to_date('".$date."', 'YY-mm-dd')
+		ORDER BY " . $order);
+		}
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getAlerts .\n";

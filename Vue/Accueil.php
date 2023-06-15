@@ -51,26 +51,18 @@
 			<div class="column" style="height:400px">
 				<div class="cartouche-solo alertes_du_jour" style="overflow-x:auto;">
 					<H3>Alertes du jour</H3>
-					<?php 
-						$alerts = Gateway::getAlerts("creation_time DESC");
-						// print_r($alerts);
-						$today = date('d-m-Y');
-						foreach ($alerts as $alert) {
-							$creationTimeSyst = date('d-m-Y', strtotime($alert['creation_time']));
-							if($creationTimeSyst == $today) { ?>
+					<?php foreach ($alerts as $alert) { ?>
 					<div class="row">
 						<div class="alertes_du_jour_left">
 							<?=$alert['id']?> - <wbr/>(<?=date('H:i', strtotime($alert['creation_time']))?>) <wbr/>
- 								<span style='color:<?= $alert['level']=='URGENT'?"#fb7d00":"red"?>;font-weight:bold'>
+ 								<span style='color:<?= $alert['level']=='URGENT'?"red":"#fb7d00"?>;font-weight:bold'>
 									<?= $alert['level'] ?></span> - <wbr/><?= $alert['category'] ?>
 						</div>
 						<div class="alertes_du_jour_right" onclick="openFormWithMsg('<?= $alert['message'] ?>')">
 							<img style="cursor:pointer" src="../ressources/message.png" width="20px" height="20px"/>
 						</div>
 					</div>
-							<?php }
-						}
-					?>
+						<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -87,7 +79,6 @@
 					for ($i = 1; $i <= $total_pages; $i ++) {
 					echo "<a href='Accueil.php?connecteur=" . $grabber . "&name=" . $name . "&page=" . $i . "&order=" . $order . "' class='buttonpage'>" . $i . "</a>\t";
 					}
-					;
 					$pageFin = $i - 1;
 					echo "<a href='Accueil.php?name=" . $name . "&connecteur=" . $grabber . "&page=" . $pageFin . "&order=" . $order . "' class='buttonpage'>&raquo;</a>";
 				?>

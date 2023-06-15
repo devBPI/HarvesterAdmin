@@ -23,87 +23,181 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		);
 	}
 	//var_dump($configuration);
+	// --------------------------------- DONNEES
+	if ($type == "donnees") {
+		$select = "SELECT ";
+		$from = " FROM public.notice ";
+		$where = " WHERE ";
+		$end_query = "";
+		$must_be_group_by = false;
 
-	$select = "SELECT configuration.harvest_task.id AS task_id";
-	$from_where = " FROM configuration.harvest_task, configuration.harvest_configuration
-    WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
-	$end_query = "";
-	$join_external_link = false;
-	$display_name_external_link = "";
-	$join_notice = false;
-	$display_name_notice = "";
+		$is_set_from_sub_query = false; // determine si on doit ajouter la sous-requete unnest(date_publishing) a la clause from
 
-	for ($i = 0; $i < count($configuration["data_to_display"]); $i++) {
-		if (preg_match('/(public.)/',$configuration["data_to_display"][$i]["data_table"])) {
-			if ($configuration["data_to_display"][$i]["data_table"] == "public.notice") {
-				$join_notice = true;
-				$display_name_notice = $configuration["data_to_display"][$i]["display_name"];
-			}
+		// ------------- FROM ET WHERE
+		$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
+		foreach ($configuration["criterias"] as $criteria) {
+			// Cas 1 : fonction (par exemple : abs)
+			// Cas 2 : nombre de moissons = dernière uniquement
+			// Cas 3 : critère sur notice.date_publishing
+			if ($criteria["table_field"] == "unnest(public.notice.date_publishing)") {
+				// Seulement si le "from" n'a pas déjà été ajouté -> on le rajoute + on fait la jointure
+				if(!$is_set_from_sub_query) {
+					$is_set_from_sub_query = true;
+					$from = $from . ", (SELECT id, unnest(date_publishing) AS annee FROM public.notice) rq";
+					if ($increment_non_vide == 0) $where = $where . "rq.id=public.notice.id";
+					else $where = $where . " AND rq.id=public.notice.id";
+					$increment_non_vide++;
+				}
+				if ($increment_non_vide == 0) {
+					$where = $where . "rq.annee" . $criteria["query_code"] . $criteria["value_to_compare"];
+				} else {
+					$where = $where . " AND rq.annee" . $criteria["query_code"] . $criteria["value_to_compare"];
+				}
+				$increment_non_vide++;
+			} // Autres cas
 			else {
-				$join_external_link = true;
-				$display_name_external_link = $configuration["data_to_display"][$i]["display_name"];
+				if ($increment_non_vide == 0) {
+					$where = $where . $criteria["data_table"] . "." . $criteria["table_field"]
+						. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+				}
+				else {
+					$where = $where . " AND " . $criteria["data_table"] . "." . $criteria["table_field"]
+						. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+				}
+				$increment_non_vide++;
+			}
+		}
+
+		// ------------- SELECT
+		$ind = 0;
+		foreach ($configuration["data_to_display"] as $key => $dtd) {
+			if ($is_set_from_sub_query && $dtd["table_field"] == "unnest(public.notice.date_publishing)") {
+				$configuration["data_to_display"][$key]["table_field"] = "annee";
+				$configuration["data_to_display"][$key]["data_table"] = "rq";
+			}
+			if (preg_match('/(\([^)]*\))/', $configuration["data_to_display"][$key]["table_field"])) {
+				if (preg_match('/(count)/', $configuration["data_to_display"][$key]["table_field"]))
+					$must_be_group_by = true;
+				if ($key == 0)
+					$select = $select . $configuration["data_to_display"][$key]["table_field"] . " AS \"" . $configuration["data_to_display"][$key]["display_name"] . "\"";
+				else
+					$select = $select . ", " . $configuration["data_to_display"][$key]["table_field"] . " AS \"" . $configuration["data_to_display"][$key]["display_name"] . "\"";
+			} else {
+				if ($key == 0) {
+					$select = $select . $configuration["data_to_display"][$key]["data_table"] . "." . $configuration["data_to_display"][$key]["table_field"] .
+						" AS \"" . $configuration["data_to_display"][$key]["display_name"] . "\"";
+				} else {
+					$select = $select . ", " . $configuration["data_to_display"][$key]["data_table"] . "." . $configuration["data_to_display"][$key]["table_field"] .
+						" AS \"" . $configuration["data_to_display"][$key]["display_name"] . "\"";
+				}
+			}
+		}
+
+		// ------------- GROUP BY
+		if ($must_be_group_by) {
+			$end_query = " GROUP BY (";
+			$ind = 0;
+			foreach ($configuration["data_to_display"] as $key => $dtd) {
+				if (!preg_match('/(count\([^)]*\))/', $dtd["table_field"])) {
+					if (preg_match('/(\([^)]*\))/', $dtd["table_field"])) {
+						if ($ind == 0) $end_query = $end_query . $dtd["table_field"];
+						else $end_query = $end_query . "," . $dtd["table_field"];
+					} else {
+						if ($ind == 0) $end_query = $end_query . $dtd["data_table"] . "." . $dtd["table_field"];
+						else $end_query = $end_query . "," . $dtd["data_table"] . "." . $dtd["table_field"];
+					}
+					$ind++;
+				}
+			}
+			$end_query = $end_query . ")";
+		}
+
+		$requete_generee = $select.$from.$where.$end_query;
+		$report["result"] = Gateway::select($select.$from.$where.$end_query);
+	}
+	// --------------------------------- PROCESSUS
+	if ($type == "processus") {
+		$select = "SELECT configuration.harvest_task.id AS task_id";
+		$from_where = " FROM configuration.harvest_task, configuration.harvest_configuration
+    		WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
+		$end_query = "";
+		$join_external_link = false;
+		$display_name_external_link = "";
+		$join_notice = false;
+		$display_name_notice = "";
+
+		foreach ($configuration["data_to_display"] as $key => $dtd) {
+			if (preg_match('/(public.)/', $dtd["data_table"])) {
+				if ($dtd["data_table"] == "public.notice") {
+					$join_notice = true;
+					$display_name_notice = $dtd["display_name"];
+				} else {
+					$join_external_link = true;
+					$display_name_external_link = $dtd["display_name"];
+				}
+			} else {
+				if (preg_match('/(\([^)]*\))/', $dtd["table_field"])) {
+					$select = $select . ", " . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
+				} else {
+					$select = $select . ", " . $dtd["data_table"] . "." . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
+				}
+			}
+		}
+
+		//print_r($select);
+
+		$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
+		foreach ($configuration["criterias"] as $criteria) {
+			// Cas 1 : fonction (par exemple : abs)
+			if (preg_match('/(\([^)]*\))/', $criteria["table_field"])) {
+				// Cas où abs(expected_notices_number-notices_number) est en %
+				if (preg_match('/(%)/', $criteria["value_to_compare"])) {
+					$v = (rtrim($criteria["value_to_compare"], "%")) / 100;
+					$value_to_compare = "(" . $v . "*expected_notices_number)";
+				} else
+					$value_to_compare = $criteria["value_to_compare"];
+
+				if ($increment_non_vide == 0) {
+					$from_where = $from_where . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
+				} else {
+					$from_where = $from_where . " AND " . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
+				}
+				$increment_non_vide++;
+			} // Cas 2 : nombre de moissons = dernière uniquement
+			else if ($criteria["data_group"] == "number_of_results_infos") {
+				$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
+			} // Autres cas
+			else {
+				if ($increment_non_vide == 0) $from_where = $from_where . $criteria["data_table"] . "." . $criteria["table_field"]
+					. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+				else $from_where = $from_where . " AND " . $criteria["data_table"] . "." . $criteria["table_field"]
+					. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+				$increment_non_vide++;
+			}
+		}
+
+		//print_r($from_where);
+
+		$report["result"] = Gateway::select($select . $from_where . $end_query);
+		if ($join_notice) {
+			foreach ($report["result"] as $key => $line) {
+				$nb = Gateway::getNumberNotices($line["task_id"]);
+				$report["result"][$key][$display_name_notice] = $nb>0?$nb:"";
+				unset($report["result"][$key]["task_id"]);
 			}
 		} else {
-			if (preg_match('/(\([^)]*\))/', $configuration["data_to_display"][$i]["table_field"])) {
-				$select = $select . ", " . $configuration["data_to_display"][$i]["table_field"] . " AS \"" . $configuration["data_to_display"][$i]["display_name"] . "\"";
-			} else {
-				$select = $select . ", " . $configuration["data_to_display"][$i]["data_table"] . "." . $configuration["data_to_display"][$i]["table_field"] . " AS \"" . $configuration["data_to_display"][$i]["display_name"] . "\"";
+			foreach ($report["result"] as $key => $line) {
+				unset($report["result"][$key]["task_id"]);
 			}
 		}
+		//var_dump($report);
 	}
-
-	//print_r($select);
-
-	$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
-	for ($i = 0; $i < count($configuration["criterias"]); $i++) {
-		// Cas 1 : fonction (par exemple : abs)
-		if (preg_match('/(\([^)]*\))/', $configuration["criterias"][$i]["table_field"])) {
-			// Cas où abs(expected_notices_number-notices_number) est en %
-			if (preg_match('/(%)/', $configuration["criterias"][$i]["value_to_compare"])) {
-				$v = (rtrim($configuration["criterias"][$i]["value_to_compare"], "%")) / 100;
-				$value_to_compare = "(" . $v . "*expected_notices_number)";
-			} else
-				$value_to_compare = $configuration["criterias"][$i]["value_to_compare"];
-
-			if ($increment_non_vide == 0) {
-				$from_where = $from_where . $configuration["criterias"][$i]["table_field"]
-					. $configuration["criterias"][$i]["query_code"] . $value_to_compare;
-			} else {
-				$from_where = $from_where . " AND " . $configuration["criterias"][$i]["table_field"]
-					. $configuration["criterias"][$i]["query_code"] . $value_to_compare;
-			}
-			$increment_non_vide++;
-		} // Cas 2 : nombre de moissons = dernière uniquement
-		else if ($configuration["criterias"][$i]["table_field"] == null) {
-			$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
-		} // Autres cas
-		else {
-			if ($increment_non_vide == 0) $from_where = $from_where . $configuration["criterias"][$i]["data_table"] . "." . $configuration["criterias"][$i]["table_field"]
-				. $configuration["criterias"][$i]["query_code"] . "'" . $configuration["criterias"][$i]["value_to_compare"] . "'";
-			else $from_where = $from_where . " AND " . $configuration["criterias"][$i]["data_table"] . "." . $configuration["criterias"][$i]["table_field"]
-				. $configuration["criterias"][$i]["query_code"] . "'" . $configuration["criterias"][$i]["value_to_compare"] . "'";
-			$increment_non_vide++;
-		}
-	}
-
-	//print_r($from_where);
-
-	$report["result"] = Gateway::select($select.$from_where.$end_query);
-	if ($join_notice) {
-		foreach ($report["result"] as $key => $line) {
-			$report["result"][$key][$display_name_notice] = Gateway::getNumberNotices($line["task_id"]);
-			unset($report["result"][$key]["task_id"]);
-		}
-	} else {
-		foreach ($report["result"] as $key => $line) {
-			unset($report["result"][$key]["task_id"]);
-		}
-	}
-	//var_dump($report);
 
 	$tab_header = [];
-	foreach ($report["result"][0] as $key => $value) {
-		$tab_header[] = $key;
+	if (count($report["result"])>1) {
+		foreach ($report["result"][0] as $key => $value) {
+			$tab_header[] = $key;
+		}
 	}
 	//var_dump($report_result);
 

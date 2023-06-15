@@ -38,7 +38,7 @@ class Gateway
 	}
 
 	// ------------------------------- Alertes
-	static function getAlerts($order) { return Alertes::getAlerts($order); }
+	static function getAlerts($order, $date=null) { return Alertes::getAlerts($order, $date); }
 	static function getAlertsForCartridge($config_id) { return Alertes::getAlertsForCartridge($config_id); }
 	static function deleteAlert($id) { Alertes::deleteAlert($id); }
 

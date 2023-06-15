@@ -73,7 +73,7 @@ class Rapport
 
 	/** Retourne les données selon le type (PROCESS ou METADATA)
 	 * @param $type string PROCESS ou METADATA
-	 * @param $is_null boolean a vrai si la colonne data_type peut être nulle
+	 * @param $is_null boolean a vrai si la colonne data_group peut être number_of_results_infos
 	 * @return array|false
 	 */
 	static function getDataToShow($type, $is_null=true) {
@@ -86,14 +86,14 @@ class Rapport
 			return pg_fetch_all(
 				pg_query(Gateway::getConnexion(), "SELECT display_value AS id, default_name as name, data_group
 														 FROM configuration.interface_data_mapping
-														 WHERE data_type='". $type . "' AND table_field IS NOT NULL
+														 WHERE data_type='". $type . "' AND data_group !='number_of_results_infos'
 														 ORDER BY default_name")
 			);
 	}
 
 	/** Retourne les données selon le type (PROCESS ou METADATA)
 	 * @param $type string PROCESS ou METADATA
-	 * @param $is_null boolean a vrai si la colonne data_type peut être nulle
+	 * @param $is_null boolean a vrai si peut être de type number_of_results_infos
 	 * @param $group string groupe de la donnée (pour division de la liste des données à afficher)
 	 * @return array|false
 	 */
@@ -115,11 +115,16 @@ class Rapport
 			);
 	}
 
+	/** Retourne les critères du rapport
+	 * @param $report_id int identifiant du rapport
+	 * @param $for string à quoi serviront ces critères : requête, affichage ou modification
+	 * @return array|false
+	 */
 	static function getCriterias($report_id, $for=null) {
 		if ($for=="query") {
 			return pg_fetch_all(
 				pg_query(Gateway::getConnexion(),
-					"SELECT idm.table_field, idm.data_table, ico.query_code, ic.value_to_compare
+					"SELECT idm.table_field, idm.data_table, ico.query_code, ic.value_to_compare, idm.data_group
 					   FROM configuration.interface_criteria ic, configuration.interface_criteria_operator ico, configuration.interface_data_mapping idm
 					   WHERE ic.interface_data_mapping_id=idm.id
 				       AND ic.interface_criteria_operator_id=ico.id
@@ -129,7 +134,7 @@ class Rapport
 		} else if ($for=="poster") {
 			return pg_fetch_all(
 				pg_query(Gateway::getConnexion(),
-					"SELECT idm.default_name, ico.label, ic.value_to_compare
+					"SELECT idm.default_name, ico.label, ic.value_to_compare, idm.data_group
 					   FROM configuration.interface_criteria ic, configuration.interface_criteria_operator ico, configuration.interface_data_mapping idm
 					   WHERE ic.interface_data_mapping_id=idm.id
 				       AND ic.interface_criteria_operator_id=ico.id
@@ -140,7 +145,7 @@ class Rapport
 		else {
 			return pg_fetch_all(
 				pg_query(Gateway::getConnexion(),
-					"SELECT ic.id, idm.display_value, ico.code, ic.value_to_compare
+					"SELECT ic.id, idm.display_value, ico.code, ic.value_to_compare, idm.data_group
 				FROM configuration.interface_criteria ic, configuration.interface_criteria_operator ico, configuration.interface_data_mapping idm
 				WHERE ic.interface_data_mapping_id=idm.id
 				  AND ic.interface_criteria_operator_id=ico.id
@@ -150,10 +155,14 @@ class Rapport
 		}
 	}
 
+	/** Retourne les données à afficher du rapport
+	 * @param $report_id int identifiant du rapport
+	 * @return array|false l'identifiant, la valeur d'affichage et la chaîne de caractère d'affichage de la donnée
+	 */
 	static function getDataToDisplay($report_id) {
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(),
-				"SELECT idtd.id, idm.display_value, idtd.display_name
+				"SELECT idtd.id, idm.display_value, idtd.display_name, idm.data_group
 				FROM configuration.interface_data_to_display idtd, configuration.interface_data_mapping idm
 				WHERE idtd.interface_data_mapping_id=idm.id
 				  AND idtd.interface_report_id=". $report_id ."
@@ -161,6 +170,10 @@ class Rapport
 		);
 	}
 
+	/** Retourne le data_mapping à partir de la valeur d'affichage (possible car celle-ci est unique)
+	 * @param $display_value string la valeur d'affichage
+	 * @return mixed
+	 */
 	static function getDataMappingByDisplay_Value($display_value) {
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(), "SELECT idm.* FROM configuration.interface_data_mapping idm WHERE idm.display_value='". $display_value."'")
@@ -192,6 +205,7 @@ class Rapport
 	}
 
 	static function updateDataToDisplay($data) {
+		var_dump($data);
 		$data_mapping_id = self::getDataMappingByDisplay_Value($data["display_value"])["id"];
 		pg_query(Gateway::getConnexion(),
 			"UPDATE configuration.interface_data_to_display
@@ -281,6 +295,10 @@ class Rapport
 		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_report WHERE id=". $id);
 	}
 
+	/** Nombre de notices insérées dans la table "notice" par la moisson
+	 * @param $task_id int identifiant de la moisson
+	 * @return int
+	 */
 	static function getNumberNotices($task_id) {
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(),
@@ -289,6 +307,23 @@ class Rapport
     					WHERE ht.configuration_id=hc.id
     					AND hc.id=n.configuration_id
     					AND (n.harvesting_date BETWEEN ht.start_time AND ht.end_time)
+    					AND ht.id=".$task_id
+			)
+		)[0]["count"];
+	}
+
+	/** Nombre de notices insérées dans la table "external_link" par la moisson
+	 * @param $task_id int identifiant de la moisson
+	 * @return int
+	 */
+	static function getNumberExternalLink($task_id) {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"SELECT COUNT(el.id)
+						FROM configuration.harvest_task ht, configuration.harvest_configuration hc, public.external_link el
+    					WHERE ht.configuration_id=hc.id
+    					AND hc.id=el.configuration_id
+    					AND (el.harvesting_date BETWEEN ht.start_time AND ht.end_time)
     					AND ht.id=".$task_id
 			)
 		)[0]["count"];

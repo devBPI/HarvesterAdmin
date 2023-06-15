@@ -30,13 +30,13 @@ function display_related_operator(element) {
     reset_defaut_cb_operateur(number);
     reset_default_cb_valeur(number);
 
-    if (element.value == "harvest_status" || element.value == "harvest_configuration_name") {
+    if (element.value == "harvest_status" || element.value == "harvest_configuration_name" || element.value == "notice_type") {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option> <option value="not_equals">&ne;</option>').show();
         if (element.value == "harvest_configuration_name") {
             // Afficher combobox des noms de configuration au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             var request = $.ajax({
-                url: "../Composant/HarvestTaskRapport.php",
+                url: "../Composant/RapportComposant.php",
                 type: "post",
                 data: "champs=id_name",
                 success: function (response) {
@@ -47,9 +47,20 @@ function display_related_operator(element) {
             // Afficher combobox des statuts possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             var request = $.ajax({
-                url: "../Composant/HarvestTaskRapport.php",
+                url: "../Composant/RapportComposant.php",
                 type: "post",
                 data: "champs=status",
+                success: function (response) {
+                    $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
+                }
+            });
+        } else if (element.value == "notice_type") {
+            // Afficher combobox des types / genres de notices possibles au lieu de input_valeur_cond
+            // Récupérer grâce à ajax
+            var request = $.ajax({
+                url: "../Composant/RapportComposant.php",
+                type: "post",
+                data: "champs=resource_type",
                 success: function (response) {
                     $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
                 }
@@ -59,7 +70,7 @@ function display_related_operator(element) {
     } else if (element.value == "harvest_last_task") {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option>').show();
         $("#cb_valeur_cond_" + number).html('<option value="Oui">Oui</option>').attr("required", true).show();
-    } else if (element.value == "harvest_creation_date" || element.value == "harvest_modification_date" || element.value == "harvest_start_time" || element.value == "harvest_end_time") {
+    } else if ((element.value).includes("date") || (element.value).includes("time")) {
         $("#input_valeur_cond_" + number).attr("type", "datetime-local").attr("required", true).show();
     } else if (element.value == "harvest_differences_notices") {
         // Suite à mail du 30/05

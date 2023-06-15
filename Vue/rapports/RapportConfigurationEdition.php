@@ -15,8 +15,14 @@
 <?php
 require "../Composant/ComboBox.php";
 include('../Vue/common/Header.php');
-if ($type == "processus") $page = "Processus";
-else $page = "Donnees";
+if ($type == "processus") {
+	$page = "Processus";
+	$what = "moisson";
+}
+else {
+	$page = "Donnees";
+	$what = "ressource";
+}
 ?>
 <div class="content">
 	<div style="display:flex;justify-content: space-between;">
@@ -40,18 +46,16 @@ else $page = "Donnees";
 			<tbody>
 				<tr>
 					<td width="200px">
-						<label class="formLabel formRapportLeft" for="input_name_rapport">Titre du rapport</label>
+						<label class="formLabel" for="input_name_rapport">Titre du rapport</label>
 					</td>
 					<td style="border-left:2px solid dimgrey">
-						<input type="text" id="input_name_rapport" name="name_rapport"
-							   placeholder="Titre identifiant le rapport"
-							<?= isset($configuration)?"value='".$configuration["name"]."'":"" ?>
-							   required/>
+						<input type="text" id="input_name_rapport" name="name_rapport" placeholder="Titre identifiant le rapport" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required/>
 						<?php if ($msg_error != null) { ?>
 						<p class="avertissement_light" style="text-align: left">
 								<?= $msg_error ?>
 						</p>
 							<?php } ?>
+
 					</td>
 				</tr>
 			</tbody>
@@ -70,18 +74,21 @@ else $page = "Donnees";
 				<!-- élément reproductible pour l'ajout des critères -->
 				<div class="critere_rapport" id="critere_rapport_" style="display:none">
 					<input type="hidden" id="input_id_cond_" name="id_cond_" value="" />
-					<?php if(isset($type) && $type == "processus") { ?>
-					<select class="champ formRapportLeft" id="cb_champ_cond_" name="champ_cond_" onchange="display_related_operator(this)">
+					<select class="champ" id="cb_champ_cond_" name="champ_cond_" onchange="display_related_operator(this)">
 						<option value="">Sélectionnez un champ</option>
-						<optgroup label="Informations sur la moisson">
+						<optgroup label="Informations sur la <?= $what ?>">
 						<?= ComboBox::makeComboBox($data_to_show["general_infos"]) ?>
 						</optgroup>
-						<optgroup label="Suivi de la moisson">
+						<optgroup label="Suivi de la <?= $what ?>">
 							<?= ComboBox::makeComboBox($data_to_show["follow_up"]) ?>
+							<?php if ($type == "processus") { ?>
 							<option value="inserted_external_link" disabled>Nombre d'insertions dans external_link</option>
 							<option value="inserted_solr" disabled>Nombre d'insertions dans Solr'</option>
+							<?php } else { ?>
+							<option value="type_share" disabled>Proportion de [type] sur l'ensemble des données collectées</option>
+							<?php } ?>
 						</optgroup>
-						<optgroup label="Nombre de moissons">
+						<optgroup label="Nombre de <?= $what ?>s">
 							<?= ComboBox::makeComboBox($data_to_show["number_of_results_infos"]) ?>
 						</optgroup>
 					</select>
@@ -95,29 +102,13 @@ else $page = "Donnees";
 							onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
 						<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
 					</button>
-					<?php } else { ?>
-					<select class="champ formRapportLeft" id="cb_champ_cond_" name="champ_cond_" onchange="display_related_operator(this)">
-						<optgroup label="Informations sur la notice">
-							<option value="creation_date">Date de collecte de la notice</option>
-						</optgroup>
-						<optgroup label="Informations sur la ressource">
-							<option value="date_publishing">Date de publication</option>
-							<option value="type_data">Type de ressource</option>
-						</optgroup>
-						<optgroup label="Suivi de la ressource">
-							<option value="type_share">Proportion de [type] sur l'ensemble des données collectées</option>
-						</optgroup>
-					</select>
-					<select class="operateur" id="cb_operateur_cond_" name="operateur_cond_">
-						<?= ComboBox::makeComboBox($operators); ?>
-					</select>
-					<input type="text" class="valeur" id="input_valeur_cond_" name="valeur_cond_" placeholder="Valeur de comparaison"/>
-					<?php } ?>
 				</div>
 				<?php if ($configuration != null) {
+					require_once "../Composant/RapportComposant.php";
 					if ($type == "processus") {
-						require_once "../Composant/HarvestTaskRapport.php";
 						echo insert_criterias($configuration["criterias"], $data_to_show, $operators, $operators_short, "processus");
+					} else {
+						echo insert_criterias($configuration["criterias"], $data_to_show, $operators, $operators_short, "donnees");
 					}
 				} ?>
 			</div>
@@ -135,7 +126,6 @@ else $page = "Donnees";
 				<!-- élément reproductible pour l'ajout de donnees -->
 				<div class="donnee_affichee" id="donnee_affichee_" style="display:none">
 					<input type="hidden" id="input_id_champ_aff_" name="id_champ_aff_" value="" />
-					<?php if(isset($type) && $type == "processus") { ?>
 					<select class="champ_donnee" id="cb_champ_aff_" name="display_champ_aff_" onchange="change_value_input(this)">
 						<option value="">Sélectionnez un champ</option>
 						<?= ComboBox::makeComboBox($data_to_show_for_display); ?>
@@ -144,12 +134,13 @@ else $page = "Donnees";
 					<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
 						<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
 					</button>
-					<?php } ?>
 				</div>
 				<?php if ($configuration != null) {
+					require_once "../Composant/RapportComposant.php";
 					if ($type == "processus") {
-						require_once "../Composant/HarvestTaskRapport.php";
 						echo insert_display_values($configuration["data_to_display"], $data_to_show_for_display, "processus");
+					} else {
+						echo insert_display_values($configuration["data_to_display"], $data_to_show_for_display, "donnees");
 					}
 				} ?>
 			</div>
@@ -174,9 +165,11 @@ else $page = "Donnees";
 
     $(document).ready(function() {
         disable_input();
+		$(".champ option[value='harvest_number_of_inserted_in_notices']").attr("disabled", true);
+        $(".champ option[value='notice_date_publishing_count']").attr("disabled", true);
         // Script permettant la redirection quand $_POST envoyé, seulement s'il n'y pas d'erreur
 	<?php if(!empty($_POST) && $msg_error==null) { ?>
-		window.location='../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= ($_GET["id"]!=""?$_GET["id"]:$new_id) ?>&viewonly';
+		//window.location='../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= ($_GET["id"]!=""?$_GET["id"]:$new_id) ?>&viewonly';
     <?php } ?>
     })
 </script>
