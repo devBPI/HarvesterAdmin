@@ -18,10 +18,10 @@ Gateway::connection();
 $section = "Moisson sur Demande";
 include ("../Vue/MoissonSurDemande.php");
 
-$configwithoutfile = $_POST['configuration-select-whithout-file'];
-$configwithfiles = $_POST['configuration-select-whith-files'];
-$fileSelected = basename($_FILES['file-to-upload']['name']);
-$tmpFileSelectedName = $_FILES['file-to-upload']['tmp_name'];
+$configwithoutfile = isset($_POST['configuration-select-whithout-file']) ?? "";
+$configwithfiles = isset($_POST['configuration-select-whith-files']) ?? "";
+$fileSelected = isset($_FILES['file-to-upload']['name'])?basename($_FILES['file-to-upload']['name']):"";
+$tmpFileSelectedName = isset($_FILES['file-to-upload']['tmp_name']) ?? "";
 $ignoredValues = []; // 02/06 ajout pour que l'enregistrement de fichier fonctionne sur mon poste
 
 // echo '<div>EN COURS DE DEVELOPPEMENT</div>';

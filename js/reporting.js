@@ -29,10 +29,9 @@ function display_related_operator(element) {
     let number = getNumber(element);
     reset_defaut_cb_operateur(number);
     reset_default_cb_valeur(number);
-
-    if (element.value == "harvest_status" || element.value == "harvest_configuration_name" || element.value == "notice_type") {
+    if (element.value == "harvest_status" || (element.value).includes("configuration_name") || element.value == "notice_type") {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option> <option value="not_equals">&ne;</option>').show();
-        if (element.value == "harvest_configuration_name") {
+        if ((element.value).includes("configuration_name")) {
             // Afficher combobox des noms de configuration au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             var request = $.ajax({
@@ -67,7 +66,7 @@ function display_related_operator(element) {
             });
         }
         $("#cb_valeur_cond_" + number).attr("required", true).show();
-    } else if (element.value == "harvest_last_task") {
+    } else if (element.value == "harvest_last_task" || element.value == "results_distinct") {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option>').show();
         $("#cb_valeur_cond_" + number).html('<option value="Oui">Oui</option>').attr("required", true).show();
     } else if ((element.value).includes("date") || (element.value).includes("time")) {

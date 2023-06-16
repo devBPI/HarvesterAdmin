@@ -69,7 +69,7 @@ function makeInputCbValeur($criteria, $i): string
 {
 	$cb = "";
 	$display_input = false;
-	if ($criteria["display_value"] == "harvest_last_task") {
+	if ($criteria["display_value"] == "harvest_last_task" || $criteria["display_value"] == "results_distinct") {
 		$cb = '<option value="Oui">Oui</option>';
 	} else if ($criteria["display_value"] == "harvest_configuration_name" || $criteria["display_value"] == "harvest_status" || $criteria["display_value"] == "notice_type") {
 		if ($criteria["display_value"] == "harvest_configuration_name") $data = getConfigurationsFormatees();
@@ -125,7 +125,7 @@ function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): s
 			<optgroup label="Suivi de la {$report_type}">
 			{$cb_follow_up}
 			</optgroup>
-			<optgroup label="Nombre de {$report_type}">
+			<optgroup label="Nombre de {$report_type}s">
 			{$cb_number_of_results_infos}
 			</optgroup>
 		</select>
@@ -167,6 +167,8 @@ function insert_criterias_donnees($criterias, $data_to_show, $operators, $operat
 	foreach ($criterias as $criteria) {
 		if($criteria["display_value"] == "notice_type") {
 			$str = $str . makeCriteria($criteria, $i, "ressource", $data_to_show, $operators_short);
+		} else if ($criteria["display_value"] == "results_distinct") {
+			$str = $str . makeCriteria($criteria, $i, "moisson", $data_to_show, [["id" => "equals", "name" => "="]]);
 		} else {
 			$str = $str . makeCriteria($criteria, $i, "ressource", $data_to_show, $operators);
 		}
