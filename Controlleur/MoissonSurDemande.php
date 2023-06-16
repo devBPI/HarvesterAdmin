@@ -5,9 +5,9 @@
 <html style="overflow-y: auto; overflow-x: hidden;">
 <?php
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
+include ("../Composant/ErrorReportingConfig.php");
+
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
 	$ini = @parse_ini_file("../etc/default.ini", true);

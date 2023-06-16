@@ -51,6 +51,7 @@
 			<div class="column" style="height:400px">
 				<div class="cartouche-solo alertes_du_jour" style="overflow-x:auto;">
 					<H3>Alertes du jour</H3>
+					<?php if(isset($alerts)) { ?>
 					<?php foreach ($alerts as $alert) { ?>
 					<div class="row">
 						<div class="alertes_du_jour_left">
@@ -62,6 +63,7 @@
 							<img style="cursor:pointer" src="../ressources/message.png" width="20px" height="20px"/>
 						</div>
 					</div>
+						<?php } ?>
 						<?php } ?>
 				</div>
 			</div>

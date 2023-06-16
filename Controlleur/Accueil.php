@@ -1,6 +1,9 @@
 <!-- Il y a différentes div et boutons de menus car je n'ai encore décidé lesquels j'utiliserai -->
 <?php
-ini_set("display_errors",1);
+//ini_set("display_errors",1);
+
+include ("../Composant/ErrorReportingConfig.php");
+
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
