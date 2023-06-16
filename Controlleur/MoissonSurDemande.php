@@ -235,5 +235,4 @@ switch ($action) {
 		}
 	}
 }
-
 ?>
