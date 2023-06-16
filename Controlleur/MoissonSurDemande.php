@@ -18,10 +18,10 @@ Gateway::connection();
 $section = "Moisson sur Demande";
 include ("../Vue/MoissonSurDemande.php");
 
-$configwithoutfile = isset($_POST['configuration-select-whithout-file']) ?? "";
-$configwithfiles = isset($_POST['configuration-select-whith-files']) ?? "";
+$configwithoutfile = $_POST['configuration-select-whithout-file'] ?? "";
+$configwithfiles = $_POST['configuration-select-whith-files'] ?? "";
 $fileSelected = isset($_FILES['file-to-upload']['name'])?basename($_FILES['file-to-upload']['name']):"";
-$tmpFileSelectedName = isset($_FILES['file-to-upload']['tmp_name']) ?? "";
+$tmpFileSelectedName = $_FILES['file-to-upload']['tmp_name'] ?? "";
 $ignoredValues = []; // 02/06 ajout pour que l'enregistrement de fichier fonctionne sur mon poste
 
 // echo '<div>EN COURS DE DEVELOPPEMENT</div>';
@@ -71,8 +71,8 @@ switch ($action) {
 		if ($islaunchwithoutgrab) {
 			$statusfortaskinsert = 'GRABBED';
 		}
-
-		if ($configwithoutfile != 0) {
+		//var_dump($configwithoutfiles);
+		if ($configwithoutfile != 0 && $configwithoutfile != null) {
 			$ins = Gateway::insertMoissonWithStatus($configwithoutfile, $statusfortaskinsert);
 			if ($ins) {
 				echo "<script type='text/javascript'>document.location.replace('../Controlleur/HistoriqueMoisson.php');</script>";
@@ -167,7 +167,6 @@ switch ($action) {
 
 						$uploadsuccess = false;
 
-						/// 05/06 METTRE WHILE ICI ?
 						if (is_uploaded_file($fileTmpName)) {
 							// Ici le fichier est telecharge avec succes.
 
@@ -214,7 +213,7 @@ switch ($action) {
 
 		}
 		if($allfilesuploaded==true) {
-
+			var_dump($configwithfiles);
 			$insertOk = Gateway::insertMoisson($configwithfiles); // $configwithfiles vaut l'id de harvest_grab_configuration
 			if (!$insertOk)
 			{
@@ -225,7 +224,7 @@ switch ($action) {
 				<?php
 				$allfilesuploaded = false;
 			} else {
-				echo "<script type='text/javascript'>document.location.replace('../Controlleur/HistoriqueMoisson.php');</script>";
+				//echo "<script type='text/javascript'>document.location.replace('../Controlleur/HistoriqueMoisson.php');</script>";
 			}
 		} else { ?>
 			<div class="avertissement">
