@@ -51,7 +51,7 @@
 			<div class="column" style="height:400px">
 				<div class="cartouche-solo alertes_du_jour" style="overflow-x:auto;">
 					<H3>Alertes du jour</H3>
-					<?php if(isset($alerts)) { ?>
+					<?php if(is_array($alerts) || is_object($alerts)) { ?>
 					<?php foreach ($alerts as $alert) { ?>
 					<div class="row">
 						<div class="alertes_du_jour_left">
