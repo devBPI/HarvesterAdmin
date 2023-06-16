@@ -7,6 +7,8 @@ if (! $ini) {
 
 require_once ("../PDO/Gateway.php");
 
+$_POST["machiavelique"];
+
 date_default_timezone_set('Europe/Paris');
 
 $type = $_POST["report_type"] ?? "";
@@ -26,15 +28,23 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	// --------------------------------- DONNEES
 	if ($type == "donnees") {
 		$select = "SELECT ";
-		$from = " FROM public.notice ";
-		$where = " WHERE ";
+		$from = " FROM public.notice, configuration.harvest_configuration ";
+		$where = " WHERE configuration.harvest_configuration.id=public.notice.configuration_id ";
 		$end_query = "";
 		$must_be_group_by = false;
 
 		$is_set_from_sub_query = false; // determine si on doit ajouter la sous-requete unnest(date_publishing) a la clause from
 
+		// ------------- DISTINCT OU NON
+		foreach ($configuration["criterias"] as $key=>$criteria) {
+			if ($criteria["data_group"]=="number_of_results_infos") {
+				$select = "SELECT DISTINCT ";
+				unset($configuration["criterias"][$key]);
+			}
+		}
+
 		// ------------- FROM ET WHERE
-		$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
+		$increment_non_vide = 1; // increment seulement si != cas 2 (pour construction de la requete)
 		foreach ($configuration["criterias"] as $criteria) {
 			// Cas 1 : fonction (par exemple : abs)
 			// Cas 2 : nombre de moissons = dernière uniquement
@@ -113,7 +123,8 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		}
 
 		$requete_generee = $select.$from.$where.$end_query;
-		$report["result"] = Gateway::select($select.$from.$where.$end_query);
+		//var_dump($requete_generee);
+		$report["result"] = Gateway::select($requete_generee);
 	}
 	// --------------------------------- PROCESSUS
 	if ($type == "processus") {
@@ -177,7 +188,6 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		}
 
 		//print_r($from_where);
-
 		$report["result"] = Gateway::select($select . $from_where . $end_query);
 		if ($join_notice) {
 			foreach ($report["result"] as $key => $line) {

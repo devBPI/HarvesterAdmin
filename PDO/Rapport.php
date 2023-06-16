@@ -65,12 +65,6 @@ class Rapport
 		)[0];
 	}
 
-	/**
-	 * @param $type
-	 * @param $is_null
-	 * @return array|false
-	 */
-
 	/** Retourne les données selon le type (PROCESS ou METADATA)
 	 * @param $type string PROCESS ou METADATA
 	 * @param $is_null boolean a vrai si la colonne data_group peut être number_of_results_infos

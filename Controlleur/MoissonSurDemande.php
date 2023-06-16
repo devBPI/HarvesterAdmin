@@ -5,9 +5,9 @@
 <html style="overflow-y: auto; overflow-x: hidden;">
 <?php
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
+include ("../Composant/ErrorReportingConfig.php");
+
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
 	$ini = @parse_ini_file("../etc/default.ini", true);
@@ -18,10 +18,10 @@ Gateway::connection();
 $section = "Moisson sur Demande";
 include ("../Vue/MoissonSurDemande.php");
 
-$configwithoutfile = $_POST['configuration-select-whithout-file'];
-$configwithfiles = $_POST['configuration-select-whith-files'];
-$fileSelected = basename($_FILES['file-to-upload']['name']);
-$tmpFileSelectedName = $_FILES['file-to-upload']['tmp_name'];
+$configwithoutfile = isset($_POST['configuration-select-whithout-file']) ?? "";
+$configwithfiles = isset($_POST['configuration-select-whith-files']) ?? "";
+$fileSelected = isset($_FILES['file-to-upload']['name'])?basename($_FILES['file-to-upload']['name']):"";
+$tmpFileSelectedName = isset($_FILES['file-to-upload']['tmp_name']) ?? "";
 $ignoredValues = []; // 02/06 ajout pour que l'enregistrement de fichier fonctionne sur mon poste
 
 // echo '<div>EN COURS DE DEVELOPPEMENT</div>';
@@ -41,7 +41,7 @@ if (isset($_POST['launch-without-file-button'])) {
 	}
 }
 
-if($_FILES['input_files']['name'][0]!=''){
+if(isset($_FILES['input_files']['name'][0]) && ($_FILES['input_files']['name'][0]!='')){
 	foreach($_FILES['input_files'] as $key => $attribute){
 		foreach($_FILES['input_files'][$key] as $j => $value){
 			$files_array[$j][$key] = $value;
@@ -49,7 +49,7 @@ if($_FILES['input_files']['name'][0]!=''){
 	}
 }
 
-if($_POST['formIgnoreValues']!=''){
+if(isset($_POST['formIgnoreValues']) && ($_POST['formIgnoreValues']!='')){
 	$ignoredValues = str_split($_POST['formIgnoreValues']);
 }
 
