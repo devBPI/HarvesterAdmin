@@ -41,7 +41,7 @@ if (isset($_POST['launch-without-file-button'])) {
 	}
 }
 
-if($_FILES['input_files']['name'][0]!=''){
+if(isset($_FILES['input_files']['name'][0]) && ($_FILES['input_files']['name'][0]!='')){
 	foreach($_FILES['input_files'] as $key => $attribute){
 		foreach($_FILES['input_files'][$key] as $j => $value){
 			$files_array[$j][$key] = $value;
@@ -49,7 +49,7 @@ if($_FILES['input_files']['name'][0]!=''){
 	}
 }
 
-if($_POST['formIgnoreValues']!=''){
+if(isset($_POST['formIgnoreValues']) && ($_POST['formIgnoreValues']!='')){
 	$ignoredValues = str_split($_POST['formIgnoreValues']);
 }
 
