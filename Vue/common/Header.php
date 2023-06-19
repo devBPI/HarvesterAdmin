@@ -67,7 +67,7 @@ if (! $ini) {
 						<a href="#">Alertes</a>
 							<input type="checkbox" id="drop-6"/>
 							<ul>
-								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/AlertesReporting.php'" href="#">Liste des alertes</a></li>
+								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/Alertes.php'" href="#">Liste des alertes</a></li>
 								<li class="envBackgroundColor"><a onclick="" href="#">Paramétrage</a></li>
 							</ul>
 						</li>
@@ -85,8 +85,8 @@ if (! $ini) {
 		if($ini['version']=="DEV")
 		{
 			echo '<button class="boutonlink" onclick="restart()"><img style="width:20px;height:20px;" src="../ressources/stop.png"/></button>';
-			require_once("../Vue/common/Tricolor.php");
 		}
+		require_once("../Vue/common/Tricolor.php");
 		?>
 	</div>
 	<h1 class="header"><?= $section ?></h1>
