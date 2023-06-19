@@ -5,6 +5,12 @@ include_once("../PDO/Gateway.php");
 class Alertes
 {
 
+
+	/** Retourne les alertes
+	 * @param $order string ordre d'affichage des résultats
+	 * @param $date string date de création de l'alerte, facultatif
+	 * @return array|false|void
+	 */
 	static function getAlerts($order, $date=null)
 	{
 		if (!$date) {
@@ -30,6 +36,10 @@ class Alertes
 		return pg_fetch_all($query);
 	}
 
+	/** Retourne les alertes pour la cartouche (Fiche Individuelle)
+	 * @param $config_id int identifiant de la configuration
+	 * @return array|false
+	 */
 	static function getAlertsForCartridge($config_id) {
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, creation_time, modification_time, status
@@ -40,11 +50,27 @@ class Alertes
 		);
 	}
 
+	/** Suppression d'une alerte
+	 * @param $id int identifiant de l'alerte
+	 * @return void
+	 */
 	static function deleteAlert($id)
 	{
 		pg_query(Gateway::getConnexion(), "DELETE FROM monitoring.alert where id='".$id."';");
 	}
 
+	static function getAlertJobs() {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+			"SELECT code AS id, name, is_enabled FROM monitoring.alert_job"
+			)
+		);
+	}
 
+	static function updateAlertJobs($alert_jobs) {
+		foreach ($alert_jobs as $alert_job) {
+			pg_query("UPDATE monitoring.alert_job SET is_enabled=". $alert_job["is_enabled"]." WHERE code=". $alert_job["id"]);
+		}
+	}
 
 }

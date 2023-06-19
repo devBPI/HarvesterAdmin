@@ -6,6 +6,8 @@ $msg_error = null;
 
 $id = $_GET["id"] ?? "";
 
+$configuration = null;
+
 if (!isset($_GET["viewonly"])) {
 	// ------------------------------------------------------------- Si enregistrement de la configuration
 	if (!empty($_POST) && $_POST["submit_value"] == "save") {

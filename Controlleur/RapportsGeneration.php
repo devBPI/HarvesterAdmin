@@ -7,8 +7,6 @@ if (! $ini) {
 
 require_once ("../PDO/Gateway.php");
 
-$_POST["machiavelique"];
-
 date_default_timezone_set('Europe/Paris');
 
 $type = $_POST["report_type"] ?? "";
@@ -123,7 +121,7 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		}
 
 		$requete_generee = $select.$from.$where.$end_query;
-		//var_dump($requete_generee);
+		//print_r($requete_generee);
 		$report["result"] = Gateway::select($requete_generee);
 	}
 	// --------------------------------- PROCESSUS
