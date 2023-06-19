@@ -69,7 +69,7 @@ if ($table == "exclusion") {
 }
 $section = "Modification d'" . $title;
 include ('../Vue/common/Header.php');
-include 'affichageParamétrage.php';
+//include 'affichageParamétrage.php';
 
 if(empty($_SESSION['session_properties'])){
     $properties_list = explode(PHP_EOL,$def);
@@ -96,11 +96,11 @@ if((isset($_POST["property"]) && isset($_POST["content"])) && (isset($_POST["id"
     $properties_list[$_POST["id"]] = $_POST["property"].":".$_POST["content"];
     $_SESSION['session_properties']=$properties_list;
 }
-if($_POST["delete"]!=""){
+if(isset($_POST["delete"]) && $_POST["delete"]!=""){
     array_splice($properties_list,$_POST["delete"],1);
     $_SESSION['session_properties']=$properties_list;
 }
-if($_POST["swapTarget"]!=""){
+if(isset($_POST["swapTarget"]) && $_POST["swapTarget"]!=""){
     $property_swap = $properties_list[$_POST["id"]];
     $properties_list[$_POST["id"]] = $properties_list[$_POST["swapTarget"]];
     $properties_list[$_POST["swapTarget"]] = $property_swap;

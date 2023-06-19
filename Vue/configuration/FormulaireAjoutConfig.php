@@ -9,6 +9,7 @@
 <?php
 	require '../Composant/ComboBox.php';
 	include ('../Vue/common/Header.php');
+	include("../Composant/ErrorReportingConfig.php");
 ?>
 <body>
 	<div class="content">
@@ -76,8 +77,11 @@
 				?> <input type="text" name="textBusiness" /> 
 					<?php
 					echo "Subordonnée à :";
-					include '../Vue/combobox/ComboBoxConfigs.php';
+					//include '../Vue/combobox/ComboBoxConfigs.php';
 					?>
+					<select>
+						<option value="-1">Aucune subordonnée choisie</option>
+					</select>
 					Format Natif des données exposées : <input type="text" name="textFormatNatif" />
 					Commentaire :
 					<TEXTAREA style="box-shadow: 0px 0px 0px;" id="textNote" name="textNote" rows=10 cols=50></TEXTAREA>

@@ -4,49 +4,43 @@
 	<th>Tâche</th>
 	<th style="width:20px;"></th>
 <?php
-foreach ($dowData[$dow] as $var) { // $dow est le jour de la semaine souhaite, dowData de dow est l'ensemble des planifs du jour J
-    ?><tr><?php
+if ($dowData[$dow]) {
+	foreach ($dowData[$dow] as $var) { // $dow est le jour de la semaine souhaite, dowData de dow est l'ensemble des planifs du jour J
+		?><tr><?php
 
-    ?><td><?php
-    if ($var['h'] == 0) {
-        $var['h'] = "00";
-    }
-    if ($var['m'] == 0) {
-        $var['m'] = "00";
-    }
-    echo $var['h'] . ":" . $var['m'];
-    ?></td>
-    
-		<td><?php
+		?><td><?php
+		if ($var['h'] == 0) {
+			$var['h'] = "00";
+		}
+		if ($var['m'] == 0) {
+			$var['m'] = "00";
+		}
+		echo $var['h'] . ":" . $var['m'];
+		?></td>
 
-    // echo $var['name'] . " (dow = ".$var['dow'].")"." (dom = ".$var['dom'].")";
-    
-		
-	$tasklabel = str_replace("_", "_<wbr>",$var['name']);
-	
-	if ($var['parameter'] != null){
-	    $tasklabel = $tasklabel."-".$var['parameter'];
-	}
-		
-    if ($var['dow'] == null && $var['dom'] == null) {
-        $tasklabel = $tasklabel. " (Quotidienne)";
-    } 
-    
-    echo $tasklabel;
+			<td><?php
+		// echo $var['name'] . " (dow = ".$var['dow'].")"." (dom = ".$var['dom'].")";
+		$tasklabel = str_replace("_", "_<wbr>",$var['name']);
 
-    ?></td>
-		<td>
-			<form
-				onsubmit="return confirm('Voulez vous vraiment supprimer cette planification ?');"
-				action="../../Controlleur/PlanningTachesAnnexes.php?id=<?php echo $var['id']; ?>"
-				method="post">
-				<input type="image" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
-			</form>
-	<?php
-	   
-	}
-	?>
-	
-	</tr>
+		if ($var['parameter'] != null){
+			$tasklabel = $tasklabel."-".$var['parameter'];
+		}
+
+		if ($var['dow'] == null && $var['dom'] == null) {
+			$tasklabel = $tasklabel. " (Quotidienne)";
+		} ?>
+		<?= $tasklabel ?></td>
+			<td>
+				<form
+					onsubmit="return confirm('Voulez vous vraiment supprimer cette planification ?');"
+					action="../../Controlleur/PlanningTachesAnnexes.php?id=<?php echo $var['id']; ?>"
+					method="post">
+					<input type="image" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
+				</form>
+			</td>
+		</tr>
+		<?php }
+} ?>
+
 </table>
 </div>
