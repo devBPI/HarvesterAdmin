@@ -69,7 +69,7 @@ if (! $ini) {
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="../js/toTop.js"></script>
 <script type="text/javascript">
-    let number_of_alerts = <?= count($alerts)+1 ?? 1 ?>;
+    let number_of_alerts = <?= ($alerts!=null)?count($alerts)+1:1 ?>;
 </script>
 <script src="../js/fiche_individuelle.js"></script>
 

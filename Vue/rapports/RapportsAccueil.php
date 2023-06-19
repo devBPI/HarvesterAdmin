@@ -25,7 +25,8 @@ else $page = "RapportsDonnees";
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($configurations as $configuration) { ?>
+		<?php if($configurations) {
+		foreach ($configurations as $configuration) { ?>
 			<tr>
 				<td><?= $configuration["name"] ?></td>
 				<td>
@@ -39,7 +40,7 @@ else $page = "RapportsDonnees";
 					</a>
 				</td>
 			</tr>
-		<?php } ?>
+		<?php }} ?>
 		<tr>
 			<td colspan="3" style="text-align: left">
 				<a href="../Controlleur/<?= $page ?>Edition.php">

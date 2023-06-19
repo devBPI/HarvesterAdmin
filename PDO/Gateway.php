@@ -41,6 +41,8 @@ class Gateway
 	static function getAlerts($order, $date=null) { return Alertes::getAlerts($order, $date); }
 	static function getAlertsForCartridge($config_id) { return Alertes::getAlertsForCartridge($config_id); }
 	static function deleteAlert($id) { Alertes::deleteAlert($id); }
+	static function getAlertJobs() { return Alertes::getAlertJobs(); }
+	static function updateAlertJobs($alert_jobs) { Alertes::updateAlertJobs($alert_jobs); }
 
 	// ------------------------------- Configuration
 	static function getIdFromCode($code) { return Configuration::getIdFromCode($code); }

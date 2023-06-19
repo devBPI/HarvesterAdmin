@@ -6,8 +6,6 @@ if (! $ini) {
 }
 
 
-
-
 require_once("../PDO/Gateway.php");
 Gateway::connection();
 
@@ -24,7 +22,7 @@ if (isset($_GET["page"])) {
 } else {
     $page = 1;
 }
-;
+
 $start_from = ($page - 1) * $limit;
 $section = "Alertes";
 include("../Vue/alerts_logs/AlertesReporting.php");

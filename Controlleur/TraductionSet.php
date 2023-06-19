@@ -28,7 +28,7 @@ if (isset($_GET["id"])) {
 	$configurations = Gateway::getConfigurationBySet($_GET["id"]);
 	$rules_set = Gateway::getTranslationRulesSet($_GET["id"]);
 	$rules = Gateway::getTranslationRulesBySet($_GET["id"]);
-	if (count($rules) > 0) {
+	if ($rules && count($rules) > 0) {
 		$rules_set["category"] = Gateway::getCategoryBySetId($_GET["id"]);
 	} else {
 		$rules_set["category"] = null;

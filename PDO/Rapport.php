@@ -268,18 +268,24 @@ class Rapport
 			);
 		}
 		self::setReportName($report["infos"]["id"], $report["infos"]["name"]);
-		foreach ($report["criterias_to_update"] as $criteria)
-			self::updateCriteria($criteria);
-		foreach($report["criterias_to_insert"] as $criteria)
-			self::insertCriteria($criteria);
-		foreach($criterias_to_delete as $criteria)
-			self::deleteCriteria($criteria["id"]);
-		foreach($report["data_to_update"] as $data)
-			self::updateDataToDisplay($data);
-		foreach($report["data_to_insert"] as $data)
-			self::insertDataToDisplay($data);
-		foreach($data_to_delete as $data)
-			self::deleteDataToDisplay($data["id"]);
+		if (count($report["criterias_to_update"]) > 0)
+			foreach ($report["criterias_to_update"] as $criteria)
+				self::updateCriteria($criteria);
+		if (count($report["criterias_to_insert"]) > 0)
+			foreach($report["criterias_to_insert"] as $criteria)
+				self::insertCriteria($criteria);
+		if ($criterias_to_delete && count($criterias_to_delete) > 0)
+			foreach($criterias_to_delete as $criteria)
+				self::deleteCriteria($criteria["id"]);
+		if (count($report["data_to_update"]) > 0)
+			foreach($report["data_to_update"] as $data)
+				self::updateDataToDisplay($data);
+		if (count($report["data_to_insert"]) > 0)
+			foreach($report["data_to_insert"] as $data)
+				self::insertDataToDisplay($data);
+		if ($data_to_delete && count($data_to_delete) > 0)
+			foreach($data_to_delete as $data)
+				self::deleteDataToDisplay($data["id"]);
 		return 0;
 	}
 
