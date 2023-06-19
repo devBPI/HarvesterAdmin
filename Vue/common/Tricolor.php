@@ -4,8 +4,8 @@
 	if (! $ini) {
 		$ini = @parse_ini_file("../etc/default.ini", true);
 	}
-	ini_set("display_errors", 0);
-	error_reporting(0);
+	ini_set("display_errors", 1);
+	error_reporting(E_ALL);
 	require_once ("../PDO/Gateway.php");
 	Gateway::connection();
 	$colorData = Gateway::getColor()[0];
