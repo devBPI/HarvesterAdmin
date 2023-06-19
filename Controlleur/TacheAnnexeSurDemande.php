@@ -12,8 +12,8 @@ $codes = Gateway::getConfigCodes();
 $section = "Tâche Annexe sur Demande";
 include ("../Vue/taches_annexes/TacheAnnexeSurDemande.php");
 
-$name = $_POST['taskname'];
-$param = $_POST['taskparameter'];
+$name = $_POST['taskname'] ?? null;
+$param = $_POST['taskparameter'] ?? null;
 
 // Recuperation de l'action en cours
 $action = '';

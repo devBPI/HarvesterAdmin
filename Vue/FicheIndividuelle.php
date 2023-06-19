@@ -18,6 +18,7 @@ if (! $ini) {
 <?php
 	$section="Détails de la configuration";
 	include ('../Vue/common/Header.php');
+	include('../Composant/ErrorReportingConfig.php');
 ?>
 	<div class="content">
 		<div class="triple-column-container" style="height:50px">

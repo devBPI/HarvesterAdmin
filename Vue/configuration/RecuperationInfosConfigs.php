@@ -39,21 +39,23 @@
 	<tr>
 		<th colspan="2">Filtres</th>
 	</tr>
-	<?php foreach ($data['filters'] as $filter) { ?>
+	<?php if($data['filters']) {
+	foreach ($data['filters'] as $filter) { ?>
 	<tr>
 		<td class="left_column">Filtre n°<?= $filter['id'] ?></td>
 		<td class="right_column"><a href="../Controlleur/FiltreTree.php?id=<?= $filter['id'] ?>"><?= $filter['name'] ?></a> portant sur "<?= $filter['entity'] ?>"</td>
 	</tr>
-	<?php } ?>
+	<?php }} ?>
 	<tr>
 		<th colspan="2">Traductions</th>
 	</tr>
-	<?php foreach ($data['trad'] as $trad) { ?>
+	<?php if($data['trad']) {
+	foreach ($data['trad'] as $trad) { ?>
 	<tr>
 		<td class="left_column">Traduction n°<?= $trad['id'] ?></td>
 		<td class="right_column"><a href="../Controlleur/TraductionSet.php?f=true&modify=<?= $trad['name'] ?>"><?= $trad['name'] ?></a></td>
 	</tr>
-	<?php } ?>
+	<?php }} ?>
 	<tr>
 		<th colspan="2">URLs</th>
 	</tr>

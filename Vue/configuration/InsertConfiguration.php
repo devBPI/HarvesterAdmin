@@ -3,24 +3,24 @@
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
 
-$codeConfig=$_POST['textCodeConfig']; 
-$name = $_POST['textName']; // String
-$publicName = $_POST['textNomPublic'];
-$publicUrl = $_POST['textUrlPublique'];
-$grabber = $_POST['list_grabber'];
-$mapping = $_POST['list_mapping'];
-$exclusion = $_POST['list_exclusion'];
-$translation = $_POST['list_translation'];
-$url = $_POST['textUrl']; // String
-$urlSet = $_POST['textUrlSet']; // String
+$codeConfig=$_POST['textCodeConfig'] ?? null;
+$name = $_POST['textName'] ?? null; // String
+$publicName = $_POST['textNomPublic'] ?? null;
+$publicUrl = $_POST['textUrlPublique'] ?? null;
+$grabber = $_POST['list_grabber'] ?? null;
+$mapping = $_POST['list_mapping'] ?? null;
+$exclusion = $_POST['list_exclusion'] ?? null;
+$translation = $_POST['list_translation'] ?? null;
+$url = $_POST['textUrl'] ?? null; // String
+$urlSet = $_POST['textUrlSet'] ?? null; // String
 $urlAdd = "&set=" . $urlSet; // String
-$separateur = $_POST['textSeparateur']; // String
-$dif = $_POST['differential'];
-$attempts = $_POST['textAttempts']; // String
-$timeout = $_POST['texTimeout']; // String
-$business = $_POST['textBusiness']; // String
-$liaison = $_POST['template'];
-$commentaire = $_POST['textNote'];
+$separateur = $_POST['textSeparateur'] ?? null; // String
+$dif = $_POST['differential'] ?? null;
+$attempts = $_POST['textAttempts'] ?? null; // String
+$timeout = $_POST['texTimeout'] ?? null; // String
+$business = $_POST['textBusiness'] ?? null; // String
+$liaison = $_POST['template'] ?? null;
+$commentaire = $_POST['textNote'] ?? null;
 
 if ($exclusion == 0) {
     $exclusion = NULL;
@@ -50,6 +50,8 @@ if (! strcmp($commentaire, "") != 0) {
 // Vérification de l'action + Update
 if (isset($_POST['insert'])) {
     $action = 'insert';
+} else {
+    $action = null;
 }
 
 if ($action == 'insert') {

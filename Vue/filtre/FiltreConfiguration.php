@@ -42,7 +42,6 @@ include('../Vue/common/Header.php');
 			</div>
 		<?php } ?>
 		<form action="FiltreConfiguration.php?modify=<?= $id ?>" method="post" id="conf" onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
-		<h3><?= $name ?></h3>
 			<table class="table-config" id="conf">
 				<tr><th width=30%>Entité</th><th width=50%>Règles de filtrage</th><th></th></tr>
 				<tr class="hidden_field"><?php
