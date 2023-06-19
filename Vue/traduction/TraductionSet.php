@@ -186,7 +186,7 @@ include('../Vue/common/Header.php');
 		<?php }?>
 	</div>
 
-	<?= TabConfigsAssociees::makeTab($configurations) ?>
+	<?= $configurations?TabConfigsAssociees::makeTab($configurations):"" ?>
 
 </div>
 </body>
