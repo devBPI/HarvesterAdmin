@@ -1,14 +1,9 @@
 <!-- PHP de la cartouche contenant un tableau affichant l'historique pour une configuration -->
 <?php
-<<<<<<< HEAD
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
-=======
 
 // ini_set("display_errors", 1);
 // error_reporting(E_ALL);
 include("../Composant/ErrorReportingConfig.php");
->>>>>>> 9787e2ccb2dfbcf325e9d351472748a4b8051e07
 
 Gateway::connection();
 
