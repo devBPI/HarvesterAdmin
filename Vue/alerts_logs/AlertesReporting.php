@@ -95,7 +95,6 @@ echo "<th scope=\"col\" width=5% onclick=\"suppressAlert()\"</th></thead>";
 echo"<tbody id=\"displaytbody\">";
 
 if ($alerts && count($alerts) > 0) {
-	var_dump($alerts);
 foreach ($alerts as $alert) {
     
 	//$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time'])) . " AlertesReporting.php";
