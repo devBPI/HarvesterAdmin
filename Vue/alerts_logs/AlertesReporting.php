@@ -16,7 +16,7 @@ if (! $ini) {
 <body name="haut" id="haut">
 	<?php
 	include('../Vue/common/Header.php');
-	$url = "AlertesReporting.php?&order=";
+	$url = "Alertes.php?&order=";
 	?>
 	<div class="content" style="width:90%">
 		<table class="table-config">
@@ -31,7 +31,7 @@ if ($order == "creation_time") {
 } else if ($order == "creation_time DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" width=10% height=30px; onclick = 'location.href=\"" . $url . "creation_time " . $sens . "\"'>Création ". $arrow . "</th>";
+echo "<th scope=\"col\" style='cursor:pointer' width=10% height=30px; onclick = 'location.href=\"" . $url . "creation_time " . $sens . "\"'>Création ". $arrow . "</th>";
 
 
 $arrow = "";
@@ -42,7 +42,7 @@ if ($order == "level") {
 } else if ($order == "level DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" width=10% onclick = 'location.href=\"" . $url . "level " . $sens . "\"'>Niveau " . $arrow . "</th>";
+echo "<th scope=\"col\" style='cursor:pointer' width=10% onclick = 'location.href=\"" . $url . "level " . $sens . "\"'>Niveau " . $arrow . "</th>";
 
 
 $arrow = "";
@@ -53,7 +53,7 @@ if ($order == "category") {
 } else if ($order == "category DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" width=10%' onclick = 'location.href=\"" . $url . "category " . $sens . "\"'>Catégorie " . $arrow . "</th>";
+echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "category " . $sens . "\"'>Catégorie " . $arrow . "</th>";
 
 
 $arrow = "";
@@ -64,7 +64,7 @@ if ($order == "configuration_name") {
 } else if ($order == "configuration_name DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" width=10%' onclick = 'location.href=\"" . $url . "configuration_name " . $sens . "\"'>Configuration " . $arrow . "</th>";
+echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "configuration_name " . $sens . "\"'>Configuration " . $arrow . "</th>";
 
 
 $arrow = "";
@@ -75,10 +75,10 @@ if ($order == "configuration_id") {
 } else if ($order == "configuration_id DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" width=10%' onclick = 'location.href=\"" . $url . "configuration_id " . $sens . "\"'>Configuration Id " . $arrow . "</th>";
+echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "configuration_id " . $sens . "\"'>Configuration Id " . $arrow . "</th>";
 
 
-echo "<th scope=\"col\" width=35%'>Message</th>";
+echo "<th scope=\"col\" style='cursor:pointer' width=35%'>Message</th>";
 
 
 $arrow = "";
@@ -94,82 +94,48 @@ echo "<th scope=\"col\" width=5% onclick=\"suppressAlert()\"</th></thead>";
 
 echo"<tbody id=\"displaytbody\">";
 
+if ($alerts && count($alerts) > 0) {
+	var_dump($alerts);
 foreach ($alerts as $alert) {
     
-    //$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time'])) . " AlertesReporting.php";
+	//$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time'])) . " AlertesReporting.php";
 	$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time']));
-    ?><tr>
-				
-		<td><?php
-		     if(empty($creationTimeSyst)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:center;'>".$creationTimeSyst."</div>";
-    		}
-        ?></td>
-		
-	
-	
-	<?php
-	   $level = $alert['level'];
-	   $levelStyle = $level."_level";
-	
-		echo "<td class='$levelStyle'>";
- 
-    		if(empty($level)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:center;'>".$level."</div>";
-    		}
-    	echo "</td>";
-        ?>
-        
-        
-        <td><?php
-            $category = $alert['category'];
-            if(empty($category)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:center;'>".$category."</div>";
-    		}
-        ?></td>
-        
-        <td><?php
-            $configurationName = $alert['configuration_name'];
-            if(empty($configurationName)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:center;'>".$configurationName."</div>";
-    		}
-        ?></td>
-        
-        <td><?php
-            $configurationId = $alert['configuration_id'];
-            if(empty($configurationId)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:center;'>".$configurationId."</div>";
-    		}
-        ?></td>
-		
-		<td><?php
-		    $message = $alert['message'];
-            if(empty($message)){
-    		    echo "<div style='text-align:center;'>-</div>";
-    		}else{
-    		    echo "<div style='text-align:left; margin-left:10px;'>".$message."</div>";
-    		}
-        ?></td>
+	$level = $alert['level'];
+	$levelStyle = $level."_level";
+	$category = $alert['category'];
+	$configurationName = $alert['configuration_name'];
+	$configurationId = $alert['configuration_id'];
+	$message = $alert['message'];
 
+	?>
+	<tr>
+		<td>
+			<div style="text-align:center;"><?= empty($creationTimeSyst)?"-":$creationTimeSyst ?></div>
+		</td>
+		<td class="<?= $levelStyle ?>">
+			<div style="text-align:center;"><?= empty($level)?"-":$level ?></div>
+		</td>
+		<td>
+			<div style="text-align:center;"><?= empty($category)?"-":$category ?></div>
+		</td>
+		<td>
+			<div style="text-align:center;"><?= empty($configurationName)?"-":$configurationName ?></div>
+		</td>
+		<td>
+			<div style="text-align:center;"><?= empty($configurationId)?"-":$configurationId ?></div>
+		</td>
+		<td>
+			<div style="text-align:center;"><?= empty($message)?"-":$message ?></div>
+		</td>
 		<td>
 			<div class="button-hover" onclick="deleteRow(<?= $alert["id"]?>)" id="<?= $alert['id']?>" style="cursor:pointer">
 				<img src="../ressources/cross.png" width="20px" height="20px">
 			</div>
 		</td>
-
-
 	</tr>
-	<?php } ?>
+	<?php
+	}
+}?>
 	</tbody>
 	</table>
 
@@ -177,7 +143,7 @@ foreach ($alerts as $alert) {
 	<script src="../js/toTop.js"></script>
 	<script>
 		function deleteRow(i){
-			post("AlertesReporting.php",{deleteRow : i});
+			post("Alertes.php",{deleteRow : i});
   	  }
 
 		/**
@@ -192,14 +158,14 @@ foreach ($alerts as $alert) {
 			form.action = path;
 
 			for (const key in params) {
-			if (params.hasOwnProperty(key)) {
-			const hiddenField = document.createElement('input');
-			hiddenField.type = 'hidden';
-			hiddenField.name = key;
-			hiddenField.value = params[key];
+				if (params.hasOwnProperty(key)) {
+					const hiddenField = document.createElement('input');
+					hiddenField.type = 'hidden';
+					hiddenField.name = key;
+					hiddenField.value = params[key];
 
-			form.appendChild(hiddenField);
-			}
+					form.appendChild(hiddenField);
+				}
 			}
 
 			document.body.appendChild(form);
