@@ -110,7 +110,7 @@ if(isset($_POST["swapTarget"]) && $_POST["swapTarget"]!=""){
 foreach($properties_list as $property){
 	if ($property != "") {
 		$exploded_property = explode(":", $property, 2);
-		var_dump($exploded_property);
+		//var_dump($exploded_property);
 		$properties_name[] = $exploded_property[0];
 		$properties_name_preview[] = $exploded_property[0];
 		$properties_content[] = $exploded_property[1];
