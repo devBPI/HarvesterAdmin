@@ -101,10 +101,11 @@
 	<tr>
 		<td class="left_column">Parcours</td>
 		<td class="right_column"><?php
+			if ($data['parcours']) {
 			foreach ($data['parcours'] as $val_mapping) {
 				if ($val_mapping['parcours'] != null)
 					echo $val_mapping['parcours'] . "<br/>";
-			}
+			}}
 			?></td>
 	</tr>
 	<tr>
