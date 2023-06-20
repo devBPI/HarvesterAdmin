@@ -63,7 +63,7 @@ if ($table == "exclusion") {
 }
 $section = "Modification d'" . $title;
 include ('../Vue/common/Header.php');
-include 'affichageParamétrage.php';
+//include 'affichageParamétrage.php';
 
 $properties_list = $_SESSION["session_properties"];
 $def_preview = implode(PHP_EOL,$properties_list);
@@ -86,11 +86,11 @@ $def_preview = implode(PHP_EOL,$properties_list);
     <div class="double-eq-column-container">
         <div class="column-full" style="text-align:left">
             <H3>Original</H3>
-            <textarea id="code_original" name="code_original"><?php echo (isset($def))? $def:"";?></textarea>
+            <textarea class="codeMirror-scroll CodeMirror" id="code_original" name="code_original"><?php echo (isset($def))? $def:"";?></textarea>
         </div>
         <div class="column-full" style="text-align:left">
             <H3>Prévisualisation</H3>
-            <textarea id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
+            <textarea class="codeMirror-scroll CodeMirror" id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
         </div>
     </div>	
 </div>

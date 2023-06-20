@@ -3,7 +3,9 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
+
 session_start();
+session_reset();
 session_unset();
 session_destroy();
 ?>

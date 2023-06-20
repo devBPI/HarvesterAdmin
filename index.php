@@ -3,7 +3,7 @@
 <?php 
 	//ini_set("display_errors",1);
 
-	include ("../Composant/ErrorReportingConfig.php");
+	include ("./Composant/ErrorReportingConfig.php"); // . et non .. car à la racine du projet
 
 	$ini = parse_ini_file("etc/configuration.ini");
 	if(!$ini)
