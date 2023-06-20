@@ -1,3 +1,6 @@
+// TestTransformation.php
+// Script inutilisé au 20/06/2023 (car page inaccessible depuis BO)
+
 var paterns=['X2','test'];
 
 function ajaxResponOk(response)
@@ -12,7 +15,7 @@ function traduction()
 	input=document.getElementById("input").value;
 	patern=document.getElementById("patern").value;
 	var request = $.ajax({
-		url: "../Controlleur/Translator.php",
+		url: "../Controlleur/unused_files/Translator.php",
 		type: "post",
 		data: 'input='+input+'&patern='+patern,
 		success: function(response){

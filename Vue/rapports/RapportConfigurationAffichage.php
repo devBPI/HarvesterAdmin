@@ -98,8 +98,10 @@ else $page = "Donnees";
 	<form action="../../Controlleur/RapportsGeneration.php" method="post">
 		<input type="hidden" id="input_generate_id" name="report_id" value="<?= $_GET["id"] ?>">
 		<input type="hidden" id="inpute_generate_type" name="report_type" value="<?= $type ?>">
-		<button id="input_generate" type="submit" name="submit_value" value="generate">Générer le rapport
-		</button>
+		<div style="display:flex;justify-content: flex-end;flex-direction: row">
+			<button id="input_generate" type="submit" name="submit_value" value="generate">Générer le rapport
+			</button>
+		</div>
 	</form>
 </div>
 

@@ -28,3 +28,27 @@ function closeForm(id=null) {
         document.getElementById("validateForm" + id).style.display = "none";
     document.getElementById("page-mask").style.display = "none";
 }
+
+// FicheIndividuelle.php
+// Rend les messages des alertes en pop-up jQuery
+function makeJQueryUIPopUP(number_of_alerts) {
+    for (let i = 1; i < number_of_alerts; i++) {
+        $(function () {
+            $("#alertPopUp" + i).dialog({
+                autoOpen: false,
+                width: 400,
+                show: {
+                    effect: "clip",
+                    duration: 200
+                },
+                hide: {
+                    effect: "clip",
+                    duration: 200
+                }
+            });
+            $("#alertOpener" + i).on("click", function () {
+                $("#alertPopUp" + i).dialog("open");
+            });
+        });
+    }
+}

@@ -146,7 +146,9 @@ else {
 			</div>
 		</fieldset>
 	</div>
-		<button class="submit_disabled" id="input_save" type="submit" name="submit_value" value="save" disabled>Enregistrer la configuration</button>
+		<div style="display:flex;justify-content: flex-end;flex-direction: row">
+			<button class="submit_disabled" id="input_save" type="submit" name="submit_value" value="save" disabled>Enregistrer la configuration</button>
+		</div>
 	</form>
 </div>
 
@@ -157,7 +159,7 @@ else {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     // Script d'initialisation des compteurs et numéros d'identifiants
-    // Ne peut se mettre dans reporting.js car utilise du php
+    // Ne peut se mettre dans rapports/reporting.js car utilise du php
     let nb_criteres = <?= isset($configuration)?count($configuration["criterias"])+1:1 ?>; // Incrément pour l'identifiant / le nom des champs de critères de sélection
     let nb_donnees_affs = <?= isset($configuration)?count($configuration["data_to_display"])+1:1 ?>; // Incrément pour l'identifiant / le nom des champs de données à afficher
     let cpt_criteres = <?= isset($configuration)?count($configuration["criterias"]):0 ?>; // Compteur de critères du rapport
@@ -165,13 +167,14 @@ else {
 
     $(document).ready(function() {
         disable_input();
-		$(".champ option[value='harvest_number_of_inserted_in_notices']").attr("disabled", true);
-        $(".champ option[value='notice_date_publishing_count']").attr("disabled", true);
-        // Script permettant la redirection quand $_POST envoyé, seulement s'il n'y pas d'erreur
+		$(".champ option[value='harvest_number_of_inserted_in_notices']").attr("disabled", true); // Pour dev, a enlever a un certain moment
+        $(".champ option[value='harvest_number_of_inserted_in_external_link']").attr("disabled", true); // Pour dev, a enlever a un certain moment
+        $(".champ option[value='notice_date_publishing_count']").attr("disabled", true); // Pour dev, a enlever a un certain moment
 	<?php if(!empty($_POST) && $msg_error==null) { ?>
-		//window.location='../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= ($_GET["id"]!=""?$_GET["id"]:$new_id) ?>&viewonly';
+        // Script permettant la redirection quand $_POST envoyé, seulement s'il n'y pas d'erreur -> changé en redirection php donc désactivé
+        //window.location='../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= ($_GET["id"]!=""?$_GET["id"]:$new_id) ?>&viewonly';
     <?php } ?>
     })
 </script>
-<script src="/js/reporting.js"></script>
+<script src="/js/rapports/reporting.js"></script>
 </html>

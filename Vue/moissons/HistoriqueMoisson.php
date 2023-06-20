@@ -301,7 +301,7 @@ foreach ($tasks as $task) {
 
 	<div id="page-mask"></div>
 
-	<script src="../js/progress.js"></script>
+	<script src="../js/moissons/progress.js"></script>
 	<script src="../js/histo-task-status.js"></script>
 	<script src="../js/pop_up.js"></script>
 </body>

@@ -211,7 +211,7 @@ if (!empty($_POST) && (!isset($array_error) || (count($array_error) == 0))) : ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../../js/add_fields.js"></script>
-<script src="../../js/entities.js"></script>
+<script src="../../js/filtres_traductions/entities.js"></script>
 <script src="../../js/pop_up.js"></script>
 <script src="../../js/toTop.js"></script>
 </body>

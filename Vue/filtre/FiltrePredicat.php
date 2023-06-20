@@ -40,19 +40,19 @@ if (! $ini) {
 				<td style='display:none'><input name='idnew' value='vide'/></td>
 				<td><input type='text' name='code'/></td>
 				<td><select name='newEnt' onchange='display_entity(this)'><option value=''>Sélectionnez une entité</option>
-				<?php foreach($entities as $e)
-				{
-					echo "<option value='".$e."'>".$e."</option>";
+				<?php if($entities) {
+					foreach($entities as $e) {
+						echo "<option value='".$e."'>".$e."</option>";
+					}
 				}?>
 				</select></td><td name="entity"></td>
 				<td>
 					<select name="function">
-				<?php
-					foreach($functions as $f)
-					{
-						echo "<option value='".$f['code']."' ".(($v['function_code']==$f['code'])?'selected':'').">".$f['code']."</option>";
+				<?php if($functions) {
+					foreach ($functions as $f) {
+						echo "<option value='" . $f['code'] . "' >" . $f['code'] . "</option>";
 					}
-				?>
+				} ?>
 					</select>
 				</td>
 				<td id="valueBox">
@@ -113,16 +113,18 @@ if (! $ini) {
 						<tr class='entity' id='new' name='pred'><td style='display:none'><td><input type='text' name='idnew' value='vide'/></td>
 						<td><input type='text' name='code'/></td>
 						<td><select onchange='display_entity(this)' name='entity-1'><option value=''>Aucun choisi</option>
-						<?php foreach($entities as $e)
-						{
-							echo "<option value='".$e['entity']."'>".$e['entity']."</option>";
+						<?php if ($entities) {
+							foreach ($entities as $e) {
+								echo "<option value='" . $e['entity'] . "'>" . $e['entity'] . "</option>";
+							}
 						} ?>
 						</select></td><td />
 						<td><select onchange="display_valueBox(this, 0, '')" name="function">
-						<?php foreach($functions as $f)
-						{
-							echo "<option value='".$f['code']."' ".(($v['function_code']==$f['code'])?'selected':'').">".$f['code']."</option>";
-						}	?>
+						<?php if($functions) {
+							foreach ($functions as $f) {
+								echo "<option value='" . $f['code'] . "' " . (($v['function_code'] == $f['code']) ? 'selected' : '') . ">" . $f['code'] . "</option>";
+							}
+						}?>
 						</select></td><td><input name='value-1' type='text'/></td>
 						<td><button class='but' type='button' title='Supprimer un prédicat' style='cursor:pointer' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
 				<?php } ?>
@@ -175,19 +177,8 @@ if (! $ini) {
 	<script src="../../js/toTop.js"></script>
 	<script src="../../js/pop_up.js"></script>
 	<script src="../../js/add_fields.js"></script>
-	<script src="../../js/entities.js"></script>
-	<script>
-		// Affichage de la valeur : désactivé si fonction IS_EMPTY, IS_NOT_EMPTY, activé et obligatoire sinon
-		function display_valueBox(elt, nb, val) {
-            if (elt.value == "IS_EMPTY" || elt.value == "IS_NOT_EMPTY") {
-                document.getElementById("valueBox" + nb).innerHTML = "<input name='value" + nb + "' type='text' value='' disabled/>";
-            } else {
-                if (val)
-                    document.getElementById("valueBox" + nb).innerHTML = "<input name='value" + nb + "' type='text' value='" + val + "' required/>";
-                else
-                    document.getElementById("valueBox" + nb).innerHTML = "<input name='value" + nb + "' type='text' value='' required/>";
-			}
-		}
-	</script>
+	<script src="../../js/filtres_traductions/entities.js"></script>
+	<script src="../../js/filtres_traductions/predicate.js"></script>
+
 </body>
 </html>

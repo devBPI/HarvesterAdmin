@@ -121,6 +121,6 @@ if (!$ini) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../../js/toTop.js"></script>
-<script src="../../js/sort_etats_dispo.js"></script>
+<script src="../../js/etats_dispo/sort_etats_dispo.js.js"></script>
 </body>
 </html>

@@ -186,10 +186,12 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 				$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
 			} // Autres cas
 			else {
-				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
+				$from_where = buildRegularWhere($criteria, $from_where, $increment_non_vide);
 				$increment_non_vide++;
 			}
 		}
+
+		//print_r($select.$from_where.$end_query);
 
 		//print_r($from_where);
 		$report["result"] = Gateway::select($select . $from_where . $end_query);

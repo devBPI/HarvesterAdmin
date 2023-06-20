@@ -78,8 +78,8 @@ require '../Composant/ComboBox.php';
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
-	<script src="../js/select.js"></script>
-	<script src="../js/select-item.js"></script>
+	<script src="../js/filtres_traductions/select.js"></script>
+	<!-- <script src="../js/unused_files/select-item.js"></script> -->
 	<script>
 		function changeHref(element){
 			var slct = element.options[element.selectedIndex].value;

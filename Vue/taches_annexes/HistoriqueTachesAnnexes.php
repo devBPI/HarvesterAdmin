@@ -227,6 +227,6 @@ foreach ($tasks as $task) {
 	?>
 	</div>
 </body>
-<script src='../js/progress.js'></script>
+<script src='../js/moissons/progress.js'></script>
 <script src='../js/histo-task-status.js'></script>
 </html>

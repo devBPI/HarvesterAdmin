@@ -1,4 +1,5 @@
 <?php
+// Vue inutilisée au 20/06/2023 (car page inaccessible depuis BO)
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
@@ -8,7 +9,7 @@ if (! $ini) {
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../js/toTop.js"></script>
-<script src='../js/translator.js'></script>
+<script src='../js/unused_files/translator.js'></script>
 <meta charset="utf-8" />
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/composants.css" />

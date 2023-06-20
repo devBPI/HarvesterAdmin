@@ -126,7 +126,7 @@ include('../Vue/common/Header.php');
 	<script src="../../js/toTop.js"></script>
 	<script src="../../js/pop_up.js"></script>
 	<script src="../../js/add_fields.js"></script>
-	<script src="../../js/entities.js"></script>
+	<script src="../../js/filtres_traductions/entities.js"></script>
 	<script>
 		function suppRegle(element){
 			var td = element.parentNode;

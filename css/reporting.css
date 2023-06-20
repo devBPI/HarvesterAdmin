@@ -39,12 +39,19 @@ input[type=date].valeur, input[type=datetime-local].valeur {
 }
 
 .delete img {
-    position:relative;
-    bottom:-10px;
+    position: relative;
+    bottom: -10px;
+}
+
+@media all and (max-width: 745px) {
+    .delete img {
+        position: unset;
+        bottom: 0;
+    }
 }
 
 .param_fieldset {
-    margin:5px;
+    margin: 5px;
     padding: 5px;
 }
 

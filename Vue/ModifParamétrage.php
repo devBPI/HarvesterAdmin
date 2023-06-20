@@ -117,10 +117,8 @@ foreach($properties_list as $property){
 ?>
 
 <div class="content">
-    <div class="triple-column-container" style="height:50px">
-        <div class="column">
-			<a href="../Controlleur/Mapping.php" class="buttonlink">&laquo; Retour</a>
-		</div>
+	<div style="display:flex;justify-content: space-between;flex-direction: row; margin-bottom: 5px">
+			<a href="../Controlleur/Mapping.php" class="buttonlink">&laquo; Retour aux mappings</a>
 	</div>
     <div class="cartouche-solo" style="width:100%;height:auto">
 		<form action="" method="post" style="padding:5%">

@@ -118,7 +118,7 @@ class Rapport
 		if ($for=="query") {
 			return pg_fetch_all(
 				pg_query(Gateway::getConnexion(),
-					"SELECT idm.table_field, idm.data_table, ico.query_code, ic.value_to_compare, idm.data_group
+					"SELECT idm.table_field, idm.data_table, ico.query_code, ic.value_to_compare, idm.display_value, idm.data_group
 					   FROM configuration.interface_criteria ic, configuration.interface_criteria_operator ico, configuration.interface_data_mapping idm
 					   WHERE ic.interface_data_mapping_id=idm.id
 				       AND ic.interface_criteria_operator_id=ico.id
@@ -199,7 +199,6 @@ class Rapport
 	}
 
 	static function updateDataToDisplay($data) {
-		var_dump($data);
 		$data_mapping_id = self::getDataMappingByDisplay_Value($data["display_value"])["id"];
 		pg_query(Gateway::getConnexion(),
 			"UPDATE configuration.interface_data_to_display
