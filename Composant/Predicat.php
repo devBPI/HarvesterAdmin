@@ -14,7 +14,8 @@ $num=(isset($_POST['num']))?$_POST['num']:$GLOBALS['nb'];
 
 <?php
 if(isset($d) && $d!=null) {
-	$value = Gateway::getPredicat($d['pred'])[0];
+	$predicat_v = Gateway::getPredicat($d['pred']);
+	$value = $predicat_v?$predicat_v[0]:null;
 	if($value) {
 		?>
 		<tr class="entity" id="<?= $value['property'] ?>">
