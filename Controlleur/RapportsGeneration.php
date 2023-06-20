@@ -11,12 +11,28 @@ date_default_timezone_set('Europe/Paris');
 
 $type = $_POST["report_type"] ?? "";
 
+function buildRegularWhere($criteria, $where, $increment_non_vide) {
+	// Autres cas de la construction du where (commun à Processus et Métadonnées)
+	if ($increment_non_vide == 0) {
+		return $where . $criteria["data_table"] . "." . $criteria["table_field"]
+			. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+	}
+	else {
+		return $where . " AND " . $criteria["data_table"] . "." . $criteria["table_field"]
+			. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+	}
+}
+
+
+
+
+
 if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	//var_dump($_POST);
 	$configuration = Gateway::getReport($_POST["report_id"]);
 	$configuration["criterias"] = Gateway::getCriterias($_POST["report_id"], "query");
 	$configuration["data_to_display"] = Gateway::getDataToDisplay($_POST["report_id"]);
-	foreach ($configuration["data_to_display"] as $key => $dtd) {
+	foreach ($configuration["data_to_display"] as $key => $dtd) { // Récupération de toutes les infos des data_to_display
 		$configuration["data_to_display"][$key] = array_unique(
 			array_merge($dtd,Gateway::getDataMappingByDisplay_Value($dtd["display_value"])),
 			SORT_REGULAR
@@ -35,7 +51,7 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 
 		// ------------- DISTINCT OU NON
 		foreach ($configuration["criterias"] as $key=>$criteria) {
-			if ($criteria["data_group"]=="number_of_results_infos") {
+			if ($criteria["display_value"]=="results_distinct") {
 				$select = "SELECT DISTINCT ";
 				unset($configuration["criterias"][$key]);
 			}
@@ -64,14 +80,7 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 				$increment_non_vide++;
 			} // Autres cas
 			else {
-				if ($increment_non_vide == 0) {
-					$where = $where . $criteria["data_table"] . "." . $criteria["table_field"]
-						. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
-				}
-				else {
-					$where = $where . " AND " . $criteria["data_table"] . "." . $criteria["table_field"]
-						. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
-				}
+				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
 				$increment_non_vide++;
 			}
 		}
@@ -173,14 +182,11 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 				}
 				$increment_non_vide++;
 			} // Cas 2 : nombre de moissons = dernière uniquement
-			else if ($criteria["data_group"] == "number_of_results_infos") {
+			else if ($criteria["display_value"] == "harvest_last_task") {
 				$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
 			} // Autres cas
 			else {
-				if ($increment_non_vide == 0) $from_where = $from_where . $criteria["data_table"] . "." . $criteria["table_field"]
-					. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
-				else $from_where = $from_where . " AND " . $criteria["data_table"] . "." . $criteria["table_field"]
-					. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
 				$increment_non_vide++;
 			}
 		}
