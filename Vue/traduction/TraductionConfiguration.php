@@ -185,7 +185,9 @@ include('../Vue/common/Header.php');
 			</tr>
 			</tbody>
 		</table>
-		<input type="submit" value="Modifier" class="buttonlink"/>
+		<div style="display:flex;justify-content: flex-end;flex-direction: row">
+			<input type="submit" value="Modifier les associations" class="buttonlink"/>
+		</div>
 	</form>
 
 </div>

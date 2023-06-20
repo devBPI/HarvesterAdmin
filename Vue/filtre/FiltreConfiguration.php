@@ -88,7 +88,9 @@ include('../Vue/common/Header.php');
 				?>
 				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td style='text-align:right'><button class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
 			</table>
-			<input type="submit" value="Modifier" class="button primairy-color round"/>
+			<div style="display:flex;justify-content: flex-end;flex-direction: row">
+				<input type="submit" value="Modifier les associations" class="button primairy-color round"/>
+			</div>
 		</form>
 	</div>
 

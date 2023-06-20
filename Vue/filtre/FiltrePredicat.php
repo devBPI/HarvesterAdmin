@@ -20,7 +20,9 @@ if (! $ini) {
 	<?php include('../Vue/common/Header.php'); ?>
 
 	<div class="content">
-		<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a><br/><br/>
+		<div style="display:flex;justify-content: space-between;flex-direction: row; margin-bottom: 5px">
+			<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
+		</div>
 			<?php
 			if(isset($_GET['set']))
 			{

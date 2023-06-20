@@ -33,7 +33,7 @@ include('../Vue/common/Header.php');
 		<h3 class="config_name" style="text-align:center">Ensemble : <?= $rules_set["name"] ?></h3>
 		<p class="sub_title">Contenu de l'ensemble de règles de traduction</p>
 	</div>
-	<div class="btn_div">
+	<div style="display:flex;justify-content: space-between;">
 		<a href="../Controlleur/Traduction.php" class="buttonlink">« Retour aux traductions</a>
 	</div>
 
@@ -135,7 +135,9 @@ include('../Vue/common/Header.php');
 				</tr>
 				</tbody>
 				</table>
-			<input type="submit" value="Valider les modifications" class="button primairy-color round"/>
+			<div style="display:flex;justify-content: flex-end;flex-direction: row">
+				<input type="submit" value="Valider les modifications" class="button primairy-color round"/>
+			</div>
 		</form>
 		<?php } else { ?>
 		<table class="table-config">
@@ -180,9 +182,9 @@ include('../Vue/common/Header.php');
 			?>
 		</tbody>
 		</table>
-			<div class="btn_div">
+		<div style="display:flex;justify-content: flex-end;flex-direction: row">
 				<a href="TraductionSet.php?id=<?= $rules_set["id"] ?>&modify=false" class="buttonpage">Éditer l'ensemble de règles</a>
-			</div>
+		</div>
 		<?php }?>
 	</div>
 

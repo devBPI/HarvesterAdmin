@@ -76,7 +76,9 @@ class TabTraductionRulesCategory
 					</tbody>
 				</table>
 			</div>
-			<input type="submit" value="Valider" class="button primairy-color round"/>
+			<div style="display:flex;justify-content: flex-end;flex-direction: row">
+				<input type="submit" value="Enregistrer" class="button primairy-color round"/>
+			</div>
 		</form>
 	</div>';
 		} else {
@@ -91,7 +93,8 @@ class TabTraductionRulesCategory
 			}
 			$str = $str . '</table>
 	</div>
-	<div class="btn_div">';
+	<div style="display:flex;justify-content: flex-end;flex-direction: row">
+			';
 			if ($id == null) {
 				$str = $str . '<a href="' . $controller . '?modify=false" class="buttonpage">' . $msg_edition . '</a>
 				</div>';

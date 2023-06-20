@@ -1,5 +1,7 @@
 <?php
 
+/* Code commun à RapportsDonneesEdition.php et RapportsProcessusEdition.php */
+
 require_once ("../PDO/Gateway.php");
 
 $msg_error = null;
