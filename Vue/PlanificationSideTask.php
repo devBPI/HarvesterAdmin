@@ -262,6 +262,7 @@ if (isset($_POST["now"])) {
 				document.getElementById("parametre").style.display = 'block';
 			} else {
 				document.getElementById("parametre").style.display = 'none';
+                document.getElementById("parametre").value = null;
 			}
 		});
  	</script>

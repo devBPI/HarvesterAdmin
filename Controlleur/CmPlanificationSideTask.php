@@ -29,6 +29,8 @@ switch ($action) {
             if ($name != null) {
                 if($name == "PURGE"){
                     $param = Gateway::getIdFromCode($param);
+                } else {
+                    $param = null;
                 }
                 $ins = Gateway::insertSideTask($name, $param);
                 if ($ins) {
@@ -49,6 +51,8 @@ switch ($action) {
             if ($name != null && $heure != "null") {
                 if($name == "PURGE"){
                     $param = Gateway::getIdFromCode($param);
+                } else {
+                    $param = null;
                 }
                 $hExplode = explode(':', $heure);
                 $h = $hExplode[0];
@@ -73,6 +77,8 @@ switch ($action) {
             if ($name != null && $heure != "null" && $jour != 0) {
                 if($name == "PURGE"){
                     $param = Gateway::getIdFromCode($param);
+                } else {
+                    $param = null;
                 }
                 $hExplode = explode(':', $heure);
                 $h = $hExplode[0];
@@ -103,6 +109,8 @@ switch ($action) {
             if ($name != null && $jour != 0 && $day != 0 && $semaine != 0 && $heure != "null") {
                 if($name == "PURGE"){
                     $param = Gateway::getIdFromCode($param);
+                } else {
+                    $param = null;
                 }
                 $hExplode = explode(':', $heure);
                 $h = $hExplode[0];

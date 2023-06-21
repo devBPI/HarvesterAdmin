@@ -86,11 +86,11 @@ $def_preview = implode(PHP_EOL,$properties_list);
     <div class="double-eq-column-container">
         <div class="column-full" style="text-align:left">
             <H3>Original</H3>
-            <textarea class="codeMirror-scroll CodeMirror" id="code_original" name="code_original"><?php echo (isset($def))? $def:"";?></textarea>
+            <textarea id="code_original" name="code_original"><?php echo (isset($def))? $def:"";?></textarea>
         </div>
         <div class="column-full" style="text-align:left">
             <H3>Prévisualisation</H3>
-            <textarea class="codeMirror-scroll CodeMirror" id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
+            <textarea id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
         </div>
     </div>	
 </div>
@@ -115,7 +115,7 @@ $def_preview = implode(PHP_EOL,$properties_list);
 	<script>
 		$('select[name="list_exist_propriety"]').on('change',function(){
 			var selectIndex=$('select option:selected').val();
-			var content = <?php echo json_encode($properties_content); ?>;
+			var content = <?= json_encode($properties_content ?? null) ?>;
 			$('#exist_content').val(content[selectIndex-1]);
 		});
 
@@ -165,7 +165,7 @@ $def_preview = implode(PHP_EOL,$properties_list);
 					editor_preview.doc.addLineClass(i,'background','CodeMirror-changedline-p-background');
 				}
 			}
-			<?php $properties_content["list_exist_propriety"] = $_POST['list_exist_propriety']; ?>
+			<?php $properties_content["list_exist_propriety"] = ($_POST['list_exist_propriety'] ?? null); ?>
 		});
 	</script>
 </body>

@@ -89,6 +89,10 @@
   .form-container .delete {
     background-color: red;
   }
+
+  .form-container .delete:hover {
+      background-color:#e20000;
+  }
   
   /* Add some hover effects to buttons */
   .form-container .btn:hover, .open-button:hover {

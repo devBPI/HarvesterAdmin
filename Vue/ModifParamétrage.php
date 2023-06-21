@@ -108,16 +108,20 @@ if(isset($_POST["swapTarget"]) && $_POST["swapTarget"]!=""){
 	$_SESSION['session_properties']=$properties_list;
 }
 foreach($properties_list as $property){
-	if ($property != "") {
+	if (strcmp($property,'')!=1 && $property != null) {
 		$exploded_property = explode(":", $property, 2);
-		//var_dump($exploded_property);
-		$properties_name[] = $exploded_property[0];
-		$properties_name_preview[] = $exploded_property[0];
-		$properties_content[] = $exploded_property[1];
-		$properties_content_preview[] = $exploded_property[1];
-		$properties_list_preview[] = $property;
+		if(isset($exploded_property[0]) && isset($exploded_property[1])) {
+			//var_dump($property . " --> [" . $exploded_property[0] . "," . $exploded_property[1] . "]");
+			$properties_name[] = $exploded_property[0];
+			$properties_name_preview[] = $exploded_property[0];
+			$properties_content[] = $exploded_property[1];
+			$properties_content_preview[] = $exploded_property[1];
+			$properties_list_preview[] = $property;
+		}
 	}
 }
+
+//var_dump($properties_name, $properties_content);
 ?>
 
 <div class="content">
@@ -199,7 +203,7 @@ foreach($properties_list as $property){
 		$i=0;
 		foreach($properties_list as $property){
 			$exploded_property = explode(":",$property,2);
-			if(!empty($exploded_property[0])){
+			if(!empty($exploded_property[1])){
 				echo "<tr>
                             <td scope=\"row\" data-label=\"Ligne\">".$i."</td>
                             <td data-label=\"Propriété\">".$exploded_property[0]."</td>
@@ -212,8 +216,8 @@ foreach($properties_list as $property){
                                 <div class=\"button-hover\" id=\"down\" onclick=\"moveRowDown(".$i.")\" style=\"cursor:pointer\">&#9660;</div>
                             </td>
                         </tr>";
+				$i++;
 			}
-			$i++;
 		}
 		?>
 	</table>
@@ -221,31 +225,35 @@ foreach($properties_list as $property){
 <div id="page-mask"></div>
 <div class="form-popup" id="modifyForm">
 	<form action="" method="post" class="form-container" id="formProperty">
-		<h1>Modification</h1>
-		<button type="button" class="cross-close" onclick="closeForm()">&times;</button>
-		<div class="row">
-			<div class="col-50">
-				<label for="property"><b>Propriété</b></label>
-			</div>
-			<div class="col-50">
-				<label for="content"><b>Contenu de la propriété</b></label>
+		<div class='form-container' id='formProperty'>
+			<h3>Modification de la propriété</h3>
+			<button type="button" class="cross-close" onclick="closeForm()">&times;</button>
+			<div class="form-popup-corps">
+				<div class="row">
+					<div class="col-50">
+						<label for="property"><b>Propriété</b></label>
+					</div>
+					<div class="col-50">
+						<label for="content"><b>Contenu de la propriété</b></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-50">
+						<input type="text" name="property" value="" id="formPropriety" readonly>
+					</div>
+					<div class="col-50">
+						<input type="text" placeholder="contenu..." id="formContent" name="content" required>
+					</div>
+				</div>
+				<div style="display:flex;justify-content: flex-end;flex-direction: row; margin-bottom: 5px">
+					<button type="submit" class="btn delete" onclick="deleteRow()">Supprimer</button>
+					<button type="submit" class="btn">Valider</button>
+				</div>
+				<input id="formID" name="id" type="hidden" value=""/>
+				<input id="formDelete" name="delete" type="hidden" value=""/>
+				<input id="formSwap" name="swapTarget" type="hidden" value=""/>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-50">
-				<input type="text" name="property" value="" id="formPropriety" readonly>
-			</div>
-			<div class="col-50">
-				<input type="text" placeholder="contenu..." id="formContent" name="content" required>
-			</div>
-		</div>
-		<div class="row">
-			<button type="submit" class="btn delete" onclick="deleteRow()" style="float:right">Supprimer</button>
-			<button type="submit" class="btn" style="float:right">Valider</button>
-		</div>
-		<input id="formID" name="id" type="hidden" value=""/>
-		<input id="formDelete" name="delete" type="hidden" value=""/>
-		<input id="formSwap" name="swapTarget" type="hidden" value=""/>
 	</form>
 </div>
 

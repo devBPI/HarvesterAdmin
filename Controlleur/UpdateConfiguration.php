@@ -2,7 +2,7 @@
 	$parcours = array();
 	$filtres = array();
 	$trads = array();
-	$acces = array("INTERNAL"=>$_POST['INTERNAL'],"EXTERNAL"=>$_POST['EXTERNAL'],"WIFI-BPI"=>$_POST['WIFI-BPI']);
+	$acces = array("INTERNAL"=>$_POST['INTERNAL'] ?? false,"EXTERNAL"=>$_POST['EXTERNAL'] ?? false,"WIFI-BPI"=>$_POST['WIFI-BPI'] ?? false);
 	foreach($_POST as $key => $value)
 	{
 		if(preg_match('/(parcours)/',$key))
@@ -20,23 +20,23 @@
 	}
 	require_once("../PDO/Gateway.php");
 	Gateway::connection();
-    $name=$_POST['form_nom_abrege'];
-    $publicName=$_POST['form_nom_public'];
-    $publicUrl=$_POST['form_url_publique'];
-    $grabber=$_POST['form_list_grabber'];
-    $mapping=$_POST['form_list_mapping'];
-    $exclusion=$_POST['list_exclusion'];  // *
-    $translation=$_POST['list_translation']; // *
-    $url=$_POST['form_URL'];
-    $urlSet=$_POST['form_URL_set'];
+    $name=$_POST['form_nom_abrege'] ?? null;
+    $publicName=$_POST['form_nom_public'] ?? null;
+    $publicUrl=$_POST['form_url_publique'] ?? null;
+    $grabber=$_POST['form_list_grabber'] ?? null;
+    $mapping=$_POST['form_list_mapping'] ?? null;
+    $exclusion=$_POST['list_exclusion'] ?? null;  // *
+    $translation=$_POST['list_translation'] ?? null; // *
+    $url=$_POST['form_URL'] ?? null;
+    $urlSet=$_POST['form_URL_set'] ?? null;
     $urlAdd="&set=".$urlSet; 
-    $separateur=$_POST['form_separateur'];
-    $dif=$_POST['form_differentiel'];
-    $attempts=$_POST['form_max_attempts'];
-    $timeout=$_POST['form_timeout'];
-    $business=$_POST['form_business_id'];
-    $liaison=$_POST['form_additional_configuration_of'];
-    $commentaire=$_POST['form_commentaires'];
+    $separateur=$_POST['form_separateur'] ?? null;
+    $dif=$_POST['form_differentiel'] ?? null;
+    $attempts=$_POST['form_max_attempts'] ?? null;
+    $timeout=$_POST['form_timeout'] ?? null;
+    $business=$_POST['form_business_id'] ?? null;
+    $liaison=$_POST['form_additional_configuration_of'] ?? null;
+    $commentaire=$_POST['form_commentaires'] ?? null;
 
     if($exclusion==0){
         $exclusion=NULL;

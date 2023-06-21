@@ -66,7 +66,7 @@
 							<div>
 								<select id="form_nom_filtre" name="form_nom_filtre">
 									<option value="">Sélectionnez un filtre</option>
-									<?= ComboBox::makeComboBox($exclusion, $dataConf['filter_id']) ?>
+									<?= ComboBox::makeComboBox($exclusion, $dataConf['filter_id'] ?? null) ?>
 								</select>
 								<a href="javascript:void(0);" class="filtre_add" title="Ajouter une exclusion"><img src="../ressources/add.png"/></a>
 							</div>
@@ -92,7 +92,7 @@
 						<legend>Différentiel</legend>
 						<span>
 							<?php
-								if ($value['differential'] == 'f') {
+								if (isset($value) && $value['differential'] == 'f') {
 							?>
 							<input type="radio" id="form_differentiel_false" name="form_differentiel" value="false" checked />
 							<label for="form_differentiel_false">Non-Différentiel</label>

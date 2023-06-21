@@ -43,6 +43,8 @@ class Gateway
 	static function deleteAlert($id) { Alertes::deleteAlert($id); }
 	static function getAlertJobs() { return Alertes::getAlertJobs(); }
 	static function updateAlertJobs($alert_jobs) { Alertes::updateAlertJobs($alert_jobs); }
+	static function getMailingList() { return Alertes::getMailingList(); }
+	static function getAlertParameters() { return Alertes::getAlertParameters(); }
 
 	// ------------------------------- Configuration
 	static function getIdFromCode($code) { return Configuration::getIdFromCode($code); }
@@ -201,7 +203,10 @@ class Gateway
 	 */
 	static function getExclusion()
 	{
-		$query = pg_query (self::$conn, "SELECT id, 'Nom' as name FROM configuration.filter ORDER BY id ASC;");
+		$query = pg_query (self::$conn, "SELECT filter.id, name
+			FROM configuration.filter INNER JOIN configuration.filter_rule
+			    ON filter.filter_rule_id=filter_rule.id
+			ORDER BY filter.id ASC;");
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getExclusion.\n";

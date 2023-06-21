@@ -54,9 +54,9 @@
 			?></td>
 				<td><?php
 			if ($var['dow'] == null && $var['dom'] == null) {
-				echo $var['name'] . " (Quotidienne)";
+				echo str_replace("_","_<wbr/>",$var['name']) . " (Quotidienne)";
 			} else {
-				echo $var['name'];
+				echo str_replace("_","_<wbr/>",$var['name']);
 		}
 
 		?></td>

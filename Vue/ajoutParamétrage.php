@@ -52,10 +52,8 @@ include ('../Vue/common/Header.php');
 
 <body>
     <div class="content">
-        <div class="triple-column-container" style="height:50px">
-            <div class="column">
-                <a href="../Controlleur/Mapping.php" class="buttonlink">&laquo; Retour</a>
-            </div>
+        <div style="display:flex;justify-content: space-between;flex-direction: row; margin-bottom: 5px">
+            <a href="../Controlleur/Mapping.php" class="buttonlink">&laquo; Retour</a>
         </div>
         <div class="cartouche-solo" style="width:auto;height:auto;padding:5%">
             <div class="row">
@@ -73,25 +71,28 @@ include ('../Vue/common/Header.php');
         <div class="column-full" style="text-align:left">
             <H3>Éditeur de texte</H3>
             <textarea id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
-        </div>	
+        </div>
+
         <div id="page-mask"></div>
         <div class="form-popup" id="validateForm">
             <form action="" method="post" class="form-container" id="formProperty">
-                <h3>Modification</h3>
-                <p>Les modifications ont été enregistrées.</p>
-                <div class="row">
-                    <button type="submit" name="ajouter" class="btn" style="float:right" value="submit">OK</button>
+                <div class='form-container' id='formProperty'>
+                    <h3>Modification</h3>
+                    <div class="form-popup-corps">
+                        <p>Les modifications ont bien été enregistrées.</p>
+                        <button class="buttonlink" type="submit" name="ajouter" value="submit">OK</button>
+                        <input id="map_name" name="map_name" type="hidden" value=""/>
+                        <input id="map_content" name="map_content" type="hidden" value=""/>
+                    </div>
                 </div>
-                <input id="map_name" name="map_name" type="hidden" value=""/>
-                <input id="map_content" name="map_content" type="hidden" value=""/>
             </form>
         </div>
+
     </div>
 
-
     	<!-- Ajout des scripts -->
-    <script language="javascript" type="text/javascript" src="https://codemirror.net/5/lib/codemirror.js"></script>
-	<script language="javascript" type="text/javascript" src="https://codemirror.net/5/mode/perl/perl.js"></script>
+    <script type="text/javascript" src="https://codemirror.net/5/lib/codemirror.js"></script>
+	<script type="text/javascript" src="https://codemirror.net/5/mode/perl/perl.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
 	<script>
@@ -108,7 +109,7 @@ include ('../Vue/common/Header.php');
 
 		$('select[name="list_exist_propriety"]').on('change',function(){
 			var selectIndex=$('select option:selected').val();
-			var content = <?php echo json_encode($properties_content); ?>;
+			var content = <?= json_encode($properties_content ?? null) ?>;
 			$('#exist_content').val(content[selectIndex-1]);
 		});
 
