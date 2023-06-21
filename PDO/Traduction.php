@@ -50,7 +50,7 @@ class Traduction
      */
     static function getTranslation($id)
     {
-        $query = pg_query (Gateway::getConnexion(), "SELECT name, T.id FROM configuration.translation T, configuration.translation_rules_set R WHERE T.translation_rules_set_id=R.id AND configuration_id=".$id);
+        $query = pg_query (Gateway::getConnexion(), "SELECT name, R.id FROM configuration.translation T, configuration.translation_rules_set R WHERE T.translation_rules_set_id=R.id AND configuration_id=".$id);
         return pg_fetch_all($query);
     }
 

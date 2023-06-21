@@ -3,7 +3,7 @@
 	<tr>
 		<th class="left_column"><?= $data['id'] ?></th>
 		<th class="right_column"><?= $data['code'] ?>
-			<a href="../Controlleur/ModifConfiguration.php?param=<?php echo $_GET['param'] ?>">
+			<a href="../Controlleur/ModifConfiguration.php?param=<?= $_GET['param'] ?>">
 				<img src="../ressources/edit.png" alt="Modifier la configuration" style="float:right" width="30px" height="30px"/>
 			</a>
 		</th>
@@ -53,7 +53,7 @@
 	foreach ($data['trad'] as $trad) { ?>
 	<tr>
 		<td class="left_column">Traduction n°<?= $trad['id'] ?></td>
-		<td class="right_column"><a href="../Controlleur/TraductionSet.php?f=true&modify=<?= $trad['name'] ?>"><?= $trad['name'] ?></a></td>
+		<td class="right_column"><a href="../Controlleur/TraductionSet.php?id=<?= $trad['id'] ?>"><?= $trad['name'] ?></a></td>
 	</tr>
 	<?php }} ?>
 	<tr>

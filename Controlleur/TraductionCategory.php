@@ -15,14 +15,13 @@ foreach($data as $k => $v)
 
 // Vaut toujours "false" sauf quand !isset
 $mod = isset($_GET['modify'])?"false":"true";
-
 if(!empty($_POST)) {
 	unset($_POST['t']);
 	$t1=array_diff($_POST,$set);
 	$t2=array_diff($set,$_POST);
 	$tr=array_diff_key($t2,$t1);
-	Gateway::updateRulesSet($t1,$t2);
-	Gateway::deleteRulesSet($tr);
+	Gateway::updateCategory($t1,$t2);
+	Gateway::deleteCategory($tr);
 	$set = $_POST;
 } else {
 	if($mod=="false") {
