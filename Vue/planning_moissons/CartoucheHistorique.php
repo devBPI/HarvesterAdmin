@@ -14,7 +14,7 @@ if (isset($_GET['param'])) {
 $data = Gateway::getTasksForCartridge($id);
 
 if (!$data) {
-    echo "Aucune tache dans l'historique.\n";
+    echo "Aucune tâche dans l'historique.\n";
 } 
 else {
     /* Création du tableau */
