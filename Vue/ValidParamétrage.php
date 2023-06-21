@@ -98,16 +98,16 @@ $def_preview = implode(PHP_EOL,$properties_list);
 <div class="form-popup" id="validateForm">
     <form action="" method="post" class="form-container" id="formProperty">
         <h3>Modification</h3>
+		<div class="form-popup-corps">
         <p>Les modifications ont été enregistrées.</p>
-        <div class="row">
-            <button type="submit" name="submitted" class="btn" style="float:right">OK</button>
+            <button type="submit" name="submitted" class="buttonlink">OK</button>
         </div>
     </form>
 </div>
 
 	<!-- Ajout des scripts -->
-	<script language="javascript" type="text/javascript" src="https://codemirror.net/5/lib/codemirror.js"></script>
-	<script language="javascript" type="text/javascript" src="https://codemirror.net/5/mode/perl/perl.js"></script>
+	<script type="text/javascript" src="https://codemirror.net/5/lib/codemirror.js"></script>
+	<script type="text/javascript" src="https://codemirror.net/5/mode/perl/perl.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
 	<script src="../js/pop_up.js"></script>

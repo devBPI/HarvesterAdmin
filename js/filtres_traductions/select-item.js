@@ -1,4 +1,4 @@
-// Script inutilisé au 20/06/2023
+
 var x, i, j, selElmnt, a, b, c;
 
 /*look for any elements with the class "custom-select":*/
