@@ -11,17 +11,6 @@ date_default_timezone_set('Europe/Paris');
 
 $type = $_POST["report_type"] ?? "";
 
-
-function reportToCsv($filename, $headers, $data) {
-	header('Content-Type: text/csv');
-	header('Content-Disposition: attachment; filename="'. $filename .'.csv";');
-	$out = fopen("php://output", 'w');
-	fputcsv($out, $headers, ";");
-	foreach ($data as $fields) {
-		fputcsv($out, $fields, ";");
-	}
-}
-
 function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	// Autres cas de la construction du where (commun à Processus et Métadonnées)
 	if ($increment_non_vide == 0) {
@@ -228,12 +217,8 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	//var_dump($report_result);
 
 	$section = $configuration["name"];
-	if(isset($_POST["generate_csv"])) {
-		//reportToCsv($configuration["name"], $tab_header, $report["result"]);
-	}
-	else {
-		include("../Vue/rapports/Rapport.php");
-	}
+
+	include("../Vue/rapports/Rapport.php");
 }
 
 ?>
