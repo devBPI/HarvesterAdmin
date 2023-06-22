@@ -30,13 +30,13 @@ function init_predicate(element){
 	var request = $.ajax({
 		url: "../Composant/Predicat.php",
 		type: "post",
-		data:'id='+$_GET['id']+'&num='+nb,
+		data:'id='+$_GET['id']+'&num='+nb_op,
 		success: function(response){
 		  setPredicate(response);
 		},
 		async:false
 	});
-	nb++;
+	nb_op--;
 }
 
 // Affichage de la valeur : désactivé si fonction IS_EMPTY, IS_NOT_EMPTY, activé et obligatoire sinon

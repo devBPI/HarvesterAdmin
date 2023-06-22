@@ -28,7 +28,7 @@ include('../Vue/common/Header.php');
 			<option value='AND'>AND</option>
 		</select>
 	</div>
-	<form action="FiltreTree.php?modify=<?= $id ?>" method="post" id='filter_rule'>
+	<form action="FiltreTree.php?id=<?= $id ?>" method="post" id='filter_rule'>
 		<div class="triple-column-container">
 			<div class="column">
 				<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
@@ -40,7 +40,7 @@ include('../Vue/common/Header.php');
 				</div>
 			</div>
 			<div class="column">
-				<input type="submit" value="Enregistrer la règle" />
+				<input type="submit" name="form_submit" value="Enregistrer la règle" />
 			</div>
 		</div>
 
@@ -54,13 +54,13 @@ include('../Vue/common/Header.php');
 	<?= TabConfigsAssociees::makeTab($configurations) ?>
 
 </div>
-<?php if(isset($_GET["success"]) && $_GET["success"]) { ?>
+<?php if(isset($success) && $success == true) { ?>
 	<div id="page-mask" style="display:block"></div>
 	<div class="form-popup" id="validateForm" style="display:block">
-		<div class='form-container' id='formProperty'>
+		<div class="form-container" id="formProperty">
 			<form action="../../Controlleur/Filtre.php" class="form-container" id="formProperty">
 				<h3>Modification</h3>
-				<div class='form-popup-corps'>
+				<div class="form-popup-corps">
 					<p>Les modifications ont bien été enregitrées.</p>
 					<button type="submit" class="buttonlink">OK</button>
 				</div>

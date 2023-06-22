@@ -7,7 +7,7 @@ if($data)
 {
 	foreach($data as $value)
 	{
-		echo "<tr><td>".$value['entity']."</td><td>".$value['name']."</td></tr>";
+		echo "<tr><td>".str_replace("_", "_<wbr/>", $value['entity'])."</td><td>".$value['name']."</td></tr>";
 	}
 }
 ?>

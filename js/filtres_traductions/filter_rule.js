@@ -33,7 +33,7 @@ function update_operation(element, profondeur= 0)
 				$("[name='" + d.childNodes[0].name + "']").on("change", function () {
 					return update_operation(this, profondeur+1);
 				});
-				nb_op--;
+				// nb_op--;
 				update_operation(d.childNodes[0], profondeur);
 			}
 		}

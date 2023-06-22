@@ -47,6 +47,7 @@ function treeDisplay($d, $profondeur=0) {
 	else
 	{
 		treeDisplay($d[0], $profondeur+1);
+		$GLOBALS['nb']++;
 		treeDisplay($d[1], $profondeur+1);
 	}
 	echo "</div>";
@@ -57,27 +58,31 @@ if (! $ini) {
 }
 require_once ("../PDO/Gateway.php");
 
+$success=false;
+
 /* Si affichage de l'arbre de la règle */
-if(isset($_GET["id"]))
+if(isset($_GET["id"]) && !isset($_POST["form_submit"]))
 {
 	$id=$_GET["id"];
 	$val=Gateway::getRuleNameRootEntity($id); // $val['name'] : nom de la règle; $val['id'] : id de la racine de l'arbre
 	$idR=$val["id"];
 }
 /* Si modification de la règle */
-else if(isset($_GET["modify"]))
+else if(isset($_GET["id"]) && isset($_POST["form_submit"]))
 {
-	$id=$_GET["modify"]; // Contient l'id de la règle
+	$id=$_GET["id"];
 	$val=Gateway::getRuleNameRootEntity($id); // $val['name'] : nom de la règle; $val['id'] : id de la racine de l'arbre
 	$idR=$val["id"]; // Racine de l'arbre
+	unset($_POST["form_submit"]);
 	$_POST=array_reverse($_POST); // Inversion des données de $_POST
+	//var_dump($_POST);
 	$donnee=treeSet(); // Création de l'arbre
 	$idRoot=Gateway::insertTree($donnee,$idR);
 	if($idRoot!=null) {
 		Gateway::setRuleTreeRoot($id,$idRoot);
 		$idR=$idRoot;
 	}
-	header("Location: ../Controlleur/FiltreTree.php?id=".$id."&success=true");
+	$success=true;
 }
 $name=$val["name"];
 $entity=$val["entity"];
@@ -91,8 +96,8 @@ if($data==null){
 	);
 }
 $profondeur = 0;
-
-$configurations = Gateway::getConfigurationByFilterRule($_GET["id"]);
+$id = $_GET["id"] ?? $_GET["modify"];
+$configurations = Gateway::getConfigurationByFilterRule($id);
 
 $section = "Définition d'une règle";
 

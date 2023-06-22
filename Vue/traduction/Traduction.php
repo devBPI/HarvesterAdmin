@@ -32,8 +32,10 @@ include('../Vue/common/Header.php');
 				</select>
 				<div style="overflow-y: auto; height:400px">
 					<table class="table-planning" id="conf">
-						<th>Entité</th>
-						<th>Règles de traduction</th>
+						<tr>
+							<th>Entité</th>
+							<th>Règles de traduction</th>
+						</tr>
 					</table>
 				</div>
 			</div>
