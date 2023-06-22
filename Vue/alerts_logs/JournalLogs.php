@@ -22,10 +22,10 @@
 			<th scope="col" style="width:10%">Date</th>
 			<th scope="col" style="width:60%">Message</th>
 			</thead>
-			<?php foreach($data as $alerte)
-			{
+			<?php if($data) {
+			foreach($data as $alerte) {
 				echo "<tr><td scope=\"row\" data-label=\"ID\">".$alerte['user_id']."</td><td data-label=\"Niveau\" class='".(($alerte['level']=="WARN")?"warn":"error")."'>".$alerte['level']."</td><td data-label=\"Date\">".$alerte['date']."</td><td data-label=\"Message\">".$alerte['message']."</td></tr>";
-			}
+			} }
 			?>
 		</table>
 		<div style="margin : 0 auto; padding:3% 0; width: max-content;">

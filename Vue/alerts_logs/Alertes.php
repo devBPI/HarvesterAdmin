@@ -1,64 +1,176 @@
+<?php
+$ini = @parse_ini_file("../etc/configuration.ini", true);
+if (! $ini) {
+    $ini = @parse_ini_file("../etc/default.ini", true);
+}
+?>
+<html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="../js/toTop.js"></script>
-<!-- Ajout du ou des fichiers javaScript-->
 <meta charset="utf-8" />
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/composants.css" />
-<!-- ajout du ou des fichiers CSS-->
-<title>Journal des Logs</title>
+<link rel="stylesheet" href="../css/accueilStyle.css" />
+<link rel="stylesheet" href="../css/alertes.css" />
+<title>Alertes</title>
 </head>
 <body name="haut" id="haut">
+	<?php
+	include('../Vue/common/Header.php');
+	$url = "Alertes.php?&order=";
+	?>
+	<div class="content" style="width:90%">
+		<table class="table-config">
+			<thead>
 <?php
-include ('../Vue/Header.php');
-?>
-    <div style="width: 100%; height: 100%; position: absolute;">
-		<div id="divTable"
-			style="top: 0; left: 0.5%; width: 98%; height: auto; position: relative;">
-			<table class="table-backoffice">
-				<th>id</th>
-				<th>dated</th>
-				<th>thread</th>
-				<th>lvl</th>
-				<th>message</th>
-				<?php
-    /* Lignes */
-    foreach ($data as $var) {
-        ?><tr><?php
-        ?><td><?php
-        echo $var['id'];
-        ?></td>
-					<td><?php
-        echo $var['dated'];
-        ?></td>
-					<td><?php
-        echo $var['thread'];
-        ?></td>
-					<td><?php
-        echo $var['lvl'];
-        ?></td>
-					<td><?php
-        echo $var['message'];
-        ?></td><?php
-        ?></tr><?php
-    }
-    ?>
-			</table>
-		</div>
-		<div
-			style="width: 100%; left: 0.5%; margin-top: 1%; z-index: 2; position: relative;">
-            <?php
-            $pagLink = "<div class='pagination'><a href='JournalLogs.php?page=1' style='margin-top:0.5%; position:absolute:'>&laquo;</a>";
-            echo '';
-            for ($i = 1; $i <= $total_pages; $i ++) {
-                $pagLink .= "<a href='JournalLogs.php?page=" . $i . "' class='active' style='margin:0.5%;'>" . $i . "</a>";
-            }
-            ;
-            $pageFin = $i - 1;
-            echo $pagLink . "<a href='JournalLogs.php?page=" . $pageFin . "' style='margin-top:0.5%;'>&raquo;</a> </div>";
-            ?>
-        </div>
-	</div>
+
+$arrow = "";
+$sens = "";
+if ($order == "creation_time") {
+    $arrow = "▼";
+    $sens = "DESC";
+} else if ($order == "creation_time DESC") {
+    $arrow = "▲";
+}
+echo "<th scope=\"col\" style='cursor:pointer' width=10% height=30px; onclick = 'location.href=\"" . $url . "creation_time " . $sens . "\"'>Création ". $arrow . "</th>";
+
+
+$arrow = "";
+$sens = "";
+if ($order == "level") {
+    $arrow = "▼";
+    $sens = "DESC";
+} else if ($order == "level DESC") {
+    $arrow = "▲";
+}
+echo "<th scope=\"col\" style='cursor:pointer' width=10% onclick = 'location.href=\"" . $url . "level " . $sens . "\"'>Niveau " . $arrow . "</th>";
+
+
+$arrow = "";
+$sens = "";
+if ($order == "category") {
+    $arrow = "▼";
+    $sens = "DESC";
+} else if ($order == "category DESC") {
+    $arrow = "▲";
+}
+echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "category " . $sens . "\"'>Catégorie " . $arrow . "</th>";
+
+
+$arrow = "";
+$sens = "";
+if ($order == "configuration_name") {
+    $arrow = "▼";
+    $sens = "DESC";
+} else if ($order == "configuration_name DESC") {
+    $arrow = "▲";
+}
+echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "configuration_name " . $sens . "\"'>Configuration " . $arrow . "</th>";
+
+
+$arrow = "";
+$sens = "";
+if ($order == "configuration_id") {
+    $arrow = "▼";
+    $sens = "DESC";
+} else if ($order == "configuration_id DESC") {
+    $arrow = "▲";
+}
+echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "configuration_id " . $sens . "\"'>Configuration Id " . $arrow . "</th>";
+
+
+echo "<th scope=\"col\" style='cursor:pointer' width=35%'>Message</th>";
+
+
+$arrow = "";
+$sens = "";
+if ($order == "status") {
+    $arrow = "▼";
+    $sens = "DESC";
+} else if ($order == "status DESC") {
+    $arrow = "▲";
+}
+
+echo "<th scope=\"col\" width=5% onclick=\"suppressAlert()\"</th></thead>";
+
+echo"<tbody id=\"displaytbody\">";
+
+if ($alerts && count($alerts) > 0) {
+foreach ($alerts as $alert) {
+    
+	//$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time'])) . " AlertesReporting.php";
+	$creationTimeSyst = date('d-m-Y H:i:s', strtotime($alert['creation_time']));
+	$level = $alert['level'];
+	$levelStyle = $level."_level";
+	$category = $alert['category'];
+	$configurationName = $alert['configuration_name'];
+	$configurationId = $alert['configuration_id'];
+	$message = $alert['message'];
+
+	?>
+	<tr>
+		<td style="text-align:center">
+			<div><?= empty($creationTimeSyst)?"-":$creationTimeSyst ?></div>
+		</td>
+		<td class="<?= $levelStyle ?>" style="text-align:center">
+			<div><?= empty($level)?"-":$level ?></div>
+		</td>
+		<td style="text-align:center">
+			<div><?= empty($category)?"-":$category ?></div>
+		</td>
+		<td style="text-align:center">
+			<div><?= empty($configurationName)?"-":$configurationName ?></div>
+		</td>
+		<td style="text-align:center">
+			<div><?= empty($configurationId)?"-":$configurationId ?></div>
+		</td>
+		<td style="text-align:center">
+			<div><?= empty($message)?"-":$message ?></div>
+		</td>
+		<td>
+			<div class="button-hover" onclick="deleteRow(<?= $alert["id"]?>)" id="<?= $alert['id']?>" style="cursor:pointer">
+				<img src="../ressources/cross.png" width="20px" height="20px">
+			</div>
+		</td>
+	</tr>
+	<?php
+	}
+}?>
+	</tbody>
+	</table>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="../js/toTop.js"></script>
+	<script>
+		function deleteRow(i){
+			post("Alertes.php",{deleteRow : i});
+  	  }
+
+		/**
+		 * envoie une requête à l'url spécifié depuis un formulaire.
+		 * @param {string} path le chemin où on doit envoyer le formulaire
+		 * @param {object} params les paramètres à faire passer dans le formulaire
+		 * @param {string} [method=post] la méthode du formulaire, codé en dur par simplicité (déjà précisé dans le nom de la fonction)
+		 */
+		function post(path, params, method='post') {
+			const form = document.createElement('form');
+			form.method = method;
+			form.action = path;
+
+			for (const key in params) {
+				if (params.hasOwnProperty(key)) {
+					const hiddenField = document.createElement('input');
+					hiddenField.type = 'hidden';
+					hiddenField.name = key;
+					hiddenField.value = params[key];
+
+					form.appendChild(hiddenField);
+				}
+			}
+
+			document.body.appendChild(form);
+			form.submit();
+		}
+
+	</script>
 </body>
 </html>

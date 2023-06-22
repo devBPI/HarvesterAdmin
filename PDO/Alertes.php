@@ -14,14 +14,14 @@ class Alertes
 	static function getAlerts($order, $date=null)
 	{
 		if (!$date) {
-			$query = pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, b.name as configuration_name, configuration_id,  creation_time, modification_time, status
+			$query = pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, CONCAT( c.name ,' (', b.name, ')') as configuration_name, configuration_id,  creation_time, modification_time, status
         FROM monitoring.alert a
         LEFT JOIN configuration.harvest_configuration c on c.id = a.configuration_id		
         LEFT JOIN configuration.search_base b on b.code = c.search_base_code 	
         WHERE 1=1
 		ORDER BY " . $order);
 		} else {
-			$query = pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, b.name as configuration_name, configuration_id,  creation_time, modification_time, status
+			$query = pg_query(Gateway::getConnexion(), "SELECT a.id, level, category, message, CONCAT( c.name ,' (', b.name, ')') as configuration_name, configuration_id,  creation_time, modification_time, status
         FROM monitoring.alert a
         LEFT JOIN configuration.harvest_configuration c on c.id = a.configuration_id		
         LEFT JOIN configuration.search_base b on b.code = c.search_base_code 
@@ -69,8 +69,39 @@ class Alertes
 
 	static function updateAlertJobs($alert_jobs) {
 		foreach ($alert_jobs as $alert_job) {
-			pg_query("UPDATE monitoring.alert_job SET is_enabled=". $alert_job["is_enabled"]." WHERE code=". $alert_job["id"]);
+			pg_query(Gateway::getConnexion(), "UPDATE monitoring.alert_job SET is_enabled=". $alert_job["is_enabled"]." WHERE code=". $alert_job["id"]);
 		}
 	}
+
+	static function getMailingList() {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"SELECT recipients AS mail, is_enabled FROM monitoring.mail_sender"
+			)
+		);
+	}
+
+	static function getMailSender($mail) {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"SELECT recipients AS mail, is_enabled FROM monitoring.mail_sender WHERE recipients=".$mail
+			)
+		)[0];
+	}
+
+	static function updateMailingList($mailing_list) {
+		foreach($mailing_list as $mail_sender) {
+			pg_query(Gateway::getConnexion(),
+				"UPDATE monitoring.mail_sender SET recipients=".$mail_sender['new_mail'].",is_enabled=".$mail_sender["is_enabled"].
+				" WHERE recipients=".$mail_sender["old_mail"]
+			);
+		}
+	}
+
+	static function getAlertParameters() {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"SELECT code, name, value FROM monitoring.alert_rule_parameter")
+		);	}
 
 }

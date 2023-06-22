@@ -25,6 +25,6 @@ if (isset($_GET["page"])) {
 
 $start_from = ($page - 1) * $limit;
 $section = "Alertes";
-include("../Vue/alerts_logs/AlertesReporting.php");
+include("../Vue/alerts_logs/Alertes.php");
 ?>
 
