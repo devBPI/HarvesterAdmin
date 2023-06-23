@@ -102,7 +102,7 @@ foreach ($alerts as $alert) {
 	$level = $alert['level'];
 	$levelStyle = $level."_level";
 	$category = $alert['category'];
-	$configurationName = $alert['configuration_name'];
+	$configurationName = str_replace(["_"," ("],["_<wbr/>", " <br/>("],$alert['configuration_name']);
 	$configurationId = $alert['configuration_id'];
 	$message = $alert['message'];
 
