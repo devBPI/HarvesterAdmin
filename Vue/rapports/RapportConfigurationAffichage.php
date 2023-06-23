@@ -114,6 +114,8 @@ else $page = "Donnees";
 </div>
 
 <?php include "../Vue/common/Footer.php" ?>
+
+<script src="../js/toTop.js"></script>
 <script type="text/javascript">
     function generer_csv() {
         <?php if(isset($configuration) && $configuration!=null) { ?>

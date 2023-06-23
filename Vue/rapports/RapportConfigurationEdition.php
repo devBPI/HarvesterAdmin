@@ -165,6 +165,7 @@ else {
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/toTop.js"></script>
 <script type="text/javascript">
     // Script d'initialisation des compteurs et numéros d'identifiants
     // Ne peut se mettre dans rapports/reporting.js car utilise du php
