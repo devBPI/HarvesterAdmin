@@ -79,7 +79,7 @@ else if(isset($_GET["id"]) && isset($_POST["form_submit"]))
 	$donnee=treeSet(); // Création de l'arbre
 	$idRoot=Gateway::insertTree($donnee,$idR);
 	if($idRoot!=null) {
-		Gateway::setRuleTreeRoot($id,$idRoot);
+		Gateway::setRoot($id,$idRoot);
 		$idR=$idRoot;
 	}
 	$success=true;

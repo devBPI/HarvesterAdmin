@@ -138,12 +138,11 @@ class Gateway
 	static function iT($data,$id) { Filtre::iT($data, $id); }
 	static function insertTree($data,$id) { return Filtre::insertTree($data, $id); }
 	static function getFilterRules() { return Filtre::getFilterRules(); }
-	static function getFilterRule() { return Filtre::getFilterRule(); }
 	static function getFilterRuleOrderBy32() { return Filtre::getFilterRuleOrderBy32(); }
 	static function getFilterByConf($id) { return Filtre::getFilterByConf($id); }
 	static function updateFilterRule($data,$id) { Filtre::updateFilterRule($data, $id); }
 	static function updatePredicats($data) { return Filtre::updatePredicats($data); }
-	static function setRuleTreeRoot($id,$idR) { Filtre::setRuleTreeRoot($id, $idR); }
+	static function setRoot($id,$idR) { Filtre::setRoot($id, $idR); }
 	static function updateRuleTree($data) { Filtre::updateRuleTree($data); }
 	static function updateFilterRules($data) { return Filtre::updateFilterRules($data); }
 	static function updateFilterConfiguration($id,$donnee) { return Filtre::updateFilterConfiguration($id, $donnee); }

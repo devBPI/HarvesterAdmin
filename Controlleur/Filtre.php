@@ -2,8 +2,7 @@
 require_once ("../PDO/Gateway.php");
 Gateway::connection();
 $section = "Filtre";
-//$rule=Gateway::getFilterRule();
-$rule=Gateway::getFilterRuleOrderBy32();
+$rules=Gateway::getFilterRuleOrderBy32();
 $categories=Gateway::getPredicatsOrderByCode();
 $data=Gateway::getConf();
 for ($i=0; $i < count($data); $i++) {
@@ -11,5 +10,3 @@ for ($i=0; $i < count($data); $i++) {
 }
 include ('../Vue/filtre/Filtre.php');
 ?>
-
-

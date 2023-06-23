@@ -48,7 +48,7 @@ require '../Composant/ComboBox.php';
 						<th style="width:20%"></th>
 						</tr>
 						<?php
-							foreach($rule as $r)
+							foreach($rules as $r)
 							{ ?>
 							<tr style="border:none">
 								<td><?= str_replace("_", "_<wbr>", $r["entity"]) ?></td><td><?= $r["name"] ?></td>

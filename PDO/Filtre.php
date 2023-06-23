@@ -16,11 +16,111 @@ class Filtre {
 		return @pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT entity,filter_rule_tree_node_id AS id  FROM configuration.filter_rule WHERE id=".$id))[0];
 	}
 
-
 	static function updateRuleName($name, $id)
 	{
 		pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule SET name='".$name."' WHERE filter_rule_tree_node_id=".$id);
 	}
+
+	static function getFilterRules()
+	{
+		return pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.filter_rule"));
+	}
+
+	static function getFilterRuleOrderBy32()
+	{
+		return pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.filter_rule ORDER BY 3,2"));
+	}
+
+	static function getFilterByConf($id)
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT F.entity, name, R.id FROM configuration.filter F, configuration.filter_rule R WHERE F.filter_rule_id=R.id AND configuration_id=".$id);
+		return pg_fetch_all($query);
+	}
+
+	static function updateFilterRule($data,$id)
+	{
+		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=".$id);
+		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id not in 
+			(SELECT translation_rule_id FROM configuration.translation_rules_set_mapping)");
+		foreach($data as $row)
+		{
+			$var = str_replace("'","''",$row['rep']);
+			$input = str_replace("'","''",$row['input']);
+			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rule(input_value,destination_id) 
+				VALUES('".$input."',(SELECT id FROM configuration.translation_destination WHERE value = '".$var."'))");
+		}
+		$ids=self::getNewRules();
+		foreach($ids as $rowid)
+		{
+			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rules_set_mapping VALUES(".$id.",".$rowid['id'].")");
+		}
+	}
+
+	/** Insert/Modifie/Supprime des regles de filtrage
+	 * @param $data array de noeuds
+	 * @return array liste des erreurs
+	 */
+	static function updateFilterRules($data)
+	{
+		$array_error = array();
+		$i = 0;
+		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_rule"));
+		foreach($ids as $id)
+		{
+			// Si modification
+			if(array_key_exists($id['id'],$data)) {
+
+				$value=$data[$id['id']];
+				$name_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT name FROM configuration.filter_rule WHERE name='" . $value['name'] ."' AND id!=" . $id['id']));
+				if ($name_existe) {
+					$array_error[$i]['msg'] = "Erreur : le nom " . $value['name'] . " n'est pas unique";
+					$array_error[$i++]['id'] = $value['name'];
+				} else {
+					pg_query(Gateway::getConnexion(),
+						"UPDATE configuration.filter_rule SET name='" . $value['name'] . "', entity='" . $value['entity'] . "' WHERE id=" . $id['id']
+					);
+				}
+			}
+			// Sinon, suppression
+			else
+			{
+				$racine = self::getRuleNameRootEntity($id['id'])['id'];
+				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter WHERE filter_rule_id =".$id['id']);
+				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_rule WHERE id =".$id['id']);
+				if ($racine != null) {
+					self::deleteTree($racine); // Suppression de l'arbre sans sa racine
+					self::deleteRoot($racine); // Suppression de la racine
+				}
+			}
+		}
+		foreach($data as $k => $value)
+		{
+			if($k<0)
+			{
+				$name_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT name FROM configuration.filter_rule WHERE name='" . $value['name'] ."' AND id=" . $id['id']));
+				if ($name_existe) {
+					$array_error[$i]['msg'] = "Erreur : le nom " . $value['name'] . " n'est pas unique";
+					$array_error[$i++]['id'] = $value['name'];
+				} else {
+					pg_query(Gateway::getConnexion(), "INSERT INTO configuration.filter_rule(name,entity) VALUES('" . $value['name'] . "', '" . $value['entity'] . "')");
+				}
+			}
+		}
+		return $array_error;
+	}
+
+	static function getFilterCode()
+	{
+		$query=pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.filter_function");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getFilterCode .\n";
+			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
+	// --------------------------------------------------------------------------- Fonctions sur les arbres
 
 	static function getRuleTree($id)
 	{
@@ -56,14 +156,32 @@ class Filtre {
 		return $data;
 	}
 
-	static function getTreeNode($id)
+	static function updateRuleTree($data)
 	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id, filter_predicate_id AS pred, boolean_operator AS operator FROM configuration.filter_rule_tree_node WHERE parent_id=".$id);
-		if (!$query)
+		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate"));
+		foreach($ids as $id)
 		{
-			return null;
+			if(array_key_exists($id['id'],$data))
+			{
+				$d=$data[$id['id']];
+				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_predicate SET code='".$d['code']."' , property='".$d['property']."' , entity = 
+					(SELECT entity FROM configuration.entity_properties WHERE property='".$d['code']."') , function_code='".$d['function_code']."' 
+					, value_to_compare='".$d['value']."' WHERE id=".$id['id']);
+			}
+			else
+			{
+				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET filter_predicate_id=NULL WHERE filter_predicate_id =".$id['id']);
+				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_predicate WHERE id =".$id['id']);
+			}
 		}
-		return pg_fetch_all($query);
+		foreach($data as $k => $d)
+		{
+			if($k<0)
+			{
+				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(code,property,entity,function_code,value_to_compare) VALUES('".$d['code']."', '".$d['property']."', 
+					(SELECT entity FROM configuration.entity_properties WHERE property='".$d['code']."'), '".$d['function_code']."', '".$d['value']."')");
+			}
+		}
 	}
 
 	/** Supprime l'arbre dont la racine est $id, sans supprimer la racine
@@ -84,73 +202,43 @@ class Filtre {
 		}
 	}
 
-	static function insertTreeNode($parent_id,$op,$id=NULL)
-	{
-		if($id==NULL)
-		{
-			if($parent_id=='')
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule_tree_node(boolean_operator) 
-				VALUES('".$op."')");
+	/** Fonction de suppression d'un sous-arbre à partir du parent d'une feuille
+	 * @param $node_id int id du noeud de la feuille
+	 * @return void
+	 */
+	static function deleteSubTree($node_id) {
+		if (!self::isRoot($node_id)) {
+			$parent = self::getParentNodeId($node_id);
+			//var_dump($parent);
+			$other_child = self::getChildNotMe($parent, $node_id)["id"];
+			$grandparent = self::getParentNodeId($parent);
+			//var_dump($grandparent);
+			if (!self::isRoot($parent)) {
+				self::setNewParent($grandparent, $other_child);
 			} else {
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule_tree_node(parent_id, boolean_operator) 
-				VALUES(".$parent_id.",'".$op."')");
+				$rule_id = Gateway::select("SELECT id FROM configuration.filter_rule WHERE filter_rule_tree_node_id=".$parent)[0]["id"];
+				self::setRoot($rule_id, $other_child);
 			}
+			self::deleteNode($node_id);
+			self::deleteNode($parent);
+		} else {
+			self::deleteRoot($node_id);
 		}
-		else
-		{
-			pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET boolean_operator='".$op."', filter_predicate_id=NULL WHERE id=".$id);
-		}
-		return pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT max(id) AS id FROM configuration.filter_rule_tree_node"))[0]['id'];
 	}
 
-	static function insertTreeLeaf($parent_id,$predicat,$id=NULL)
-	{
-		$pred=self::getPredicatByCode($predicat); // $pred : id du prédicat
-		if($parent_id==NULL || $parent_id=="") { // Si pas de parent (racine ou élément "OPERATION")
-			if ($id != NULL) { // Si on modifie la racine
-				pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_rule_tree_node
-										SET filter_predicate_id=" . intval($pred) . ",boolean_operator=null WHERE id=" . intval($id));
-				return $id;
-			} else { // Si on ajoute un élément
-				pg_query(Gateway::getConnexion(), "INSERT INTO configuration.filter_rule_tree_node(filter_predicate_id)
-										VALUES (" . $pred . ")");
-				return pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT max(id) AS id FROM configuration.filter_rule_tree_node"))[0]['id'];
-			}
-		}
-		else if($id==NULL)
-		{
-			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule_tree_node(parent_id, filter_predicate_id) 
-				VALUES(".$parent_id.",".$pred.")");
-		}
-		else
-		{
-			pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET boolean_operator=NULL, filter_predicate_id=".$pred." WHERE id=".$id);
-		}
-
+	static function setRoot($rule_id, $node_id) {
+		pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_rule SET filter_rule_tree_node_id=".intval($node_id)." WHERE id=".intval($rule_id));
 	}
 
-	static function insertPredicat($property,$function,$value,$code=NULL)
-	{
-		$id=@pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate WHERE
-			property='".$property."' AND function_code='".$function."' AND value_to_compare='".$value."'"))[0]['id'];
-		if(empty($id))
-		{
-			if($code==null)
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(entity,property,function_code,value_to_compare) VALUES(
-				(SELECT entity FROM configuration.entity_properties WHERE property='".$property."'),'".$property."','".$function."','".$value."')");
-				$id=pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT max(id) FROM configuration.filter_predicate"))[0]['max'];
-			}
-			else
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(code,entity,property,function_code,value_to_compare) VALUES(".$code."
-					(SELECT entity FROM configuration.entity_properties WHERE property='".$property."'),'".$property."','".$function."','".$value."')");
-				return;
-			}
-		}
-		return $id;
+	/** Fonction de définition du nouveau parent d'un noeud
+	 * @param $parent int id du nouveau parent
+	 * @param $node_id int id du noeud qui doit changer de parent
+	 * @return void
+	 */
+	static function setNewParent($parent, $node_id) {
+		pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_rule_tree_node SET parent_id=".intval($parent)." WHERE id=".intval($node_id));
 	}
+
 
 	static function iT($data,$id)
 	{
@@ -207,39 +295,135 @@ class Filtre {
 		}
 	}
 
-	static function getFilterRule()
+	static function insertTreeNode($parent_id,$op,$id=NULL)
 	{
-		return pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.filter_rule"));
+		if($id==NULL)
+		{
+			if($parent_id=='')
+			{
+				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule_tree_node(boolean_operator) 
+				VALUES('".$op."')");
+			} else {
+				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule_tree_node(parent_id, boolean_operator) 
+				VALUES(".$parent_id.",'".$op."')");
+			}
+		}
+		else
+		{
+			pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET boolean_operator='".$op."', filter_predicate_id=NULL WHERE id=".$id);
+		}
+		return pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT max(id) AS id FROM configuration.filter_rule_tree_node"))[0]['id'];
 	}
 
-	static function getFilterRuleOrderBy32()
+	static function insertTreeLeaf($parent_id,$predicat,$id=NULL)
 	{
-		return pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.filter_rule ORDER BY 3,2"));
+		$pred=self::getPredicatByCode($predicat); // $pred : id du prédicat
+		if($parent_id==NULL || $parent_id=="") { // Si pas de parent (racine ou élément "OPERATION")
+			if ($id != NULL) { // Si on modifie la racine
+				pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_rule_tree_node
+										SET filter_predicate_id=" . intval($pred) . ",boolean_operator=null WHERE id=" . intval($id));
+				return $id;
+			} else { // Si on ajoute un élément
+				pg_query(Gateway::getConnexion(), "INSERT INTO configuration.filter_rule_tree_node(filter_predicate_id)
+										VALUES (" . $pred . ")");
+				return pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT max(id) AS id FROM configuration.filter_rule_tree_node"))[0]['id'];
+			}
+		}
+		else if($id==NULL)
+		{
+			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_rule_tree_node(parent_id, filter_predicate_id) 
+				VALUES(".$parent_id.",".$pred.")");
+		}
+		else
+		{
+			pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET boolean_operator=NULL, filter_predicate_id=".$pred." WHERE id=".$id);
+		}
+
 	}
 
-	static function getFilterByConf($id)
+	static function getTreeNode($id)
 	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT F.entity, name, R.id FROM configuration.filter F, configuration.filter_rule R WHERE F.filter_rule_id=R.id AND configuration_id=".$id);
+		$query = pg_query(Gateway::getConnexion(),"SELECT id, filter_predicate_id AS pred, boolean_operator AS operator FROM configuration.filter_rule_tree_node WHERE parent_id=".$id);
+		if (!$query)
+		{
+			return null;
+		}
 		return pg_fetch_all($query);
 	}
 
-	static function updateFilterRule($data,$id)
+
+	/** Renvoie le deuxieme enfant d'un noeud parent
+	 * @param $parent int id du noeud parent
+	 * @param $node_id int id du noeud enfant a ne pas retourner
+	 * @return mixed
+	 */
+	static function getChildNotMe($parent, $node_id) {
+		$children = self::getRuleTree($parent);
+		if ($children[0]["id"] == $node_id)
+			return $children[1];
+		else
+			return $children[0];
+	}
+
+	/** Verifie si un noeud donne est une racine ou non
+	 * @param $node_id int id du noeud
+	 * @return bool vrai/faux si le noeud est une racine
+	 */
+	static function isRoot($node_id) {
+		$result = pg_fetch_all(
+			pg_query(
+				Gateway::getConnexion(), "SELECT filter_rule_tree_node_id FROM configuration.filter_rule WHERE filter_rule_tree_node_id=".intval($node_id)
+			)
+		);
+		return $result && (count($result) > 0);
+	}
+
+	/** Recupere le parent d'un noeud enfant
+	 * @param $node_id int id d'un noeud
+	 * @return mixed le parent si le noeud n'est pas une racine, null sinon
+	 */
+	static function getParentNodeId($node_id) {
+		if (!self::isRoot($node_id)) {
+			return pg_fetch_all(
+				pg_query(
+					Gateway::getConnexion(), "SELECT parent_id FROM configuration.filter_rule_tree_node WHERE id=" . $node_id
+				)
+			)[0]["parent_id"];
+		}
+		return null;
+	}
+
+	/** Supprime un noeud quelconque
+	 * @param $node_id int id du noeud
+	 * @return void
+	 */
+	static function deleteNode($node_id) {
+		pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id =".intval($node_id));
+	}
+
+	/** Supprime la racine
+	 * @param $racine int id de la racine a supprimer
+	 * @return void
+	 */
+	static function deleteRoot($racine) {
+		$result = Gateway::select("SELECT id FROM configuration.filter_rule WHERE filter_rule_tree_node_id=".intval($racine));
+		if ($result) {
+			foreach ($result as $rule) {
+				self::setRoot($rule["id"], null);
+			}
+		}
+		pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id =".intval($racine));
+	}
+
+	// --------------------------------------------------------------------------- Fonctions sur les prédicats
+
+	static function getPredicat($id)
 	{
-		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=".$id);
-		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id not in 
-			(SELECT translation_rule_id FROM configuration.translation_rules_set_mapping)");
-		foreach($data as $row)
-		{
-			$var = str_replace("'","''",$row['rep']);
-			$input = str_replace("'","''",$row['input']);
-			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rule(input_value,destination_id) 
-				VALUES('".$input."',(SELECT id FROM configuration.translation_destination WHERE value = '".$var."'))");
+		$query = @pg_query(Gateway::getConnexion(),"SELECT code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate WHERE id=".$id);
+		if(!$query) {
+			return null;
 		}
-		$ids=self::getNewRules();
-		foreach($ids as $rowid)
-		{
-			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rules_set_mapping VALUES(".$id.",".$rowid['id'].")");
-		}
+		return pg_fetch_all($query);
 	}
 
 	/** Met à jour les prédicats.
@@ -288,96 +472,31 @@ class Filtre {
 		return $array_error;
 	}
 
-	static function getFilterRules()
+	static function insertPredicat($property,$function,$value,$code=NULL)
 	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id, name, entity FROM configuration.filter_rule");
-		return pg_fetch_all($query);
-	}
-
-	static function setRuleTreeRoot($id,$idR)
-	{
-		pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule SET filter_rule_tree_node_id=".$idR." WHERE id=".$id);
-	}
-
-	static function updateRuleTree($data)
-	{
-		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate"));
-		foreach($ids as $id)
+		$id=@pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate WHERE
+			property='".$property."' AND function_code='".$function."' AND value_to_compare='".$value."'"))[0]['id'];
+		if(empty($id))
 		{
-			if(array_key_exists($id['id'],$data))
+			if($code==null)
 			{
-				$d=$data[$id['id']];
-				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_predicate SET code='".$d['code']."' , property='".$d['property']."' , entity = 
-					(SELECT entity FROM configuration.entity_properties WHERE property='".$d['code']."') , function_code='".$d['function_code']."' 
-					, value_to_compare='".$d['value']."' WHERE id=".$id['id']);
+				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(entity,property,function_code,value_to_compare) VALUES(
+				(SELECT entity FROM configuration.entity_properties WHERE property='".$property."'),'".$property."','".$function."','".$value."')");
+				$id=pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT max(id) FROM configuration.filter_predicate"))[0]['max'];
 			}
 			else
 			{
-				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET filter_predicate_id=NULL WHERE filter_predicate_id =".$id['id']);
-				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_predicate WHERE id =".$id['id']);
+				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(code,entity,property,function_code,value_to_compare) VALUES(".$code."
+					(SELECT entity FROM configuration.entity_properties WHERE property='".$property."'),'".$property."','".$function."','".$value."')");
+				return;
 			}
 		}
-		foreach($data as $k => $d)
-		{
-			if($k<0)
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(code,property,entity,function_code,value_to_compare) VALUES('".$d['code']."', '".$d['property']."', 
-					(SELECT entity FROM configuration.entity_properties WHERE property='".$d['code']."'), '".$d['function_code']."', '".$d['value']."')");
-			}
-		}
-	}
-
-	static function updateFilterRules($data)
-	{
-		$array_error = array();
-		$i = 0;
-		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_rule"));
-		foreach($ids as $id)
-		{
-			// Si modification
-			if(array_key_exists($id['id'],$data)) {
-
-				$value=$data[$id['id']];
-				$name_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT name FROM configuration.filter_rule WHERE name='" . $value['name'] ."' AND id!=" . $id['id']));
-				if ($name_existe) {
-					$array_error[$i]['msg'] = "Erreur : le nom " . $value['name'] . " n'est pas unique";
-					$array_error[$i++]['id'] = $value['name'];
-				} else {
-					pg_query(Gateway::getConnexion(),
-						"UPDATE configuration.filter_rule SET name='" . $value['name'] . "', entity='" . $value['entity'] . "' WHERE id=" . $id['id']
-					);
-				}
-			}
-			// Sinon, suppression
-			else
-			{
-				$racine = self::getRuleNameRootEntity($id['id'])['id'];
-				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter WHERE filter_rule_id =".$id['id']);
-				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_rule WHERE id =".$id['id']);
-				if ($racine != null) {
-					self::deleteTree($racine); // Suppression de l'arbre sans sa racine
-					self::deleteRoot($racine); // Suppression de la racine
-				}
-			}
-		}
-		foreach($data as $k => $value)
-		{
-			if($k<0)
-			{
-				$name_existe = @pg_fetch_all(pg_query(Gateway::getConnexion(), "SELECT name FROM configuration.filter_rule WHERE name='" . $value['name'] ."' AND id=" . $id['id']));
-				if ($name_existe) {
-					$array_error[$i]['msg'] = "Erreur : le nom " . $value['name'] . " n'est pas unique";
-					$array_error[$i++]['id'] = $value['name'];
-				} else {
-					pg_query(Gateway::getConnexion(), "INSERT INTO configuration.filter_rule(name,entity) VALUES('" . $value['name'] . "', '" . $value['entity'] . "')");
-				}
-			}
-		}
-		return $array_error;
+		return $id;
 	}
 
 	static function deletePredicat($predicate_id) {
 		$query = pg_query(Gateway::getConnexion(), "SELECT id FROM configuration.filter_rule_tree_node WHERE filter_predicate_id=".intval($predicate_id));
+		// Suppression de tous les sous-arbres ou apparaissent le predicat
 		if ($query) {
 			$nodes_id = pg_fetch_all($query);
 			if ($nodes_id) {
@@ -388,74 +507,67 @@ class Filtre {
 		} else {
 			var_dump("Erreur de la requête deletePredicat");
 		}
+		// Suppression du predicat
 		@pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_predicate WHERE id =".intval($predicate_id));
 	}
 
-	static function deleteSubTree($node_id) {
-		if (!self::isRoot($node_id)) {
-			$parent = self::getParentNodeId($node_id);
-			//var_dump($parent);
-			$other_child = self::getChildNotMe($parent, $node_id)["id"];
-			$grandparent = self::getParentNodeId($parent);
-			//var_dump($grandparent);
-			if (!self::isRoot($parent)) {
-				self::setNewParent($grandparent, $other_child);
-			} else {
-				$rule_id = Gateway::select("SELECT id FROM configuration.filter_rule WHERE filter_rule_tree_node_id=".$parent)[0]["id"];
-				self::setRoot($rule_id, $other_child);
-			}
-			self::deleteNode($node_id);
-			self::deleteNode($parent);
-		} else {
-			self::deleteRoot($node_id);
+	static function getPredicatByCode($code){
+		$query = pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate WHERE code='".$code."'");
+		return pg_fetch_all($query)[0]["id"];
+	}
+
+	static function getPredicats()
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getPredicats .\n";
+			exit;
 		}
+		return pg_fetch_all($query);
 	}
 
-	static function setRoot($rule_id, $node_id) {
-		pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_rule SET filter_rule_tree_node_id=".intval($node_id)." WHERE id=".intval($rule_id));
+	static function getPredicatsOrderByCode()
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY code");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getPredicatsOrderByCode.\n";
+			exit;
+		}
+		return pg_fetch_all($query);
 	}
 
-	static function setNewParent($parent, $node_id) {
-		pg_query(Gateway::getConnexion(), "UPDATE configuration.filter_rule_tree_node SET parent_id=".intval($parent)." WHERE id=".intval($node_id));
+	static function getPredicatsOrderByEntityCode()
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY entity,code");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getPredicatsOrderByEntityCode.\n";
+			exit;
+		}
+		return pg_fetch_all($query);
 	}
 
-	static function getChildNotMe($parent, $node_id) {
-		$children = self::getRuleTree($parent);
-		if ($children[0]["id"] == $node_id)
-			return $children[1];
-		else
-			return $children[0];
+	static function getPredicatsByEntity($entity)
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate WHERE entity='".$entity."'");
+		if (!$query)
+		{
+			echo "Erreur durant la requête de getPredicatsByEntity .\n";
+			exit;
+		}
+		return pg_fetch_all($query);
 	}
 
-	static function isRoot($node_id) {
-		$result = pg_fetch_all(
-			pg_query(
-				Gateway::getConnexion(), "SELECT filter_rule_tree_node_id FROM configuration.filter_rule WHERE filter_rule_tree_node_id=".intval($node_id)
-			)
+
+	// --------------------------------------------------------------------------- Fonction sur les configurations
+	public static function getConfigurationByFilterRule($id) {
+		return @pg_fetch_all(
+			pg_query(Gateway::getConnexion(), "SELECT DISTINCT hc.*
+													FROM configuration.harvest_configuration hc, configuration.filter f, configuration.filter_rule fr
+													WHERE f.configuration_id = hc.id AND f.filter_rule_id = fr.id AND fr.id = " . $id)
 		);
-		return $result && (count($result) > 0);
-	}
-
-	static function getParentNodeId($node_id) {
-		return pg_fetch_all(
-			pg_query(
-				Gateway::getConnexion(), "SELECT parent_id FROM configuration.filter_rule_tree_node WHERE id=".$node_id
-			)
-		)[0]["parent_id"];
-	}
-
-	static function deleteNode($node_id) {
-		pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id =".intval($node_id));
-	}
-
-	static function deleteRoot($racine) {
-		$result = Gateway::select("SELECT id FROM configuration.filter_rule WHERE filter_rule_tree_node_id=".intval($racine));
-		if ($result) {
-			foreach ($result as $rule) {
-				self::setRoot($rule["id"], null);
-			}
-		}
-		pg_query(Gateway::getConnexion(), "DELETE FROM configuration.filter_rule_tree_node WHERE id =".intval($racine));
 	}
 
 	static function updateFilterConfiguration($id,$donnee)
@@ -517,83 +629,6 @@ class Filtre {
 			}
 		}
 		return $array_error;
-	}
-
-	static function getFilterCode()
-	{
-		$query=pg_query(Gateway::getConnexion(),"SELECT * FROM configuration.filter_function");
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getFilterCode .\n";
-			exit;
-		}
-		return pg_fetch_all($query);
-	}
-
-	static function getPredicat($id)
-	{
-		$query = @pg_query(Gateway::getConnexion(),"SELECT code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate WHERE id=".$id);
-		if(!$query) {
-			return null;
-		}
-		return pg_fetch_all($query);
-	}
-
-	static function getPredicatByCode($code){
-		$query = pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate WHERE code='".$code."'");
-		return pg_fetch_all($query)[0]["id"];
-	}
-
-	static function getPredicats()
-	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate");
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getPredicats .\n";
-			exit;
-		}
-		return pg_fetch_all($query);
-	}
-
-	static function getPredicatsOrderByCode()
-	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY code");
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getPredicatsOrderByCode.\n";
-			exit;
-		}
-		return pg_fetch_all($query);
-	}
-
-	static function getPredicatsOrderByEntityCode()
-	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate ORDER BY entity,code");
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getPredicatsOrderByEntityCode.\n";
-			exit;
-		}
-		return pg_fetch_all($query);
-	}
-
-	static function getPredicatsByEntity($entity)
-	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate WHERE entity='".$entity."'");
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getPredicatsByEntity .\n";
-			exit;
-		}
-		return pg_fetch_all($query);
-	}
-
-	public static function getConfigurationByFilterRule($id) {
-		return @pg_fetch_all(
-			pg_query(Gateway::getConnexion(), "SELECT DISTINCT hc.*
-													FROM configuration.harvest_configuration hc, configuration.filter f, configuration.filter_rule fr
-													WHERE f.configuration_id = hc.id AND f.filter_rule_id = fr.id AND fr.id = " . $id)
-		);
 	}
 
 }

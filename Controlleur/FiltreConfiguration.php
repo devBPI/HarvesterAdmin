@@ -33,7 +33,7 @@ if(isset($_GET['modify']))
 }
 $entities = Gateway::getEntities();
 $conf = Gateway::getFilterByConf($id);
-$data = Gateway::getFilterRule();
+$data = Gateway::getFilterRules();
 $configname = Gateway::getConfigurationName($id);
 $section = "Configuration et règles de filtrage";
 include "../Vue/filtre/FiltreConfiguration.php";
