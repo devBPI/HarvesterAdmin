@@ -111,10 +111,12 @@ if (!isset($_GET["viewonly"])) {
 	} else {
 		$section = $section . "nouvelle configuration de rapport";
 	}
-	if (isset($_GET["id"])) {
+	if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 		$configuration = Gateway::getReport($_GET["id"]);
-		$configuration["criterias"] = Gateway::getCriterias($_GET["id"]);
-		$configuration["data_to_display"] = Gateway::getDataToDisplay($_GET["id"]);
+		if ($configuration!=null) {
+			$configuration["criterias"] = Gateway::getCriterias($_GET["id"]);
+			$configuration["data_to_display"] = Gateway::getDataToDisplay($_GET["id"]);
+		}
 	}
 
 	$operators_old = Gateway::getOperators();
@@ -136,11 +138,13 @@ if (!isset($_GET["viewonly"])) {
 }
 // ---------------------------------------------------------------------------------------------- AFFICHAGE
 else {
-	if (isset($_GET["id"])) {
+	if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 		$configuration = Gateway::getReport($_GET["id"]);
-		$configuration["criterias"] = Gateway::getCriterias($_GET["id"], "poster");
-		$configuration["data_to_display"] = Gateway::getDataToDisplay($_GET["id"]);
-		$section = $section . "détails de la configuration";
+		if ($configuration!=null) {
+			$configuration["criterias"] = Gateway::getCriterias($_GET["id"], "poster");
+			$configuration["data_to_display"] = Gateway::getDataToDisplay($_GET["id"]);
+			$section = $section . "détails de la configuration";
+		}
 	}
 	include "../Vue/rapports/RapportConfigurationAffichage.php";
 }

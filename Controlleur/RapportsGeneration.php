@@ -11,6 +11,18 @@ date_default_timezone_set('Europe/Paris');
 
 $type = $_POST["report_type"] ?? "";
 
+
+function reportToCsv($filename, $headers, $data) {
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment; filename="'. $filename .'.csv";');
+	$out = fopen("php://output", 'w');
+	fputcsv($out, $headers, ";");
+	foreach ($data as $fields) {
+		fputcsv($out, $fields, ";");
+	}
+	fclose($out);
+}
+
 function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	// Autres cas de la construction du where (commun à Processus et Métadonnées)
 	if ($increment_non_vide == 0) {
@@ -22,9 +34,6 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 			. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
 	}
 }
-
-
-
 
 
 if(!empty($_POST) && $_POST["submit_value"] == "generate") {
@@ -191,9 +200,8 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		}
 
 		//print_r($select.$from_where.$end_query);
-
-		//print_r($from_where);
-		$report["result"] = Gateway::select($select . $from_where . $end_query);
+		$requete_generee = $select.$from_where.$end_query;
+		$report["result"] = Gateway::select($requete_generee);
 		if ($join_notice) {
 			foreach ($report["result"] as $key => $line) {
 				$nb = Gateway::getNumberNotices($line["task_id"]);
@@ -217,8 +225,18 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	//var_dump($report_result);
 
 	$section = $configuration["name"];
-
-	include("../Vue/rapports/Rapport.php");
+	if(isset($_POST["generate_csv"])) {
+		//reportToCsv($configuration["name"], $tab_header, $report["result"]);
+		echo implode(";",$tab_header);
+		echo "\n";
+		foreach ($report["result"] as $line) {
+			echo implode(";",$line);
+			echo "\n";
+		}
+	}
+	else {
+		include("../Vue/rapports/Rapport.php");
+	}
 }
 
 ?>

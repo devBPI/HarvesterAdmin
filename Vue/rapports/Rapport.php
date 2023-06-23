@@ -42,6 +42,7 @@ else $page = "RapportsDonnees";
 			<?php } ?>
 		</tbody>
 	</table>
+
 	<?= str_replace(["WHERE", "FROM", "GROUP BY"], ["</br>WHERE", "</br>FROM", "</br>GROUP BY"], $requete_generee ?? "") ?>
 </div>
 
@@ -50,6 +51,7 @@ else $page = "RapportsDonnees";
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
 </script>
 
 </html>

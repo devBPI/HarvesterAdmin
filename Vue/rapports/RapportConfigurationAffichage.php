@@ -28,7 +28,7 @@ else $page = "Donnees";
 			<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux
 				rapports sur les métadonnées</a>
 		<?php } ?>
-		<?php if (isset($_GET["id"]) && $_GET["id"] != "") { ?>
+		<?php if (isset($_GET["id"]) && $_GET["id"] != "" && isset($configuration) && $configuration!=null) { ?>
 			<form action="../Controlleur/Rapports.php?id=<?= $type ?>" method="post" style="margin-bottom:0"
 				  onsubmit="return confirm('Souhaitez-vous supprimer cette configuration de rapport ? Cette action est irréversible.');">
 				<input type="hidden" id="input_delete_id" name="report_id" value="<?= $_GET["id"] ?>">
@@ -36,6 +36,7 @@ else $page = "Donnees";
 			</form>
 		<?php } ?>
 	</div>
+	<?php if (isset($configuration) && $configuration!=null) { ?>
 	<!-- Section titre du rapport -->
 	<div class="border_div param_content_div" style="padding:5px;">
 		<table class="report_config_table" style="width: 100%">
@@ -95,16 +96,30 @@ else $page = "Donnees";
 			</div>
 		</fieldset>
 	</div>
-	<form action="../../Controlleur/RapportsGeneration.php" method="post">
-		<input type="hidden" id="input_generate_id" name="report_id" value="<?= $_GET["id"] ?>">
-		<input type="hidden" id="inpute_generate_type" name="report_type" value="<?= $type ?>">
-		<div style="display:flex;justify-content: flex-end;flex-direction: row">
-			<button id="input_generate" type="submit" name="submit_value" value="generate">Générer le rapport
-			</button>
+	<div style="display:flex;justify-content: flex-end;flex-direction: row">
+		<form action="../../Controlleur/RapportsGeneration.php" method="post" style="margin-bottom: 0">
+			<input type="hidden" id="input_generate_id" name="report_id" value="<?= $_GET["id"] ?>">
+			<input type="hidden" id="inpute_generate_type" name="report_type" value="<?= $type ?>">
+			<button id="input_generate" style="width:200px;border-bottom-left-radius:0;border-bottom-right-radius:0" type="submit" name="submit_value" value="generate">Visualiser le rapport</button>
+		</form>
+	</div>
+	<div style="display:flex;justify-content: flex-end;flex-direction: row">
+		<button id="" class="submit-button" style="width:200px;border-top:1px solid grey;border-top-left-radius:0;border-top-right-radius:0" onclick="generer_csv()">Générer un fichier CSV</button>
+	</div>
+	<?php } else { ?>
+		<div class="avertissement">
+			La configuration demandée n'a pas été trouvée. Veuillez vérifier l'URL.
 		</div>
-	</form>
+	<?php } ?>
 </div>
 
 <?php include "../Vue/common/Footer.php" ?>
-
+<script type="text/javascript">
+    function generer_csv() {
+        <?php if(isset($configuration) && $configuration!=null) { ?>
+        window.open("../Composant/GenererCSV?id=<?= $_GET["id"] ?>&name=<?= str_replace(" ", "_", $configuration["name"]) ?>&report_type=<?= $type ?>",
+			"mynewwindow", "pop-up, menubar=no, titlebar=no, height=200, width=275");
+        <?php } ?>
+    }
+</script>
 </body>

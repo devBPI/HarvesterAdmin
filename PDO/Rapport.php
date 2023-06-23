@@ -222,7 +222,7 @@ class Rapport
 		$name_exists = pg_fetch_all(pg_query(Gateway::getConnexion(),
 			"SELECT name FROM configuration.interface_report WHERE name='". $report["infos"]["name"] ."'")
 		);
-		if (count($name_exists) > 0)
+		if ($name_exists && count($name_exists) > 0)
 			return -1;
 		$query = pg_query(Gateway::getConnexion(), "INSERT INTO configuration.interface_report(name, type)
 												 VALUES ('".$report["infos"]["name"]."', '".$report["infos"]["type"]."')
@@ -245,7 +245,7 @@ class Rapport
 	static function updateReport($report) {
 
 		$name_exists = pg_fetch_all(pg_query(Gateway::getConnexion(),
-				"SELECT name FROM configuration.interface_report WHERE name='". $report["infos"]["name"] ."' AND id!=". $report["infos"]["id"])
+				"SELECT name FROM configuration.interface_report WHERE LOWER(name)='". strtolower($report["infos"]["name"]) ."' AND id!=". $report["infos"]["id"])
 		);
 		if ($name_exists && count($name_exists) > 0)
 			return -1;

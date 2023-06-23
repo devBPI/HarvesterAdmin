@@ -31,7 +31,7 @@ else {
 	<?php } else { ?>
 		<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux rapports sur les métadonnées</a>
 	<?php } ?>
-	<?php if (isset($_GET["id"]) && $_GET["id"] != "") { ?>
+	<?php if (isset($_GET["id"]) && $_GET["id"] != "" && isset($configuration) && $configuration!=null) { ?>
 		<form action="../Controlleur/Rapports.php?id=<?= $type ?>" method="post" style="margin-bottom:0"
 			  onsubmit="return confirm('Souhaitez-vous supprimer cette configuration de rapport ? Cette action est irréversible.');">
 			<input type="hidden" id="input_delete_id" name="report_id" value="<?= $_GET["id"] ?>">
@@ -39,6 +39,7 @@ else {
 		</form>
 	<?php } ?>
 	</div>
+	<?php if (isset($configuration) && $configuration!=null) { ?>
 	<form method="post" id="formRapport">
 	<!-- Section titre du rapport -->
 	<div class="border_div param_content_div" style="padding:5px;">
@@ -49,7 +50,9 @@ else {
 						<label class="formLabel" for="input_name_rapport">Titre du rapport</label>
 					</td>
 					<td style="border-left:2px solid dimgrey">
-						<input type="text" id="input_name_rapport" name="name_rapport" placeholder="Titre identifiant le rapport" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required/>
+						<input type="text" id="input_name_rapport" name="name_rapport" placeholder="Titre identifiant le rapport"
+							   title="Les caractères interdits sont . , ; ' &quot; \ /"
+							pattern="[^.,;'&quot;/\\\x22]*" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required/>
 						<?php if ($msg_error != null) { ?>
 						<p class="avertissement_light" style="text-align: left">
 								<?= $msg_error ?>
@@ -150,6 +153,11 @@ else {
 			<button class="submit_disabled" id="input_save" type="submit" name="submit_value" value="save" disabled>Enregistrer la configuration</button>
 		</div>
 	</form>
+	<?php } else { ?>
+		<div class="avertissement">
+			La configuration demandée n'a pas été trouvée. Veuillez vérifier l'URL.
+		</div>
+	<?php } ?>
 </div>
 
 <?php include "../Vue/common/Footer.php" ?>
@@ -170,10 +178,7 @@ else {
 		$(".champ option[value='harvest_number_of_inserted_in_notices']").attr("disabled", true); // Pour dev, a enlever a un certain moment
         $(".champ option[value='harvest_number_of_inserted_in_external_link']").attr("disabled", true); // Pour dev, a enlever a un certain moment
         $(".champ option[value='notice_date_publishing_count']").attr("disabled", true); // Pour dev, a enlever a un certain moment
-	<?php if(!empty($_POST) && $msg_error==null) { ?>
-        // Script permettant la redirection quand $_POST envoyé, seulement s'il n'y pas d'erreur -> changé en redirection php donc désactivé
-        //window.location='../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= ($_GET["id"]!=""?$_GET["id"]:$new_id) ?>&viewonly';
-    <?php } ?>
+        $(".champ option[value='notice_number_of_rows']").attr("disabled", true); // Pour dev, a enlever a un certain moment
     })
 </script>
 <script src="/js/rapports/reporting.js"></script>

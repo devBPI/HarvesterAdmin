@@ -35,9 +35,8 @@ function getStatusFormates(): array
 {
 	$status = Gateway::getAllStatus();
 	$status_formate = [];
-	foreach ($status as $s) {
+	foreach ($status as $s)
 		$status_formate[] = ["id" => $s["status"], "name" => $s["status"]];
-	}
 	return $status_formate;
 }
 
@@ -112,11 +111,12 @@ function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): s
 	$cb_number_of_results_infos = ComboBox::makeComboBox($data_to_show["number_of_results_infos"], $criteria["display_value"]);
 	$cb_operators = ComboBox::makeComboBox($operators, $criteria["code"]);
 	$cb_valeur = makeInputCbValeur($criteria, $i);
+	$criteria_id = $criteria["id"] ?? "";
 	$str = "";
 	// Fait en heredoc pour plus de lisibilité
 	return <<< HTML
 <div class="critere_rapport" id="critere_rapport_{$i}">
-		<input type="hidden" id="input_id_cond_{$i}" name="id_cond_{$i}" value="{$criteria["id"]}" />
+		<input type="hidden" id="input_id_cond_{$i}" name="id_cond_{$i}" value="{$criteria_id}" />
 		<select class="champ" id="cb_champ_cond_{$i}" name="champ_cond_{$i}" onchange="display_related_operator(this)" required>
 			<option value="">Sélectionnez un champ</option>
 			<optgroup label="Informations sur la {$report_type}">
@@ -184,9 +184,10 @@ function insert_display_values($datas, $data_to_show_for_display, $type): string
 	$j = 1;
 	$i = "00" . $j;
 	foreach ($datas as $data) {
+		$data_id = $data["id"] ?? "";
 		$str = $str . '
 		<div class="donnee_affichee" id="donnee_affichee_' . $i . '">
-		<input type="hidden" id="input_id_champ_aff_'. $i .'" name="id_champ_aff_'. $i .'" value="'. $data["id"] .'" />';
+		<input type="hidden" id="input_id_champ_aff_'. $i .'" name="id_champ_aff_'. $i .'" value="'. $data_id .'" />';
 		$str = $str . '
 			<select class="champ_donnee" id="cb_champ_aff_' . $i . '" name="display_champ_aff_' . $i . '" onchange="change_value_input(this)">
 				<option value="">Sélectionnez un champ</option>' .
