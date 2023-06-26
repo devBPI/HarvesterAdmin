@@ -54,7 +54,7 @@ else {
 							   title="Les caractères interdits sont . , ; ' &quot; \ /"
 							pattern="[^.,;'&quot;/\\\x22]*" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required/>
 						<?php if ($msg_error != null) { ?>
-						<p class="avertissement_light" style="text-align: left">
+						<p class="avertissement_light">
 								<?= $msg_error ?>
 						</p>
 							<?php } ?>
@@ -84,7 +84,6 @@ else {
 						<optgroup label="Suivi de la <?= $what ?>">
 							<?= ComboBox::makeComboBox($data_to_show["follow_up"]) ?>
 							<?php if ($type == "processus") { ?>
-							<option value="inserted_external_link" disabled>Nombre d'insertions dans external_link</option>
 							<option value="inserted_solr" disabled>Nombre d'insertions dans Solr'</option>
 							<?php } else { ?>
 							<option value="type_share" disabled>Proportion de [type] sur l'ensemble des données collectées</option>
@@ -130,7 +129,12 @@ else {
 					<input type="hidden" id="input_id_champ_aff_" name="id_champ_aff_" value="" />
 					<select class="champ_donnee" id="cb_champ_aff_" name="display_champ_aff_" onchange="change_value_input(this)">
 						<option value="">Sélectionnez un champ</option>
-						<?= ComboBox::makeComboBox($data_to_show_for_display); ?>
+						<optgroup label="Informations sur la <?= $what ?>">
+							<?= ComboBox::makeComboBox($data_to_show_for_display["general_infos"]) ?>
+						</optgroup>
+						<optgroup label="Suivi de la <?= $what ?>">
+							<?= ComboBox::makeComboBox($data_to_show_for_display["follow_up"]) ?>
+						</optgroup>
 					</select>
 					<input type="text" class="champ_donnee" id="input_name_champ_aff_" name="name_champ_aff_" placeholder="Dénomination de la donnée"/>
 					<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">

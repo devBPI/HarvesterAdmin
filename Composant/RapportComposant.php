@@ -106,7 +106,7 @@ HTML;
 
 function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): string
 {
-	$cb_general_infos = ComboBox::makeComboBox($data_to_show['general_infos'], $criteria['display_value']);
+	$cb_general_infos = ComboBox::makeComboBox($data_to_show["general_infos"], $criteria["display_value"]);
 	$cb_follow_up = ComboBox::makeComboBox($data_to_show["follow_up"], $criteria["display_value"]);
 	$cb_number_of_results_infos = ComboBox::makeComboBox($data_to_show["number_of_results_infos"], $criteria["display_value"]);
 	$cb_operators = ComboBox::makeComboBox($operators, $criteria["code"]);
@@ -138,6 +138,32 @@ function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): s
 		</button>
 	</div>
 HTML;
+}
+
+function makeDataToDisplay($data, $i, $dtsfd, $report_type) {
+	$cb_general_infos = ComboBox::makeComboBox($dtsfd["general_infos"], $data["display_value"]);
+	$cb_follow_up = ComboBox::makeComboBox($dtsfd["follow_up"], $data["display_value"]);
+	$data_id = $data["id"] ?? "";
+	return <<<HTML
+<div class="donnee_affichee" id="donnee_affichee_{$i}">
+		<input type="hidden" id="input_id_champ_aff_{$i}" name="id_champ_aff_{$i}" value="{$data_id}" />
+		<select class="champ_donnee" id="cb_champ_aff_{$i}" name="display_champ_aff_{$i}" onchange="change_value_input(this)">
+			<option value="">Sélectionnez un champ</option>
+			<optgroup label="Informations sur la {$report_type}">
+			{$cb_general_infos}
+			</optgroup>
+			<optgroup label="Suivi de la {$report_type}">
+			{$cb_follow_up}
+			</optgroup>
+		</select>
+		<input type="text" class="champ_donnee" id="input_name_champ_aff_{$i}" name="name_champ_aff_{$i}"
+			 		value="{$data["display_name"]}" placeholder="Dénomination de la donnée"/>
+		<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
+			<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
+		</button>
+</div>
+HTML;
+
 }
 
 function insert_criterias_processus($criterias, $data_to_show, $operators, $operators_short): string
@@ -184,23 +210,10 @@ function insert_display_values($datas, $data_to_show_for_display, $type): string
 	$j = 1;
 	$i = "00" . $j;
 	foreach ($datas as $data) {
-		$data_id = $data["id"] ?? "";
-		$str = $str . '
-		<div class="donnee_affichee" id="donnee_affichee_' . $i . '">
-		<input type="hidden" id="input_id_champ_aff_'. $i .'" name="id_champ_aff_'. $i .'" value="'. $data_id .'" />';
-		$str = $str . '
-			<select class="champ_donnee" id="cb_champ_aff_' . $i . '" name="display_champ_aff_' . $i . '" onchange="change_value_input(this)">
-				<option value="">Sélectionnez un champ</option>' .
-				ComboBox::makeComboBox($data_to_show_for_display, $data["display_value"]) . '
-			</select>
-			<input type="text" class="champ_donnee" id="input_name_champ_aff_' . $i . '" name="name_champ_aff_' . $i . '"
-			 		value="'. $data["display_name"] .'" placeholder="Dénomination de la donnée"/>
-			<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, \'donnee\')">
-				<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
-			</button>';
-		$str = $str .
-			'</div>';
-
+		if ($type == "processus")
+			$str = $str . makeDataToDisplay($data, $i, $data_to_show_for_display, "moisson");
+		else
+			$str = $str . makeDataToDisplay($data, $i, $data_to_show_for_display, "ressource");
 		$j +=1;
 		$i = "00" . $j;
 	}

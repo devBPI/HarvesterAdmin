@@ -67,26 +67,6 @@ class Rapport
 
 	/** Retourne les données selon le type (PROCESS ou METADATA)
 	 * @param $type string PROCESS ou METADATA
-	 * @param $is_null boolean a vrai si la colonne data_group peut être number_of_results_infos
-	 * @return array|false
-	 */
-	static function getDataToShow($type, $is_null=true) {
-		if ($is_null)
-			return pg_fetch_all(
-				pg_query(Gateway::getConnexion(), "SELECT display_value AS id, default_name as name, data_group
-														 FROM configuration.interface_data_mapping WHERE data_type='". $type . "' ORDER BY default_name")
-			);
-		else
-			return pg_fetch_all(
-				pg_query(Gateway::getConnexion(), "SELECT display_value AS id, default_name as name, data_group
-														 FROM configuration.interface_data_mapping
-														 WHERE data_type='". $type . "' AND data_group !='number_of_results_infos'
-														 ORDER BY default_name")
-			);
-	}
-
-	/** Retourne les données selon le type (PROCESS ou METADATA)
-	 * @param $type string PROCESS ou METADATA
 	 * @param $is_null boolean a vrai si peut être de type number_of_results_infos
 	 * @param $group string groupe de la donnée (pour division de la liste des données à afficher)
 	 * @return array|false

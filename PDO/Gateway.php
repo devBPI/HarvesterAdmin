@@ -185,7 +185,6 @@ class Gateway
 	static function getReports($type=null) { return Rapport::getReports($type); }
 	static function getReport($id) { return Rapport::getReport($id); }
 	static function getOperators() { return Rapport::getOperators(); }
-	static function getDataToShow($type, $is_null=true) { return Rapport::getDataToShow($type, $is_null); }
 	static function getDataToShowByGroup($type, $is_null, $group) { return Rapport::getDataToShowByGroup($type, $is_null, $group); }
 	static function getCriterias($report_id, $for=null) { return Rapport::getCriterias($report_id, $for); }
 	static function getDataToDisplay($report_id) { return Rapport::getDataToDisplay($report_id); }
