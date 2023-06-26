@@ -20,7 +20,7 @@ if (! $ini) {
 	<?php include('../Vue/common/Header.php'); ?>
 
 	<div class="content">
-		<div style="display:flex;justify-content: space-between;flex-direction: row; margin-bottom: 5px">
+		<div class="button_top_div_with_margin">
 			<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
 		</div>
 			<?php
@@ -58,7 +58,7 @@ if (! $ini) {
 				<td id="valueBox">
 					<input name='value' type='text'/>
 				</td>
-				<td><button class='but' type='button' title='Supprimer un prédicat' style='cursor:pointer' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>
+				<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td>
 			</tr>
 
 				<?php
@@ -105,7 +105,7 @@ if (! $ini) {
 								<?php }
 							} ?>
 							</td>
-							<td><button class='but' type='button' title='Supprimer un prédicat' style='cursor:pointer' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
+							<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
 						<?php }
 					}
 					else
@@ -126,11 +126,11 @@ if (! $ini) {
 							}
 						}?>
 						</select></td><td><input name='value-1' type='text'/></td>
-						<td><button class='but' type='button' title='Supprimer un prédicat' style='cursor:pointer' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
+						<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
 				<?php } ?>
 				<tr style="background-color:rgba(0,0,0,0);" id="add_row">
 					<td>
-						<button class='ajout but' type='button' title='Ajouter un prédicat' style='cursor:pointer' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement, "filtre_predicat")'>
+						<button class='ajout but' type='button' title='Ajouter un prédicat' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement, "filtre_predicat")'>
 							<img src='../../ressources/add.png' width='30px' height='30px'/></button>
 					</td>
 					<td></td><td></td><td></td><td></td>

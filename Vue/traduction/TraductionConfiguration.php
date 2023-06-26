@@ -80,7 +80,7 @@ include('../Vue/common/Header.php');
 					<input type="checkbox" name="case"/>
 				</td>
 				<td>
-					<button class="but" type="button" title="Supprimer un set" style="cursor:pointer" onclick='delete_field(this.parentElement.parentElement)'>
+					<button class="but" type="button" title="Supprimer un set" onclick='delete_field(this.parentElement.parentElement)'>
 						<img src="../../ressources/cross.png" width="30px" height="30px"></button>
 				</td>
 			</tr>
@@ -132,7 +132,7 @@ include('../Vue/common/Header.php');
 					<td data-label="Suppression des espaces"><input type="checkbox" name="trim<?= $key ?>" <?= (($value['trim'] == 'f') ? '' : 'checked') ?>/>
 					</td>
 					<td>
-						<button class="but" type="button" title="Supprimer un set" style="cursor:pointer" onclick="delete_field(this.parentElement.parentElement)">
+						<button class="but" type="button" title="Supprimer un set" onclick="delete_field(this.parentElement.parentElement)">
 							<img src="../../ressources/cross.png" width="30px" height="30px"/>
 						</button>
 					</td>
@@ -165,7 +165,7 @@ include('../Vue/common/Header.php');
 					<input type="checkbox" name="trim"/>
 				</td>
 				<td>
-					<button class="but" type="button" title="Supprimer un set" style="cursor:pointer" onclick="delete_field(this.parentElement.parentElement)">
+					<button class="but" type="button" title="Supprimer un set" onclick="delete_field(this.parentElement.parentElement)">
 						<img src="../../ressources/cross.png" width="30px" height="30px"/></button>
 				</td>
 			</tr>
@@ -178,14 +178,14 @@ include('../Vue/common/Header.php');
 				<td></td>
 				<td></td>
 				<td>
-					<button class="ajout but" type="button" title="Ajouter une traduction" style="cursor:pointer" onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
+					<button class="ajout but" type="button" title="Ajouter une traduction" onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
 						<img src="../../ressources/add.png" width="30px" height="30px"/>
 					</button>
 				</td>
 			</tr>
 			</tbody>
 		</table>
-		<div style="display:flex;justify-content: flex-end;flex-direction: row">
+		<div class="button_end_div">
 			<input type="submit" value="Modifier les associations" class="buttonlink"/>
 		</div>
 	</form>

@@ -33,7 +33,7 @@ include('../Vue/common/Header.php');
 		<h3 class="config_name" style="text-align:center">Ensemble : <?= $rules_set["name"] ?></h3>
 		<p class="sub_title">Contenu de l'ensemble de règles de traduction</p>
 	</div>
-	<div style="display:flex;justify-content: space-between;">
+	<div class="button_top_div">
 		<a href="../Controlleur/Traduction.php" class="buttonlink">« Retour aux traductions</a>
 	</div>
 
@@ -128,14 +128,13 @@ include('../Vue/common/Header.php');
 					<td></td>
 					<td class="td_cross">
 						<button class="ajout but" type="button" title="Ajouter une ligne"
-								style="cursor:pointer"
 								onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
 							<img src="../ressources/add.png" width="30px" height="30px"/></button>
 					</td>
 				</tr>
 				</tbody>
 				</table>
-			<div style="display:flex;justify-content: flex-end;flex-direction: row">
+			<div class="button_end_div">
 				<input type="submit" value="Valider les modifications" class="button primairy-color round"/>
 			</div>
 		</form>
@@ -182,7 +181,7 @@ include('../Vue/common/Header.php');
 			?>
 		</tbody>
 		</table>
-		<div style="display:flex;justify-content: flex-end;flex-direction: row">
+		<div class="button_end_div">
 				<a href="TraductionSet.php?id=<?= $rules_set["id"] ?>&modify=false" class="buttonpage">Éditer l'ensemble de règles</a>
 		</div>
 		<?php }?>

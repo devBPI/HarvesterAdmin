@@ -75,7 +75,6 @@ function makeTab($cibles, $rules, $rules_set, $id_category)
 					<td></td>
 						<td class="td_cross">
 							<button class="ajout but" type="button" title="Ajouter une ligne"
-									style="cursor:pointer"
 									onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
 								<img src="../ressources/add.png" width="30px" height="30px"/></button>
 						</td>

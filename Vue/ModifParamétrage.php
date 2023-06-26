@@ -125,7 +125,7 @@ foreach($properties_list as $property){
 ?>
 
 <div class="content">
-	<div style="display:flex;justify-content: space-between;flex-direction: row; margin-bottom: 5px">
+	<div class="button_top_div_with_margin">
 		<a href="../Controlleur/Mapping.php" class="buttonlink">&laquo; Retour aux mappings</a>
 	</div>
 	<div class="cartouche-solo" style="width:100%;height:auto">
@@ -245,7 +245,7 @@ foreach($properties_list as $property){
 						<input type="text" placeholder="contenu..." id="formContent" name="content" required>
 					</div>
 				</div>
-				<div style="display:flex;justify-content: flex-end;flex-direction: row; margin-bottom: 5px">
+				<div class="button_end_div_with_margin">
 					<button type="submit" class="btn delete" onclick="deleteRow()">Supprimer</button>
 					<button type="submit" class="btn">Valider</button>
 				</div>

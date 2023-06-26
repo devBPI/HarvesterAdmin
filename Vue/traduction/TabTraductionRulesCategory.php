@@ -68,7 +68,6 @@ class TabTraductionRulesCategory
 					<td></td>
 						<td class="td_cross">
 							<button class="ajout but" type="button" title="Ajouter une ligne"
-									style="cursor:pointer"
 									onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
 								<img src="../ressources/add.png" width="30px" height="30px"/></button>
 						</td>
@@ -76,7 +75,7 @@ class TabTraductionRulesCategory
 					</tbody>
 				</table>
 			</div>
-			<div style="display:flex;justify-content: flex-end;flex-direction: row">
+			<div class="button_end_div">
 				<input type="submit" value="Enregistrer" class="button primairy-color round"/>
 			</div>
 		</form>
@@ -93,7 +92,7 @@ class TabTraductionRulesCategory
 			}
 			$str = $str . '</table>
 	</div>
-	<div style="display:flex;justify-content: flex-end;flex-direction: row">
+	<div class="button_end_div">
 			';
 			if ($id == null) {
 				$str = $str . '<a href="' . $controller . '?modify=false" class="buttonpage">' . $msg_edition . '</a>

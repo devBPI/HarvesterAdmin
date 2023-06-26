@@ -52,7 +52,7 @@ include ('../Vue/common/Header.php');
 
 <body>
     <div class="content">
-        <div style="display:flex;justify-content: space-between;flex-direction: row; margin-bottom: 5px">
+        <div class="button_top_div_with_margin">
             <a href="../Controlleur/Mapping.php" class="buttonlink">&laquo; Retour</a>
         </div>
         <div class="cartouche-solo" style="width:auto;height:auto;padding:5%">

@@ -8,9 +8,29 @@ body {
 	padding-bottom: 25px;
 }
 
-.but{
+.button_top_div, .button_top_div_with_margin {
+	display:flex;
+	justify-content: space-between;
+}
+
+.button_top_div_with_margin {
+	margin-bottom: 5px;
+}
+
+.button_end_div, .button_end_div_with_margin {
+	display:flex;
+	justify-content: flex-end;
+	flex-direction: row;
+}
+
+.button_end_div_with_margin {
+	margin-top: 5px;
+}
+
+.but {
 	border:none;
 	background-color:rgba(0,0,0,0);
+	cursor: pointer;
 }
 .button {
 	border: none;

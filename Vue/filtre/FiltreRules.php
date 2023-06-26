@@ -25,7 +25,7 @@ include ('../Vue/common/Header.php');
 	<div class="content">
 		<FORM action="FiltreRules.php?modify=false" method="post" onsubmit="return confirm('Voulez vous vraiment modifier les ensembles de règles ?');">
 			<h2>Règles de filtrage</h2>
-			<div style="display:flex;justify-content: space-between;flex-direction: row;margin-bottom: 5px;">
+			<div class="button_top_div_with_margin">
 				<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
 			</div>
 			<div class="sizeable_table">
@@ -101,7 +101,7 @@ include ('../Vue/common/Header.php');
 						echo "<tr><td>".$value['name']."</td><td>".$value['entity']."</td></tr>";
 					}
 					echo "</table>
-							<div style='display:flex;justify-content: flex-end;flex-direction: row;margin-top:5px'>
+							<div class='button_end_div_with_margin'>
 								<a href='FiltreRules.php?modify=false' class=\"submit-button\">Modifier les règles</a>
 							</div>
 							</div>";
