@@ -20,7 +20,7 @@ else $page = "Donnees";
 ?>
 
 <div class="content">
-	<div style="display:flex;justify-content: space-between;">
+	<div class="button_top_div">
 		<?php if ($type == "processus") { ?>
 			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">«
 				Retour aux rapports sur les processus</a>
@@ -65,15 +65,9 @@ else $page = "Donnees";
 				<?php foreach ($configuration["criterias"] as $criteria) { ?>
 				<div class="critere_rapport critere_rapport_posting">
 					<div class="div_decorative_left"></div>
-					<div class="criteria_left">
-						<?= $criteria["default_name"] ?>
-					</div>
-					<div class="criteria_middle">
-						<?= $criteria["label"] ?>
-					</div>
-					<div class="criteria_right">
-						<?= $criteria["value_to_compare"] ?>
-					</div>
+					<div class="criteria_left"><?= $criteria["default_name"] ?></div>
+					<div class="criteria_middle"><?= $criteria["label"] ?></div>
+					<div class="criteria_right"><?= $criteria["value_to_compare"] ?></div>
 				</div>
 				<?php } ?>
 			</div>
@@ -88,22 +82,20 @@ else $page = "Donnees";
 				<?php foreach ($configuration["data_to_display"] as $data) { ?>
 				<div class="donnee_affichee donnee_affichee_posting">
 					<div class="div_decorative_left"></div>
-					<div class="data_to_display_left">
-						<?= $data["display_name"] ?>
-					</div>
+					<div class="data_to_display_left"><?= $data["display_name"] ?></div>
 				</div>
 				<?php } ?>
 			</div>
 		</fieldset>
 	</div>
-	<div style="display:flex;justify-content: flex-end;flex-direction: row">
+	<div class="button_end_div">
 		<form action="../../Controlleur/RapportsGeneration.php" method="post" style="margin-bottom: 0">
 			<input type="hidden" id="input_generate_id" name="report_id" value="<?= $_GET["id"] ?>">
-			<input type="hidden" id="inpute_generate_type" name="report_type" value="<?= $type ?>">
+			<input type="hidden" id="input_generate_type" name="report_type" value="<?= $type ?>">
 			<button id="input_generate" style="width:200px;border-bottom-left-radius:0;border-bottom-right-radius:0" type="submit" name="submit_value" value="generate">Visualiser le rapport</button>
 		</form>
 	</div>
-	<div style="display:flex;justify-content: flex-end;flex-direction: row">
+	<div class="button_end_div">
 		<button id="" class="submit-button" style="width:200px;border-top:1px solid grey;border-top-left-radius:0;border-top-right-radius:0" onclick="generer_csv()">Générer un fichier CSV</button>
 	</div>
 	<?php } else { ?>

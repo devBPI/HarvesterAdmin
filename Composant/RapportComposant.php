@@ -70,10 +70,10 @@ function makeInputCbValeur($criteria, $i): string
 	$display_input = false;
 	if ($criteria["display_value"] == "harvest_last_task" || $criteria["display_value"] == "results_distinct") {
 		$cb = '<option value="Oui">Oui</option>';
-	} else if ($criteria["display_value"] == "harvest_configuration_name" || $criteria["display_value"] == "harvest_status" || $criteria["display_value"] == "notice_type") {
-		if ($criteria["display_value"] == "harvest_configuration_name") $data = getConfigurationsFormatees();
-		else if($criteria["display_value"] == "harvest_status") $data = getStatusFormates();
-		else $data = getResourceTypesFormates();
+	} else if (preg_match("/(configuration_name)/", $criteria["display_value"]) || $criteria["display_value"] == "harvest_status" || $criteria["display_value"] == "notice_type") {
+		if($criteria["display_value"] == "harvest_status") $data = getStatusFormates();
+		else if ($criteria["display_value"] == "notice_type") $data = getResourceTypesFormates();
+		else $data = getConfigurationsFormatees();
 		$cb = ComboBox::makeComboBox($data, $criteria["value_to_compare"]);
 	} else {
 		$display_input = true;
@@ -133,7 +133,7 @@ function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): s
 			{$cb_operators}
 		</select>
 		{$cb_valeur}
-		<button class="but delete" type="button" title="Supprimer un critère" style="cursor:pointer;" onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
+		<button class="but delete" type="button" title="Supprimer un critère" onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
 			<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
 		</button>
 	</div>

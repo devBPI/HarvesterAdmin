@@ -54,7 +54,7 @@
                 let month = date.getMonth()+1;
                 let year = date.getFullYear();
                 dl.href = URL.createObjectURL(blobObject);
-                dl.download = filename + "__" + day + "_" + month + "_" + year + ".csv";
+                dl.download = filename + "__" + day + "-" + month + "-" + year + ".csv";
 
                 dl.click();
 

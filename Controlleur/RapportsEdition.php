@@ -26,7 +26,7 @@ if (!isset($_GET["viewonly"])) {
 		$ind = 0;
 		$donnees["infos"]["id"] = $id;
 		$donnees["infos"]["name"] = $_POST["name_rapport"];
-		$donnees["infos"]["type"] = "METADATA";
+		$donnees["infos"]["type"] = $data_type;
 		unset($_POST["name_rapport"]);
 		$donnees["criteria_id_list"] = [];
 		$donnees["criterias_to_update"] = [];

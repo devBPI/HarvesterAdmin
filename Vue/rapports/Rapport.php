@@ -16,7 +16,7 @@ if ($type=="processus") $page = "RapportsProcessus";
 else $page = "RapportsDonnees";
 ?>
 <div class="content">
-	<div style="display:flex;justify-content: space-between;">
+	<div class="button_top_div">
 		<?php if ($type == "processus") { ?>
 			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les processus</a>
 		<?php } else { ?>

@@ -194,6 +194,7 @@ class Gateway
 	static function updateReport($report) { return Rapport::updateReport($report); }
 	static function deleteReport($id) { Rapport::deleteReport($id); }
 	static function getNumberNotices($task_id) { return Rapport::getNumberNotices($task_id); }
+	static function getNumberExternalLink($task_id) { return Rapport::getNumberExternalLink($task_id); }
 
 	/**
 	 * @return array de type id,'Nom' contenant l'id et une chaîne "Nom"

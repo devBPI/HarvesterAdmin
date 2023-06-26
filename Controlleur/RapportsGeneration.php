@@ -158,7 +158,7 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 				if ($dtd["data_table"] == "public.notice") {
 					$join_notice = true;
 					$display_name_notice = $dtd["display_name"];
-				} else {
+				} else if ($dtd["data_table"] == "public.external_link") {
 					$join_external_link = true;
 					$display_name_external_link = $dtd["display_name"];
 				}
@@ -206,14 +206,17 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 			foreach ($report["result"] as $key => $line) {
 				$nb = Gateway::getNumberNotices($line["task_id"]);
 				$report["result"][$key][$display_name_notice] = $nb>0?$nb:"";
-				unset($report["result"][$key]["task_id"]);
-			}
-		} else {
-			foreach ($report["result"] as $key => $line) {
-				unset($report["result"][$key]["task_id"]);
 			}
 		}
-		//var_dump($report);
+		if ($join_external_link) {
+			foreach ($report["result"] as $key => $line) {
+				$nb = Gateway::getNumberExternalLink($line["task_id"]);
+				$report["result"][$key][$display_name_external_link] = $nb>0?$nb:"";
+			}
+		}
+		foreach ($report["result"] as $key => $line) {
+			unset($report["result"][$key]["task_id"]);
+		}
 	}
 
 	$tab_header = [];

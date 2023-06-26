@@ -25,7 +25,7 @@ else {
 }
 ?>
 <div class="content">
-	<div style="display:flex;justify-content: space-between;">
+	<div class="button_top_div">
 	<?php if ($type == "processus") { ?>
 		<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les processus</a>
 	<?php } else { ?>
@@ -39,7 +39,7 @@ else {
 		</form>
 	<?php } ?>
 	</div>
-	<?php if (isset($configuration) && $configuration!=null) { ?>
+	<?php if ((isset($configuration) && $configuration!=null) || !isset($_GET["id"])) { ?>
 	<form method="post" id="formRapport">
 	<!-- Section titre du rapport -->
 	<div class="border_div param_content_div" style="padding:5px;">
@@ -70,8 +70,7 @@ else {
 		<fieldset class="param_fieldset">
 			<legend>Critères</legend>
 			<div id="criteres_rapport">
-				<button type="button" class="ajout but" title="Ajouter un critère" style="cursor:pointer"
-						onclick="add_critere_or_donnee(this.parentElement, 'critere')">
+				<button type="button" class="ajout but" title="Ajouter un critère" onclick="add_critere_or_donnee(this.parentElement, 'critere')">
 					<img src="../../ressources/add.png" width="30px" height="30px"/>
 				</button>
 				<!-- élément reproductible pour l'ajout des critères -->
@@ -101,7 +100,7 @@ else {
 					<input type="text" class="valeur" id="input_valeur_cond_" name="valeur_cond_" placeholder="Valeur de comparaison" pattern="[0-9]*"/>
 					<select class="champ" id="cb_valeur_cond_" name="valeur_cond_" style="display:none">
 					</select>
-					<button class="but delete" type="button" title="Supprimer un critère" style="cursor:pointer;"
+					<button class="but delete" type="button" title="Supprimer un critère"
 							onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
 						<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
 					</button>
@@ -123,7 +122,7 @@ else {
 		<fieldset class="param_fieldset">
 			<legend>Données affichées</legend>
 			<div id="donnees_affichees">
-				<button type="button" class="ajout but" title="Ajouter une donnée à afficher" style="cursor:pointer" onclick="add_critere_or_donnee(this.parentElement, 'donnee')">
+				<button type="button" class="ajout but" title="Ajouter une donnée à afficher" onclick="add_critere_or_donnee(this.parentElement, 'donnee')">
 					<img src="../../ressources/add.png" width="30px" height="30px"/>
 				</button>
 				<!-- élément reproductible pour l'ajout de donnees -->
@@ -149,7 +148,7 @@ else {
 			</div>
 		</fieldset>
 	</div>
-		<div style="display:flex;justify-content: flex-end;flex-direction: row">
+		<div class="button_end_div">
 			<button class="submit_disabled" id="input_save" type="submit" name="submit_value" value="save" disabled>Enregistrer la configuration</button>
 		</div>
 	</form>
