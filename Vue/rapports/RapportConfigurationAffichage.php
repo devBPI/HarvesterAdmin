@@ -111,7 +111,7 @@ else $page = "Donnees";
 <script type="text/javascript">
     function generer_csv() {
         <?php if(isset($configuration) && $configuration!=null) { ?>
-        window.open("../Composant/GenererCSV?id=<?= $_GET["id"] ?>&name=<?= str_replace(" ", "_", $configuration["name"]) ?>&report_type=<?= $type ?>",
+        window.open("../Composant/GenererCSV.php?id=<?= $_GET["id"] ?>&name=<?= str_replace(" ", "_", $configuration["name"]) ?>&report_type=<?= $type ?>",
 			"mynewwindow", "pop-up, menubar=no, titlebar=no, height=200, width=275");
         <?php } ?>
     }
