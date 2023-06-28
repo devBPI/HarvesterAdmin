@@ -30,7 +30,7 @@ include('../Vue/common/Header.php');
 <div class="content traduction">
 	<?php if (isset($id) && $id!=null) { ?>
 	<div class="config_name_and_sub_title">
-		<h3 class="config_name" style="text-align:center">Ensemble : <?= $name ?></h3>
+		<h3 class="config_name">Ensemble : <?= $name ?></h3>
 		<p class="sub_title">Contenu de l'ensemble de cibles de traduction</p>
 	</div>
 	<div class="btn_div">

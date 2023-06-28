@@ -27,7 +27,7 @@ include('../Vue/common/Header.php');
 		</div>
 		<div class="column">
 			<div class="config_name_and_sub_title">
-				<h3 class="config_name" style="text-align:center">Configuration : <?= $name ?></h3>
+				<h3 class="config_name">Configuration : <?= $name ?></h3>
 				<p class="sub_title"></p>
 			</div>
 		</div>
@@ -35,7 +35,7 @@ include('../Vue/common/Header.php');
 	<?php if (isset($array_error) && count($array_error) > 0) { ?>
 		<div>
 			<p class="avertissement" style="text-align:left; margin-bottom:0">Les modifications suivantes n'ont pas été prises en compte :</p>
-			<p class="avertissement_light" style="text-align:left">
+			<p class="avertissement_light">
 				<?php foreach ($array_error as $error) { ?>
 					<?= $error['msg'] ?><br/>
 				<?php } ?>

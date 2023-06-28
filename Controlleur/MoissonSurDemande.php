@@ -213,7 +213,7 @@ switch ($action) {
 
 		}
 		if($allfilesuploaded==true) {
-			var_dump($configwithfiles);
+			//var_dump($configwithfiles);
 			$insertOk = Gateway::insertMoisson($configwithfiles); // $configwithfiles vaut l'id de harvest_grab_configuration
 			if (!$insertOk)
 			{

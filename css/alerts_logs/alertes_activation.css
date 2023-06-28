@@ -1,0 +1,60 @@
+.table_alertes_enabled { table-layout: initial; }
+.table_alertes_enabled tr:nth-child(even) { background-color: #ebf8ff; }
+.table_alertes_enabled td { padding: 0 0 0 75px; text-align: left; }
+.table_alertes_enabled th { background-color: #56acde; color: black; }
+
+.table_alertes_enabled .td_switch { width: 20px; }
+.table_alertes_enabled .td_label { padding-left:15px; width:40%; }
+
+/* Source : https://www.w3schools.com/howto/howto_css_switch.asp + custom code */
+
+.switch {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 30px;
+    padding: 0;
+}
+
+.switch input[type=checkbox] {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    height: 30px;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cccccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 30px
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}

@@ -122,7 +122,7 @@ function delete_critere_or_donnee(parent, type) {
 
 // Active ou desactive le bouton d'envoi du formulaire
 function disable_input() {
-    console.log(cpt_criteres, cpt_donnees_affs);
+    //console.log(cpt_criteres, cpt_donnees_affs);
     if (cpt_criteres > 0 && cpt_donnees_affs > 0) {
         $("#input_save").removeAttr("disabled");
         $("#input_save").removeClass("submit_disabled");

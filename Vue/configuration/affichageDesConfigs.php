@@ -76,7 +76,7 @@
             <td data-label="Base de recherche"><?= $var['public_name'] ?></a></td>
             <td data-label="Type de connecteur"><?= $var['grabber'] ?></a></td>
             <td data-label="Dernière moisson"><?php
-                if ($var['date'] == null) {
+                if (!isset($var['date']) || $var['date'] == null) {
                     echo 'Jamais ou réinitialisé';
                 } else {
                     $modificationDateSyst = date('Y-m-d H:i:s', strtotime($var['date'])) . " ";

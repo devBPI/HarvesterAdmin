@@ -30,7 +30,7 @@ include('../Vue/common/Header.php');
 <body name="haut" id="haut" style="height: auto; width: auto;">
 <div class="content traduction">
 	<div class="config_name_and_sub_title">
-		<h3 class="config_name" style="text-align:center">Ensemble : <?= $rules_set["name"] ?></h3>
+		<h3 class="config_name">Ensemble : <?= $rules_set["name"] ?></h3>
 		<p class="sub_title">Contenu de l'ensemble de règles de traduction</p>
 	</div>
 	<div class="button_top_div">

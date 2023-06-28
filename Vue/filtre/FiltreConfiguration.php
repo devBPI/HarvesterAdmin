@@ -98,7 +98,7 @@ include('../Vue/common/Header.php');
 	if(!empty($_POST)) : ?>
 		<div id="page-mask" style="display:block"></div>
 		<div class="form-popup" id="validateForm" style="display:block">
-			<div class='form-container' id='formProperty'>
+			<div class="form-container" id="formProperty">
 				<?php if (isset($array_error) && $array_error != null) { ?>
 					<!--<form action="#" class="form-container" id="formProperty">-->
 				<?php } else { ?>

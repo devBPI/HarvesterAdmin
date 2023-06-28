@@ -72,7 +72,7 @@
 
 		<?php include ("../Vue/configuration/affichageDesConfigs.php");?>
 		<div class="triple-column-container">
-			<div class="column" style="text-align:left">
+			<div class="column-text-left">
 				<a href="../Controlleur/AjoutConfiguration.php"class="buttonpage">Ajouter une Configuration</a>
 			</div>
 			<div class="column">

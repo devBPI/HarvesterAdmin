@@ -45,6 +45,7 @@ class Gateway
 	static function updateAlertJobs($alert_jobs) { Alertes::updateAlertJobs($alert_jobs); }
 	static function getMailingList() { return Alertes::getMailingList(); }
 	static function getAlertParameters() { return Alertes::getAlertParameters(); }
+	static function updateAlertParameters($alert_parameters) { Alertes::updateAlertParameters($alert_parameters); }
 
 	// ------------------------------- Configuration
 	static function getIdFromCode($code) { return Configuration::getIdFromCode($code); }

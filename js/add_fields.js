@@ -1,5 +1,5 @@
 function add_new_field(elt, jsEventPage) {
-	console.log(elt);
+	//console.log(jsEventPage);
 	let d = null;
 	let pos_node = 1;
 	if(elt.tagName!="TABLE")
@@ -37,6 +37,11 @@ function add_new_field(elt, jsEventPage) {
 			let k = document.getElementsByName("function" + nb)[0];
 			k.addEventListener("change", function () {
 				display_valueBox(this, nb, "")
+			});
+		} else if (jsEventPage == "alertes_parametrage") {
+			let k = document.getElementsByName("is_enabled_k_" + nb)[0];
+			k.addEventListener("change", function () {
+				change_label_text(this, 'k', nb);
 			});
 		}
 	}
