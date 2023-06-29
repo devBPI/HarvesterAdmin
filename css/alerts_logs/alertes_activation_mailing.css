@@ -1,10 +1,21 @@
-.table_alertes_enabled { table-layout: initial; }
+.table_alertes_enabled { table-layout: initial; border:none; }
 .table_alertes_enabled tr:nth-child(even) { background-color: #ebf8ff; }
 .table_alertes_enabled td { padding: 0 0 0 75px; text-align: left; }
 .table_alertes_enabled th { background-color: #56acde; color: black; }
 
 .table_alertes_enabled .td_switch { width: 20px; }
 .table_alertes_enabled .td_label { padding-left:15px; width:40%; }
+.table_alertes_enabled .td_cross { padding-left: 0; width: 60px; }
+
+.table_alertes_enabled input[type=checkbox] {
+    margin-right: 10px;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: 5px;
+}
+
+.table_alertes_enabled input[type=email] { font-size: 16px; }
 
 /* Source : https://www.w3schools.com/howto/howto_css_switch.asp + custom code */
 

@@ -25,7 +25,9 @@
 }
 
 .alertes_params_div_title::before {
-    content: "►";
+    content: '\0025BA';
+    color: #56acde;
+    display: inline-block;
 }
 
 .alertes_params_div_title {
@@ -34,6 +36,7 @@
     padding: 10px 5px 10px 50px;
     font-weight: bold;
     font-size:18px;
+    color: black;
     text-decoration: underline black;
 }
 

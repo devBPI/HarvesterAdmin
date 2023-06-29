@@ -1,22 +1,19 @@
-<html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../../css/style.css" />
 	<link rel="stylesheet" href="../../css/composants.css" />
-	<link rel="stylesheet" href="../../css/selectStyle.css" />
 	<link rel="stylesheet" href="../../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../../css/formStyle.css" />
 	<link rel="stylesheet" href="../../css/alerts_logs/alertes_reglage.css" />
 
 	<title>Activation des alertes</title>
 
 </head>
 
-<body>
 <?php
 include("../Vue/common/Header.php");
 ?>
-
+<body>
 <div class="content">
 	<div class="button_top_div_with_margin">
 		<a class="buttonlink" href="../Controlleur/AlertesParametrage.php" style="float:none; height:16px">« Retour</a>
@@ -40,7 +37,7 @@ include("../Vue/common/Header.php");
 					<div class="alertes_params_label_div">
 						<label for="input_value_<?= $i ?>"><?= $ligne["name"] ?></label>
 					</div>
-					<input class="alertes_params_input" type="number" id="input_value_<?= $i ?>" name="value_<?= $i ?>" min="0" value="<?= $ligne["value"] ?>" required/>
+					<input class="alertes_params_input" type="number" id="input_value_<?= $i ?>" name="value_<?= $i ?>" min="0" <?= ($i % 2 != 0)?'max="100"':'' ?> value="<?= $ligne["value"] ?>" required/>
 				</div>
 <?php if($i % 2 != 0) { ?>
 			</div>

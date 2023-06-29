@@ -39,9 +39,10 @@ function add_new_field(elt, jsEventPage) {
 				display_valueBox(this, nb, "")
 			});
 		} else if (jsEventPage == "alertes_parametrage") {
-			let k = document.getElementsByName("is_enabled_k_" + nb)[0];
+			let k = document.getElementsByName("is_enabled_" + nb)[0];
+			k.click();
 			k.addEventListener("change", function () {
-				change_label_text(this, 'k', nb);
+				change_label_text(this, nb);
 			});
 		}
 	}

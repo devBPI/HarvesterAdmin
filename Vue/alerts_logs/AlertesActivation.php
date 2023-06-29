@@ -1,22 +1,19 @@
-<html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../../css/style.css" />
 	<link rel="stylesheet" href="../../css/composants.css" />
-	<link rel="stylesheet" href="../../css/selectStyle.css" />
 	<link rel="stylesheet" href="../../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../../css/formStyle.css" />
-	<link rel="stylesheet" href="../../css/alerts_logs/alertes_activation.css" />
+	<link rel="stylesheet" href="../../css/alerts_logs/alertes_activation_mailing.css" />
 
 	<title>Activation des alertes</title>
 </head>
 
-<body>
 <?php
 include("../Vue/common/Header.php");
 $i = 0;
 ?>
-
+<body>
 <div class="content">
 	<div class="button_top_div_with_margin">
 		<a class="buttonlink" href="../Controlleur/AlertesParametrage.php" style="float:none; height:16px">« Retour</a>
@@ -62,7 +59,7 @@ $i = 0;
 		</tbody>
 	</table>
 		<div class="button_end_div_with_margin">
-			<button type="submit" name="submit_value" value="save">Enregistrer la configuration</button>
+			<button type="submit" name="submit_value" value="save">Enregistrer les modifications</button>
 		</div>
 	</form>
 </div>

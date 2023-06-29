@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../../css/style.css" />
@@ -11,11 +11,11 @@
 	<title><?= $section ?></title>
 </head>
 
-<body>
 <?php
 include("../Vue/common/Header.php");
 ?>
 
+<body>
 <div class="content">
 	<div class="triple-column-container">
 		<div class="column-text-left">
@@ -66,19 +66,19 @@ include("../Vue/common/Header.php");
 				<div class="alertes_homepage_div_int">
 					<table class="table-config table_home_recipients">
 						<tbody>
-							<?php foreach($mailing_list as $recipient) { ?>
+						<?php foreach($mailing_list as $recipient) { ?>
 
 							<tr>
 								<td><?= $recipient["mail"] ?></td>
 								<td class="<?= $recipient["is_enabled"] == "t"?"activated":"deactivated" ?>"><?= $recipient["is_enabled"]=="t"?"Activée":"Désactivée" ?></td>
 							</tr>
-							<?php } ?>
+						<?php } ?>
 
 						</tbody>
 					</table>
 				</div>
 				<div class="alertes_homepage_div_button">
-					<a class="submit-button">Gérer la liste de diffusion</a>
+					<a class="submit-button" href="../Controlleur/AlertesMailingList">Gérer la liste de diffusion</a>
 				</div>
 			</div>
 		</div>

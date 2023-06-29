@@ -13,7 +13,7 @@
 }
 
 .table_home_threshold tr:nth-child(even), .table_home_recipients tr:nth-child(even), .table_home_alertes_enabled tr:nth-child(even) {
-    background-color: #EBF8FF;
+    background-color: #ebf8ff;
 }
 
 .table_home_alertes_enabled td.activated, .table_home_alertes_enabled td.deactivated,
