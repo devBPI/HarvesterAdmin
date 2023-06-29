@@ -128,7 +128,7 @@ if (! $ini) {
 						</select></td><td><input name='value-1' type='text'/></td>
 						<td><button class='but' type='button' title='Supprimer un prédicat' onclick='delete_field(this.parentElement.parentElement)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>
 				<?php } ?>
-				<tr style="background-color:rgba(0,0,0,0);" id="add_row">
+				<tr id="add_row">
 					<td>
 						<button class='ajout but' type='button' title='Ajouter un prédicat' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement, "filtre_predicat")'>
 							<img src='../../ressources/add.png' width='30px' height='30px'/></button>

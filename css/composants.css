@@ -19,9 +19,9 @@ body {
 }
 
 
-/* ------------------------------- */
-/* TABLES (balises table, td, tr) */
-/* ------------------------------- */
+/* ---------------------------------------------- */
+/* TABLES (balises table, td, tr, bouton add_row) */
+/* ---------------------------------------------- */
 .table-config {
     border: 1px solid #ccc;
     border-collapse: collapse;
@@ -182,6 +182,12 @@ body {
     text-transform: uppercase;
     word-wrap: break-word;
 }
+
+/* Bouton add_row */
+#add_row {
+    background-color:rgba(0,0,0,0);
+}
+
 
 @media screen and (max-width: 600px) {
     .table-mapping {

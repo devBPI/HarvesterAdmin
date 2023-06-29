@@ -78,7 +78,7 @@ include("../Vue/common/Header.php");
 					</table>
 				</div>
 				<div class="alertes_homepage_div_button">
-					<a class="submit-button" href="../Controlleur/AlertesMailingList">Gérer la liste de diffusion</a>
+					<a class="submit-button" href="../Controlleur/AlertesMailingList.php">Gérer la liste de diffusion</a>
 				</div>
 			</div>
 		</div>

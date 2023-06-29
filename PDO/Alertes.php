@@ -75,6 +75,18 @@ class Alertes
 		}
 	}
 
+	static function getAlertParameters() {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(), "SELECT code, name, value FROM monitoring.alert_rule_parameter ORDER BY code")
+		);
+	}
+
+	static function updateAlertParameters($alert_parameters) {
+		foreach ($alert_parameters as $alert_parameter) {
+			pg_query(Gateway::getConnexion(), "UPDATE monitoring.alert_rule_parameter SET value=". $alert_parameter["value"]." WHERE code='". $alert_parameter["id"]."'");
+		}
+	}
+
 	/** Liste des noms de domaine des adresses mail, précédés d'un @
 	 * @return array|false liste où les éléments sont de la forme "@nomdedomaine"
 	 */
@@ -109,16 +121,50 @@ class Alertes
 		return $head_mailinglist;
 	}
 
-	static function getAlertParameters() {
-		return pg_fetch_all(
-			pg_query(Gateway::getConnexion(), "SELECT code, name, value FROM monitoring.alert_rule_parameter ORDER BY code")
+	static function updateMailSender($mail_sender) {
+		pg_query(Gateway::getConnexion(),
+			"UPDATE monitoring.mail_sender
+					SET recipients='".$mail_sender["id"]."', is_enabled='".$mail_sender["is_enabled"]."'
+					WHERE recipients LIKE '".$mail_sender["old_id"]."'"
 		);
 	}
 
-	static function updateAlertParameters($alert_parameters) {
-		foreach ($alert_parameters as $alert_parameter) {
-			pg_query(Gateway::getConnexion(), "UPDATE monitoring.alert_rule_parameter SET value=". $alert_parameter["value"]." WHERE code='". $alert_parameter["id"]."'");
+	static function insertMailSender($mail_sender) {
+		pg_query(Gateway::getConnexion(), "INSERT INTO monitoring.mail_sender
+										VALUES ('".$mail_sender["id"]."', '".$mail_sender["is_enabled"]."')");
+	}
+
+	static function mailSenderExists($mail_sender_id) {
+		return is_array(Gateway::select("SELECT * FROM monitoring.mail_sender WHERE recipients='".$mail_sender_id."'"));
+	}
+
+	static function updateMailingList($mailing_list) {
+		$array_error = [];
+		$mailing_old_ids = [];
+
+		foreach ($mailing_list as $mail_sender) {
+			if ($mail_sender["old_id"] != 'null')
+				$mailing_old_ids[] = $mail_sender["old_id"];
 		}
+
+		pg_query(Gateway::getConnexion(),
+			"DELETE FROM monitoring.mail_sender WHERE recipients NOT IN ('".implode("','", $mailing_old_ids)."')"
+		);
+
+		foreach ($mailing_list as $mail_sender) {
+			if ($mail_sender["old_id"] == 'null') {
+				if (!self::mailSenderExists($mail_sender["id"]))
+					self::insertMailSender($mail_sender);
+				else
+					$array_error[] = $mail_sender["id"];
+			} else {
+				if (($mail_sender["old_id"] == $mail_sender["id"]) || !self::mailSenderExists($mail_sender["id"]))
+					self::updateMailSender($mail_sender);
+				else
+					$array_error[] = $mail_sender["id"];
+			}
+		}
+		return $array_error;
 	}
 
 }

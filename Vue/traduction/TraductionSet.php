@@ -123,7 +123,7 @@ include('../Vue/common/Header.php');
 				<?php } ?>
 				<?php }
 				?>
-				<tr style="background-color:rgba(0,0,0,0);" id="add_row">
+				<tr id="add_row">
 					<td></td>
 					<td></td>
 					<td class="td_cross">
