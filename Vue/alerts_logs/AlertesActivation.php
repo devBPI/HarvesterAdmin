@@ -4,9 +4,14 @@
 	<link rel="stylesheet" href="../../css/style.css" />
 	<link rel="stylesheet" href="../../css/composants.css" />
 	<link rel="stylesheet" href="../../css/accueilStyle.css" />
+	<link rel="stylesheet" href="../../css/formStyle.css" /> <!-- Pour popup -->
 	<link rel="stylesheet" href="../../css/alerts_logs/alertes_activation_mailing.css" />
 
 	<title>Activation des alertes</title>
+
+	<style>
+
+	</style>
 </head>
 
 <?php
@@ -37,7 +42,7 @@ $i = 0;
 				<td class="td_switch">
 					<label class="switch">
 					<input type="checkbox" id="input_is_enabled_<?= $i ?>" name="is_enabled_<?= $i ?>" value="" onchange="change_label_text(this, <?= $i ?>)" checked>
-					<span class="slider"></span>
+					<span class="slider" id="slider_<?= $i ?>"></span>
 					</label>
 				</td>
 				<td class="td_label">
@@ -47,7 +52,7 @@ $i = 0;
 				<td class="td_switch">
 					<label class="switch">
 					<input type="checkbox" id="input_is_enabled_<?= $i ?>" name="is_enabled_<?= $i ?>" value="" onchange="change_label_text(this, <?= $i ?>)">
-					<span class="slider"></span>
+					<span class="slider" id="slider_<?= $i ?>"></span>
 					</label>
 				</td>
 				<td class="td_label">
@@ -63,17 +68,26 @@ $i = 0;
 		</div>
 	</form>
 </div>
+
+<?php if (!empty($_POST)) : ?>
+	<div id="page-mask" style="display:block"></div>
+	<div class="form-popup" id="validateForm" style="display:block">
+		<div class="form-container" id="formProperty">
+			<h3>Modification</h3>
+			<div class="form-popup-corps">
+				<p>L'état d'activation des tâches de surveillance a bien été enregistré.</p>
+				<button class="buttonlink" onclick="window.location.href='../Controlleur/AlertesParametrage.php'">OK</button>
+			</div>
+		</div>
+	</div>
+<?php endif; ?>
+
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="../js/toTop.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/toTop.js"></script>
+<script type="text/javascript" src="../js/alerts_logs/checkbox_slider.js"></script>
 <script type="text/javascript">
-	function change_label_text(element, indice) {
-        if (element.checked)
-            document.getElementById("label_"+indice).innerHTML = "Activée";
-		else
-            document.getElementById("label_"+indice).innerHTML = "Désactivée";
-	}
 </script>
 
 </html>

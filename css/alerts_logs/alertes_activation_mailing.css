@@ -1,8 +1,10 @@
 .table_alertes_enabled { table-layout: initial; border:none; }
+.table_alertes_enabled tr { border: none; }
 .table_alertes_enabled tr:nth-child(even) { background-color: #ebf8ff; }
 .table_alertes_enabled td { padding: 0 0 0 75px; text-align: left; }
 .table_alertes_enabled th { background-color: #56acde; color: black; }
 
+.table_alertes_enabled .td_email { width:40%; }
 .table_alertes_enabled .td_switch { width: 20px; }
 .table_alertes_enabled .td_label { padding-left:15px; width:40%; }
 .table_alertes_enabled .td_cross { padding-left: 0; width: 60px; }
@@ -10,25 +12,25 @@
 .table_alertes_enabled input[type=checkbox] {
     margin-right: 10px;
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 0;
+    height: 0;
     top: 5px;
 }
 
-.table_alertes_enabled input[type=email] { font-size: 16px; }
+.table_alertes_enabled input[type=email] { margin: 4px; font-size: 16px; }
+
+@media screen and (max-width: 1200px) {
+    .table_alertes_enabled .td_email { padding-left:5%; }
+}
 
 /* Source : https://www.w3schools.com/howto/howto_css_switch.asp + custom code */
 
 .switch {
     display: inline-block;
     position: relative;
-    width: 60px;
-    height: 30px;
+    width: 62px;
+    height: 32px;
     padding: 0;
-}
-
-.switch input[type=checkbox] {
-    display: none;
 }
 
 .slider {
@@ -40,9 +42,8 @@
     right: 0;
     bottom: 0;
     background-color: #cccccc;
-    -webkit-transition: .4s;
     transition: .4s;
-    border-radius: 30px
+    border-radius: 30px;
 }
 
 .slider:before {
@@ -53,7 +54,6 @@
     left: 4px;
     bottom: 4px;
     background-color: white;
-    -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
 }
