@@ -9,7 +9,10 @@ require_once ("../PDO/Gateway.php");
 
 date_default_timezone_set('Europe/Paris');
 
+$report_id = $_POST["report_id"] ?? "";
 $type = $_POST["report_type"] ?? "";
+
+$query_empty_or_error = false;
 
 
 function reportToCsv($filename, $headers, $data) {
@@ -35,12 +38,11 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	}
 }
 
-
 if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	//var_dump($_POST);
-	$configuration = Gateway::getReport($_POST["report_id"]);
-	$configuration["criterias"] = Gateway::getCriterias($_POST["report_id"], "query");
-	$configuration["data_to_display"] = Gateway::getDataToDisplay($_POST["report_id"]);
+	$configuration = Gateway::getReport($report_id);
+	$configuration["criterias"] = Gateway::getCriterias($report_id, "query");
+	$configuration["data_to_display"] = Gateway::getDataToDisplay($report_id);
 	foreach ($configuration["data_to_display"] as $key => $dtd) { // Récupération de toutes les infos des data_to_display
 		$configuration["data_to_display"][$key] = array_unique(
 			array_merge($dtd,Gateway::getDataMappingByDisplay_Value($dtd["display_value"])),
@@ -141,6 +143,10 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		$requete_generee = $select.$from.$where.$end_query;
 		//print_r($requete_generee);
 		$report["result"] = Gateway::select($requete_generee);
+
+		if (!$report["result"]) {
+			$query_empty_or_error = true;
+		}
 	}
 	// --------------------------------- PROCESSUS
 	if ($type == "processus") {
@@ -202,25 +208,29 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		//print_r($select.$from_where.$end_query);
 		$requete_generee = $select.$from_where.$end_query;
 		$report["result"] = Gateway::select($requete_generee);
-		if ($join_notice) {
-			foreach ($report["result"] as $key => $line) {
-				$nb = Gateway::getNumberNotices($line["task_id"]);
-				$report["result"][$key][$display_name_notice] = $nb>0?$nb:"";
+		if ($report["result"]) {
+			if ($join_notice) {
+				foreach ($report["result"] as $key => $line) {
+					$nb = Gateway::getNumberNotices($line["task_id"]);
+					$report["result"][$key][$display_name_notice] = $nb > 0 ? $nb : "";
+				}
 			}
-		}
-		if ($join_external_link) {
-			foreach ($report["result"] as $key => $line) {
-				$nb = Gateway::getNumberExternalLink($line["task_id"]);
-				$report["result"][$key][$display_name_external_link] = $nb>0?$nb:"";
+			if ($join_external_link) {
+				foreach ($report["result"] as $key => $line) {
+					$nb = Gateway::getNumberExternalLink($line["task_id"]);
+					$report["result"][$key][$display_name_external_link] = $nb > 0 ? $nb : "";
+				}
 			}
-		}
-		foreach ($report["result"] as $key => $line) {
-			unset($report["result"][$key]["task_id"]);
+			foreach ($report["result"] as $key => $line) {
+				unset($report["result"][$key]["task_id"]);
+			}
+		} else {
+			$query_empty_or_error = true;
 		}
 	}
 
 	$tab_header = [];
-	if (count($report["result"])>1) {
+	if ($report["result"]) {
 		foreach ($report["result"][0] as $key => $value) {
 			$tab_header[] = $key;
 		}
@@ -232,9 +242,11 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 		//reportToCsv($configuration["name"], $tab_header, $report["result"]);
 		echo implode(";",$tab_header);
 		echo "\n";
-		foreach ($report["result"] as $line) {
-			echo implode(";",$line);
-			echo "\n";
+		if ($report["result"]) {
+			foreach ($report["result"] as $line) {
+				echo implode(";", $line);
+				echo "\n";
+			}
 		}
 	}
 	else {

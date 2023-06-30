@@ -19,7 +19,7 @@ function reset_default_cb_valeur(number) {
     $("#input_valeur_cond_" + number).text("").val("")
         .attr("pattern", "[0-9]*")
         .attr("placeholder", "Valeur de comparaison")
-        .attr("type", "text").removeAttr("required").hide();
+        .attr("type", "text").removeAttr("required").removeAttr("max").hide();
 }
 
 // -------------------------------------------------------------------------------------------------------------- OK
@@ -70,7 +70,7 @@ function display_related_operator(element) {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option>').show();
         $("#cb_valeur_cond_" + number).html('<option value="Oui">Oui</option>').attr("required", true).show();
     } else if ((element.value).includes("date") || (element.value).includes("time")) {
-        $("#input_valeur_cond_" + number).attr("type", "datetime-local").attr("required", true).show();
+        $("#input_valeur_cond_" + number).removeAttr("pattern").attr("type", "datetime-local").attr("max", "9999-12-31T23:59").attr("required", true).show();
     } else if (element.value == "harvest_differences_notices") {
         // Suite à mail du 30/05
         $("#input_valeur_cond_" + number).attr("placeholder", "Si pourcentage, ne pas oublier le %")

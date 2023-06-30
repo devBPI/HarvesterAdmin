@@ -93,7 +93,7 @@ function makeInputCbValeur($criteria, $i): string
 	if($display_input) {
 		return <<<HTML
 <input type="{$input_type}" class="valeur" id="input_valeur_cond_{$i}" name="valeur_cond_{$i}"
-			value="{$criteria["value_to_compare"]}" placeholder="{$placeholder}" pattern="{$pattern}" required />
+			value="{$criteria["value_to_compare"]}" placeholder="{$placeholder}" pattern="{$pattern}" max="9999-12-31T23:59" required />
 	<select class="champ" id="cb_valeur_cond_{$i}" name="valeur_cond_{$i}" style="display:none"></select>
 HTML;
 	} else {

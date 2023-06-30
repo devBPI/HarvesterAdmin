@@ -24,6 +24,7 @@ else $page = "RapportsDonnees";
 		<?php } ?>
 		<p style="text-align:right;margin:0;padding-top:12px">Version du <?= date("d/m/Y \à H:i:s") ?></p>
 	</div>
+<?php if (!$query_empty_or_error) { ?>
 	<table class="table-config">
 		<thead>
 		<tr>
@@ -42,6 +43,23 @@ else $page = "RapportsDonnees";
 			<?php } ?>
 		</tbody>
 	</table>
+<?php } else { ?>
+	<br/><br/>
+	<p class="avertissement" style="text-align: left">
+		Le rapport n'a retourné aucun résultat. Cela peut signifier que les critères sont invalides ou en conflit les uns
+		avec les autres : veuillez vérifier la configuration du rapport <a href="../Controlleur/Rapports<?= ucfirst($type) ?>Edition.php?id=<?= $report_id ?>&viewonly">en cliquant ici</a>.</p>
+	<p style="text-align: left; font-size:18px">De manière non-exhaustive, voici la liste des conflits qui peuvent conduire à un rapport vide :</p>
+<?php if($type == "processus") { ?>
+	<ul>
+		<li style="font-size:18px">Date de début inférieure à date de fin</li>
+		<li style="font-size:18px">Durée de la moisson supérieure à l'intervalle entre début et fin de moisson</li>
+		<li style="font-size:18px">Critères "Fin de la moisson" et "Statut" d'erreur sélectionnés en même temps (une moisson en erreur n'a pas de date de fin)</li>
+		<li style="font-size:18px">...</li>
+	</ul>
+<?php } ?>
+
+	<br/><br/>
+<?php }	?>
 
 	<?= str_replace(["WHERE", "FROM", "GROUP BY"], ["</br>WHERE", "</br>FROM", "</br>GROUP BY"], $requete_generee ?? "") ?>
 </div>
