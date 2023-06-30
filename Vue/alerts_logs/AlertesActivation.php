@@ -34,7 +34,7 @@ $i = 0;
 		<tbody>
 <?php foreach($alert_jobs as $alert_job) { ?>
 			<tr>
-				<td>
+				<td class="td_name">
 					<input type="hidden" id="input_id_<?= $i ?>" name="id_<?= $i ?>" value="<?= $alert_job["id"] ?>" required/>
 					<?= $alert_job["name"] ?>
 				</td>

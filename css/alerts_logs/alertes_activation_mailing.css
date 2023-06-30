@@ -20,7 +20,37 @@
 .table_alertes_enabled input[type=email] { margin: 4px; font-size: 16px; }
 
 @media screen and (max-width: 1200px) {
-    .table_alertes_enabled .td_email { padding-left:5%; }
+    .table_alertes_enabled .td_email, .table_alertes_enabled .td_name { padding-left:5%; }
+}
+
+@media screen and (max-width: 600px) { /* Neutralise composants.css  */
+    .table-config tr.hidden_field { display: none; }
+    .table-config.table_alertes_enabled { display: table; width: 100%; border: 1px solid black; }
+
+    .table-config thead {
+        position: inherit;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .table-config.table_alertes_enabled tr { margin-bottom: 0; border-bottom: 1px solid darkgrey; }
+    .table-config thead th, .table-config .table_head th {
+        display: block; width: auto;
+    }
+    .table-config tbody td {
+        padding: 15px 0 15px 5px;
+        height: auto;
+        border:none;
+        font-size: inherit;
+    }
+    .table-config tbody td.td_email { width: 95%; }
+    .table-config tbody td:first-child { padding-left: 5px; border-bottom: 1px solid #dddddd; }
+    .table_alertes_enabled .td_switch, .table_alertes_enabled .td_label, .table_alertes_enabled .td_cross {
+        display: inline-block;
+        width: auto;
+    }
 }
 
 /* Source : https://www.w3schools.com/howto/howto_css_switch.asp + custom code */

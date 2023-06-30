@@ -49,7 +49,7 @@ $i = 0;
 					</button>
 				</td>
 			</tr>
-			<tr>
+			<tr class="table_head">
 				<th>Adresse mail</th>
 				<th colspan="2">État de l'adresse mail</th>
 				<th class="td_cross"></th>

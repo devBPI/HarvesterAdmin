@@ -1,40 +1,61 @@
+@media screen  and (max-width: 1050px) {
+    .triple-column-container {
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 600px) { /* Neutralise composants.css  */
+    .table-config tr {
+        display: block;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    .table-config.table_home_alertes_enabled td, .table-config.table_home_threshold td, .table-config.table_home_recipients td {
+        font-size: inherit;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        height: auto;
+    }
+}
+
 .table_home_alertes_enabled {
-    width: 100%;
+width: 100%;
 }
 
 .table_home_alertes_enabled td, .table_home_threshold td, .table_home_recipients td {
-    height: 55px;
-    padding: 0 0 0 15px;
-    text-align: left;
+height: 55px;
+padding: 0 0 0 15px;
+text-align: left;
 }
 
 .table_home_threshold td, .table_home_recipients td, .table_home_alertes_enabled td {
-    border-bottom: 1px solid black;
+border-bottom: 1px solid black;
 }
 
 .table_home_threshold tr:nth-child(even), .table_home_recipients tr:nth-child(even), .table_home_alertes_enabled tr:nth-child(even) {
-    background-color: #ebf8ff;
+background-color: #ebf8ff;
 }
 
 .table_home_alertes_enabled td.activated, .table_home_alertes_enabled td.deactivated,
 .table_home_threshold td.activated, .table_home_threshold td.deactivated,
 .table_home_recipients td.activated, .table_home_recipients td.deactivated {
-    width: 120px;
-    font-weight: bolder;
+width: 120px;
+font-weight: bolder;
 }
 
 .table_home_alertes_enabled td.deactivated, .table_home_threshold td.deactivated, .table_home_recipients td.deactivated {
-    color: grey;
+color: grey;
 }
 
 .alertes_homepage_div_ext button, .alertes_homepage_div_ext .submit-button {
-    display: inline-block;
-    width:100%;
-    max-height: 40px;
-    border-radius:0;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: normal;
+display: inline-block;
+width:100%;
+max-height: 40px;
+border-radius:0;
+box-sizing: border-box;
+text-align: center;
+line-height: normal;
 }
 
 .alertes_homepage_title { margin-block-end: 0; font-weight: bolder; }
