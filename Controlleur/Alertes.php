@@ -1,13 +1,11 @@
-<html style="overflow-x: hidden; overflow-y: auto;">
+<html lang="fr" style="overflow-x: hidden; overflow-y: auto;">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 
-
 require_once("../PDO/Gateway.php");
-Gateway::connection();
 
 if(isset($_POST['deleteRow']) && $_POST['deleteRow']!=''){
 	Gateway::deleteAlert($_POST['deleteRow']);
@@ -27,4 +25,3 @@ $start_from = ($page - 1) * $limit;
 $section = "Alertes";
 include("../Vue/alerts_logs/Alertes.php");
 ?>
-

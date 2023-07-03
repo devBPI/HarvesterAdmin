@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../../css/style.css" />
@@ -21,9 +22,9 @@ $i = 0;
 	</div>
 	<?php if (!empty($array_error)) { ?>
 	<div class="avertissement">
-		<p style="text-align:left">ERREURS :<br/>
+		<p style="text-align:left">ERREURS :<br>
 			<?php foreach ($array_error as $error) { ?>
-				L'adresse mail <?= $error ?> existe déjà.</br>
+				L'adresse mail <?= $error ?> existe déjà.<br>
 			<?php } ?>
 		</p>
 		</div>

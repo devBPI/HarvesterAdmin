@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../css/style.css" />
@@ -61,7 +62,7 @@ else $page = "RapportsDonnees";
 	<br/><br/>
 <?php }	?>
 
-	<?= str_replace(["WHERE", "FROM", "GROUP BY"], ["</br>WHERE", "</br>FROM", "</br>GROUP BY"], $requete_generee ?? "") ?>
+	<?= str_replace(["WHERE", "FROM", "GROUP BY"], ["<br>WHERE", "<br>FROM", "<br>GROUP BY"], $requete_generee ?? "") ?>
 </div>
 
 

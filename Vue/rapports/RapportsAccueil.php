@@ -1,11 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" href="../css/style.css" />
-	<link rel="stylesheet" href="../css/composants.css" />
-	<link rel="stylesheet" href="../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../css/formStyle.css" />
-	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css" />
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/composants.css">
+	<link rel="stylesheet" href="../css/accueilStyle.css">
+	<link rel="stylesheet" href="../css/formStyle.css">
+	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css">
 	<title>Paramétrage des rapports sur les <?= $type ?> </title>
 </head>
 
@@ -19,9 +20,9 @@ else $page = "RapportsDonnees";
 	<table class="table-config">
 		<thead>
 			<tr>
-				<th width="70%">Nom de la configuration</th>
-				<th width="15%">Éditer</th>
-				<th width="15%">Afficher</th>
+				<th style="width:70%">Nom de la configuration</th>
+				<th style="width:15%">Éditer</th>
+				<th style="width:15%">Afficher</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +32,7 @@ else $page = "RapportsDonnees";
 				<td><?= $configuration["name"] ?></td>
 				<td>
 					<a href="../Controlleur/<?= $page ?>Edition.php?id=<?= $configuration["id"] ?>">
-						<img src="../ressources/edit.png" alt="Modifier la configuration" width="30px" height="30px"/>
+						<img src="../ressources/edit.png" alt="Modifier la configuration" style="width:30px;height:30px">
 					</a>
 				</td>
 				<td>
@@ -44,9 +45,8 @@ else $page = "RapportsDonnees";
 		<tr>
 			<td colspan="3" style="text-align: left">
 				<a href="../Controlleur/<?= $page ?>Edition.php">
-					<img src="../../ressources/add.png" alt="Ajouter une configuration" width="30px" height="30px">
+					<img src="../../ressources/add.png" alt="Ajouter une configuration" style="width:30px;height:30px">
 				</a>
-			</td>
 			</td>
 		</tr>
 		</tbody>

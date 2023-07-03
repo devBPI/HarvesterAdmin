@@ -147,6 +147,14 @@ input[type=file] {
     font-size: 14px;
 }
 
+.buttonlink.buttongrey {
+    background-color: #D5D5D5;
+}
+
+.buttonlink.buttongrey:hover {
+    background-color: #cccccc;
+}
+
 .buttonpage {
     background-color: #77b8dd;
     color: white;

@@ -1,26 +1,19 @@
-<?php
-$ini = @parse_ini_file("../etc/configuration.ini", true);
-if (! $ini) {
-    $ini = @parse_ini_file("../etc/default.ini", true);
-}
-?>
-<html>
 <head>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../css/style.css" />
-<link rel="stylesheet" href="../css/composants.css" />
-<link rel="stylesheet" href="../css/accueilStyle.css" />
-<link rel="stylesheet" href="../css/alerts_logs/alertes.css" />
-<title>Alertes</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/composants.css">
+	<link rel="stylesheet" href="../css/accueilStyle.css">
+	<link rel="stylesheet" href="../css/alerts_logs/alertes.css">
+	<title>Alertes</title>
 </head>
-<body name="haut" id="haut">
+<body id="haut">
 	<?php
 	include('../Vue/common/Header.php');
 	$url = "Alertes.php?&order=";
 	?>
 	<div class="content" style="width:90%">
 		<table class="table-config">
-			<thead>
+			<thead><tr>
 <?php
 
 $arrow = "";
@@ -31,7 +24,7 @@ if ($order == "creation_time") {
 } else if ($order == "creation_time DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" style='cursor:pointer' width=10% height=30px; onclick = 'location.href=\"" . $url . "creation_time " . $sens . "\"'>Création ". $arrow . "</th>";
+echo "<th style=\"cursor:pointer;width:10%;height:30px\" onclick = 'location.href=\"" . $url . "creation_time " . $sens . "\"'>Création ". $arrow . "</th>";
 
 
 $arrow = "";
@@ -42,7 +35,7 @@ if ($order == "level") {
 } else if ($order == "level DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" style='cursor:pointer' width=10% onclick = 'location.href=\"" . $url . "level " . $sens . "\"'>Niveau " . $arrow . "</th>";
+echo "<th style=\"cursor:pointer;width:10%\" onclick = 'location.href=\"" . $url . "level " . $sens . "\"'>Niveau " . $arrow . "</th>";
 
 
 $arrow = "";
@@ -53,7 +46,7 @@ if ($order == "category") {
 } else if ($order == "category DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "category " . $sens . "\"'>Catégorie " . $arrow . "</th>";
+echo "<th style=\"cursor:pointer;width:10%\" onclick = 'location.href=\"" . $url . "category " . $sens . "\"'>Catégorie " . $arrow . "</th>";
 
 
 $arrow = "";
@@ -64,7 +57,7 @@ if ($order == "configuration_name") {
 } else if ($order == "configuration_name DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "configuration_name " . $sens . "\"'>Configuration " . $arrow . "</th>";
+echo "<th style=\"cursor:pointer;width:10%\" onclick = 'location.href=\"" . $url . "configuration_name " . $sens . "\"'>Configuration " . $arrow . "</th>";
 
 
 $arrow = "";
@@ -75,10 +68,10 @@ if ($order == "configuration_id") {
 } else if ($order == "configuration_id DESC") {
     $arrow = "▲";
 }
-echo "<th scope=\"col\" style='cursor:pointer' width=10%' onclick = 'location.href=\"" . $url . "configuration_id " . $sens . "\"'>Configuration Id " . $arrow . "</th>";
+echo "<th style=\"cursor:pointer;width:10%\" onclick = 'location.href=\"" . $url . "configuration_id " . $sens . "\"'>Configuration Id " . $arrow . "</th>";
 
 
-echo "<th scope=\"col\" style='cursor:pointer' width=35%'>Message</th>";
+echo "<th style=\"cursor:pointer;width:35%\">Message</th>";
 
 
 $arrow = "";
@@ -90,7 +83,7 @@ if ($order == "status") {
     $arrow = "▲";
 }
 
-echo "<th scope=\"col\" width=5% onclick=\"suppressAlert()\"</th></thead>";
+echo "<th style=\"width:5%\" onclick=\"suppressAlert()\"></th></tr></thead>";
 
 echo"<tbody id=\"displaytbody\">";
 
@@ -102,33 +95,33 @@ foreach ($alerts as $alert) {
 	$level = $alert['level'];
 	$levelStyle = $level."_level";
 	$category = $alert['category'];
-	$configurationName = str_replace(["_"," ("],["_<wbr/>", " <br/>("],$alert['configuration_name']);
+	$configurationName = str_replace(["_"," ("],["_<wbr/>", " <br>("],$alert['configuration_name']);
 	$configurationId = $alert['configuration_id'];
 	$message = $alert['message'];
 
 	?>
-	<tr>
-		<td style="text-align:center">
+	<tr style="text-align:center">
+		<td>
 			<div><?= empty($creationTimeSyst)?"-":$creationTimeSyst ?></div>
 		</td>
-		<td class="<?= $levelStyle ?>" style="text-align:center">
+		<td class="<?= $levelStyle ?>">
 			<div><?= empty($level)?"-":$level ?></div>
 		</td>
-		<td style="text-align:center">
+		<td>
 			<div><?= empty($category)?"-":$category ?></div>
 		</td>
-		<td style="text-align:center">
+		<td>
 			<div><?= empty($configurationName)?"-":$configurationName ?></div>
 		</td>
-		<td style="text-align:center">
+		<td>
 			<div><?= empty($configurationId)?"-":$configurationId ?></div>
 		</td>
-		<td style="text-align:center">
+		<td>
 			<div><?= empty($message)?"-":$message ?></div>
 		</td>
 		<td>
 			<div class="button-hover" onclick="deleteRow(<?= $alert["id"]?>)" id="<?= $alert['id']?>" style="cursor:pointer">
-				<img src="../ressources/cross.png" width="20px" height="20px">
+				<img src="../ressources/cross.png" alt="Supprimer une ligne" style="width:20px;height:20px">
 			</div>
 		</td>
 	</tr>
@@ -137,6 +130,7 @@ foreach ($alerts as $alert) {
 }?>
 	</tbody>
 	</table>
+	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>

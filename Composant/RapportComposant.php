@@ -134,7 +134,7 @@ function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): s
 		</select>
 		{$cb_valeur}
 		<button class="but delete" type="button" title="Supprimer un critère" onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
-			<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
+			<img alt="Supprimer un critère" src="../ressources/cross.png" style="width:30px;height:30px">
 		</button>
 	</div>
 HTML;
@@ -157,9 +157,9 @@ function makeDataToDisplay($data, $i, $dtsfd, $report_type) {
 			</optgroup>
 		</select>
 		<input type="text" class="champ_donnee" id="input_name_champ_aff_{$i}" name="name_champ_aff_{$i}"
-			 		value="{$data["display_name"]}" pattern="[^.'&quot;/\\\x22]*" placeholder="Dénomination de la donnée"/>
+			 		value="{$data["display_name"]}" pattern="[^.'&quot;/\\x22]*" placeholder="Dénomination de la donnée"/>
 		<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
-			<img alt="Supprimer un critère" src="../ressources/cross.png" width="30px" height="30px">
+			<img alt="Supprimer un critère" src="../ressources/cross.png" style="width:30px;height:30px">
 		</button>
 </div>
 HTML;

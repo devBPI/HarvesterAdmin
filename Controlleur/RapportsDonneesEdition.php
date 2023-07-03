@@ -7,7 +7,7 @@ if (! $ini) {
 
 require_once ("../PDO/Gateway.php");
 
-$section = "Paramétrage des rapports :</br>";
+$section = "Paramétrage des rapports :<br>";
 
 $type = "donnees";
 

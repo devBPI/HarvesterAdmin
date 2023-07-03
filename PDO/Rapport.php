@@ -308,4 +308,29 @@ class Rapport
 		)[0]["count"];
 	}
 
+
+	static function duplicateReport($report_id) {
+		$configuration = Gateway::getReport($report_id);
+		if ($configuration == null)
+			return -1;
+		// -- Détermination du nom du rapport
+		$cpt = 0;
+		$name_exists = true;
+		while ($name_exists) {
+			$cpt++;
+			$name_exists = pg_fetch_all(pg_query(Gateway::getConnexion(),
+					"SELECT name FROM configuration.interface_report
+            		WHERE LOWER(name)='" . mb_strtolower($configuration["name"] . " (" . $cpt . ")", "utf-8") . "'")
+			);
+		}
+		// -- Formattage du rapport pour la fonction insertReport
+		$report["infos"]["name"] = $configuration["name"] . " (".$cpt.")";
+		$report["infos"]["type"] = $configuration["type"];
+		$report["criterias_to_insert"] = Gateway::getCriterias($report_id);
+		$report["data_to_insert"] = Gateway::getDataToDisplay($report_id);
+
+		// -- Insertion du rapport
+		return self::insertReport($report);
+	}
+
 }

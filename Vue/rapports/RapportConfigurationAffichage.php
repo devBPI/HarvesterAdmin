@@ -1,12 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" href="../css/style.css" />
-	<link rel="stylesheet" href="../css/composants.css" />
-	<link rel="stylesheet" href="../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../css/formStyle.css" />
-	<link rel="stylesheet" href="../css/reporting.css" />
-	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css" />
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/composants.css">
+	<link rel="stylesheet" href="../css/accueilStyle.css">
+	<link rel="stylesheet" href="../css/formStyle.css">
+	<link rel="stylesheet" href="../css/reporting.css">
+	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css">
 	<title>Paramétrage des rapports</title>
 
 </head>
@@ -42,7 +43,7 @@ else $page = "Donnees";
 		<table class="report_config_table" style="width: 100%">
 			<tbody>
 			<tr>
-				<td width="200px">
+				<td style="width:200px">
 					<label>Titre du rapport</label>
 				</td>
 				<td style="border-left:2px solid dimgrey">
@@ -50,7 +51,7 @@ else $page = "Donnees";
 				</td>
 				<td>
 					<a href="../Controlleur/Rapports<?= $page ?>Edition.php?id=<?= $configuration["id"] ?>">
-						<img src="../ressources/edit.png" alt="Modifier la configuration" width="30px" height="30px"/>
+						<img src="../ressources/edit.png" alt="Modifier la configuration" style="width:30px;height:30px">
 					</a>
 				</td>
 			</tr>
@@ -96,7 +97,7 @@ else $page = "Donnees";
 		</form>
 	</div>
 	<div class="button_end_div">
-		<button id="" class="submit-button" style="width:200px;border-top:1px solid grey;border-top-left-radius:0;border-top-right-radius:0" onclick="generer_csv()">Générer un fichier CSV</button>
+		<button class="submit-button" style="width:200px;border-top:1px solid grey;border-top-left-radius:0;border-top-right-radius:0" onclick="generer_csv()">Générer un fichier CSV</button>
 	</div>
 	<?php } else { ?>
 		<div class="avertissement">

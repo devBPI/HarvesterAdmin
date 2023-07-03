@@ -193,6 +193,7 @@ class Gateway
 	static function getDataMappingByDisplay_Value($display_value) { return Rapport::getDataMappingByDisplay_Value($display_value); }
 	static function insertReport($report) { return Rapport::insertReport($report); }
 	static function updateReport($report) { return Rapport::updateReport($report); }
+	static function duplicateReport($report_id) { return Rapport::duplicateReport($report_id); }
 	static function deleteReport($id) { Rapport::deleteReport($id); }
 	static function getNumberNotices($task_id) { return Rapport::getNumberNotices($task_id); }
 	static function getNumberExternalLink($task_id) { return Rapport::getNumberExternalLink($task_id); }
