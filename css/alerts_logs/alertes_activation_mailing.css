@@ -6,7 +6,7 @@
 
 .table_alertes_enabled .td_email { width:40%; }
 .table_alertes_enabled .td_switch { width: 20px; }
-.table_alertes_enabled .td_label { padding-left:15px; width:40%; }
+.table_alertes_enabled .td_label { padding-left:15px; }
 .table_alertes_enabled .td_cross { padding-left: 0; width: 60px; }
 
 .table_alertes_enabled input[type=checkbox] {

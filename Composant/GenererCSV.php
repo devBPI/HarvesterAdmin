@@ -7,34 +7,11 @@
 <p id="paragraphe" style="font-size: 16px">Génération du rapport, veuillez patienter...<br/>Le téléchargement commencera juste après.</p>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-    /*function post(path, params, method='post') {
-        const form = document.createElement('form');
-        form.method = method;
-        form.action = path;
-
-        for (let [key, value] of params) {
-            	console.log(key);
-                const hiddenField = document.createElement('input');
-                hiddenField.type = 'hidden';
-                hiddenField.name = key;
-                hiddenField.value = value;
-
-                form.appendChild(hiddenField);
-        }
-
-        document.body.appendChild(form);
-        console.log(form);
-		form.submit();
-    } */
+    /* var myUrl = new URL(window.location.toLocaleString());
+    var type = myUrl.searchParams.get("report_type");
+    var id = myUrl.searchParams.get("id");
+	window.location.href="../Controlleur/RapportsGeneration.php?report_type="+type+"&submit_value=generate&report_id="+id+"&generate_csv=true"; */
 	function getresult() {
-		/*let map = new Map();
-        map.set("report_type", "processus");
-        map.set("submit_value", "generate");
-        map.set("report_id", 10);
-        map.set("generate_csv", "true");
-        console.log(map); */
-        //post("../Controlleur/RapportsGeneration.php", map);
-
 		var myUrl = new URL(window.location.toLocaleString());
         var type = myUrl.searchParams.get("report_type");
         var id = myUrl.searchParams.get("id");
@@ -44,21 +21,24 @@
             type: "post",
             data: "report_type="+type+"&submit_value=generate&report_id="+id+"&generate_csv=true",
             success: function (response) {
-                document.getElementById("paragraphe").innerHTML = response;
                 let dl = document.createElement("a");
                 let blobObject = new Blob(['\ufeff'+response],{
                     type: "text/csv;charset=utf-8;"
                 });
                 let date = new Date();
 				let day = date.getDate();
+                if (day < 10)
+                    day = "0"+day;
                 let month = date.getMonth()+1;
+                if (month < 10)
+                	month = "0"+month;
                 let year = date.getFullYear();
                 dl.href = URL.createObjectURL(blobObject);
                 dl.download = filename + "__" + day + "-" + month + "-" + year + ".csv";
 
                 dl.click();
 
-                window.close();
+               window.close();
 			}
 		});
     }

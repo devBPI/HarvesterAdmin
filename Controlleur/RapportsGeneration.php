@@ -10,7 +10,11 @@ require_once ("../PDO/Gateway.php");
 date_default_timezone_set('Europe/Paris');
 
 $report_id = $_POST["report_id"] ?? "";
+if ($report_id == "")
+	$report_id = $_GET["report_id"] ?? "";
 $type = $_POST["report_type"] ?? "";
+if ($type == "")
+	$type = $_GET["report_type"] ?? "";
 
 $query_empty_or_error = false;
 
@@ -18,6 +22,7 @@ $query_empty_or_error = false;
 function reportToCsv($filename, $headers, $data) {
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment; filename="'. $filename .'.csv";');
+	ob_clean();
 	$out = fopen("php://output", 'w');
 	fputcsv($out, $headers, ";");
 	foreach ($data as $fields) {
@@ -38,7 +43,7 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	}
 }
 
-if(!empty($_POST) && $_POST["submit_value"] == "generate") {
+if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && $_GET["submit_value"] == "generate") {
 	//var_dump($_POST);
 	$configuration = Gateway::getReport($report_id);
 	$configuration["criterias"] = Gateway::getCriterias($report_id, "query");
@@ -238,8 +243,9 @@ if(!empty($_POST) && $_POST["submit_value"] == "generate") {
 	//var_dump($report_result);
 
 	$section = $configuration["name"];
-	if(isset($_POST["generate_csv"])) {
-		//reportToCsv($configuration["name"], $tab_header, $report["result"]);
+	if(isset($_POST["generate_csv"]) || isset($_GET["generate_csv"])) {
+		// reportToCsv($configuration["name"], $tab_header, $report["result"]);
+		ob_clean(); // Permet d'enlever les deux lignes vides au début du fichier
 		echo implode(";",$tab_header);
 		echo "\n";
 		if ($report["result"]) {

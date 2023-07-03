@@ -1,5 +1,4 @@
 function add_new_field(elt, jsEventPage) {
-	//console.log(jsEventPage);
 	let d = null;
 	let pos_node = 1;
 	if(elt.tagName!="TABLE")
@@ -36,10 +35,18 @@ function add_new_field(elt, jsEventPage) {
 		if (jsEventPage == "filtre_predicat") {
 			let k = document.getElementsByName("function" + nb)[0];
 			k.addEventListener("change", function () {
-				display_valueBox(this, nb, "")
+				display_valueBox(this, nb, "");
 			});
 		} else if (jsEventPage == "alertes_parametrage") {
 			let k = document.getElementsByName("is_enabled_" + nb)[0];
+			$(k).on( "focus", function() {
+				let nb =  $(this).attr("id").substring("input_is_enabled_".length,$(this).attr("id").length );
+				$("#slider_"+nb).css("transition", "0s");
+				$("#slider_"+nb).css("border", "2px double black");
+			});
+			$(k).on( "focusout", function() {
+				$(".slider").css("border", "none");
+			});
 			k.click();
 			k.addEventListener("change", function () {
 				change_label_text(this, nb);

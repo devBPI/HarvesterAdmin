@@ -9,12 +9,11 @@
 
 	<title>Activation des envois de mail</title>
 </head>
-
-<body>
 <?php
 include("../Vue/common/Header.php");
 $i = 0;
 ?>
+<body>
 
 <div class="content">
 	<div class="button_top_div_with_margin">
@@ -37,10 +36,10 @@ $i = 0;
 					<input type="hidden" id="input_old_id_" name="old_id_" value="null"/>
 					<input type="email" id="input_id_" name="id_" placeholder="mail@nom-de-domaine.fr" value=""/>
 				</td>
-				<td class="td_switch">
+				<td class="td_switch" style="width:15%;text-align:right">
 					<label class="switch">
 						<input type="checkbox" id="input_is_enabled_" name="is_enabled_" value="" />
-						<span class="slider"></span>
+						<span class="slider" id="slider_"></span>
 					</label>
 				</td>
 				<td class="td_label"><label for="input_is_enabled_" id="label_">Activée</label></td>
@@ -66,7 +65,7 @@ $i = 0;
 						<input type="email" id="input_id_<?= $i ?>" <?= $recipient_class ?> name="id_<?= $i ?>" placeholder="mail@nom-de-domaine.fr" value="<?= $recipient["new_mail"] ?>" required/>
 					</td>
 <?php if($recipient["is_enabled"]=="t") { ?>
-					<td class="td_switch">
+					<td class="td_switch" style="width:15%;text-align:right">
 						<label class="switch">
 							<input type="checkbox" id="input_is_enabled_<?= $i ?>" name="is_enabled_<?= $i ?>" value="" onchange="change_label_text(this, <?= $i ?>)" checked/>
 							<span class="slider" id="slider_<?= $i ?>"></span>
@@ -76,7 +75,7 @@ $i = 0;
 						<label for="input_is_enabled_<?= $i ?>" id="label_<?= $i ?>">Activée</label>
 					</td>
 <?php } else { ?>
-					<td class="td_switch">
+					<td class="td_switch" style="width:15%;text-align:right">
 						<label class="switch">
 							<input type="checkbox" id="input_is_enabled_<?= $i ?>" name="is_enabled_<?= $i ?>" value="" onchange="change_label_text(this, <?= $i ?>)"/>
 							<span class="slider" id="slider_<?= $i ?>"></span>

@@ -10,6 +10,5 @@ $("input[type=checkbox]").on( "focus", function() {
     $("#slider_"+nb).css("border", "2px double black");
 });
 $("input[type=checkbox]").on( "focusout", function() {
-    let nb =  $(this).attr("id").substring("input_is_enabled_".length,$(this).attr("id").length );
     $(".slider").css("border", "none");
 });
