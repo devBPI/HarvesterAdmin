@@ -43,6 +43,28 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	}
 }
 
+// -- Si tri du tableau (clic sur en-tête du tableau)
+if (isset($_POST["ordre"]) && isset($_POST["champ"]) && isset($_POST["report_list"])) {
+	$tab_header = [];
+	$indice = $_POST["champ"];
+	$new_array = $_POST["report_list"];
+	usort($new_array, function($a, $b) use ($indice) {
+		if (strtolower($a[$indice]) < strtolower($b[$indice])) return 1;
+		return -1;
+	});
+	if ($_POST["ordre"] == "asc") {
+		$new_array = array_reverse($new_array);
+	}
+	foreach ($new_array as $ligne) {
+		echo "<tr>";
+		foreach ($ligne as $key => $value) {
+			echo "<td>".str_replace("_", "_<wbr>", $value)."</td>";
+		}
+		echo "</tr>";
+	}
+}
+// -- Sinon, génération de la requête et du rapport associé
+else {
 if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && $_GET["submit_value"] == "generate") {
 	//var_dump($_POST);
 	$configuration = Gateway::getReport($report_id);
@@ -259,5 +281,5 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 		include("../Vue/rapports/Rapport.php");
 	}
 }
-
+}
 ?>

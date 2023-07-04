@@ -14,6 +14,7 @@
 include('../Vue/common/Header.php');
 if ($type=="processus") $page = "RapportsProcessus";
 else $page = "RapportsDonnees";
+$nb = 0;
 ?>
 <div class="content">
 	<div class="button_top_div">
@@ -27,13 +28,13 @@ else $page = "RapportsDonnees";
 <?php if (!$query_empty_or_error) { ?>
 	<table class="table-config">
 		<thead>
-		<tr>
+		<tr id="head_tableau" style="cursor:pointer">
 			<?php foreach ($report["result"][0] as $key => $value) { ?>
-				<th><?= $key ?></th>
+				<th id="th_cell_<?= $nb ?>" class="order_asc" onclick="maj_col(<?= $nb++ ?>)"><?= $key ?></th>
 			<?php } ?>
 		</tr>
 		</thead>
-		<tbody>
+		<tbody id="emplacement_tableau">
 			<?php foreach ($report["result"] as $ligne) { ?>
 			<tr>
 			<?php foreach ($ligne as $key => $value) { ?>
@@ -70,7 +71,9 @@ else $page = "RapportsDonnees";
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../js/toTop.js"></script>
 <script type="text/javascript">
-
+	let nb_col = <?= $nb ?>; // Nombre de colonnes
 </script>
+<script src="../js/rapports/sort_reporting.js"></script>
+
 
 </html>
