@@ -320,7 +320,7 @@ class Rapport
 			$cpt++;
 			$name_exists = pg_fetch_all(pg_query(Gateway::getConnexion(),
 					"SELECT name FROM configuration.interface_report
-            		WHERE LOWER(name)='" . mb_strtolower($configuration["name"] . " (" . $cpt . ")", "utf-8") . "'")
+            		WHERE LOWER(name)='" . utf8_encode(strtolower(utf8_decode($configuration["name"] . " (" . $cpt . ")"))) . "'")
 			);
 		}
 		// -- Formattage du rapport pour la fonction insertReport
