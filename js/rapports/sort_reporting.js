@@ -7,14 +7,16 @@ function remplir_tableau(title_cell = null, order = null) {
     for (let child of table_head.children) {
         list_header.push(child.innerHTML);
     }
+var j = 0;
     for (let child of emplacement.children) {
         let child_content = {};
-        //console.log(child.children.length);
-        for (let i=0; i < child.children.length; i++) {
+        for (i=0; i < child.children.length; i++) {
             child_content[list_header[i]]=child.children[i].innerHTML;
         }
         list.push(child_content);
+	j++;
     }
+	console.log(j);
 
     $.ajax({
         type: "post",
