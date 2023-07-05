@@ -88,7 +88,7 @@ function makeInputCbValeur($criteria, $i): string
 {
 	$cb = "";
 	$display_input = false;
-	if ($criteria["display_value"] == "harvest_last_task" || $criteria["display_value"] == "results_distinct") {
+	if ($criteria["display_value"] == "harvest_last_task" || preg_match("/(results_distinct)/", $criteria["display_value"])) {
 		$cb = '<option value="Oui">Oui</option>';
 	} else if (preg_match("/(configuration_name)/", $criteria["display_value"]) || $criteria["display_value"] == "harvest_status"
 		|| $criteria["display_value"] == "notice_type" || $criteria["display_value"] == "harvest_grabber_type") {

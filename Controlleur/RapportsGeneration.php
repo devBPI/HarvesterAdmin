@@ -177,6 +177,7 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 	}
 	// --------------------------------- PROCESSUS
 	if ($type == "processus") {
+
 		$select = "SELECT configuration.harvest_task.id AS task_id";
 		$from = " FROM configuration.harvest_task, configuration.harvest_configuration ";
 		$where = " WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
@@ -187,7 +188,15 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 		$display_name_notice = "";
 		$join_grabber = false; // passe à vrai si la table grabber a déjà été ajoutée au from et au where
 		$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
+		$unique = false; // passe à vrai si on doit supprimer les doublons
+		foreach ($configuration["criterias"] as $key=>$criteria) {
+			if (preg_match("/(results_distinct)/", $criteria["display_value"])) {
+				$unique = true; // si results_dtistinct -> on doit supprimer les doublons
+				unset($configuration["criterias"][$key]);
+			}
+		}
 
+		// ------------- SELECT
 		foreach ($configuration["data_to_display"] as $key => $dtd) {
 			if (preg_match('/(public.)/', $dtd["data_table"])) {
 				if ($dtd["data_table"] == "public.notice") {
@@ -219,7 +228,9 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 
 		//print_r($select);
 
-		foreach ($configuration["criterias"] as $criteria) {// Cas 1 : fonction (par exemple : abs)
+		// ------------- FROM, WHERE ET ORDER BY
+		foreach ($configuration["criterias"] as $criteria) {
+			// Cas 1 : fonction (par exemple : abs)
 			if (preg_match('/(\([^)]*\))/', $criteria["table_field"])) {
 				// Cas où abs(expected_notices_number-notices_number) est en %
 				if (preg_match('/(%)/', $criteria["value_to_compare"])) {
@@ -234,7 +245,7 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 					$where = $where . " AND " . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
 				}
 				$increment_non_vide++;
-			} // Cas 2 : nombre de moissons = dernière uniquement
+			} // Cas 2 : nombre de moissons = dernière uniquement --> ORDER BY
 			else if ($criteria["display_value"] == "harvest_last_task") {
 				$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
 			} // Cas 3 : besoin d'ajouter une jointure à la table grabber
@@ -277,6 +288,12 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 			foreach ($report["result"] as $key => $line) {
 				unset($report["result"][$key]["task_id"]);
 			}
+
+			// ------------- DISTINCT OU NON
+			if ($unique) {
+				$report["result"] = array_unique($report["result"], SORT_REGULAR);
+			}
+
 		} else {
 			$query_empty_or_error = true;
 		}

@@ -78,7 +78,7 @@ function display_related_operator(element) {
             })
         }
         $("#cb_valeur_cond_" + number).attr("required", true).show();
-    } else if (element.value == "harvest_last_task" || element.value == "results_distinct") {
+    } else if (element.value == "harvest_last_task" || (element.value).includes("results_distinct")) {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option>').show();
         $("#cb_valeur_cond_" + number).html('<option value="Oui">Oui</option>').attr("required", true).show();
     } else if ((element.value).includes("date") || (element.value).includes("time")) {
