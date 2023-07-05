@@ -29,15 +29,16 @@ function display_related_operator(element) {
     let number = getNumber(element);
     reset_defaut_cb_operateur(number);
     reset_default_cb_valeur(number);
-    if (element.value == "harvest_status" || (element.value).includes("configuration_name") || element.value == "notice_type") {
+    if (element.value == "harvest_status" || (element.value).includes("configuration_name")
+        || element.value == "notice_type" || element.value == "harvest_grabber_type" ) {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option> <option value="not_equals">&ne;</option>').show();
         if ((element.value).includes("configuration_name")) {
             // Afficher combobox des noms de configuration au lieu de input_valeur_cond
             // Récupérer grâce à ajax
-            var request = $.ajax({
+            $.ajax({
                 url: "../Composant/RapportComposant.php",
                 type: "post",
-                data: "champs=id_name",
+                data: {champs: "id_name"},
                 success: function (response) {
                     $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
                 }
@@ -45,10 +46,10 @@ function display_related_operator(element) {
         } else if (element.value == "harvest_status") {
             // Afficher combobox des statuts possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
-            var request = $.ajax({
+            $.ajax({
                 url: "../Composant/RapportComposant.php",
                 type: "post",
-                data: "champs=status",
+                data: {champs: "status"},
                 success: function (response) {
                     $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
                 }
@@ -56,14 +57,25 @@ function display_related_operator(element) {
         } else if (element.value == "notice_type") {
             // Afficher combobox des types / genres de notices possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
-            var request = $.ajax({
+            $.ajax({
                 url: "../Composant/RapportComposant.php",
                 type: "post",
-                data: "champs=resource_type",
+                data: {champs: "resource_type"},
                 success: function (response) {
                     $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
                 }
             });
+        } else if (element.value == "harvest_grabber_type") {
+            // Afficher combobox des connecteurs possibles au lieu de input_valeur_cond
+            // Récupérer grâce à ajax
+            $.ajax({
+                url: "../Composant/RapportComposant.php",
+                type: "post",
+                data: {champs: "grabber_type"},
+                success: function (response) {
+                    $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
+                }
+            })
         }
         $("#cb_valeur_cond_" + number).attr("required", true).show();
     } else if (element.value == "harvest_last_task" || element.value == "results_distinct") {

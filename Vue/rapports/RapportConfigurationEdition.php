@@ -53,8 +53,9 @@ else {
 						<input type="text" id="input_name_rapport" name="name_rapport" placeholder="Titre identifiant le rapport"
 							   title="Les caractères interdits sont . , ; ' &quot; \ /"
 							pattern="[^.,;'&quot;/\\]*" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required>
+						<?php if (isset($_GET["id"]) && $_GET["id"] != "" && isset($configuration) && $configuration!=null) { ?>
 						<a onclick="openForm()" class="buttonlink" style="width:190px;margin-left:5px">Dupliquer le rapport</a>
-						<?php if ($msg_error != null) { ?>
+						<?php } if ($msg_error != null) { ?>
 						<p class="avertissement_light">
 								<?= $msg_error ?>
 						</p>

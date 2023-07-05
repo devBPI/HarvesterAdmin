@@ -70,6 +70,7 @@ class Gateway
 	static function accesUpdate($code,$acces) { Configuration::accesUpdate($code, $acces); }
 	static function getParcours($id) { return Configuration::getParcours($id); }
 	static function updateParcours($parcours, $id) { Configuration::updateParcours($parcours, $id); }
+	static function getConfigurationGrabber() { return Configuration::getConfigurationGrabber(); }
 
 	// ------------------------------- Traduction
 	static function getTranslationDestinations() { return Traduction::getTranslationDestinations(); }
@@ -218,16 +219,7 @@ class Gateway
 	}
 	
 
-	static function getConfigurationGrabber()
-	{
-		$query = pg_query (self::$conn, "SELECT id,name FROM configuration.grabber ORDER BY id ASC;");
-		/*if (!$query)
-		{
-			echo "Erreur durant la requête de getConfigurationGrabber .\n";
-			exit;
-		}*/
-		return pg_fetch_all($query);
-	}
+
 
 	static function select($str)
 	{
@@ -242,7 +234,7 @@ class Gateway
 
 	static function getGraberName($id)
 	{
-		$query = pg_query (self::$conn, "SELECT G.name FROM configuration.grabber G, configuration.harvest_grab_configuration H
+		$query = pg_query (self::getConnexion(), "SELECT G.name FROM configuration.grabber G, configuration.harvest_grab_configuration H
 		WHERE G.id = H.grabber_id and H.id =".$id.";");
 		/*if (!$query)
 		{
@@ -254,23 +246,23 @@ class Gateway
 
 	static function insert($str)
 	{
-		return pg_query (self::$conn, $str) or die ('Erreur connexion'. pg_last_error(self::$conn).'<br/>Avec la query: '.$str);
+		return pg_query (self::getConnexion(), $str) or die ('Erreur connexion'. pg_last_error(self::$conn).'<br/>Avec la query: '.$str);
 	}
 	
 	
 	static function prepare($stmtname, $query)
 	{
-	    return pg_prepare(self::$conn, $stmtname, $query);
+	    return pg_prepare(self::getConnexion(), $stmtname, $query);
 	}
 	
 	static function executeStatement($stmtname, $params)
 	{
-	    return pg_execute(self::$conn, $stmtname, $params);
+	    return pg_execute(self::getConnexion(), $stmtname, $params);
 	}
 
 	static function getColor()
 	{
-		$query = pg_query(self::$conn,"
+		$query = pg_query(self::getConnexion(),"
 			SELECT nbr AS nbr_active, time_spent,
 				CASE WHEN nbr = 0 THEN 'red'
 				WHEN nbr = 1 THEN
@@ -317,7 +309,7 @@ class Gateway
 	
 	static function getVersion()
 	{
-		$query = pg_query(self::$conn, "SELECT appli_version FROM configuration.scheduler_launch ORDER BY start_time DESC;");
+		$query = pg_query(self::getConnexion(), "SELECT appli_version FROM configuration.scheduler_launch ORDER BY start_time DESC;");
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getVersion .\n";
@@ -328,12 +320,12 @@ class Gateway
 	
 	static function reboot()
 	{
-		pg_query(self::$conn,"update configuration.scheduler_monitoring set has_to_be_shutdown = true") or die ('Erreur reboot'. pg_last_error(self::$conn));
+		pg_query(self::getConnexion(),"update configuration.scheduler_monitoring set has_to_be_shutdown = true") or die ('Erreur reboot'. pg_last_error(self::$conn));
 	}
 
 	static function getConf()
 	{
-		$query = pg_query(self::$conn,"SELECT hc.id, b.name AS name FROM configuration.harvest_configuration hc LEFT JOIN configuration.search_base b on b.code = hc.search_base_code ORDER BY id");
+		$query = pg_query(self::getConnexion(),"SELECT hc.id, b.name AS name FROM configuration.harvest_configuration hc LEFT JOIN configuration.search_base b on b.code = hc.search_base_code ORDER BY id");
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getConf .\n";
@@ -345,7 +337,7 @@ class Gateway
 	
 	static function getNotice($id)
 	{
-		$query = pg_query(self::$conn,"SELECT property from configuration.entity_properties WHERE entity='".$id."' ORDER BY property");
+		$query = pg_query(self::getConnexion(),"SELECT property from configuration.entity_properties WHERE entity='".$id."' ORDER BY property");
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getNotice .\n";
@@ -359,7 +351,7 @@ class Gateway
 	}
 	static function getEntities()
 	{
-		$query = pg_query(self::$conn,"SELECT DISTINCT entity from configuration.entity_properties ORDER BY entity");
+		$query = pg_query(self::getConnexion(),"SELECT DISTINCT entity from configuration.entity_properties ORDER BY entity");
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getEntities .\n";
@@ -372,12 +364,10 @@ class Gateway
 		return $res;
 	}
 	
-
-	
 	static function findSearchBaseAndConfigCodesForConfig($configId)
 	{
 	    // chargement des config sans fichier a uploader
-	    $query = pg_query(self::$conn, "select c.code as config_code, b.code as base_code
+	    $query = pg_query(self::getConnexion(), "select c.code as config_code, b.code as base_code
                                         from configuration.harvest_configuration c
                                         join configuration.search_base b on b.code = c.search_base_code
                                         where c.id='".$configId."'");
@@ -392,7 +382,7 @@ class Gateway
 	
 	static function getSearchBaseCodeForName($name)
 	{
-	    $query = pg_query (self::$conn, "select code from configuration.search_base where name = ".$name."");
+	    $query = pg_query (self::getConnexion(), "select code from configuration.search_base where name = ".$name."");
 	    if (!$query)
 	    {
 	        // CTLG-312 - on n'indique pas d'erreur si on ne trouve pas de donnee (pas de exit !!)
@@ -404,7 +394,7 @@ class Gateway
 	
 	static function insertSearchBase($code, $name)
 	{
-	    return pg_query(self::$conn, "INSERT into configuration.search_base(code, name) values ('".$code."','".$name."');")or die ('Erreur insertSearchBase'. pg_last_error(self::$conn));
+	    return pg_query(self::getConnexion(), "INSERT into configuration.search_base(code, name) values ('".$code."','".$name."');")or die ('Erreur insertSearchBase'. pg_last_error(self::$conn));
 	}
 
 	static function getResourceTypes() {

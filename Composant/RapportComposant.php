@@ -9,6 +9,7 @@ if (isset($_POST["champs"]) && $_POST["champs"] == "id_name") {
 	$configurations = getConfigurationsFormatees();
 	echo ComboBox::makeComboBox($configurations);
 }
+
 // Remplir ComboBox avec les statuts
 else if (isset($_POST["champs"]) && $_POST["champs"] == "status") {
 	$status = getStatusFormates();
@@ -19,6 +20,12 @@ else if (isset($_POST["champs"]) && $_POST["champs"] == "status") {
 if (isset($_POST["champs"]) && $_POST["champs"] == "resource_type") {
 	$types_donnees = getResourceTypesFormates();
 	echo ComboBox::makeComboBox($types_donnees);
+}
+
+// Remplir ComboBox avec les noms des connecteurs
+if (isset($_POST["champs"]) && $_POST["champs"] == "grabber_type") {
+	$grabbers = getGrabbersFormates();
+	echo ComboBox::makeComboBox($grabbers);
 }
 
 // ----------------------------------------------------------------------- Fonctions utiles pour Ajax / insert
@@ -53,6 +60,19 @@ function getResourceTypesFormates(): array
 	return $types_donnees_formatees;
 }
 
+function getGrabbersFormates(): array
+{
+	$grabbers = Gateway::getConfigurationGrabber();
+	$grabbers_formates = [];
+	foreach ($grabbers as $grabber) {
+		$grabbers_formates[] = [
+			"id" => $grabber["name"],
+			"name" => $grabber["name"]
+		];
+	}
+	return $grabbers_formates;
+}
+
 // ------------------------------------------------------------------------------ Fonctions pour insertion
 
 function insert_criterias($criterias, $data_to_show, $operators, $operators_short, $type): string
@@ -70,9 +90,11 @@ function makeInputCbValeur($criteria, $i): string
 	$display_input = false;
 	if ($criteria["display_value"] == "harvest_last_task" || $criteria["display_value"] == "results_distinct") {
 		$cb = '<option value="Oui">Oui</option>';
-	} else if (preg_match("/(configuration_name)/", $criteria["display_value"]) || $criteria["display_value"] == "harvest_status" || $criteria["display_value"] == "notice_type") {
+	} else if (preg_match("/(configuration_name)/", $criteria["display_value"]) || $criteria["display_value"] == "harvest_status"
+		|| $criteria["display_value"] == "notice_type" || $criteria["display_value"] == "harvest_grabber_type") {
 		if($criteria["display_value"] == "harvest_status") $data = getStatusFormates();
 		else if ($criteria["display_value"] == "notice_type") $data = getResourceTypesFormates();
+		else if ($criteria["display_value"] == "harvest_grabber_type") $data = getGrabbersFormates();
 		else $data = getConfigurationsFormatees();
 		$cb = ComboBox::makeComboBox($data, $criteria["value_to_compare"]);
 	} else {

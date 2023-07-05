@@ -359,6 +359,17 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
 		return pg_fetch_all($query);
 	}
 
+	static function getConfigurationGrabber()
+	{
+		$query = pg_query (Gateway::getConnexion(), "SELECT id,name FROM configuration.grabber ORDER BY id ASC;");
+		/*if (!$query)
+		{
+			echo "Erreur durant la requête de getConfigurationGrabber .\n";
+			exit;
+		}*/
+		return pg_fetch_all($query);
+	}
+
 }
 
 

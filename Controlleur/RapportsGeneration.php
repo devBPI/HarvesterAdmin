@@ -178,13 +178,15 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 	// --------------------------------- PROCESSUS
 	if ($type == "processus") {
 		$select = "SELECT configuration.harvest_task.id AS task_id";
-		$from_where = " FROM configuration.harvest_task, configuration.harvest_configuration
-    		WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
+		$from = " FROM configuration.harvest_task, configuration.harvest_configuration ";
+		$where = " WHERE configuration.harvest_task.configuration_id = configuration.harvest_configuration.id AND ";
 		$end_query = "";
 		$join_external_link = false;
 		$display_name_external_link = "";
 		$join_notice = false;
 		$display_name_notice = "";
+		$join_grabber = false; // passe à vrai si la table grabber a déjà été ajoutée au from et au where
+		$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
 
 		foreach ($configuration["data_to_display"] as $key => $dtd) {
 			if (preg_match('/(public.)/', $dtd["data_table"])) {
@@ -198,6 +200,17 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 			} else {
 				if (preg_match('/(\([^)]*\))/', $dtd["table_field"])) {
 					$select = $select . ", " . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
+				} else if ($dtd["data_table"] == "configuration.grabber") {
+					if (!$join_grabber) {
+						$join_grabber = true;
+						$from = $from.", configuration.grabber, configuration.harvest_grab_configuration";
+						if ($increment_non_vide == 0)
+							$where = $where." harvest_grab_configuration.grabber_id=grabber.id";
+						else
+							$where = $where." AND harvest_grab_configuration.grabber_id=grabber.id";
+						$increment_non_vide++;
+					}
+					$select = $select . ", " . $dtd["data_table"] . "." . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
 				} else {
 					$select = $select . ", " . $dtd["data_table"] . "." . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
 				}
@@ -206,7 +219,6 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 
 		//print_r($select);
 
-		$increment_non_vide = 0; // increment seulement si != cas 2 (pour construction de la requete)
 		foreach ($configuration["criterias"] as $criteria) {// Cas 1 : fonction (par exemple : abs)
 			if (preg_match('/(\([^)]*\))/', $criteria["table_field"])) {
 				// Cas où abs(expected_notices_number-notices_number) est en %
@@ -217,23 +229,37 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 					$value_to_compare = $criteria["value_to_compare"];
 
 				if ($increment_non_vide == 0) {
-					$from_where = $from_where . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
+					$where = $where . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
 				} else {
-					$from_where = $from_where . " AND " . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
+					$where = $where . " AND " . $criteria["table_field"] . $criteria["query_code"] . $value_to_compare;
 				}
 				$increment_non_vide++;
 			} // Cas 2 : nombre de moissons = dernière uniquement
 			else if ($criteria["display_value"] == "harvest_last_task") {
 				$end_query = $end_query . " ORDER BY harvest_task.id DESC LIMIT 1";
+			} // Cas 3 : besoin d'ajouter une jointure à la table grabber
+			else if ($criteria["display_value"] == "harvest_grabber_type") {
+				if (!$join_grabber) {
+					$join_grabber = true;
+					$from = $from.", configuration.grabber, configuration.harvest_grab_configuration";
+					if ($increment_non_vide == 0)
+						$where = $where." harvest_grab_configuration.grabber_id=grabber.id";
+					else
+						$where = $where." AND harvest_grab_configuration.grabber_id=grabber.id";
+					$where = $where. " AND harvest_configuration.grab_configuration_id=harvest_grab_configuration.id";
+					$increment_non_vide++;
+				}
+				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
+				$increment_non_vide++;
 			} // Autres cas
 			else {
-				$from_where = buildRegularWhere($criteria, $from_where, $increment_non_vide);
+				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
 				$increment_non_vide++;
 			}
 		}
 
 		//print_r($select.$from_where.$end_query);
-		$requete_generee = $select.$from_where.$end_query;
+		$requete_generee = $select.$from.$where.$end_query;
 		$report["result"] = Gateway::select($requete_generee);
 		if ($report["result"]) {
 			if ($join_notice) {
