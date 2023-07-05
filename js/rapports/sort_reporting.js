@@ -9,6 +9,7 @@ function remplir_tableau(title_cell = null, order = null) {
     }
     for (let child of emplacement.children) {
         let child_content = {};
+        //console.log(child.children.length);
         for (let i=0; i < child.children.length; i++) {
             child_content[list_header[i]]=child.children[i].innerHTML;
         }
