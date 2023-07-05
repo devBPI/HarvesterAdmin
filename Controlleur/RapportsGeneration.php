@@ -44,9 +44,13 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 
 // -- Si tri du tableau (clic sur en-tête du tableau)
 if (isset($_POST["ordre"]) && isset($_POST["champ"]) && isset($_POST["report_list"])) {
+	echo ini_get("max_input_vars");
+	// var_dump($_POST["report_list"]);
 	$tab_header = [];
 	$indice = $_POST["champ"];
 	$new_array = $_POST["report_list"];
+	// echo ini_get("upload_max_filesize");
+	// echo ini_get("post_max_size");
 	usort($new_array, function($a, $b) use ($indice) {
 		if (strtolower($a[$indice]) < strtolower($b[$indice])) return 1;
 		return -1;
