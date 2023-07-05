@@ -11,7 +11,7 @@
 
 <title>Accueil</title>
 </head>
-<body name="haut">
+<body >
 	<?php include('../Vue/common/Header.php'); ?>
 	<div class="content" style="width:90%">
 		<table class="table-config">

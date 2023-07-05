@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 ?>
-<html>
+<html lang="fr">
 <head>
 <!-- Ajout du ou des fichiers javaScript-->
 <meta charset="utf-8" />

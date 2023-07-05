@@ -4,7 +4,7 @@ if (!$ini) {
 	$ini = @parse_ini_file("../etc/default.ini", true);
 }
 ?>
-<html>
+<html lang="fr">
 <head>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -26,7 +26,7 @@ include ('../Vue/traduction/TabTraductionRulesCategory.php');
 include('../Vue/common/Header.php');
 ?>
 
-<body name="haut" id="haut" style="height: auto; width: auto;">
+<body id="haut" style="height: auto; width: auto;">
 <div class="content traduction">
 	<div class="btn_div">
 		<a href="../Controlleur/Traduction.php" class="buttonlink">« Retour aux traductions</a>

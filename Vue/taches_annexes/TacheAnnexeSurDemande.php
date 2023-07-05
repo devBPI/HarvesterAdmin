@@ -1,5 +1,5 @@
 <!-- Il y a différentes div et boutons de menus car je n'ai encore décidé lesquels j'utiliserai -->
-<html>
+<html lang="fr">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
@@ -21,7 +21,7 @@ foreach ($array as $item) {
 <link rel="stylesheet" href="../css/accueilStyle.css" />
 <title>Tâche Annexe sur Demande</title>
 </head>
-<body name="haut" id="haut">
+<body id="haut">
 
 <?php
 

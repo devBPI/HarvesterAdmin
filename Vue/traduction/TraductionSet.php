@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }
 ?>
-<html>
+<html lang="fr">
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../js/toTop.js"></script>
@@ -27,7 +27,7 @@ require '../Vue/configuration/TabConfigsAssociees.php';
 include('../Vue/common/Header.php');
 ?>
 
-<body name="haut" id="haut" style="height: auto; width: auto;">
+<body id="haut" style="height: auto; width: auto;">
 <div class="content traduction">
 	<div class="config_name_and_sub_title">
 		<h3 class="config_name">Ensemble : <?= $rules_set["name"] ?></h3>

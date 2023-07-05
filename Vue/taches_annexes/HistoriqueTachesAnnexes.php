@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../css/accueilStyle.css" />
 <title>Historique des tâches annexes</title>
 </head>
-<body name="haut" id="haut">
+<body id="haut">
 	<?php
 include ('../Vue/common/Header.php');
 $url = "HistoriqueTachesAnnexes.php?&order=";

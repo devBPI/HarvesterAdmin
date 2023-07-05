@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
@@ -14,7 +14,7 @@ if (! $ini) {
 	<title>Planning des Moissons</title>
 </head>
 
-<body name="haut" style="overflow:visible">
+<body style="overflow:visible">
 	<?php include('../Vue/common/Header.php'); ?>
 
 	<div class="content" style="width:90%">

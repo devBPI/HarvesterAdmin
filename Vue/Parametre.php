@@ -9,7 +9,7 @@ session_reset();
 session_unset();
 session_destroy();
 ?>
-<html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../css/style.css" />

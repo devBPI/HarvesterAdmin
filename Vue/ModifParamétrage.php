@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <?php
 session_start();
 if (! empty($_POST['envoyer'])) {
@@ -24,7 +24,7 @@ $ini = @parse_ini_file("../etc/default.ini", true);
 </head>
 
 
-<body name="haut" id="haut">
+<body id="haut">
 <?php
 $table = $_GET['table'];
 $id = $_GET['id'];

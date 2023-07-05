@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
@@ -15,7 +15,7 @@ require '../Composant/ComboBox.php';
 <link rel="stylesheet" href="../css/accueilStyle.css" />
 <title>Planification d'une Tâche annexe</title>
 </head>
-<body name="haut" id="haut">
+<body id="haut">
 <?php
 $section = "Planifier une Tâche annexe";
 include('../Vue/common/Header.php');

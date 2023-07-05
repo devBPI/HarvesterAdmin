@@ -4,7 +4,7 @@ if (! $ini) {
     $ini = @parse_ini_file("../etc/default.ini", true);
 }	
 ?>
-<html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../../css/style.css" />

@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../css/formStyle.css" />
 <title>Historique des Moissons</title>
 </head>
-<body name="haut" id="haut" style="height: 100%;">
+<body id="haut" style="height: 100%;">
 	<?php
 include ('../Vue/common/Header.php');
 $url = "HistoriqueMoisson.php?&order=";

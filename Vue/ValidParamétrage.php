@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <?php
 session_start();
 require_once("../PDO/Gateway.php");
@@ -32,7 +32,7 @@ if (! $ini) {
 </head>
 
 
-<body name="haut" id="haut">
+<body id="haut">
 <?php
 $table = $_GET['table'];
 $id = $_GET['id'];

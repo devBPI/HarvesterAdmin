@@ -9,7 +9,7 @@
 <!-- ajout du ou des fichiers CSS-->
 <title>Journal des Logs</title>
 </head>
-<body name="haut" id="haut">
+<body id="haut">
 <?php
 include ('../Vue/Header.php');
 ?>

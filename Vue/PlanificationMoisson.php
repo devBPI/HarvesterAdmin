@@ -1,5 +1,5 @@
 <!-- Il y a différentes div et boutons de menus car je n'ai encore décidé lesquels j'utiliserai -->
-<html>
+<html lang="fr">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
@@ -17,7 +17,7 @@ require '../Composant/ComboBox.php';
 <link rel="stylesheet" href="../css/selectStyle.css" />
 <title>Planification d'une Moisson</title>
 </head>
-<body name="haut" id="haut">
+<body id="haut">
 <?php
 $section = "Planifier une Moisson";
 include('../Vue/common/Header.php');

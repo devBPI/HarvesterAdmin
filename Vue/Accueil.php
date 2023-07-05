@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <head>
 <meta charset="utf-8" />
 <link rel="stylesheet" href="../css/style.css" />
@@ -9,7 +9,7 @@
 
 <title>Accueil</title>
 </head>
-<body name="haut">
+<body >
 	<?php include('../Vue/common/Header.php'); ?>
 	<div class="content">
 		<div class="double-column-container">

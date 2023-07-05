@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <h2>
 <?php 
 	//ini_set("display_errors",1);
@@ -24,7 +24,7 @@
 	<link rel="stylesheet" href="css/composants.css" />
     <title>Connexion</title>
 </head>
-<body name="haut" id="haut" style="margin:0 0">
+<body id="haut" style="margin:0 0">
 	<div class="entete" style="width:100%;height:7%">
 		<h2 style="text-align:center"><?php echo $ini['version'];?></h2>
 	</div>

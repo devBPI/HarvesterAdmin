@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <?php
 require_once("../PDO/Gateway.php");
 Gateway::connection();

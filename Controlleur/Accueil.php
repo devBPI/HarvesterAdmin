@@ -70,7 +70,7 @@ include ("../Vue/Accueil.php");
 <html style="overflow-x:hidden;overflow-y:auto;">
 <link rel="stylesheet" href="../Vue/Style/DEVstyle.css" />
 <link rel="stylesheet" href="../Vue/Style/style.css" />
-<html>
+<html lang="fr">
 <!-- Entête avec les différents boutons du menu --\>
 <div name="entete" id="menu-deroulant" class="entete">
 Lors de l'affichage de la page principale

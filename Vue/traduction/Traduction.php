@@ -6,7 +6,7 @@ if (! $ini) {
 
 require '../Composant/ComboBox.php';
 ?>
-<html>
+<html lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../css/style.css" />
@@ -20,10 +20,10 @@ require '../Composant/ComboBox.php';
 include('../Vue/common/Header.php');
 ?>
 
-<body name="haut" id="haut" style="height: auto; width: auto;">
+<body id="haut" style="height: auto; width: auto;">
 	<div class="content">
 		<div class="double-column-container">
-			<div class="column" style="height:450px">
+			<div class="column">
 			<H3>Configurations et règles de traduction associées</H3>
 			<div class="cartouche-solo" style="width:auto;height:435px;padding:5%;">
 				<select id="rule" name="Trad">
