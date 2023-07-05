@@ -4,7 +4,6 @@ $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
 	$ini = @parse_ini_file("../etc/default.ini", true);
 }
-
 require_once ("../PDO/Gateway.php");
 
 date_default_timezone_set('Europe/Paris');

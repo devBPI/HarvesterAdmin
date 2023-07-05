@@ -15,7 +15,6 @@ function remplir_tableau(title_cell = null, order = null) {
         }
         list.push(child_content);
     }
-
     $.ajax({
         type: "post",
         data: {ordre: order, champ: list_header[title_cell], report_list: list },
