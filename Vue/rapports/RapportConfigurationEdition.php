@@ -138,7 +138,7 @@ else {
 							<?= ComboBox::makeComboBox($data_to_show_for_display["follow_up"]) ?>
 						</optgroup>
 					</select>
-					<input type="text" class="champ_donnee" id="input_name_champ_aff_" name="name_champ_aff_" pattern="[^.'&quot;/\\\x22]*" placeholder="Dénomination de la donnée">
+					<input type="text" class="champ_donnee" id="input_name_champ_aff_" name="name_champ_aff_" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée" title="Les caractères interdits sont . , ; \ /">
 					<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
 						<img alt="Supprimer un critère" src="../ressources/cross.png" style="width:30px;height:30px">
 					</button>

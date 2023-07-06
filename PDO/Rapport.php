@@ -182,7 +182,7 @@ class Rapport
 		$data_mapping_id = self::getDataMappingByDisplay_Value($data["display_value"])["id"];
 		pg_query(Gateway::getConnexion(),
 			"UPDATE configuration.interface_data_to_display
-				   SET display_name='". $data["display_name"] ."', interface_data_mapping_id=". $data_mapping_id ."
+				   SET display_name=E'". $data["display_name"] ."', interface_data_mapping_id=". $data_mapping_id ."
 				   WHERE id=". $data["id"]);
 	}
 
@@ -190,7 +190,7 @@ class Rapport
 		$data_mapping_id = self::getDataMappingByDisplay_Value($data["display_value"])["id"];
 		pg_query(Gateway::getConnexion(),
 			"INSERT INTO configuration.interface_data_to_display(display_name, interface_data_mapping_id, interface_report_id)
-					VALUES ('". $data["display_name"] ."', ". $data_mapping_id .", ". $data["report_id"] . ")"
+					VALUES (E'". $data["display_name"] ."', ". $data_mapping_id .", ". $data["report_id"] . ")"
 		);
 	}
 

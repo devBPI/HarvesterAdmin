@@ -53,14 +53,14 @@ if (!isset($_GET["viewonly"])) {
 			} else if (preg_match('/(id_champ_aff_)/', $key) && $value != "") {
 				$is_to = "update";
 				$donnees["data_id_list"][] = $value;
-				$donnees["data_to_" . $is_to][$ind]["id"] = $value;
+				$donnees["data_to_" . $is_to][$ind]["id"] = str_replace('"', '\"', str_replace("'", "\'", $value));
 			} else if (preg_match('/(id_champ_aff_)/', $key) && $value == "") {
 				$is_to = "insert";
 				$donnees["data_to_" . $is_to][$ind]["report_id"] = $id;
 			} else if (preg_match('/(display_champ_aff_)/', $key)) {
-				$donnees["data_to_" . $is_to][$ind]["display_value"] = $value;
+				$donnees["data_to_" . $is_to][$ind]["display_value"] = str_replace('"', '\"', str_replace("'", "\'", $value));
 			} else if (preg_match('/(name_champ_aff_)/', $key)) {
-				$donnees["data_to_" . $is_to][$ind++]["display_name"] = $value;
+				$donnees["data_to_" . $is_to][$ind++]["display_name"] = str_replace('"', '\"', str_replace("'", "\'", $value));
 			}
 		}
 
