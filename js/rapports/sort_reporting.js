@@ -19,8 +19,15 @@ function remplir_tableau(title_cell = null, order = null) {
     }
 
     list.sort(function (a,b) {
-        if (order == "asc") return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? 1 : -1;
-        else return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? -1 : 1;
+        if (!Number.isInteger(Number.parseInt(a[title_cell])) && !Number.isInteger(Number.parseInt(!b[title_cell]))) {
+           // console.log("non-int");
+            if (order == "asc") return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? 1 : -1;
+            else return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? -1 : 1;
+        } else {
+           // console.log("int");
+            if (order == "asc") return (Number.parseInt(b[title_cell]) < Number.parseInt(a[title_cell])) ? 1 : -1;
+            else return (Number.parseInt(b[title_cell]) < Number.parseInt(a[title_cell])) ? -1 : 1;
+        }
     });
 
     for (let i = 0; i < list.length; i++ ) {
