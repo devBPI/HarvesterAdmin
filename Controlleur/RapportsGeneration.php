@@ -42,7 +42,7 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	}
 }
 
-// -- Si tri du tableau (clic sur en-tête du tableau)
+// -- Si tri du tableau (clic sur en-tête du tableau) --> inutilisé
 if (isset($_POST["ordre"]) && isset($_POST["champ"]) && isset($_POST["report_list"])) {
 	// echo ini_get("max_input_vars"); --> ce qui pose problème pour les grands tableaux report_list
 	// var_dump($_POST["report_list"]);
@@ -52,7 +52,7 @@ if (isset($_POST["ordre"]) && isset($_POST["champ"]) && isset($_POST["report_lis
 	// echo ini_get("upload_max_filesize");
 	// echo ini_get("post_max_size");
 	usort($new_array, function($a, $b) use ($indice) {
-		if (strtolower($a[$indice]) < strtolower($b[$indice])) return 1;
+		if (strtolower($a[$idice]) < strtolower($b[$indice])) return 1;
 		return -1;
 	});
 	if ($_POST["ordre"] == "asc") {

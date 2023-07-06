@@ -1,28 +1,45 @@
 function remplir_tableau(title_cell = null, order = null) {
     let emplacement = document.getElementById("emplacement_tableau");
-    let table_head = document.getElementById("head_tableau");
-    let list_header = [];
-    var list = [];
+    // let table_head = document.getElementById("head_tableau");
+    // let list_header = [];
+    let list = [];
+    let str = "";
 
-    for (let child of table_head.children) {
+    /*for (let child of table_head.children) {
         list_header.push(child.innerHTML);
-    }
+    }*/
 
     for (let child of emplacement.children) {
-        let child_content = {};
+        let child_content = [];
         for (let i=0; i < child.children.length; i++) {
-            child_content[list_header[i]]=child.children[i].innerHTML;
+            //child_content[list_header[i]]=child.children[i].innerHTML;
+            child_content[i]=child.children[i].innerHTML;
         }
         list.push(child_content);
     }
 
-    $.ajax({
+    list.sort(function (a,b) {
+        if (order == "asc") return (b[title_cell] < a[title_cell]) ? 1 : -1;
+        else return (b[title_cell] < a[title_cell]) ? -1 : 1;
+    });
+
+    for (let i = 0; i < list.length; i++ ) {
+        str = str+"<tr>";
+        for (let j = 0; j < list[i].length; j++) {
+            str += "<td>"+list[i][j]+"</td>";
+        }
+        str = str+"</tr>";
+    }
+
+    document.getElementById("emplacement_tableau").innerHTML = str;
+
+    /*$.ajax({
         type: "post",
         data: {ordre: order, champ: list_header[title_cell], report_list: list },
         success: function (response) {
             document.getElementById("emplacement_tableau").innerHTML = response;
         }
-    });
+    });*/
 }
 
 function maj_col(nb) {
@@ -43,6 +60,5 @@ function maj_col(nb) {
     }
 
     remplir_tableau(nb, order);
-    if (order == "asc") cell.innerHTML += " ▲";
-    else cell.innerHTML += " ▼";
+    cell.innerHTML += (order == "asc") ? " ▲" : " ▼";
 }
