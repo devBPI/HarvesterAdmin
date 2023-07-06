@@ -19,8 +19,8 @@ function remplir_tableau(title_cell = null, order = null) {
     }
 
     list.sort(function (a,b) {
-        if (order == "asc") return (b[title_cell] < a[title_cell]) ? 1 : -1;
-        else return (b[title_cell] < a[title_cell]) ? -1 : 1;
+        if (order == "asc") return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? 1 : -1;
+        else return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? -1 : 1;
     });
 
     for (let i = 0; i < list.length; i++ ) {

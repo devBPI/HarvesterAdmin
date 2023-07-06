@@ -22,8 +22,14 @@ if (!isset($_GET["viewonly"])) {
 		unset($_POST["id_champ_aff_"]);
 		unset($_POST["display_champ_aff_"]);
 		unset($_POST["name_champ_aff_"]);
+		unset($_POST["submit_value"]);
 
-		$ind = 0;
+		// Récupération des ids des données à visualiser
+		$dtd_id_list = [];
+		$dtd_list = Gateway::getDataToDisplay($id);
+		for ($i = 0; $i < count($dtd_list); $i++) { $dtd_id_list[] = $dtd_list[$i]["id"]; }
+
+		// Définition des variables
 		$donnees["infos"]["id"] = $id;
 		$donnees["infos"]["name"] = $_POST["name_rapport"];
 		$donnees["infos"]["type"] = $data_type;
@@ -36,31 +42,48 @@ if (!isset($_GET["viewonly"])) {
 		$donnees["data_to_insert"] = [];
 		$is_to = "update";
 
+		// Formattage des critères
+		$ind = 0;
 		foreach ($_POST as $key => $value) {
 			if (preg_match('/(id_cond_)/', $key) && $value != "") {
 				$is_to = "update";
 				$donnees["criteria_id_list"][] = $value;
 				$donnees["criterias_to_" . $is_to][$ind]["id"] = $value;
+				unset($_POST[$key]);
 			} else if (preg_match('/(id_cond_)/', $key) && $value == "") {
 				$is_to = "insert";
 				$donnees["criterias_to_" . $is_to][$ind]["report_id"] = $id;
+				unset($_POST[$key]);
 			} else if (preg_match('/(champ_cond_)/', $key)) {
 				$donnees["criterias_to_" . $is_to][$ind]["display_value"] = $value;
+				unset($_POST[$key]);
 			} else if (preg_match('/(operateur_cond_)/', $key)) {
 				$donnees["criterias_to_" . $is_to][$ind]["code"] = $value;
+				unset($_POST[$key]);
 			} else if (preg_match('/(valeur_cond_)/', $key)) {
 				$donnees["criterias_to_" . $is_to][$ind++]["value_to_compare"] = $value;
-			} else if (preg_match('/(id_champ_aff_)/', $key) && $value != "") {
+				unset($_POST[$key]);
+			}
+		}
+
+		// Formattage des données à afficher
+		$ind = 0;
+		$new_dtd = true;
+		foreach ($_POST as $key => $value) {
+			if (preg_match('/(id_champ_aff_)/', $key) && isset($dtd_id_list[$ind]) && $new_dtd) {
 				$is_to = "update";
-				$donnees["data_id_list"][] = $value;
-				$donnees["data_to_" . $is_to][$ind]["id"] = str_replace('"', '\"', str_replace("'", "\'", $value));
-			} else if (preg_match('/(id_champ_aff_)/', $key) && $value == "") {
+				$new_dtd = false;
+				$donnees["data_id_list"][] = $dtd_id_list[$ind];
+				$donnees["data_to_" . $is_to][$ind]["id"] = $dtd_id_list[$ind];
+			} else if (preg_match('/(id_champ_aff_)/', $key) && !isset($dtd_id_list[$ind]) && $new_dtd) {
 				$is_to = "insert";
+				$new_dtd = false;
 				$donnees["data_to_" . $is_to][$ind]["report_id"] = $id;
 			} else if (preg_match('/(display_champ_aff_)/', $key)) {
 				$donnees["data_to_" . $is_to][$ind]["display_value"] = str_replace('"', '\"', str_replace("'", "\'", $value));
 			} else if (preg_match('/(name_champ_aff_)/', $key)) {
 				$donnees["data_to_" . $is_to][$ind++]["display_name"] = str_replace('"', '\"', str_replace("'", "\'", $value));
+				$new_dtd = true;
 			}
 		}
 

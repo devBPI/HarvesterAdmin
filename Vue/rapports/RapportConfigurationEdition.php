@@ -8,7 +8,6 @@
 	<link rel="stylesheet" href="../css/reporting.css">
 	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css">
 	<title>Paramétrage des rapports</title>
-
 </head>
 
 <body>
@@ -139,6 +138,9 @@ else {
 						</optgroup>
 					</select>
 					<input type="text" class="champ_donnee" id="input_name_champ_aff_" name="name_champ_aff_" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée" title="Les caractères interdits sont . , ; \ /">
+					<div class="reporting_arrow_div">
+						<div class="reporting_arrow"><span class="arrow_up"></span><span class="arrow_down"></span></div>
+					</div>
 					<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
 						<img alt="Supprimer un critère" src="../ressources/cross.png" style="width:30px;height:30px">
 					</button>
@@ -191,12 +193,12 @@ else {
 	</div>
 </div>
 
-
 <?php include "../Vue/common/Footer.php" ?>
 
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="../js/toTop.js"></script>
 <script type="text/javascript">
     // Script d'initialisation des compteurs et numéros d'identifiants

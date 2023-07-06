@@ -1,4 +1,5 @@
-// -------------------------------------------------------------------------------------------------------------- OK
+// jQuery pour déplacer les divs
+$("#donnees_affichees").sortable({ tolerance: "pointer" });
 
 // Réinitialise l'état de la combobox d'opération de comparaison
 function reset_defaut_cb_operateur(number) {
@@ -96,7 +97,6 @@ function display_related_operator(element) {
     }
 }
 
-// -------------------------------------------------------------------------------------------------------------- OK
 
 // Rajoute une ligne de critères / données à afficher et incrémente les compteurs correspondants
 function add_critere_or_donnee(parent, type) {

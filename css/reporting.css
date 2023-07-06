@@ -90,6 +90,10 @@ input[type=submit].buttonlinkdanger:hover {
     background-color:#e20000;
 }
 
+/*.donnee_affichee {
+    background-color: whitesmoke;
+}*/
+
 .critere_rapport_posting {
     display: flex;
 }
@@ -133,3 +137,20 @@ input[type=submit].buttonlinkdanger:hover {
     font-weight: bold;
     font-size: 16px;
 }
+
+.reporting_arrow_div {
+    display: inline-block;
+    width:50px;
+    margin-left: 1%;
+    vertical-align: middle;
+}
+.reporting_arrow {
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.reporting_arrow .arrow_up, .reporting_arrow .arrow_down { line-height: 1; }
+.reporting_arrow .arrow_up::before { content : '\25b2'; }
+.reporting_arrow .arrow_down::before { content : '\25bc'; }

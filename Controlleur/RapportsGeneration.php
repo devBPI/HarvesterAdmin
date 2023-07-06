@@ -220,6 +220,7 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 							$where = $where." harvest_grab_configuration.grabber_id=grabber.id";
 						else
 							$where = $where." AND harvest_grab_configuration.grabber_id=grabber.id";
+						$where = $where. " AND harvest_configuration.grab_configuration_id=harvest_grab_configuration.id";
 						$increment_non_vide++;
 					}
 					$select = $select . ", " . $dtd["data_table"] . "." . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";

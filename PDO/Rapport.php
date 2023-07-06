@@ -140,8 +140,9 @@ class Rapport
 				FROM configuration.interface_data_to_display idtd, configuration.interface_data_mapping idm
 				WHERE idtd.interface_data_mapping_id=idm.id
 				  AND idtd.interface_report_id=". $report_id ."
+				  ORDER BY idtd.id
 			")
-		);
+		); // ORDER BY id pour afficher les données dans l'ordre déterminé par l'utilisateur
 	}
 
 	/** Retourne le data_mapping à partir de la valeur d'affichage (possible car celle-ci est unique)
