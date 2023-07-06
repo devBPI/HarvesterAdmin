@@ -19,14 +19,21 @@ function remplir_tableau(title_cell = null, order = null) {
     }
 
     list.sort(function (a,b) {
-        if (!Number.isInteger(Number.parseInt(a[title_cell])) && !Number.isInteger(Number.parseInt(!b[title_cell]))) {
-           // console.log("non-int");
+        let regex = /[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?/i;
+        if (regex.test(a[title_cell])) {
+            //console.log("date");
+            let d1 = new Date(a[title_cell]);
+            let d2 = new Date(b[title_cell]);
+            if (order == "asc") return (d1 < d2) ? 1 : -1;
+            else return (d1 < d2) ? -1 : 1;
+        } else if (!Number.isNaN(Number.parseFloat(a[title_cell])) && !Number.isNaN(Number.parseFloat(b[title_cell]))) {
+            //console.log("float/int");
+            if (order == "asc") return (Number.parseFloat(b[title_cell]) < Number.parseFloat(a[title_cell])) ? 1 : -1;
+            else return (Number.parseFloat(b[title_cell]) < Number.parseFloat(a[title_cell])) ? -1 : 1;
+        } else {
+            //console.log("string");
             if (order == "asc") return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? 1 : -1;
             else return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? -1 : 1;
-        } else {
-           // console.log("int");
-            if (order == "asc") return (Number.parseInt(b[title_cell]) < Number.parseInt(a[title_cell])) ? 1 : -1;
-            else return (Number.parseInt(b[title_cell]) < Number.parseInt(a[title_cell])) ? -1 : 1;
         }
     });
 
