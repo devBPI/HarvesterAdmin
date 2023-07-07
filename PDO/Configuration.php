@@ -370,6 +370,15 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
 		return pg_fetch_all($query);
 	}
 
+
+	static function getSearchBases() {
+		return pg_fetch_all(
+			pg_query(
+				Gateway::getConnexion(), "SELECT code, name FROM configuration.search_base ORDER BY name"
+			)
+		);
+	}
+
 }
 
 

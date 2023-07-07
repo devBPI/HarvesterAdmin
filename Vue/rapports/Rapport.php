@@ -57,8 +57,12 @@ $nb = 0;
 		<li style="font-size:18px">Critères "Fin de la moisson" et "Statut" d'erreur sélectionnés en même temps (une moisson en erreur n'a pas de date de fin)</li>
 		<li style="font-size:18px">...</li>
 	</ul>
+<?php } else { ?>
+	<ul>
+		<li style="font-size:18px">Intervalle de dates mal configuré</li>
+		<li style="font-size:18px">...</li>
+	</ul>
 <?php } ?>
-
 	<br/><br/>
 <?php }	?>
 

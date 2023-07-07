@@ -42,6 +42,11 @@ function buildRegularWhere($criteria, $where, $increment_non_vide) {
 	}
 }
 
+function buildWhereFromString($where, $str, $increment_non_vide) {
+	if ($increment_non_vide == 0)  return $where . " " . $str;
+	else return $where . " AND " . $str;
+}
+
 // -- Si tri du tableau (clic sur en-tête du tableau) --> inutilisé
 if (isset($_POST["ordre"]) && isset($_POST["champ"]) && isset($_POST["report_list"])) {
 	// echo ini_get("max_input_vars"); --> ce qui pose problème pour les grands tableaux report_list
@@ -52,7 +57,7 @@ if (isset($_POST["ordre"]) && isset($_POST["champ"]) && isset($_POST["report_lis
 	// echo ini_get("upload_max_filesize");
 	// echo ini_get("post_max_size");
 	usort($new_array, function($a, $b) use ($indice) {
-		if (strtolower($a[$idice]) < strtolower($b[$indice])) return 1;
+		if (strtolower($a[$indice]) < strtolower($b[$indice])) return 1;
 		return -1;
 	});
 	if ($_POST["ordre"] == "asc") {
@@ -89,6 +94,8 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 		$must_be_group_by = false;
 
 		$is_set_from_sub_query = false; // determine si on doit ajouter la sous-requete unnest(date_publishing) a la clause from
+		$join_grabber = false; // determine si on doit joindre la table grabber
+		$join_search_base = false; // determine si on doit joindre la table search_base
 
 		// ------------- DISTINCT OU NON
 		foreach ($configuration["criterias"] as $key=>$criteria) {
@@ -101,16 +108,16 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 		// ------------- FROM ET WHERE
 		$increment_non_vide = 1; // increment seulement si != cas 2 (pour construction de la requete)
 		foreach ($configuration["criterias"] as $criteria) {
-			// Cas 1 : fonction (par exemple : abs)
-			// Cas 2 : nombre de moissons = dernière uniquement
-			// Cas 3 : critère sur notice.date_publishing
+			// Cas 1 : critère sur la date de publication
+			// Cas 2 : critère le type de connecteur
+			// Cas 3 : critère sur la base de recherche
+			// Autres cas
 			if ($criteria["table_field"] == "unnest(public.notice.date_publishing)") {
 				// Seulement si le "from" n'a pas déjà été ajouté -> on le rajoute + on fait la jointure
-				if(!$is_set_from_sub_query) {
+				if (!$is_set_from_sub_query) {
 					$is_set_from_sub_query = true;
 					$from = $from . ", (SELECT id, unnest(date_publishing) AS annee FROM public.notice) rq";
-					if ($increment_non_vide == 0) $where = $where . "rq.id=public.notice.id";
-					else $where = $where . " AND rq.id=public.notice.id";
+					$where = buildWhereFromString($where,"rq.id=public.notice.id", $increment_non_vide);
 					$increment_non_vide++;
 				}
 				if ($increment_non_vide == 0) {
@@ -118,6 +125,26 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 				} else {
 					$where = $where . " AND rq.annee" . $criteria["query_code"] . $criteria["value_to_compare"];
 				}
+				$increment_non_vide++;
+			} else if ($criteria["display_value"] == "harvest_grabber_type") {
+				if (!$join_grabber) {
+					$join_grabber = true;
+					$from = $from . ", configuration.grabber, configuration.harvest_grab_configuration";
+					$where = buildWhereFromString($where, "harvest_grab_configuration.grabber_id=grabber.id 
+										AND harvest_configuration.grab_configuration_id=harvest_grab_configuration.id", $increment_non_vide);
+					$increment_non_vide++;
+				}
+				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
+				$increment_non_vide++;
+			} else if ($criteria["display_value"] == "notice_search_base") {
+				if (!$join_search_base) {
+					$join_search_base = true;
+					$from = $from . ", configuration.search_base";
+					$where = buildWhereFromString($where, "configuration.search_base.code=configuration.harvest_configuration.search_base_code",
+													$increment_non_vide);
+					$increment_non_vide++;
+				}
+				$where = buildRegularWhere($criteria, $where, $increment_non_vide);
 				$increment_non_vide++;
 			} // Autres cas
 			else {
@@ -140,6 +167,24 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 					$select = $select . $configuration["data_to_display"][$key]["table_field"] . " AS \"" . $configuration["data_to_display"][$key]["display_name"] . "\"";
 				else
 					$select = $select . ", " . $configuration["data_to_display"][$key]["table_field"] . " AS \"" . $configuration["data_to_display"][$key]["display_name"] . "\"";
+			} else if ($dtd["data_table"] == "configuration.grabber") {
+				if (!$join_grabber) {
+					$join_grabber = true;
+					$from = $from.", configuration.grabber, configuration.harvest_grab_configuration";
+					$where = buildWhereFromString($where, "harvest_grab_configuration.grabber_id=grabber.id
+														 AND harvest_configuration.grab_configuration_id=harvest_grab_configuration.id");
+					$increment_non_vide++;
+				}
+				$select = $select . ", " . $dtd["data_table"] . "." . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
+			} else if ($dtd["data_table"] == "configuration.search_base") {
+				if (!$join_search_base) {
+					$join_search_base = true;
+					$from = $from . ", configuration.search_base";
+					$where = buildWhereFromString($where, "configuration.search_base.code=configuration.harvest_configuration.search_base_code",
+						$increment_non_vide);
+					$increment_non_vide++;
+				}
+				$select = $select . ", " . $dtd["data_table"] . "." . $dtd["table_field"] . " AS \"" . $dtd["display_name"] . "\"";
 			} else {
 				if ($key == 0) {
 					$select = $select . $configuration["data_to_display"][$key]["data_table"] . "." . $configuration["data_to_display"][$key]["table_field"] .
@@ -172,9 +217,9 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 
 		$requete_generee = $select.$from.$where.$end_query;
 		//print_r($requete_generee);
-		$report["result"] = Gateway::select($requete_generee);
+		$report["result"] = Gateway::selectNoError($requete_generee);
 
-		if (!$report["result"]) {
+		if (!$report["result"] || $report["result"] == -1) {
 			$query_empty_or_error = true;
 		}
 	}
@@ -275,8 +320,8 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 
 		//print_r($select.$from_where.$end_query);
 		$requete_generee = $select.$from.$where.$end_query;
-		$report["result"] = Gateway::select($requete_generee);
-		if ($report["result"]) {
+		$report["result"] = Gateway::selectNoError($requete_generee);
+		if ($report["result"] || $report["result"] == -1) {
 			if ($join_notice) {
 				foreach ($report["result"] as $key => $line) {
 					$nb = Gateway::getNumberNotices($line["task_id"]);
@@ -304,9 +349,11 @@ if((!empty($_POST) && $_POST["submit_value"] == "generate") || !empty($_GET) && 
 	}
 
 	$tab_header = [];
-	if ($report["result"]) {
-		foreach ($report["result"][0] as $key => $value) {
-			$tab_header[] = $key;
+	if (!$query_empty_or_error) {
+		if ($report["result"]) {
+			foreach ($report["result"][0] as $key => $value) {
+				$tab_header[] = $key;
+			}
 		}
 	}
 	//var_dump($report_result);

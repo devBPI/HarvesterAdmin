@@ -31,7 +31,7 @@ function display_related_operator(element) {
     reset_defaut_cb_operateur(number);
     reset_default_cb_valeur(number);
     if (element.value == "harvest_status" || (element.value).includes("configuration_name")
-        || element.value == "notice_type" || element.value == "harvest_grabber_type" ) {
+        || element.value == "notice_type" || (element.value).includes("grabber_type") || (element.value).includes("notice_search_base")) {
         $("#cb_operateur_cond_" + number).html('<option value="equals">&equals;</option> <option value="not_equals">&ne;</option>').show();
         if ((element.value).includes("configuration_name")) {
             // Afficher combobox des noms de configuration au lieu de input_valeur_cond
@@ -66,7 +66,7 @@ function display_related_operator(element) {
                     $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
                 }
             });
-        } else if (element.value == "harvest_grabber_type") {
+        } else if ((element.value).includes("grabber_type")) {
             // Afficher combobox des connecteurs possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             $.ajax({
@@ -76,7 +76,18 @@ function display_related_operator(element) {
                 success: function (response) {
                     $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
                 }
-            })
+            });
+        } else if ((element.value).includes("notice_search_base")) {
+            // Afficher combobox des bases de recherches possibles au lieu de input_valeur_cond
+            // Récupérer grâce à ajax
+            $.ajax({
+                url: "../Composant/RapportComposant.php",
+                type: "post",
+                data: {champs: "search_base"},
+                success: function (response) {
+                    $("#cb_valeur_cond_" + number).html('<option value="">Sélectionnez une valeur</option>' + response);
+                }
+            });
         }
         $("#cb_valeur_cond_" + number).attr("required", true).show();
     } else if (element.value == "harvest_last_task" || (element.value).includes("results_distinct")) {

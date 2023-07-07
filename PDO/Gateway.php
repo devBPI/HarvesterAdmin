@@ -71,6 +71,7 @@ class Gateway
 	static function getParcours($id) { return Configuration::getParcours($id); }
 	static function updateParcours($parcours, $id) { Configuration::updateParcours($parcours, $id); }
 	static function getConfigurationGrabber() { return Configuration::getConfigurationGrabber(); }
+	static function getSearchBases() { return Configuration::getSearchBases(); }
 
 	// ------------------------------- Traduction
 	static function getTranslationDestinations() { return Traduction::getTranslationDestinations(); }
@@ -228,6 +229,16 @@ class Gateway
 		{
 			echo "Erreur durant la requête de select .\n";
 			exit;
+		}
+		return pg_fetch_all($query);
+	}
+
+	static function selectNoError($str)
+	{
+		$query = @pg_query(self::getConnexion(), $str);
+		if (!$query)
+		{
+			return -1;
 		}
 		return pg_fetch_all($query);
 	}
