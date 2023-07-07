@@ -26,7 +26,7 @@ if (!isset($_GET["viewonly"])) {
 
 		// Récupération des ids des données à visualiser
 		$dtd_id_list = [];
-		$dtd_list = Gateway::getDataToDisplay($id);
+		if ($id != "") $dtd_list = Gateway::getDataToDisplay($id);
 		for ($i = 0; $i < count($dtd_list); $i++) { $dtd_id_list[] = $dtd_list[$i]["id"]; }
 
 		// Définition des variables
