@@ -87,7 +87,7 @@ else {
 							<?php if ($type == "processus") { ?>
 							<option value="inserted_solr" disabled>Nombre d'insertions dans Solr'</option>
 							<?php } else { ?>
-							<option value="type_share" disabled>Proportion de [type] sur l'ensemble des données collectées</option>
+							<!--<option value="type_share" disabled>Proportion de [type] sur l'ensemble des données collectées</option>-->
 							<?php } ?>
 						</optgroup>
 						<optgroup label="Nombre de <?= $what ?>s">

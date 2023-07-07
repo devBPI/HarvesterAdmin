@@ -25,7 +25,7 @@ $nb = 0;
 		<?php } ?>
 		<p style="text-align:right;margin:0;padding-top:12px">Version du <?= date("d/m/Y \à H:i:s") ?></p>
 	</div>
-<?php if (!$query_empty_or_error) { ?>
+<?php if (!$query_empty_or_error && isset($report["id"])) { ?>
 	<table class="table-config">
 		<thead>
 		<tr id="head_tableau" style="cursor:pointer">
