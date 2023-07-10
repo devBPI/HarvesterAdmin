@@ -138,8 +138,8 @@ else {
 						</optgroup>
 					</select>
 					<input type="text" class="champ_donnee" id="input_name_champ_aff_" name="name_champ_aff_" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée" title="Les caractères interdits sont . , ; \ /">
-					<div class="reporting_arrow_div">
-						<div class="reporting_arrow"><span class="arrow_up"></span><span class="arrow_down"></span></div>
+					<div class="reporting_arrow_div" title="Glisser-déposer pour changer l'ordre des données (colonnes du rapport)">
+						<img alt="Glisser-déposer" src="../ressources/move.png" style="width:25px">
 					</div>
 					<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
 						<img alt="Supprimer un critère" src="../ressources/cross.png" style="width:30px;height:30px">

@@ -17,17 +17,19 @@ else $page = "RapportsDonnees";
 ?>
 <div class="content">
 	<table class="table-config">
-		<thead>
+		<thead id="head_tableau">
 			<tr>
-				<th style="width:70%">Nom de la configuration</th>
-				<th style="width:15%">Éditer</th>
-				<th style="width:15%">Afficher</th>
+				<th id="th_cell_0" class="order_asc" style="width:15%;cursor:pointer" onclick="maj_col(0)">Date de création</th>
+				<th id="th_cell_1" class="order_asc" style="width:55%;cursor:pointer" onclick="maj_col(1)">Nom de la configuration</th>
+				<th id="th_cell_2" style="width:15%">Éditer</th>
+				<th id="th_cell_3" style="width:15%">Afficher</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="emplacement_tableau">
 		<?php if($configurations) {
 		foreach ($configurations as $configuration) { ?>
 			<tr>
+				<td><?= date('d-m-Y H:i:s',strtotime($configuration["creation_date"])) ?></td>
 				<td><?= $configuration["name"] ?></td>
 				<td>
 					<a href="../Controlleur/<?= $page ?>Edition.php?id=<?= $configuration["id"] ?>">
@@ -41,14 +43,14 @@ else $page = "RapportsDonnees";
 				</td>
 			</tr>
 		<?php }} ?>
+		</tbody>
 		<tr>
-			<td colspan="3" style="text-align: left">
+			<td colspan="4" style="text-align:left">
 				<a href="../Controlleur/<?= $page ?>Edition.php">
 					<img src="../../ressources/add.png" alt="Ajouter une configuration" style="width:30px;height:30px">
 				</a>
 			</td>
 		</tr>
-		</tbody>
 	</table>
 </div>
 
@@ -71,6 +73,7 @@ else $page = "RapportsDonnees";
 <script src="../js/toTop.js"></script>
 <script src="/js/pop_up.js"></script>
 <script type="text/javascript">
+	let nb_col = 4; // Nombre de colonnes du tableau
 </script>
-
+<script src="../js/rapports/sort_reporting.js"></script>
 </html>
