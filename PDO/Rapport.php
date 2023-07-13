@@ -24,12 +24,13 @@ class Rapport
 		}
 	}
 
-	/** Retourne l'id, le nom et le type du rapport dont l'id est passé en paramètre
+	/** Retourne l'id, le nom, la date de création, la racine et le type du rapport dont l'id est passé en paramètre
 	 * @param $id int id du rapport
 	 * @return mixed|null
 	 */
 	static function getReport($id) {
-		$query = pg_query(Gateway::getConnexion(), "SELECT * FROM configuration.interface_report WHERE id=" . $id);
+		$query = pg_query(Gateway::getConnexion(), "SELECT id, name, type, creation_date, interface_criteria_tree_node_id AS tree_root
+							FROM configuration.interface_report WHERE id=" . $id);
 		if (!$query)
 			return null;
 		$result = pg_fetch_all($query);
@@ -332,6 +333,47 @@ class Rapport
 
 		// -- Insertion du rapport
 		return self::insertReport($report);
+	}
+
+	static function getCriteriasTree($tree_root_id) {
+		$query = @pg_query(Gateway::getConnexion(),"SELECT id, interface_criteria_id AS leaf_id, boolean_operator AS operator
+					FROM configuration.interface_criteria_tree_node WHERE id=".intval($tree_root_id));
+		$donnee = pg_fetch_all($query)[0];
+		if(!empty($donnee)) {
+			if(!empty($donnee["operator"])) {
+				$data = self::grt($tree_root_id);
+			}
+			$data["operator"]=$donnee["operator"];
+			$data["leaf_id"]=$donnee["leaf_id"];
+			$data["id"]=$donnee["id"];
+			return $data;
+		} else {
+			return null;
+		}
+	}
+
+	static function grt($parent_id) {
+		$data = self::getTreeNodeByParent($parent_id);
+		if ($data) {
+			foreach ($data as $k => $d) {
+				if (!empty($data[$k]["operator"])) {
+					$data[$k] = self::grt($d["id"]);
+					$data[$k]["operator"] = $d["operator"];
+					$data[$k]["id"] = $d["id"];
+				}
+			}
+		}
+		return $data;
+	}
+
+	static function getTreeNodebyParent($parent_id)
+	{
+		$query = pg_query(Gateway::getConnexion(),"SELECT id, interface_criteria_id AS leaf_id, boolean_operator AS operator
+							FROM configuration.interface_criteria_tree_node WHERE parent_id=".$parent_id);
+		if (!$query) {
+			return null;
+		}
+		return pg_fetch_all($query);
 	}
 
 }

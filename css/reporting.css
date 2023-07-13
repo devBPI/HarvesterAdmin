@@ -36,11 +36,11 @@ input[type=date].valeur, input[type=datetime-local].valeur {
     cursor: pointer;
     display: inline-block;
     height: 30px;
+    vertical-align: middle;
 }
 
 .delete img {
     position: relative;
-    bottom: -10px;
 }
 
 @media all and (max-width: 745px) {

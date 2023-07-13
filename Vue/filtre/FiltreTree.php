@@ -4,7 +4,7 @@ if (! $ini) {
 	$ini = @parse_ini_file("../etc/default.ini", true);
 }
 ?>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="../../css/style.css" />
@@ -61,7 +61,7 @@ include('../Vue/common/Header.php');
 			<form action="../../Controlleur/Filtre.php" class="form-container" id="formProperty">
 				<h3>Modification</h3>
 				<div class="form-popup-corps">
-					<p>Les modifications ont bien été enregitrées.</p>
+					<p>Les modifications ont bien été enregistrées.</p>
 					<button type="submit" class="buttonlink">OK</button>
 				</div>
 			</form>

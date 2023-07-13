@@ -10,50 +10,6 @@ $id = $_GET["id"] ?? "";
 
 $configuration = null;
 
-function makeTree(&$donnees_post) {
-	$arbre = [];
-	if ($donnees_post) {
-		if (preg_match("/(operator_group_)/", key($donnees_post))) {
-			$arbre["root"] = array_shift($donnees_post);
-			$arbre["nb_children"] = array_shift($donnees_post);
-			if ($arbre["nb_children"] == 0) {
-				$ind = 0;
-				$keys_to_remove = [];
-				foreach ($donnees_post as $key => $value) {
-					if (preg_match('/(id_cond_)/', $key)) {
-						$keys_to_remove[] = $key;
-					} else if (preg_match('/(champ_cond_)/', $key)) {
-						$arbre["criterias"][$ind]["display_value"] = $value;
-						$keys_to_remove[] = $key;
-					} else if (preg_match('/(operateur_cond_)/', $key)) {
-						$arbre["criterias"][$ind]["code"] = $value;
-						$keys_to_remove[] = $key;
-					} else if (preg_match('/(valeur_cond_)/', $key)) {
-						$arbre["criterias"][$ind++]["value_to_compare"] = $value;
-						$keys_to_remove[] = $key;
-					} else {
-						break;
-					}
-				}
-				// On enleve le "T" des criteres
-				foreach ($arbre["criterias"] as $key => $criteria) {
-					if (preg_match("/(date)/", $criteria["display_value"])
-						|| preg_match("/(time)/", $criteria["display_value"])) {
-						if (preg_match("/(([0-9]{4}-[0-9]{2}-[0-9]{2})T((0?[0-9]|1[0-9]|2[0-3]):[0-9]+))/", $criteria["value_to_compare"]))
-							$arbre["criterias"][$key]["value_to_compare"] = str_replace("T", " ", $criteria["value_to_compare"]);
-					}
-				}
-				$donnees_post = array_diff_key($donnees_post, array_flip($keys_to_remove));
-			} else {
-				for ($j = 0; $j < $arbre["nb_children"]; $j++) {
-					$arbre["children"][$j] = makeTree($donnees_post);
-				}
-			}
-		}
-	}
-	return $arbre;
-}
-
 if (!isset($_GET["viewonly"])) {
 	// ------------------------------------------------------------- Si enregistrement de la configuration
 	if (!empty($_POST) && $_POST["submit_value"] == "save") {
@@ -86,6 +42,30 @@ if (!isset($_GET["viewonly"])) {
 		$donnees["data_to_insert"] = [];
 		$is_to = "update";
 
+		// Formattage des critères
+		$ind = 0;
+		foreach ($_POST as $key => $value) {
+			if (preg_match('/(id_cond_)/', $key) && $value != "") {
+				$is_to = "update";
+				$donnees["criteria_id_list"][] = $value;
+				$donnees["criterias_to_" . $is_to][$ind]["id"] = $value;
+				unset($_POST[$key]);
+			} else if (preg_match('/(id_cond_)/', $key) && $value == "") {
+				$is_to = "insert";
+				$donnees["criterias_to_" . $is_to][$ind]["report_id"] = $id;
+				unset($_POST[$key]);
+			} else if (preg_match('/(champ_cond_)/', $key)) {
+				$donnees["criterias_to_" . $is_to][$ind]["display_value"] = $value;
+				unset($_POST[$key]);
+			} else if (preg_match('/(operateur_cond_)/', $key)) {
+				$donnees["criterias_to_" . $is_to][$ind]["code"] = $value;
+				unset($_POST[$key]);
+			} else if (preg_match('/(valeur_cond_)/', $key)) {
+				$donnees["criterias_to_" . $is_to][$ind++]["value_to_compare"] = $value;
+				unset($_POST[$key]);
+			}
+		}
+
 		// Formattage des données à afficher
 		$ind = 0;
 		$new_dtd = true;
@@ -95,32 +75,43 @@ if (!isset($_GET["viewonly"])) {
 				$new_dtd = false;
 				$donnees["data_id_list"][] = $dtd_id_list[$ind];
 				$donnees["data_to_" . $is_to][$ind]["id"] = $dtd_id_list[$ind];
-				unset($_POST[$key]);
 			} else if (preg_match('/(id_champ_aff_)/', $key) && !isset($dtd_id_list[$ind]) && $new_dtd) {
 				$is_to = "insert";
 				$new_dtd = false;
 				$donnees["data_to_" . $is_to][$ind]["report_id"] = $id;
-				unset($_POST[$key]);
 			} else if (preg_match('/(display_champ_aff_)/', $key)) {
 				$donnees["data_to_" . $is_to][$ind]["display_value"] = str_replace('"', '\"', str_replace("'", "\'", $value));
-				unset($_POST[$key]);
 			} else if (preg_match('/(name_champ_aff_)/', $key)) {
 				$donnees["data_to_" . $is_to][$ind++]["display_name"] = str_replace('"', '\"', str_replace("'", "\'", $value));
 				$new_dtd = true;
-				unset($_POST[$key]);
 			}
 		}
 
-		$donnees["criterias_tree"] = makeTree($_POST);
+		// On enleve le "T" des criteres a ajouter
+		foreach ($donnees["criterias_to_insert"] as $key => $criteria) {
+			if (preg_match("/(date)/", $criteria["display_value"])
+				|| preg_match("/(time)/", $criteria["display_value"])) {
+				if (preg_match("/(([0-9]{4}-[0-9]{2}-[0-9]{2})T((0?[0-9]|1[0-9]|2[0-3]):[0-9]+))/", $criteria["value_to_compare"]))
+					$donnees["criterias_to_insert"][$key]["value_to_compare"] = str_replace("T", " ", $criteria["value_to_compare"]);
+			}
+		}
 
-		/* // Désactivé pour test
-		if ($id != "") {
+		// On enleve le "T" des criteres a modifier
+		foreach ($donnees["criterias_to_update"] as $key => $criteria) {
+			if (preg_match("/(date)/", $criteria["display_value"])
+				|| preg_match("/(time)/", $criteria["display_value"])) {
+				if (preg_match("/(([0-9]{4}-[0-9]{2}-[0-9]{2})T((0?[0-9]|1[0-9]|2[0-3]):[0-9]+))/", $criteria["value_to_compare"]))
+					$donnees["criterias_to_update"][$key]["value_to_compare"] = str_replace("T", " ", $criteria["value_to_compare"]);
+			}
+		}
+
+		if (isset($_GET["id"])) {
 			$insert_ok = Gateway::updateReport($donnees); // Retourne -1 si erreur d'insertion, 0 sinon
 			if ($insert_ok == -1) {
 				$msg_error = "Erreur : le titre du rapport (" . $donnees["infos"]["name"] . ") est déjà utilisé";
 			} else {
 				// Si pas d'erreur, redirection
-				header("Location: ../Controlleur/Rapports".$maj_type."Edition.php?id=".$id."&viewonly");
+				header("Location: ../Controlleur/Rapports".$maj_type."Edition.php?id=".$_GET["id"]."&viewonly");
 			}
 		} else {
 			$new_id = Gateway::insertReport($donnees); // Retourne -1 si erreur d'insertion, l'id de la configuration insérée sinon
@@ -135,20 +126,19 @@ if (!isset($_GET["viewonly"])) {
 				// Si pas d'erreur, redirection
 				header("Location: ../Controlleur/Rapports".$maj_type."Edition.php?id=".$new_id."&viewonly");
 			}
-		}*/
+		}
 	}
 	// ------------------------------------------------------------- Sinon / Apres etre entres dans le "Si"
-	if ($id != "") {
+	if (isset($_GET["id"])) {
 		$section = $section . "modification de la configuration de rapport";
 	} else {
 		$section = $section . "nouvelle configuration de rapport";
 	}
-	if ($id != "" && is_numeric($id)) {
-		$configuration = Gateway::getReport($id);
+	if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+		$configuration = Gateway::getReport($_GET["id"]);
 		if ($configuration!=null) {
-			$tree_root_id = $configuration["tree_root"]; // Id de la racine de l'arbre
-			$configuration["criterias_tree"] = Rapport::getCriteriasTree($tree_root_id);
-			$configuration["data_to_display"] = Gateway::getDataToDisplay($id);
+			$configuration["criterias"] = Gateway::getCriterias($_GET["id"]);
+			$configuration["data_to_display"] = Gateway::getDataToDisplay($_GET["id"]);
 		}
 	}
 
@@ -172,12 +162,11 @@ if (!isset($_GET["viewonly"])) {
 }
 // ---------------------------------------------------------------------------------------------- AFFICHAGE
 else {
-	if ($id != "" && is_numeric($id)) {
-		$configuration = Gateway::getReport($id);
+	if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+		$configuration = Gateway::getReport($_GET["id"]);
 		if ($configuration!=null) {
-			$tree_root_id = $configuration["tree_root"]; // Id de la racine de l'arbre
-			$configuration["criterias_tree"] = Rapport::getCriteriasTree($tree_root_id);
-			$configuration["data_to_display"] = Gateway::getDataToDisplay($id);
+			$configuration["criterias"] = Gateway::getCriterias($_GET["id"], "poster");
+			$configuration["data_to_display"] = Gateway::getDataToDisplay($_GET["id"]);
 			$section = $section . "détails de la configuration";
 		}
 	}

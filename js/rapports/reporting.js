@@ -1,3 +1,5 @@
+var seuil = 5;
+
 // jQuery pour déplacer les divs
 $("#donnees_affichees").sortable({ tolerance: "pointer" });
 
@@ -23,7 +25,6 @@ function reset_default_cb_valeur(number) {
         .attr("type", "text").removeAttr("required").removeAttr("max").hide();
 }
 
-// -------------------------------------------------------------------------------------------------------------- OK
 
 // Affiche la combobox de valeur selon la valeur de la combobox de champ
 function display_related_operator(element) {
@@ -109,9 +110,44 @@ function display_related_operator(element) {
 }
 
 
+function add_group(parent, profondeur=0) {
+    add_group_(parent, profondeur);
+    add_group_(parent, profondeur);
+}
+
+// Code à part pour refactoring futur (mettre en commun avec code de filter_rule.js)
+function add_group_(parent, profondeur=0) {
+    console.log("Dans add_group, profondeur vaut " + profondeur);
+    var inserted_child = $("#operation_").clone();
+    let nb = nb_groupes;
+    if (nb < 10) { nb = "00" + nb; }
+    else if (nb < 100) { nb = "0" + nb; }
+    $(inserted_child).attr("id", $(inserted_child).attr("id") + nb);
+    if ((profondeur+1) % 2 == 0)
+        $(inserted_child).addClass("operation_even");
+    // Ajout de l'indice pour chaque element que contient l'enfant
+    for (let i=0; i < inserted_child.children().length; i++) {
+        maj_id_and_name_group(inserted_child.children()[i], nb, profondeur);
+    }
+    // Ajout de l'enfant dans le grandparent
+    let nb_parent = ($(parent).attr("id")).slice(-3);
+    ($("#div_operation_sub_int_"+nb_parent)).append(inserted_child);
+    $(inserted_child).show();
+    // Désactivation de l'autre bouton / lien
+    deactivation_add_critere(nb_parent);
+    // Incrémentation du nombre d'enfants du parent
+    $("#nb_children_operator_group_"+nb_parent).val(parseInt($("#nb_children_operator_group_"+nb_parent).val()) + 1);
+    // Incrémentation de l'indice et du compteur
+    nb_groupes++; cpt_groupes++;
+}
+
 // Rajoute une ligne de critères / données à afficher et incrémente les compteurs correspondants
 function add_critere_or_donnee(parent, type) {
-    let inserted_child = $(parent.children[1]).clone();
+    if (type == "critere") {
+        var inserted_child = $("#critere_rapport_").clone();
+    } else if (type == "donnee") {
+        var inserted_child = $("#donnee_affichee_").clone();
+    }
     // Calcul du nouvel indice pour l'enfant a inserer
     let nb = 0;
     if (type == 'critere') { nb = nb_criteres; }
@@ -121,26 +157,149 @@ function add_critere_or_donnee(parent, type) {
     $(inserted_child).attr("id", $(inserted_child).attr("id") + nb);
     // Ajout de l'indice a chaque element que contient l'enfant
     for (let i=0; i < inserted_child.children().length; i++) {
-        if (inserted_child.children()[i].type == "select-one" || inserted_child.children()[i].type=="text")
-            $(inserted_child.children()[i]).attr("required", true);
-        $(inserted_child.children()[i]).attr("id", $(inserted_child.children()[i]).attr("id") + nb);
-        $(inserted_child.children()[i]).attr("name", $(inserted_child.children()[i]).attr("name") + nb);
+        maj_id_and_name(inserted_child.children()[i], nb);
     }
-    // Ajout de l'enfant dans le parent
-    $(parent).append(inserted_child);
+    if (type == "critere") {
+        // Ajout de l'enfant dans le grandparent
+        var nb_parent = ($(parent).parent().parent()).attr("id").slice(-3);
+        $("#div_operation_sub_int_" + nb_parent).append(inserted_child);
+    } else {
+        $(parent).append(inserted_child);
+    }
     $(inserted_child).show();
+    // Désactivation de l'autre bouton / lien
+    if (type == "critere") {
+        deactivation_add_group(nb_parent);
+    }
     // Incrementation de l'indice et du compteur
-    if (type == 'critere') { nb_criteres++; cpt_criteres++; }
-    else { nb_donnees_affs++; cpt_donnees_affs++; }
+    if (type == "critere") { nb_criteres++; cpt_criteres++; }
+    else if (type == "donnee"){ nb_donnees_affs++; cpt_donnees_affs++; }
     disable_input();
+}
+
+function deactivation_add_critere(nb_parent) {
+    $("#a_add_critere_"+nb_parent).attr("title", "Ce groupe n'accepte que des groupes de critères");
+    $("#a_add_critere_"+nb_parent).addClass("a_disabled");
+    $("#a_add_critere_"+nb_parent).removeAttr("onclick");
+    $("#a_add_critere_" + nb_parent).off( "click");
+}
+
+function reactivation_add_critere(nb_parent) {
+    $("#a_add_critere_"+nb_parent).removeAttr("title");
+    $("#a_add_critere_"+nb_parent).removeClass("a_disabled");
+    $("#a_add_critere_" + nb_parent).off( "click");
+    $("#a_add_critere_" + nb_parent).on("click", function () {
+        return add_critere_or_donnee(this.parentElement.parentElement, "critere");
+    });
+}
+
+function deactivation_add_group(nb_parent) {
+    $("#a_add_group_" + nb_parent).attr("title", "Ce groupe n'accepte que des critères simples");
+    $("#a_add_group_" + nb_parent).addClass("a_disabled");
+    $("#a_add_group_"+nb_parent).removeAttr("onclick");
+    $("#a_add_group_" + nb_parent).off( "click");
+}
+
+function reactivation_add_group(nb_parent, profondeur) {
+    $("#a_add_group_" + nb_parent).removeAttr("title");
+    $("#a_add_group_" + nb_parent).removeClass("a_disabled");
+    $("#a_add_group_" + nb_parent).off( "click");
+    $("#a_add_group_" + nb_parent).on("click", function () {
+        return add_group(this.parentElement, profondeur + 1);
+    });
+}
+
+function maj_id_and_name_group(child_of_inserted_child, nb, profondeur) {
+    if (child_of_inserted_child.className == "div_add_group") {
+        if (profondeur < (seuil - 1))
+            $(child_of_inserted_child).on("click", function () {
+                return add_group(this.parentElement, profondeur + 1);
+            });
+        else {
+            $(child_of_inserted_child).attr("title", "Seuil de profondeur de l'arbre atteint");
+            $(child_of_inserted_child).addClass("a_disabled");
+        }
+    } else if (child_of_inserted_child.className.includes("delete")) {
+        console.log("delete_group(this.parentElement, "+profondeur+")");
+        $(child_of_inserted_child).on("click", function () {
+            return delete_group(this.parentElement.parentElement.parentElement.parentElement, profondeur);
+        });
+    } else if (child_of_inserted_child.className.includes("prof_")) {
+        $(child_of_inserted_child).removeClass("prof_");
+        $(child_of_inserted_child).addClass("prof_"+profondeur);
+    }
+    maj_id_and_name(child_of_inserted_child, nb, profondeur, true);
+}
+
+function maj_id_and_name(child_of_inserted_child, nb, profondeur=0, is_group=false) {
+    if ((child_of_inserted_child.type == "select-one" || child_of_inserted_child.type == "text")
+        && !(child_of_inserted_child.id).includes("cb_valeur_cond"))
+        $(child_of_inserted_child).attr("required", true);
+    if ($(child_of_inserted_child).attr("id"))
+        $(child_of_inserted_child).attr("id", $(child_of_inserted_child).attr("id") + nb);
+    if ($(child_of_inserted_child).attr("name"))
+        $(child_of_inserted_child).attr("name", $(child_of_inserted_child).attr("name") + nb);
+    for (let i = 0; i < $(child_of_inserted_child).children().length; i++) {
+       if (is_group)
+            maj_id_and_name_group($(child_of_inserted_child).children()[i], nb, profondeur);
+        else
+            maj_id_and_name($(child_of_inserted_child).children()[i], nb);
+    }
 }
 
 // Supprime une ligne de critères / données à afficher et décrémente les compteurs correspondants
 function delete_critere_or_donnee(parent, type) {
+    // Décrémentation des compteurs
     if (type == 'critere') cpt_criteres--;
     else cpt_donnees_affs--;
+    // Réactivation de l'élément d'ajout des groupes si besoin
+    if (is_group_empty($(parent).parent(), parent)) {
+        let nb_grandparent = ($(parent).parent().attr("id")).slice(-3);
+        let profondeur = parseInt($(parent).parent().attr("class").slice(-1));
+        reactivation_add_group(nb_grandparent, profondeur);
+    }
+    // Suppression de l'élément
     parent.remove();
     disable_input();
+}
+
+// Supprime un groupe et son contenu
+function delete_group(parent, profondeur_grandparent) {
+    let nb_grandparent = ($(parent).parent().attr("id")).slice(-3);
+    // Décrémentation du compteur
+    cpt_criteres = cpt_criteres - count_criteres_in_parent($(parent));
+    // Réactivation de l'élément d'ajout des critères si besoin
+    if (is_group_empty($(parent).parent(), parent)) {
+        reactivation_add_critere(nb_grandparent, profondeur_grandparent);
+    }
+    // Suppression de l'élément
+    $("#nb_children_operator_group_"+nb_grandparent).val(parseInt($("#nb_children_operator_group_"+nb_grandparent).val()) - 1);
+    console.log
+    parent.remove();
+    disable_input();
+}
+
+function is_group_empty(grandparent, parent) {
+    for (let some_parent of $(grandparent).children()) {
+        if (($(some_parent).hasClass("critere_rapport") || $(some_parent).hasClass("div_operation")) && some_parent != parent) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+function count_criteres_in_parent(parent) {
+    let cpt_criteres_in_parent = 0;
+    if (parent.hasClass("critere_rapport")) {
+        return 1;
+    } else if($(parent).children().length > 0) {
+        for (let i = 0; i < $(parent).children().length; i++) {
+            cpt_criteres_in_parent += count_criteres_in_parent($($(parent).children()[i]));
+        }
+        return cpt_criteres_in_parent;
+    } else {
+        return 0;
+    }
 }
 
 // Active ou desactive le bouton d'envoi du formulaire

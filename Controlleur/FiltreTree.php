@@ -75,8 +75,9 @@ else if(isset($_GET["id"]) && isset($_POST["form_submit"]))
 	$idR=$val["id"]; // Racine de l'arbre
 	unset($_POST["form_submit"]);
 	$_POST=array_reverse($_POST); // Inversion des données de $_POST
-	//var_dump($_POST);
+	// var_dump($_POST);
 	$donnee=treeSet(); // Création de l'arbre
+	// var_dump($donnee);
 	$idRoot=Gateway::insertTree($donnee,$idR);
 	if($idRoot!=null) {
 		Gateway::setRoot($id,$idRoot);
