@@ -47,21 +47,24 @@ else {
 				<table style="width: 100%">
 					<tbody>
 					<tr>
-						<td style="width:200px">
+						<td style="width:200px;border-right:2px solid dimgrey" rowspan="2">
 							<label class="formLabel" for="input_name_rapport">Titre du rapport</label>
 						</td>
-						<td style="border-left:2px solid dimgrey;text-align: left;display: flex; flex-grow:1">
+						<td style="text-align: left;display: flex; flex-grow:1">
 							<input type="text" id="input_name_rapport" name="name_rapport" placeholder="Titre identifiant le rapport"
 								   title="Les caractères interdits sont . , ; ' &quot; \ /"
 								   pattern="[^.,;'&quot;/\\]*" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required>
 							<?php if (isset($_GET["id"]) && $_GET["id"] != "" && isset($configuration) && $configuration!=null) { ?>
 								<a onclick="openForm()" class="buttonlink" style="width:190px;margin-left:5px">Dupliquer le rapport</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
 							<?php } if ($msg_error != null) { ?>
 								<p class="avertissement_light">
 									<?= $msg_error ?>
 								</p>
 							<?php } ?>
-
 						</td>
 					</tr>
 					</tbody>

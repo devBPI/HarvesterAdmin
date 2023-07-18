@@ -265,16 +265,14 @@ class Rapport
 				self::insertCriteriaTree($sub_tree, $parent_id);
 			}
 			return $parent_id;
-		} else { // On est en présence de feuilles
-			foreach ($criterias_tree as $sub_tree) {
-				$leaf_id = self::insertCriteria($sub_tree);
-				pg_fetch_all(
-					pg_query(Gateway::getConnexion(),
-						"INSERT INTO configuration.interface_criteria_tree_node(parent_id, interface_criteria_id)
-						VALUES (" . $parent . ", " . $leaf_id . ")"
-					)
-				);
-			}
+		} else { // On est en présence d'une feuille
+			$leaf_id = self::insertCriteria($criterias_tree);
+			pg_fetch_all(
+				pg_query(Gateway::getConnexion(),
+					"INSERT INTO configuration.interface_criteria_tree_node(parent_id, interface_criteria_id)
+					VALUES (" . $parent . ", " . $leaf_id . ")"
+				)
+			);
 		}
 		return null;
 	}
@@ -404,7 +402,6 @@ class Rapport
 		$report["infos"]["name"] = $configuration["name"] . " (".$cpt.")";
 		$report["infos"]["type"] = $configuration["type"];
 		$report["data_to_insert"] = Gateway::getDataToDisplay($report_id);
-		$report["criterias_tree"] = [];
 		$criterias_tmp = Gateway::getCriteriasTree(self::getReport($report_id)["tree_root"]);
 		$report["criterias_tree"] = self::recursiveCriteriasFormatting($criterias_tmp);
 		// -- Insertion du rapport
@@ -416,8 +413,8 @@ class Rapport
 		foreach ($criterias_tmp as $node) {
 			if (is_array($node)) {
 				if ($node["leaf_id"] != null) {
-					$criteria = self::getCriteria($node["leaf_id"])[0];
-					$criterias_tree["criterias"][] = [
+					$criteria = Gateway::getCriteria($node["leaf_id"])[0];
+					$criterias_tree[] = [
 						"display_value" => $criteria["display_value"],
 						"code" => $criteria["code"],
 						"value_to_compare" => $criteria["value_to_compare"]

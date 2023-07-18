@@ -32,13 +32,11 @@ class RapportTreeComposant
 		if (!is_array($donnee)) {
 			return;
 		}
-		$op = $donnee["operator"];
-		$leaf_id = $donnee["leaf_id"];
+		$op = $donnee["operator"] ?? null;
 		$data_type = $parameters_array["data_type"];
 		//var_dump($donnee);
 
 		unset($donnee["operator"]); // Pour une meilleure gestion des indices ($nb)
-		unset($donnee["leaf_id"]); // Pour une meilleure gestion des indices ($nb)
 		unset($donnee["id"]); // Pour une meilleure gestion des indices ($nb)
 
 		$operation_even = "";
@@ -46,20 +44,18 @@ class RapportTreeComposant
 		if ($profondeur % 2 == 0) $operation_even = "operation_even";
 		else $operation_even_1 = "operation_even";
 
-		if ($leaf_id != null) {
-			$criteria = Gateway::getCriteria($leaf_id);
-
+		if ($op == null) {
 			list($operators, $operators_short, $data_to_show) = getOperatorsDataToShow($data_type);
 			self::incrementNb();
 			if ($data_type == "PROCESS")
-				echo insert_criterias_processus($criteria, $data_to_show, $operators, $operators_short, self::getNb());
+				echo insert_criterias_processus([$donnee], $data_to_show, $operators, $operators_short, self::getNb());
 			else
-				echo insert_criterias_donnees($criteria, $data_to_show, $operators, $operators_short, self::getNb());
+				echo insert_criterias_donnees([$donnee], $data_to_show, $operators, $operators_short, self::getNb());
 		} else {
 
 			$nb_children_group = 0;
 			foreach ($donnee as $d) {
-				if ($d["leaf_id"] == null) {
+				if (isset($d["operator"])) {
 					$nb_children_group++;
 				}
 			}
@@ -151,28 +147,24 @@ HTML;
 		if (!is_array($donnee)) {
 			return;
 		}
-		$op = $donnee["operator"];
-		$leaf_id = $donnee["leaf_id"];
+		$op = $donnee["operator"] ?? null;
 		$data_type = $parameters_array["data_type"];
 		//var_dump($donnee);
 
 		unset($donnee["operator"]); // Pour une meilleure gestion des indices ($nb)
-		unset($donnee["leaf_id"]); // Pour une meilleure gestion des indices ($nb)
 		unset($donnee["id"]); // Pour une meilleure gestion des indices ($nb)
 
 		$operation_even = "";
 		$operation_even_1 = "";
 		if ($profondeur % 2 == 0) $operation_even = "operation_even";
 		else $operation_even_1 = "operation_even";
-
-		if ($leaf_id != null) {
-			$criteria = Gateway::getCriteria($leaf_id)[0];
+		if ($op == null) {
 			self::incrementNb();
 			echo <<<HTML
 		<div class="critere_rapport_posting">
-			<div class="criteria_left">{$criteria["default_name"]}</div>
-			<div class="criteria_middle">{$criteria["label"]}</div>
-			<div class="criteria_right">{$criteria["value_to_compare"]}</div>
+			<div class="criteria_left">{$donnee["default_name"]}</div>
+			<div class="criteria_middle">{$donnee["label"]}</div>
+			<div class="criteria_right">{$donnee["value_to_compare"]}</div>
 		</div>
 HTML;
 

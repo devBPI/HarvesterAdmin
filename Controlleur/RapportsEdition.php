@@ -16,11 +16,33 @@ $id = $_GET["id"] ?? "";
 
 $configuration = null;
 
+function recursiveCriteriasFormatting($criterias_tmp) {
+	$criterias_tree = [];
+	foreach ($criterias_tmp as $node) {
+		if (is_array($node)) {
+			if ($node["leaf_id"] != null) {
+				$criteria = Gateway::getCriteria($node["leaf_id"])[0];
+				$criterias_tree[] = [
+					"display_value" => $criteria["display_value"],
+					"code" => $criteria["code"],
+					"value_to_compare" => $criteria["value_to_compare"],
+					"default_name" => $criteria["default_name"],
+					"label" => $criteria["label"]
+				];
+			} else {
+				$criterias_tree [] = recursiveCriteriasFormatting($node);
+			}
+		}
+	}
+	$criterias_tree["operator"] = $criterias_tmp["operator"];
+	return $criterias_tree;
+}
+
 function makeTree(&$donnees_post) {
 	$arbre = [];
 	if ($donnees_post) {
 		if (preg_match("/(operator_group_)/", key($donnees_post))) {
-			$arbre["operator"] = array_shift($donnees_post);
+			$operator = array_shift($donnees_post);
 			$nb_children = array_shift($donnees_post);
 			if ($nb_children == 0) {
 				$ind = 0;
@@ -29,24 +51,26 @@ function makeTree(&$donnees_post) {
 					if (preg_match('/(id_cond_)/', $key)) {
 						$keys_to_remove[] = $key;
 					} else if (preg_match('/(champ_cond_)/', $key)) {
-						$arbre["criterias"][$ind]["display_value"] = $value;
+						$arbre[$ind]["display_value"] = $value;
 						$keys_to_remove[] = $key;
 					} else if (preg_match('/(operateur_cond_)/', $key)) {
-						$arbre["criterias"][$ind]["code"] = $value;
+						$arbre[$ind]["code"] = $value;
 						$keys_to_remove[] = $key;
 					} else if (preg_match('/(valeur_cond_)/', $key)) {
-						$arbre["criterias"][$ind++]["value_to_compare"] = $value;
+						$arbre[$ind++]["value_to_compare"] = $value;
 						$keys_to_remove[] = $key;
 					} else {
 						break;
 					}
 				}
 				// On enleve le "T" des criteres
-				foreach ($arbre["criterias"] as $key => $criteria) {
-					if (preg_match("/(date)/", $criteria["display_value"])
-						|| preg_match("/(time)/", $criteria["display_value"])) {
-						if (preg_match("/(([0-9]{4}-[0-9]{2}-[0-9]{2})T((0?[0-9]|1[0-9]|2[0-3]):[0-9]+))/", $criteria["value_to_compare"]))
-							$arbre["criterias"][$key]["value_to_compare"] = str_replace("T", " ", $criteria["value_to_compare"]);
+				foreach ($arbre as $key => $criteria) {
+					if (is_array($criteria)) { // Si pas array, alors "operator"
+						if (preg_match("/(date)/", $criteria["display_value"])
+							|| preg_match("/(time)/", $criteria["display_value"])) {
+							if (preg_match("/(([0-9]{4}-[0-9]{2}-[0-9]{2})T((0?[0-9]|1[0-9]|2[0-3]):[0-9]+))/", $criteria["value_to_compare"]))
+								$arbre[$key]["value_to_compare"] = str_replace("T", " ", $criteria["value_to_compare"]);
+						}
 					}
 				}
 				$donnees_post = array_diff_key($donnees_post, array_flip($keys_to_remove));
@@ -55,6 +79,7 @@ function makeTree(&$donnees_post) {
 					$arbre[$j] = makeTree($donnees_post);
 				}
 			}
+			$arbre["operator"] = $operator;
 		}
 	}
 	return $arbre;
@@ -93,7 +118,7 @@ function recursiveCount($criterias_tree, $cpt_groups=1): array
 	if ($cpt_groups < 1) $cpt_groups = 0;
 	foreach ($criterias_tree as $key => $donnee) {
 		if (is_array($donnee)) {
-			if ($donnee["leaf_id"] == null) {
+			if (isset($donnee["operator"]) && $donnee["operator"] != null) {
 				$cpt_groups++;
 				$cpt_groups += recursiveCount($donnee, 0)[1];
 				$cpt_criterias += recursiveCount($donnee, 0)[0];
@@ -166,6 +191,12 @@ if (!isset($_GET["viewonly"])) {
 			$insert_ok = Gateway::updateReport($donnees); // Retourne -1 si erreur d'insertion, 0 sinon
 			if ($insert_ok == -1) {
 				$msg_error = "Erreur : le titre du rapport (" . $donnees["infos"]["name"] . ") est déjà utilisé";
+				$configuration["id"] = $donnees["infos"]["id"];
+				$configuration["name"] = $donnees["infos"]["name"];
+				$configuration["type"] = $donnees["infos"]["type"];
+				$configuration["data_to_display"] = array_merge($donnees["data_to_insert"], $donnees["data_to_update"]);
+				$configuration["criterias_tree"] = $donnees["criterias_tree"];
+				list($configuration["nb_criterias"], $configuration["nb_groups"]) = recursiveCount($configuration["criterias_tree"]);
 			} else {
 				// Si pas d'erreur, redirection
 				header("Location: ../Controlleur/Rapports".$maj_type."Edition.php?id=".$id."&viewonly");
@@ -191,11 +222,12 @@ if (!isset($_GET["viewonly"])) {
 	} else {
 		$section = $section . "nouvelle configuration de rapport";
 	}
-	if ($id != "" && is_numeric($id)) {
+	if ($id != "" && is_numeric($id) && $msg_error == null) {
 		$configuration = Gateway::getReport($id);
 		if ($configuration!=null) {
 			$tree_root_id = $configuration["tree_root"]; // Id de la racine de l'arbre
-			$configuration["criterias_tree"] = Gateway::getCriteriasTree($tree_root_id);
+			$tree_tmp = Gateway::getCriteriasTree($tree_root_id);
+			$configuration["criterias_tree"] = recursiveCriteriasFormatting($tree_tmp);
 			$configuration["data_to_display"] = Gateway::getDataToDisplay($id);
 			list($configuration["nb_criterias"], $configuration["nb_groups"]) = recursiveCount($configuration["criterias_tree"]);
 		}
@@ -213,7 +245,8 @@ else {
 		$configuration = Gateway::getReport($id);
 		if ($configuration!=null) {
 			$tree_root_id = $configuration["tree_root"]; // Id de la racine de l'arbre
-			$configuration["criterias_tree"] = Gateway::getCriteriasTree($tree_root_id);
+			$tree_tmp = Gateway::getCriteriasTree($tree_root_id);
+			$configuration["criterias_tree"] = recursiveCriteriasFormatting($tree_tmp);
 			$configuration["data_to_display"] = Gateway::getDataToDisplay($id);
 			$section = $section . "détails de la configuration";
 		}
