@@ -46,11 +46,17 @@ function getConfigurationsFormatees(): array
 
 function getStatusFormates(): array
 {
-	$status = Gateway::getAllStatus();
-	$status_formate = [];
-	foreach ($status as $s)
-		$status_formate[] = ["id" => $s["status"], "name" => $s["status"]];
-	return $status_formate;
+	//$status = Gateway::getAllStatus();
+	//$status_formate = [];
+	//foreach ($status as $s)
+	//	$status_formate[] = ["id" => $s["status"], "name" => $s["status"]];
+	//return $status_formate;
+	return [
+		["id" => "INDEXED", "name" => "INDEXED"],
+		["id" => "GRAB_ERROR", "name" => "GRAB_ERROR"],
+		["id" => "INDEX_ERROR", "name" => "INDEX_ERROR"],
+		["id" => "CANCELED", "name" => "CANCELED"]
+	];
 }
 
 function getResourceTypesFormates(): array
@@ -87,15 +93,6 @@ function getSearchBasesFormates(): array
 }
 
 // ------------------------------------------------------------------------------ Fonctions pour insertion
-
-function insert_criterias($criterias, $data_to_show, $operators, $operators_short, $type): string
-{
-	if ($type == "processus") {
-		return insert_criterias_processus($criterias, $data_to_show, $operators, $operators_short);
-	} else {
-		return insert_criterias_donnees($criterias, $data_to_show, $operators, $operators_short);
-	}
-}
 
 function makeInputCbValeur($criteria, $i): string
 {
@@ -149,7 +146,6 @@ function makeCriteria($criteria, $i, $report_type, $data_to_show, $operators): s
 	$cb_operators = ComboBox::makeComboBox($operators, $criteria["code"]);
 	$cb_valeur = makeInputCbValeur($criteria, $i);
 	$criteria_id = $criteria["id"] ?? "";
-	$str = "";
 	// Fait en heredoc pour plus de lisibilité
 	return <<< HTML
 <div class="critere_rapport" id="critere_rapport_{$i}">
@@ -197,7 +193,7 @@ function makeDataToDisplay($data, $i, $dtsfd, $report_type) {
 		<input type="text" class="champ_donnee" id="input_name_champ_aff_{$i}" name="name_champ_aff_{$i}" title="Les caractères interdits sont . , ; \ /"
 			 		value="{$data_display_name}" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée"/>
 		<div class="reporting_arrow_div" title="Glisser-déposer pour changer l'ordre des données (colonnes du rapport)">
-			<img alt="Glisser-déposer" src="../ressources/move.png" style="width:25px">
+			<img alt="Glisser-déposer" src="../ressources/move.png">
 		</div>
 		<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
 			<img alt="Supprimer un critère" src="../ressources/cross.png" style="width:30px;height:30px">
@@ -207,11 +203,11 @@ HTML;
 
 }
 
-function insert_criterias_processus($criterias, $data_to_show, $operators, $operators_short): string
+function insert_criterias_processus($criterias, $data_to_show, $operators, $operators_short, $j=1): string
 {
 	$str = "";
-	$j = 1;
-	$i = "00" . $j;
+	if ($j < 10) { $i = "00" . $j; }
+	else if ($j < 100) { $i = "0" . $j; }
 	foreach ($criterias as $criteria) {
 		if ($criteria["display_value"] == "harvest_last_task") {
 			$str = $str . makeCriteria($criteria, $i, "moisson", $data_to_show, [["id" => "equals", "name" => "="]]);
@@ -226,10 +222,9 @@ function insert_criterias_processus($criterias, $data_to_show, $operators, $oper
 	return $str;
 }
 
-function insert_criterias_donnees($criterias, $data_to_show, $operators, $operators_short): string
+function insert_criterias_donnees($criterias, $data_to_show, $operators, $operators_short, $j=1): string
 {
 	$str = "";
-	$j = 1;
 	$i = "00" . $j;
 	foreach ($criterias as $criteria) {
 		if($criteria["display_value"] == "notice_type") {

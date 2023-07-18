@@ -142,19 +142,7 @@ if (!isset($_GET["viewonly"])) {
 		}
 	}
 
-	$operators_old = Gateway::getOperators();
-	$operators = [];
-	foreach ($operators_old as $operator) {		// Formatage des operateurs
-		$operators[] = [
-			"id" => $operator["code"],
-			"name" => $operator["label"]
-		];
-	}
-	$operators_short = [["id" => "equals", "name" => "&equals;"], ["id" => "not_equals", "name" => "&ne;"]];
-
-	$data_to_show["general_infos"] = Gateway::getDataToShowByGroup($data_type, true, "general_infos");
-	$data_to_show["follow_up"] = Gateway::getDataToShowByGroup($data_type, true, "follow_up");
-	$data_to_show["number_of_results_infos"] = Gateway::getDataToShowByGroup($data_type, true, "number_of_results_infos");
+	list($operators, $operators_short, $data_to_show) = extracted($data_type);
 	$data_to_show_for_display["general_infos"] = Gateway::getDataToShowByGroup($data_type, true, "general_infos");
 	$data_to_show_for_display["follow_up"] = Gateway::getDataToShowByGroup($data_type, true, "follow_up");
 

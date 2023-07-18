@@ -190,7 +190,9 @@ class Gateway
 	static function getReport($id) { return Rapport::getReport($id); }
 	static function getOperators() { return Rapport::getOperators(); }
 	static function getDataToShowByGroup($type, $is_null, $group) { return Rapport::getDataToShowByGroup($type, $is_null, $group); }
+	static function getCriteriasTree($tree_root_id) { return Rapport::getCriteriasTree($tree_root_id); }
 	static function getCriterias($report_id, $for=null) { return Rapport::getCriterias($report_id, $for); }
+	static function getCriteria($criteria_id) { return Rapport::getCriteria($criteria_id); }
 	static function getDataToDisplay($report_id) { return Rapport::getDataToDisplay($report_id); }
 	static function getDataMappingByDisplay_Value($display_value) { return Rapport::getDataMappingByDisplay_Value($display_value); }
 	static function insertReport($report) { return Rapport::insertReport($report); }

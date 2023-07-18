@@ -130,6 +130,18 @@ class Rapport
 		}
 	}
 
+	static function getCriteria($criteria_id) {
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"SELECT ic.id, idm.table_field, idm.data_table, ico.code, ico.label, ic.value_to_compare, idm.display_value, idm.default_name, idm.data_group
+					   FROM configuration.interface_criteria ic, configuration.interface_criteria_operator ico, configuration.interface_data_mapping idm
+					   WHERE ic.interface_data_mapping_id=idm.id
+				       AND ic.interface_criteria_operator_id=ico.id
+				       AND ic.id=". $criteria_id ."
+			")
+		);
+	}
+
 	/** Retourne les données à afficher du rapport
 	 * @param $report_id int identifiant du rapport
 	 * @return array|false l'identifiant, la valeur d'affichage et la chaîne de caractère d'affichage de la donnée
@@ -170,10 +182,13 @@ class Rapport
 	static function insertCriteria($criteria) {
 		$operator_id = self::getOperatorByCode($criteria["code"])["id"];
 		$data_mapping_id = self::getDataMappingByDisplay_Value($criteria["display_value"])["id"];
-		pg_query(Gateway::getConnexion(),
-				"INSERT INTO configuration.interface_criteria(value_to_compare, interface_data_mapping_id, interface_criteria_operator_id, interface_report_id)
-					   VALUES ('". $criteria["value_to_compare"] ."', ". $data_mapping_id .", ". $operator_id .", " .$criteria["report_id"] .")"
-		);
+		return pg_fetch_all(
+			pg_query(Gateway::getConnexion(),
+				"INSERT INTO configuration.interface_criteria(value_to_compare, interface_data_mapping_id, interface_criteria_operator_id)
+					   VALUES ('". $criteria["value_to_compare"] ."', ". $data_mapping_id .", ". $operator_id .")
+					   	RETURNING id"
+			)
+		)[0]["id"];
 	}
 
 	static function deleteCriteria($id) {
@@ -213,51 +228,85 @@ class Rapport
 			return -1;
 		}
 		$report_id = pg_fetch_all($query)[0]["id"];
-		foreach($report["criterias_to_insert"] as $criteria) {
-			$criteria["report_id"] = $report_id;
-			self::insertCriteria($criteria);
-		}
+		// Insertion des données à afficher
 		foreach($report["data_to_insert"] as $data) {
 			$data["report_id"] = $report_id;
 			self::insertDataToDisplay($data);
 		}
+		// Insertion des critères
+		$root_id = self::insertCriteriaTree($report["criterias_tree"]);
+		pg_query(Gateway::getConnexion(), "UPDATE configuration.interface_report
+				SET interface_criteria_tree_node_id=".$root_id." WHERE id=".$report_id
+		);
+
 		return $report_id;
 	}
 
-	static function updateReport($report) {
+	static function insertCriteriaTree($criterias_tree, $parent=null) {
+		if (isset($criterias_tree["operator"]) && $criterias_tree["operator"] != null) { // Si on est en présence d'un noeud
+			$operator = $criterias_tree["operator"];
+			unset($criterias_tree["operator"]);
+			if ($parent != null) {
+				$parent_id = pg_fetch_all(
+					pg_query(Gateway::getConnexion(),
+						"INSERT INTO configuration.interface_criteria_tree_node(parent_id, boolean_operator)
+						VALUES (".$parent.", '".$operator."') RETURNING id"
+					)
+				)[0]["id"];
+			} else {
+				$parent_id = pg_fetch_all(
+					pg_query(Gateway::getConnexion(),
+						"INSERT INTO configuration.interface_criteria_tree_node(boolean_operator)
+						VALUES ('".$operator."') RETURNING id"
+					)
+				)[0]["id"];
+			}
+			foreach ($criterias_tree as $sub_tree) {
+				self::insertCriteriaTree($sub_tree, $parent_id);
+			}
+			return $parent_id;
+		} else { // On est en présence de feuilles
+			foreach ($criterias_tree as $sub_tree) {
+				$leaf_id = self::insertCriteria($sub_tree);
+				pg_fetch_all(
+					pg_query(Gateway::getConnexion(),
+						"INSERT INTO configuration.interface_criteria_tree_node(parent_id, interface_criteria_id)
+						VALUES (" . $parent . ", " . $leaf_id . ")"
+					)
+				);
+			}
+		}
+		return null;
+	}
 
+	static function updateReport($report) {
 		$name_exists = pg_fetch_all(pg_query(Gateway::getConnexion(),
 				"SELECT name FROM configuration.interface_report WHERE LOWER(name)='". strtolower($report["infos"]["name"]) ."' AND id!=". $report["infos"]["id"])
 		);
 		if ($name_exists && count($name_exists) > 0)
 			return -1;
 
-		$criterias_to_delete = [];
 		$data_to_delete = [];
-		if (count($report["criteria_id_list"]) > 0) {
-			$criterias_to_delete = pg_fetch_all(pg_query(Gateway::getConnexion(),
-					"SELECT id FROM configuration.interface_criteria
-          					WHERE id NOT IN ('" . implode("','", $report["criteria_id_list"]) . "')
-          					AND interface_report_id=". $report["infos"]["id"])
-			);
-		}
+
 		if (count($report["data_id_list"]) > 0) {
 			$data_to_delete = pg_fetch_all(pg_query(Gateway::getConnexion(),
 					"SELECT id FROM configuration.interface_data_to_display
-          					WHERE id NOT IN ('" . implode("','", $report["data_id_list"]) . "')
-          					AND interface_report_id=". $report["infos"]["id"])
+          					WHERE id NOT IN ('".implode("','", $report["data_id_list"])."')
+          					AND interface_report_id=".$report["infos"]["id"])
 			);
 		}
+		// Màj du nom du rapport
 		self::setReportName($report["infos"]["id"], $report["infos"]["name"]);
-		if (count($report["criterias_to_update"]) > 0)
-			foreach ($report["criterias_to_update"] as $criteria)
-				self::updateCriteria($criteria);
-		if (count($report["criterias_to_insert"]) > 0)
-			foreach($report["criterias_to_insert"] as $criteria)
-				self::insertCriteria($criteria);
-		if ($criterias_to_delete && count($criterias_to_delete) > 0)
-			foreach($criterias_to_delete as $criteria)
-				self::deleteCriteria($criteria["id"]);
+		// Suppression de l'ancien arbre de critères
+		$tree_root_id = Gateway::getReport($report["infos"]["id"])["tree_root"]; // Id de la racine de l'arbre
+		self::deleteTree($tree_root_id);
+		self::deleteRoot($tree_root_id);
+		// Insertion des nouveaux critères
+		$root_id = self::insertCriteriaTree($report["criterias_tree"]);
+		pg_query(Gateway::getConnexion(), "UPDATE configuration.interface_report
+				SET interface_criteria_tree_node_id=".$root_id." WHERE id=".$report["infos"]["id"]
+		);
+		// Màj des données à afficher
 		if (count($report["data_to_update"]) > 0)
 			foreach($report["data_to_update"] as $data)
 				self::updateDataToDisplay($data);
@@ -270,10 +319,36 @@ class Rapport
 		return 0;
 	}
 
-	static function deleteReport($id) {
-		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_criteria WHERE interface_report_id=". $id);
-		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_data_to_display WHERE interface_report_id=". $id);
-		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_report WHERE id=". $id);
+	static function deleteTree($parent_id) {
+		if($parent_id == null) {
+			return;
+		}
+		$children_ids=pg_fetch_all(
+			pg_query(Gateway::getConnexion(), "SELECT id FROM configuration.interface_criteria_tree_node WHERE parent_id=".$parent_id)
+		);
+		if($children_ids != null){
+			foreach($children_ids as $id) {
+				self::deleteTree($id["id"]);
+				pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_criteria_tree_node WHERE id=" . $id["id"]);
+			}
+		}
+	}
+
+	static function deleteRoot($tree_root_id) {
+		pg_query(Gateway::getConnexion(), "UPDATE configuration.interface_report
+		 					SET interface_criteria_tree_node_id=null
+		 					WHERE interface_criteria_tree_node_id=".intval($tree_root_id)
+		);
+		pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_criteria_tree_node
+       											WHERE id=".intval($tree_root_id));
+	}
+
+	static function deleteReport($report_id) {
+		$tree_root_id = Gateway::getReport($report_id)["tree_root"];
+		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_data_to_display WHERE interface_report_id=". $report_id);
+		@pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_report WHERE id=". $report_id);
+		self::deleteTree($tree_root_id);
+		self::deleteRoot($tree_root_id);
 	}
 
 	/** Nombre de notices insérées dans la table "notice" par la moisson
@@ -328,11 +403,32 @@ class Rapport
 		// -- Formattage du rapport pour la fonction insertReport
 		$report["infos"]["name"] = $configuration["name"] . " (".$cpt.")";
 		$report["infos"]["type"] = $configuration["type"];
-		$report["criterias_to_insert"] = Gateway::getCriterias($report_id);
 		$report["data_to_insert"] = Gateway::getDataToDisplay($report_id);
-
+		$report["criterias_tree"] = [];
+		$criterias_tmp = Gateway::getCriteriasTree(self::getReport($report_id)["tree_root"]);
+		$report["criterias_tree"] = self::recursiveCriteriasFormatting($criterias_tmp);
 		// -- Insertion du rapport
 		return self::insertReport($report);
+	}
+
+	static function recursiveCriteriasFormatting($criterias_tmp) {
+		$criterias_tree = [];
+		foreach ($criterias_tmp as $node) {
+			if (is_array($node)) {
+				if ($node["leaf_id"] != null) {
+					$criteria = self::getCriteria($node["leaf_id"])[0];
+					$criterias_tree["criterias"][] = [
+						"display_value" => $criteria["display_value"],
+						"code" => $criteria["code"],
+						"value_to_compare" => $criteria["value_to_compare"]
+					];
+				} else {
+					$criterias_tree [] = self::recursiveCriteriasFormatting($node);
+				}
+			}
+		}
+		$criterias_tree["operator"] = $criterias_tmp["operator"];
+		return $criterias_tree;
 	}
 
 	static function getCriteriasTree($tree_root_id) {
@@ -359,6 +455,7 @@ class Rapport
 				if (!empty($data[$k]["operator"])) {
 					$data[$k] = self::grt($d["id"]);
 					$data[$k]["operator"] = $d["operator"];
+					$data[$k]["leaf_id"]=$d["leaf_id"];
 					$data[$k]["id"] = $d["id"];
 				}
 			}

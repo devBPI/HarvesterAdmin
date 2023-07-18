@@ -112,7 +112,6 @@ function display_related_operator(element) {
 
 function add_group(parent, profondeur=0) {
     add_group_(parent, profondeur);
-    add_group_(parent, profondeur);
 }
 
 // Code à part pour refactoring futur (mettre en commun avec code de filter_rule.js)
@@ -220,7 +219,7 @@ function maj_id_and_name_group(child_of_inserted_child, nb, profondeur) {
             $(child_of_inserted_child).addClass("a_disabled");
         }
     } else if (child_of_inserted_child.className.includes("delete")) {
-        console.log("delete_group(this.parentElement, "+profondeur+")");
+        // console.log("delete_group(this.parentElement, "+profondeur+")");
         $(child_of_inserted_child).on("click", function () {
             return delete_group(this.parentElement.parentElement.parentElement.parentElement, profondeur);
         });
@@ -274,7 +273,6 @@ function delete_group(parent, profondeur_grandparent) {
     }
     // Suppression de l'élément
     $("#nb_children_operator_group_"+nb_grandparent).val(parseInt($("#nb_children_operator_group_"+nb_grandparent).val()) - 1);
-    console.log
     parent.remove();
     disable_input();
 }

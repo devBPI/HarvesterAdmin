@@ -8,91 +8,15 @@
 	<link rel="stylesheet" href="../css/reporting.css">
 	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css">
 	<title>Paramétrage des rapports</title>
-
-	<style>
-        .div_add_group {
-            color: #b40626;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: underline;
-            margin-right: 2px;
-        }
-
-        .div_add_critere {
-            color: #77b8dd;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: underline;
-            margin-left: 2px;
-        }
-
-        .a_disabled {
-            color: #cccccc;
-            cursor: not-allowed;
-        }
-
-        .div_operation {
-            display:flex;
-            flex-grow: 2;
-            vertical-align: middle;
-            align-items: center;
-            padding:5px;
-            margin-bottom:5px;
-        }
-
-        .div_operation.racine .div_operation_int_int {
-            border: 2px solid black;
-        }
-
-        .div_operation_ext {
-            height: 45px;
-            margin-right: -50px;
-            z-index: 2;
-        }
-
-        .div_operation_int {
-            display: flex;
-            align-items: stretch;
-            flex-grow: 1;
-            height: 100%;
-        }
-
-        .div_operation_dotted {
-            width: 80px;
-            border: 2px dashed grey;
-            border-right: none;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-
-        .div_operation_int_int {
-            width: 100%;
-            border:1px solid black;
-            padding: 5px;
-            background-color: whitesmoke;
-            z-index: 2;
-        }
-
-        .div_operation.racine .group_operator.racine {
-            color: #2196F3;
-        }
-
-        .group_operator {
-            position: relative;
-            border: 1px solid black;
-            z-index: 1;
-            font-weight: bold;
-            border-radius: 0;
-        }
-
-	</style>
 </head>
 
 <body>
 <?php
-require "../Composant/ComboBox.php";
-include('../Vue/common/Header.php');
-if ($type == "processus") {
+require_once("../Composant/ComboBox.php");
+include_once("../Vue/common/Header.php");
+require_once ("../Composant/RapportComposant.php");
+require_once ("../Composant/RapportTreeComposant.php");
+if (isset($type) && $type == "processus") {
 	$page = "Processus";
 	$what = "moisson";
 }
@@ -150,14 +74,12 @@ else {
 					<legend>Critères</legend>
 					<div id="criteres_rapport">
 						<?php if ($configuration != null) {
-							/*require_once "../Composant/RapportComposant.php";
 							if ($type == "processus") {
-								echo insert_criterias($configuration["criterias"], $data_to_show, $operators, $operators_short, "processus");
+								RapportTreeComposant::tree_display($configuration["criterias_tree"],0, ["data_type" => "PROCESS", "tree_type" => "report"]);
 							} else {
-								echo insert_criterias($configuration["criterias"], $data_to_show, $operators, $operators_short, "donnees");
-							}*/
-							//treeDisplay($configuration);
-						} if(true) { ?>
+								RapportTreeComposant::tree_display($configuration["criterias_tree"], 0, ["data_type" => "METADATA", "tree_type" => "report"]);
+							}
+						} else { ?>
 							<div id="operation_000" class="div_operation racine">
 								<div class="div_operation_ext">
 									<select aria-label="Opérateur du groupe" name="operator_group_000" class="group_operator racine">
@@ -192,7 +114,6 @@ else {
 							<img src="../../ressources/add.png" alt="Ajouter une donnée à afficher" style="width:30px;height:30px">
 						</button>
 						<?php if ($configuration != null) {
-							require_once "../Composant/RapportComposant.php";
 							if ($type == "processus") {
 								echo insert_display_values($configuration["data_to_display"], $data_to_show_for_display, "processus");
 							} else {
@@ -284,7 +205,7 @@ else {
 	</select>
 	<input aria-label="Dénomination de la donnée" type="text" class="champ_donnee" id="input_name_champ_aff_" name="name_champ_aff_" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée" title="Les caractères interdits sont . , ; \ /">
 	<div class="reporting_arrow_div" title="Glisser-déposer pour changer l'ordre des données (colonnes du rapport)">
-		<img alt="Glisser-déposer" src="../ressources/move.png" style="width:25px">
+		<img alt="Glisser-déposer" src="../ressources/move.png">
 	</div>
 	<button class="but delete" type="button" title="Supprimer une donnée à afficher" onclick="delete_critere_or_donnee(this.parentElement, 'donnee')">
 		<img alt="Supprimer une donnée à afficher" src="../ressources/cross.png" style="width:30px;height:30px">
@@ -327,12 +248,12 @@ else {
 <script type="text/javascript">
     // Script d'initialisation des compteurs et numéros d'identifiants
     // Ne peut se mettre dans rapports/reporting.js car utilise du php
-    let nb_criteres = 1; // Incrément pour l'identifiant / le nom des champs de critères de sélection
+    let nb_criteres = <?= isset($configuration["nb_criterias"])?$configuration["nb_criterias"]+$configuration["nb_groups"]+1:1 ?>; // Incrément pour l'identifiant / le nom des champs de critères de sélection
     let nb_donnees_affs = <?= isset($configuration)?count($configuration["data_to_display"])+1:1 ?>; // Incrément pour l'identifiant / le nom des champs de données à afficher
-    let cpt_criteres = 0; // Compteur de critères du rapport
+    let nb_groupes = <?= isset($configuration["nb_groups"])?$configuration["nb_groups"]+$configuration["nb_criterias"]+1:1 ?>; // Incrément pour l'identifiant / le nom des groupes
+    let cpt_criteres = <?= isset($configuration)?$configuration["nb_criterias"]:0 ?>; // Compteur de critères du rapport
     let cpt_donnees_affs = <?= isset($configuration)?count($configuration["data_to_display"]):0 ?>; // Compteur de données à afficher
-    let nb_groupes = 1;
-    let cpt_groupes = 0;
+    let cpt_groupes = <?= isset($configuration)?$configuration["nb_groups"]:0 ?>; // Compteur de groupes
 
     $(document).ready(function() {
         disable_input();

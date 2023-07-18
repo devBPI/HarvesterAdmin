@@ -15,10 +15,6 @@ if (isset($_POST["submit_type"]) && $_POST["submit_type"] == "Supprimer le rappo
 	$msg_text = "La suppression du rapport ". $report_name ." a bien été effectuée.";
 } else if (isset($_POST["submit_type"]) && $_POST["submit_type"] == "duplicate") {
 	$configuration = Gateway::getReport($_POST["report_id"]);
-	if ($configuration!=null) {
-		$configuration["criterias"] = Gateway::getCriterias($_POST["report_id"]);
-		$configuration["data_to_display"] = Gateway::getDataToDisplay($_POST["report_id"]);
-	}
 	if ($configuration != null) {
 		if (Gateway::duplicateReport($_POST["report_id"]) > -1) {
 			$report_name = Gateway::getReport($_POST["report_id"])["name"];

@@ -13,8 +13,8 @@
 
 <body>
 <?php
-require "../Composant/ComboBox.php";
-include('../Vue/common/Header.php');
+require_once("../Composant/ComboBox.php");
+include_once("../Vue/common/Header.php");
 if ($type == "processus") $page = "Processus";
 else $page = "Donnees";
 ?>
@@ -22,11 +22,9 @@ else $page = "Donnees";
 <div class="content">
 	<div class="button_top_div">
 		<?php if ($type == "processus") { ?>
-			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">«
-				Retour aux rapports sur les processus</a>
+			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les processus</a>
 		<?php } else { ?>
-			<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux
-				rapports sur les métadonnées</a>
+			<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux rapports sur les métadonnées</a>
 		<?php } ?>
 		<?php if (isset($_GET["id"]) && $_GET["id"] != "" && isset($configuration) && $configuration!=null) { ?>
 			<form action="../Controlleur/Rapports.php?id=<?= $type ?>" method="post" style="margin-bottom:0"
@@ -62,14 +60,9 @@ else $page = "Donnees";
 		<fieldset class="param_fieldset">
 			<legend>Critères</legend>
 			<div id="criteres_rapport">
-				<?php foreach ($configuration["criterias"] as $criteria) { ?>
-				<div class="critere_rapport critere_rapport_posting">
-					<div class="div_decorative_left"></div>
-					<div class="criteria_left"><?= $criteria["default_name"] ?></div>
-					<div class="criteria_middle"><?= $criteria["label"] ?></div>
-					<div class="criteria_right"><?= $criteria["value_to_compare"] ?></div>
-				</div>
-				<?php } ?>
+				<?php require_once("../Composant/RapportTreeComposant.php");
+					RapportTreeComposant::tree_display($configuration["criterias_tree"], 0, ["data_type" => "METADATA", "tree_type" => "report", "for_what" => "viewonly"]);
+				?>
 			</div>
 		</fieldset>
 	</div>

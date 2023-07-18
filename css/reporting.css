@@ -1,4 +1,5 @@
 .param_content_div {
+    overflow-y: auto;
     background-color: whitesmoke;
 }
 
@@ -30,6 +31,11 @@ input[type=date].valeur, input[type=datetime-local].valeur {
 .operateur {
     display: inline-block;
     width: 10%;
+}
+
+.critere_rapport, .donnee_affichee {
+    display: flex;
+    vertical-align: middle;
 }
 
 .delete {
@@ -90,10 +96,6 @@ input[type=submit].buttonlinkdanger:hover {
     background-color:#e20000;
 }
 
-/*.donnee_affichee {
-    background-color: whitesmoke;
-}*/
-
 .critere_rapport_posting {
     display: flex;
 }
@@ -106,6 +108,7 @@ input[type=submit].buttonlinkdanger:hover {
 .critere_rapport_posting .criteria_right {
     width: 40%;
     padding: 12px;
+    word-wrap: break-word;
 }
 
 .critere_rapport_posting .criteria_middle {
@@ -113,21 +116,39 @@ input[type=submit].buttonlinkdanger:hover {
     padding: 12px;
 }
 
+.critere_rapport_posting .group_operator {
+    height: 45px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+}
+
+.critere_rapport_posting .div_operation .div_operation_ext p {
+    width: 60px;
+    margin: 0 auto;
+}
+
 .donnee_affichee_posting .data_to_display_left {
     padding: 12px;
 }
 
-.donnee_affichee_posting, .critere_rapport_posting {
+.donnee_affichee_posting {
     background-color: white;
+}
+
+.donnee_affichee_posting, .critere_rapport_posting {
     display: flex;
     align-items: center;
     margin: 1px;
 }
 
 .div_decorative_left {
-    background-color: #77b8dd;
-    border-right: 3px solid dimgrey;
-    width:25px;
+    background-color: rgba(107, 165, 198);
+    border-right: 3px solid #2196F3;
+    width: 25px;
     height: 50px;
 }
 
@@ -140,8 +161,98 @@ input[type=submit].buttonlinkdanger:hover {
 
 .reporting_arrow_div {
     display: inline-block;
-    width:50px;
-    margin-left: 1%;
+    width: 50px;
+    margin: auto;
     vertical-align: middle;
     cursor: move;
+}
+
+.reporting_arrow_div img {
+    width: 25px;
+    height: 25px;
+    display: block;
+    margin: auto;
+}
+
+.delete {
+    margin: auto;
+}
+
+.div_add_group {
+    color: #b40626;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-right: 2px;
+}
+
+.div_add_critere {
+    color: #2196F3;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-left: 2px;
+}
+
+.a_disabled {
+    color: #cccccc;
+    cursor: not-allowed;
+}
+
+.div_operation {
+    display:flex;
+    flex-grow: 2;
+    vertical-align: middle;
+    align-items: center;
+    padding:5px;
+    margin-bottom:5px;
+}
+
+.div_operation.racine .div_operation_int_int {
+    border: 2px solid black;
+}
+
+.div_operation_ext {
+    height: 45px;
+    margin-right: -50px;
+    z-index: 2;
+}
+
+.div_operation_int {
+    display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.div_operation_dotted {
+    width: 80px;
+    border: 2px dashed grey;
+    border-right: none;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.div_operation_int_int {
+    width: 100%;
+    border:1px solid black;
+    padding: 5px;
+    background-color: rgba(107, 165, 198, 0.295);
+    z-index: 2;
+}
+
+.div_operation_int_int.operation_even {
+    background-color: rgba(255, 255, 255, 0.295);
+}
+
+.div_operation.racine .group_operator.racine {
+    color: #2196F3;
+}
+
+.group_operator {
+    position: relative;
+    border: 1px solid black;
+    z-index: 1;
+    font-weight: bold;
+    border-radius: 0;
 }
