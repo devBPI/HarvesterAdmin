@@ -133,7 +133,7 @@ class Rapport
 	static function getCriteria($criteria_id) {
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(),
-				"SELECT ic.id, idm.table_field, idm.data_table, ico.code, ico.label, ic.value_to_compare, idm.display_value, idm.default_name, idm.data_group
+				"SELECT ic.id, idm.table_field, idm.data_table, ico.code, ico.label, ico.query_code, ic.value_to_compare, idm.display_value, idm.default_name, idm.data_group
 					   FROM configuration.interface_criteria ic, configuration.interface_criteria_operator ico, configuration.interface_data_mapping idm
 					   WHERE ic.interface_data_mapping_id=idm.id
 				       AND ic.interface_criteria_operator_id=ico.id
@@ -166,17 +166,6 @@ class Rapport
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(), "SELECT idm.* FROM configuration.interface_data_mapping idm WHERE idm.display_value='". $display_value."'")
 		)[0];
-	}
-	
-	static function updateCriteria($criteria) {
-		$operator_id = self::getOperatorByCode($criteria["code"])["id"];
-		$data_mapping_id = self::getDataMappingByDisplay_Value($criteria["display_value"])["id"];
-		pg_query(Gateway::getConnexion(),
-		"UPDATE configuration.interface_criteria
-				SET value_to_compare='". $criteria["value_to_compare"] ."',
-				interface_data_mapping_id=" . $data_mapping_id . ",
-				interface_criteria_operator_id=" . $operator_id . "
-				WHERE id=" . $criteria["id"]);
 	}
 
 	static function insertCriteria($criteria) {
@@ -321,13 +310,16 @@ class Rapport
 		if($parent_id == null) {
 			return;
 		}
-		$children_ids=pg_fetch_all(
-			pg_query(Gateway::getConnexion(), "SELECT id FROM configuration.interface_criteria_tree_node WHERE parent_id=".$parent_id)
+		$children=pg_fetch_all(
+			pg_query(Gateway::getConnexion(), "SELECT id, interface_criteria_id AS leaf_id FROM configuration.interface_criteria_tree_node WHERE parent_id=".$parent_id)
 		);
-		if($children_ids != null){
-			foreach($children_ids as $id) {
-				self::deleteTree($id["id"]);
-				pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_criteria_tree_node WHERE id=" . $id["id"]);
+		if($children != null){
+			foreach($children as $child) {
+				self::deleteTree($child["id"]);
+				pg_query(Gateway::getConnexion(), "DELETE FROM configuration.interface_criteria_tree_node WHERE id=" . $child["id"]);
+				if ($child["leaf_id"] != null) {
+					self::deleteCriteria($child["leaf_id"]);
+				}
 			}
 		}
 	}
