@@ -19,12 +19,12 @@ function remplir_tableau(title_cell = null, order = null) {
     }
 
     list.sort(function (a,b) {
-        let regex_1 = /[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?/i;
-        let regex_2 = /[0-9]{2}-[0-9]{2}-[0-9]{4}\s[0-9]{2}:[0-9]{2}:[0-9]{2}?/i;
-        if (regex_1.test(a[title_cell]) || regex_2.test(a[title_cell])) {
+        let regex_1 = /[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?/i; // Date au format YYYY-mm-dd hh:mm:ss.mmm
+        let regex_2 = /[0-9]{2}-[0-9]{2}-[0-9]{4}\s[0-9]{2}:[0-9]{2}:[0-9]{2}?/i; // Date au format dd-mm-YYYY HH:mm:ss
+        var a_t = a[title_cell];
+        var b_t = b[title_cell];
+        if (regex_1.test(a_t) || regex_2.test(a_t)) {
             //console.log("date");
-            var a_t = a[title_cell];
-            var b_t = b[title_cell];
             if (regex_1.test(a_t)) {
                 var d1 = new Date(a_t);
                 var d2 = new Date(b_t);
@@ -42,14 +42,14 @@ function remplir_tableau(title_cell = null, order = null) {
             }
             if (order == "asc") return (d1 < d2) ? 1 : -1;
             else return (d1 < d2) ? -1 : 1;
-        } else if (!Number.isNaN(Number.parseFloat(a[title_cell])) && !Number.isNaN(Number.parseFloat(b[title_cell]))) {
+        } else if (!Number.isNaN(Number.parseFloat(a_t)) && !Number.isNaN(Number.parseFloat(b_t))) {
             //console.log("float/int");
-            if (order == "asc") return (Number.parseFloat(b[title_cell]) < Number.parseFloat(a[title_cell])) ? 1 : -1;
-            else return (Number.parseFloat(b[title_cell]) < Number.parseFloat(a[title_cell])) ? -1 : 1;
+            if (order == "asc") return (Number.parseFloat(a_t) < Number.parseFloat(b_t)) ? 1 : -1;
+            else return (Number.parseFloat(a_t) < Number.parseFloat(b_t)) ? -1 : 1;
         } else {
             //console.log("string");
-            if (order == "asc") return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? 1 : -1;
-            else return (b[title_cell].toLowerCase() < a[title_cell].toLowerCase()) ? -1 : 1;
+            if (order == "asc") return (a_t.toLowerCase() < b_t.toLowerCase()) ? 1 : -1;
+            else return (a_t.toLowerCase() < b_t.toLowerCase()) ? -1 : 1;
         }
     });
 
