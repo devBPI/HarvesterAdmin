@@ -221,6 +221,7 @@ else {
 			$from = " FROM public.notice, configuration.harvest_configuration ";
 			$where = " WHERE configuration.harvest_configuration.id=public.notice.configuration_id ";
 			$end_query = "";
+			$increment_non_vide = 1;
 			$must_be_group_by = false;
 
 			$is_set_from_sub_query = false; // determine si on doit ajouter la sous-requete unnest(date_publishing) a la clause from

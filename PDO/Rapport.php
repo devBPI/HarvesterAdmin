@@ -174,7 +174,7 @@ class Rapport
 		return pg_fetch_all(
 			pg_query(Gateway::getConnexion(),
 				"INSERT INTO configuration.interface_criteria(value_to_compare, interface_data_mapping_id, interface_criteria_operator_id)
-					   VALUES ('". $criteria["value_to_compare"] ."', ". $data_mapping_id .", ". $operator_id .")
+					   VALUES (E'". $criteria["value_to_compare"] ."', ". $data_mapping_id .", ". $operator_id .")
 					   	RETURNING id"
 			)
 		)[0]["id"];

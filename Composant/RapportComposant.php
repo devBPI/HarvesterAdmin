@@ -87,7 +87,7 @@ function getSearchBasesFormates(): array
 	$search_bases = Gateway::getSearchBases();
 	$search_bases_formates = [];
 	foreach($search_bases as $sb) {
-		$search_bases_formates[] = ["id" => $sb["name"], "name" => $sb["name"]];
+		$search_bases_formates[] = ["id" => str_replace("'", "\'", $sb["name"]), "name" => $sb["name"]];
 	}
 	return $search_bases_formates;
 }
@@ -108,7 +108,7 @@ function makeInputCbValeur($criteria, $i): string
 		else if (preg_match("/(grabber_type)/",$criteria["display_value"])) $data = getGrabbersFormates();
 		else if (preg_match("/(search_base)/",$criteria["display_value"],$criteria["display_value"])) $data = getSearchBasesFormates();
 		else $data = getConfigurationsFormatees();
-		$cb = ComboBox::makeComboBox($data, $criteria["value_to_compare"]);
+		$cb = ComboBox::makeComboBox($data, str_replace("'", "\'", $criteria["value_to_compare"]));
 	} else {
 		$display_input = true;
 		if (preg_match("/(date)/", $criteria["display_value"]) || preg_match("/(time)/", $criteria["display_value"]))
