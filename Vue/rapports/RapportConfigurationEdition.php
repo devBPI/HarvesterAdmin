@@ -55,7 +55,7 @@ else {
 								   title="Les caractères interdits sont . , ; ' &quot; \ /"
 								   pattern="[^.,;'&quot;/\\]*" <?= isset($configuration)?"value='".$configuration["name"]."'":"" ?> required>
 							<?php if (isset($_GET["id"]) && $_GET["id"] != "" && isset($configuration) && $configuration!=null) { ?>
-								<a onclick="openForm()" class="buttonlink" style="width:190px;margin-left:5px">Dupliquer le rapport</a>
+								<a tabindex="0" onclick="openForm()" class="buttonlink" style="width:190px;margin-left:5px">Dupliquer le rapport</a>
 						</td>
 					</tr>
 					<tr>
@@ -97,8 +97,8 @@ else {
 									<div class="div_operation_int_int">
 										<div id="div_operation_sub_int_000" class="prof_0"></div>
 										<div id="div_add_group_critere_000">
-											<a id="a_add_group_000" class="div_add_group" onclick="add_group(this.parentElement, 1)">+ Ajouter un groupe</a>
-											<a id="a_add_critere_000" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'critere')">+ Ajouter un critère</a>
+											<a tabindex="0" id="a_add_group_000" class="div_add_group" onclick="add_group(this.parentElement, 1)">+ Ajouter un groupe</a>
+											<a tabindex="0" id="a_add_critere_000" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'critere')" tabindex=0>+ Ajouter un critère</a>
 										</div>
 									</div>
 								</div>
@@ -152,8 +152,8 @@ else {
 		<div class="div_operation_int_int">
 			<div id="div_operation_sub_int_" class="prof_"></div>
 			<div id="div_add_group_critere_">
-				<a id="a_add_group_" class="div_add_group">+ Ajouter un groupe</a>
-				<a id="a_add_critere_" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'critere')">+ Ajouter un critère</a>
+				<a tabindex="0" id="a_add_group_" class="div_add_group">+ Ajouter un groupe</a>
+				<a tabindex="0" id="a_add_critere_" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'critere')">+ Ajouter un critère</a>
 				<button class="but delete" type="button" title="Supprimer un groupe et son contenu">
 					<img alt="Supprimer un groupe" src="../ressources/cross.png" style="width:30px;height:30px">
 				</button>
@@ -227,13 +227,13 @@ else {
 					<div style="width:99%;margin-right:1%">
 						<form action="../../Controlleur/Rapports.php?id=<?= $type ?>" method="post">
 							<input type="hidden" id="input_duplicate_id" name="report_id" value="<?= $_GET["id"] ?? "" ?>">
-							<button type="submit" name="submit_type" class="buttonlink" value="duplicate">Confirmer</button>
+							<button tabindex="0" type="submit" name="submit_type" class="buttonlink" value="duplicate">Confirmer</button>
 						</form>
 					</div>
 				</div>
 				<div class="col-50">
 					<div style="width:99%;margin-left:1%">
-						<button type="submit" class="buttonlink buttongrey" onclick="closeForm()">Annuler</button>
+						<button tabindex="0" type="submit" class="buttonlink buttongrey" onclick="closeForm()">Annuler</button>
 					</div>
 				</div>
 			</div>

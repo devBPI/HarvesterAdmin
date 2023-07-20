@@ -115,8 +115,8 @@ HTML;
 				echo <<<HTML
 			</div>
 			<div id="div_add_group_critere_{$i}">
-				<a id="a_add_group_{$i}" class="div_add_group {$a_disabled_group}" {$title_group} {$event_group}>+ Ajouter un groupe</a>
-				<a id="a_add_critere_{$i}" class="div_add_critere {$a_disabled_criteria}" {$title_criteria} {$event_criteria}>+ Ajouter un critère</a>
+				<a tabindex="0" id="a_add_group_{$i}" class="div_add_group {$a_disabled_group}" {$title_group} {$event_group}>+ Ajouter un groupe</a>
+				<a tabindex="0" id="a_add_critere_{$i}" class="div_add_critere {$a_disabled_criteria}" {$title_criteria} {$event_criteria}>+ Ajouter un critère</a>
 			</div>
 		</div>
 	</div>
@@ -126,8 +126,8 @@ HTML;
 				echo <<<HTML
 			</div>
 			<div id="div_add_group_critere_{$i}">
-				<a id="a_add_group_{$i}" class="div_add_group {$a_disabled_group}" {$title_group} {$event_group}>+ Ajouter un groupe</a>
-				<a id="a_add_critere_{$i}" class="div_add_critere {$a_disabled_criteria}" {$title_criteria} {$event_criteria}>+ Ajouter un critère</a>
+				<a tabindex="0" id="a_add_group_{$i}" class="div_add_group {$a_disabled_group}" {$title_group} {$event_group}>+ Ajouter un groupe</a>
+				<a tabindex="0" id="a_add_critere_{$i}" class="div_add_critere {$a_disabled_criteria}" {$title_criteria} {$event_criteria}>+ Ajouter un critère</a>
 				<button class="but delete" type="button" title="Supprimer un groupe et son contenu" onclick="delete_group(this.parentElement.parentElement.parentElement.parentElement, {$profondeur})">
 					<img alt="Supprimer un groupe" src="../ressources/cross.png" style="width:30px;height:30px">
 				</button>

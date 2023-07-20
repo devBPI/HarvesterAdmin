@@ -114,7 +114,7 @@ function searchInTree($criterias_tree, $search_key, $search_value, $delete=true,
 }
 
 
-/* Cette fonction est opérationnelle pour les requêtes simples ("autres cas")
+/** Cette fonction est opérationnelle pour les requêtes simples ("autres cas")
 	+ dernière moisson uniquement (n'utilise pas cette fonction mais searchInTree)
 	+ résultats distincts (n'utilise pas cette fonction mais searchInTree)
 	+ connecteurs (utilise searchInTree + cette fonction)

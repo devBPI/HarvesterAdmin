@@ -1,5 +1,12 @@
 var seuil = 5;
 
+// jQuery pour l'accessibilité des liens d'ajout (navigation au clavier)
+$("a").on("keypress", function(elt) {
+    if (elt.which == 32 || elt.which == 13) {
+        $(this).trigger("click");
+    }
+} );
+
 // jQuery pour déplacer les divs
 $("#donnees_affichees").sortable({ tolerance: "pointer" });
 
