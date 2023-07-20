@@ -35,11 +35,11 @@ function buildRegularWhere($criteria, $where, $operator, $increment_non_vide) {
 	// Autres cas de la construction du where (commun à Processus et Métadonnées)
 	if ($increment_non_vide == 0) {
 		return $where . $criteria["data_table"] . "." . $criteria["table_field"]
-			. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+			. $criteria["query_code"] . "E'" . str_replace("'", "\'", $criteria["value_to_compare"]) . "'";
 	}
 	else {
 		return $where . " " . $operator . " " . $criteria["data_table"] . "." . $criteria["table_field"]
-			. $criteria["query_code"] . "'" . $criteria["value_to_compare"] . "'";
+			. $criteria["query_code"] . "E'" . str_replace("'", "\'", $criteria["value_to_compare"]) . "'";
 	}
 }
 
