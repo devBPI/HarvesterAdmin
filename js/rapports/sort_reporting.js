@@ -19,11 +19,27 @@ function remplir_tableau(title_cell = null, order = null) {
     }
 
     list.sort(function (a,b) {
-        let regex = /[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?/i;
-        if (regex.test(a[title_cell])) {
+        let regex_1 = /[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?/i;
+        let regex_2 = /[0-9]{2}-[0-9]{2}-[0-9]{4}\s[0-9]{2}:[0-9]{2}:[0-9]{2}?/i;
+        if (regex_1.test(a[title_cell]) || regex_2.test(a[title_cell])) {
             //console.log("date");
-            let d1 = new Date(a[title_cell]);
-            let d2 = new Date(b[title_cell]);
+            var a_t = a[title_cell];
+            var b_t = b[title_cell];
+            if (regex_1.test(a_t)) {
+                var d1 = new Date(a_t);
+                var d2 = new Date(b_t);
+            } else {
+                let a_t_date = a_t.split('-');
+                let b_t_date = b_t.split('-');
+                let a_t_time = a_t_date[2].split(':');
+                let b_t_time = b_t_date[2].split(':');
+                a_t_date[2] = a_t_time[0].split(' ')[0];
+                b_t_date[2] = b_t_time[0].split(' ')[0];
+                a_t_time[0] = a_t_time[0].split(' ')[1];
+                b_t_time[0] = b_t_time[0].split(' ')[1];
+                var d1 = new Date(a_t_date[2], parseInt(a_t_date[1])-1, a_t_date[0], a_t_time[0], b_t_time[1], a_t_time[2]);
+                var d2 = new Date(b_t_date[2], parseInt(b_t_date[1])-1, b_t_date[0], b_t_time[0], b_t_time[1], a_t_time[2]);
+            }
             if (order == "asc") return (d1 < d2) ? 1 : -1;
             else return (d1 < d2) ? -1 : 1;
         } else if (!Number.isNaN(Number.parseFloat(a[title_cell])) && !Number.isNaN(Number.parseFloat(b[title_cell]))) {
