@@ -82,6 +82,9 @@ function recursiveCriteriasFormatting($criterias_tmp) {
  * 								booléen à vrai si le parent doit être supprimé (ne sert qu'à la récursion)].
  */
 function searchInTree($criterias_tree, $search_key, $search_value, $delete=true, $delete_parent=false) {
+	if ($criterias_tree == null) {
+		return array(false, null, false);
+	}
 	$result = false; // Résultat (booléen)
 	$delete_self = false; // Doit-on supprimer le sous-arbre courant (utile dans car où ... AND (dernière moisson / resultat distinct))
 	$c_tree = []; // Arbre
@@ -121,6 +124,9 @@ function searchInTree($criterias_tree, $search_key, $search_value, $delete=true,
 	+ base de recherche (utilise searchInTree + cette fonction)
 	+ fonctions (abs notamment, unnest) */
 function buildQuery($criterias_tree, $increment_non_vide=1, $operator=null, $not_the_last=true) {
+	if ($criterias_tree == null) {
+		return "";
+	}
 	$where = "";
 	if (isset($criterias_tree["operator"]) && $criterias_tree["operator"] != null ) { // Groupe
 		$criterias_tree_operator = $criterias_tree["operator"];
@@ -254,7 +260,8 @@ else {
 				$where = $where . " AND rq.id=public.notice.id";
 			}
 			// Cas de base
-			$where = $where . " AND " . buildQuery($configuration["criterias_tree"]);
+			if ($configuration["criterias_tree"] != null)
+				$where = $where . " AND " . buildQuery($configuration["criterias_tree"]);
 
 			// ------------- SELECT
 			$ind = 0;
@@ -360,7 +367,8 @@ else {
 				$where = $where." AND harvest_configuration.grab_configuration_id=harvest_grab_configuration.id";
 			}
 			// Cas de base
-			$where = $where . " AND " . buildQuery($configuration["criterias_tree"], 1);
+			if ($configuration["criterias_tree"] != null)
+				$where = $where . " AND " . buildQuery($configuration["criterias_tree"], 1);
 
 			// ------------- SELECT, (et FROM, WHERE associés)
 			foreach ($configuration["data_to_display"] as $key => $dtd) {
