@@ -41,7 +41,7 @@ else {
 		<?php } ?>
 	</div>
 	<?php if ((isset($configuration) && $configuration!=null) || !isset($_GET["id"])) { ?>
-		<form method="post" id="formRapport">
+		<form method="post" id="formRapport" onsubmit="return onSubmit()">
 			<!-- Section titre du rapport -->
 			<div class="border_div param_content_div" style="padding:5px;">
 				<table style="width: 100%">
@@ -91,6 +91,8 @@ else {
 										<option value="EXCEPT">EXCEPT</option>
 									</select>
 									<input type="hidden" id="nb_children_operator_group_000" name="nb_children_operator_group_000" value="0">
+									<input type="hidden" id="nb_children_operator_criteria_000" name="nb_children_operator_criteria_000" value="0">
+									<input type="hidden" id="nb_children_operator_000" name="nb_children_operator_000" value="0" pattern="^[1-9][0-9]*">
 								</div>
 								<div class="div_operation_int">
 									<div class="div_operation_dotted"></div>
@@ -146,6 +148,8 @@ else {
 			<option value="EXCEPT">EXCEPT</option>
 		</select>
 		<input type="hidden" id="nb_children_operator_group_" name="nb_children_operator_group_" value="0">
+		<input type="hidden" id="nb_children_operator_criteria_" name="nb_children_operator_criteria_" value="0">
+		<input type="hidden" id="nb_children_operator_" name="nb_children_operator_" value="0"  pattern="^[1-9][0-9]*">
 	</div>
 	<div class="div_operation_int">
 		<div class="div_operation_dotted"></div>

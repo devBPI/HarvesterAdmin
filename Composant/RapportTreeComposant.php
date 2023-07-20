@@ -54,11 +54,15 @@ class RapportTreeComposant
 		} else {
 
 			$nb_children_group = 0;
+			$nb_children_criteria = 0;
 			foreach ($donnee as $d) {
 				if (isset($d["operator"])) {
 					$nb_children_group++;
+				} else {
+					$nb_children_criteria++;
 				}
 			}
+			$nb_children_tot = $nb_children_group+$nb_children_criteria;
 
 			$a_disabled_group = "";
 			$a_disabled_criteria = "";
@@ -102,6 +106,8 @@ class RapportTreeComposant
 			<option value="EXCEPT" {$except_selected}>EXCEPT</option>
 		</select>
 		<input type="hidden" id="nb_children_operator_group_{$i}" name="nb_children_operator_group_{$i}" value="{$nb_children_group}">
+		<input type="hidden" id="nb_children_operator_criteria_{$i}" name="nb_children_operator_criteria_{$i}" value="{$nb_children_criteria}">
+		<input type="hidden" id="nb_children_operator_{$i}" name="nb_children_operator_{$i}" value="{$nb_children_tot}" pattern="^[1-9][0-9]*">
 	</div>
 	<div class="div_operation_int">
 		<div class="div_operation_dotted"></div>

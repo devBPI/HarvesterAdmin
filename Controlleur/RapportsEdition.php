@@ -143,6 +143,13 @@ if (!isset($_GET["viewonly"])) {
 		unset($_POST["display_champ_aff_"]);
 		unset($_POST["name_champ_aff_"]);
 		unset($_POST["submit_value"]);
+		$keys = array_keys($_POST);
+		for ($i = 0; $i < count($keys); $i++) {
+			if (preg_match("/(nb_children_operator_)/", $keys[$i]) && !preg_match("/(nb_children_operator_group)/", $keys[$i])) {
+				unset ($_POST[$keys[$i]]);
+			}
+		}
+
 
 		// Récupération des ids des données à visualiser
 		$dtd_id_list = [];
@@ -151,8 +158,8 @@ if (!isset($_GET["viewonly"])) {
 
 		// Définition des variables
 		$donnees["infos"]["id"] = $id;
-		$donnees["infos"]["name"] = $_POST["name_rapport"];
 		$donnees["infos"]["type"] = $data_type;
+		$donnees["infos"]["name"] = $_POST["name_rapport"];
 		unset($_POST["name_rapport"]);
 		$donnees["data_id_list"] = [];
 		$donnees["data_to_update"] = [];

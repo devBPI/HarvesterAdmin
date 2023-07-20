@@ -1,5 +1,23 @@
 var seuil = 5;
 
+function onSubmit() {
+    let elts = document.querySelectorAll("input[type=hidden]");
+    for (let elt of elts ) {
+        if ((elt.name).includes("nb_children_operator_") && !(elt.name).includes("nb_children_operator_group_")
+            && !(elt.name).includes("nb_children_operator_criteria_") && (elt.name) != "nb_children_operator_" && (elt.value) == "0") {
+            alert("Erreur : Il existe un groupe de critères vide.");
+            return false;
+        }
+        if ((elt.name).includes("nb_children_operator_") && (elt.name).includes("nb_children_operator_group_")
+            && (elt.value) == "1") {
+            alert("Erreur : Il existe un groupe ne contenant qu'un seul groupe de critères.");
+            return false;
+        }
+    }
+    return true;
+}
+
+
 // jQuery pour l'accessibilité des liens d'ajout (navigation au clavier)
 $("a").on("keypress", function(elt) {
     if (elt.which == 32 || elt.which == 13) {
@@ -118,12 +136,19 @@ function display_related_operator(element) {
 
 
 function add_group(parent, profondeur=0) {
-    add_group_(parent, profondeur);
+    let nb_children_parent = $("#nb_children_operator_"+($(parent).attr("id")).slice(-3)).val();
+    // Ajout de deux groupes enfants si le parent est vide
+    if (nb_children_parent == 0) {
+        add_group_(parent, profondeur);
+        add_group_(parent, profondeur);
+    } else {
+        add_group_(parent, profondeur);
+    }
 }
 
 // Code à part pour refactoring futur (mettre en commun avec code de filter_rule.js)
 function add_group_(parent, profondeur=0) {
-    console.log("Dans add_group, profondeur vaut " + profondeur);
+    /*console.log("Dans add_group, profondeur vaut " + profondeur);*/
     var inserted_child = $("#operation_").clone();
     let nb = nb_groupes;
     if (nb < 10) { nb = "00" + nb; }
@@ -143,6 +168,7 @@ function add_group_(parent, profondeur=0) {
     deactivation_add_critere(nb_parent);
     // Incrémentation du nombre d'enfants du parent
     $("#nb_children_operator_group_"+nb_parent).val(parseInt($("#nb_children_operator_group_"+nb_parent).val()) + 1);
+    $("#nb_children_operator_" + nb_parent).val(parseInt($("#nb_children_operator_"+nb_parent).val()) + 1);
     // Incrémentation de l'indice et du compteur
     nb_groupes++; cpt_groupes++;
 }
@@ -156,7 +182,7 @@ function add_critere_or_donnee(parent, type) {
     }
     // Calcul du nouvel indice pour l'enfant a inserer
     let nb = 0;
-    if (type == 'critere') { nb = nb_criteres; }
+    if (type == "critere") { var nb_grandparent = ($(parent).parent().parent()).attr("id").slice(-3); nb = nb_criteres; }
     else { nb = nb_donnees_affs; }
     if (nb < 10) { nb = "00" + nb; }
     else if (nb < 100) { nb = "0" + nb; }
@@ -167,15 +193,16 @@ function add_critere_or_donnee(parent, type) {
     }
     if (type == "critere") {
         // Ajout de l'enfant dans le grandparent
-        var nb_parent = ($(parent).parent().parent()).attr("id").slice(-3);
-        $("#div_operation_sub_int_" + nb_parent).append(inserted_child);
+        $("#nb_children_operator_criteria_" + nb_grandparent).val(parseInt($("#nb_children_operator_criteria_"+nb_grandparent).val()) + 1);
+        $("#nb_children_operator_" + nb_grandparent).val(parseInt($("#nb_children_operator_"+nb_grandparent).val()) + 1);
+        $("#div_operation_sub_int_" + nb_grandparent).append(inserted_child);
     } else {
         $(parent).append(inserted_child);
     }
     $(inserted_child).show();
     // Désactivation de l'autre bouton / lien
     if (type == "critere") {
-        deactivation_add_group(nb_parent);
+        deactivation_add_group(nb_grandparent);
     }
     // Incrementation de l'indice et du compteur
     if (type == "critere") { nb_criteres++; cpt_criteres++; }
@@ -256,15 +283,18 @@ function maj_id_and_name(child_of_inserted_child, nb, profondeur=0, is_group=fal
 // Supprime une ligne de critères / données à afficher et décrémente les compteurs correspondants
 function delete_critere_or_donnee(parent, type) {
     // Décrémentation des compteurs
-    if (type == 'critere') cpt_criteres--;
+    if (type == "critere") { var nb_grandparent = ($(parent).parent().attr("id")).slice(-3); cpt_criteres--; }
     else cpt_donnees_affs--;
     // Réactivation de l'élément d'ajout des groupes si besoin
     if (is_group_empty($(parent).parent(), parent)) {
-        let nb_grandparent = ($(parent).parent().attr("id")).slice(-3);
         let profondeur = parseInt($(parent).parent().attr("class").slice(-1));
         reactivation_add_group(nb_grandparent, profondeur);
     }
     // Suppression de l'élément
+    if (type == "critere") {
+        $("#nb_children_operator_criteria_" + nb_grandparent).val(parseInt($("#nb_children_operator_criteria_"+nb_grandparent).val()) - 1);
+        $("#nb_children_operator_" + nb_grandparent).val(parseInt($("#nb_children_operator_"+nb_grandparent).val()) - 1);
+    }
     parent.remove();
     disable_input();
 }
@@ -280,6 +310,7 @@ function delete_group(parent, profondeur_grandparent) {
     }
     // Suppression de l'élément
     $("#nb_children_operator_group_"+nb_grandparent).val(parseInt($("#nb_children_operator_group_"+nb_grandparent).val()) - 1);
+    $("#nb_children_operator_" + nb_grandparent).val(parseInt($("#nb_children_operator_"+nb_grandparent).val()) - 1);
     parent.remove();
     disable_input();
 }
