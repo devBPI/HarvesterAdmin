@@ -181,7 +181,7 @@ function makeDataToDisplay($data, $i, $dtsfd, $report_type) {
 	return <<<HTML
 <div class="donnee_affichee" id="donnee_affichee_{$i}">
 		<input type="hidden" id="input_id_champ_aff_{$i}" name="id_champ_aff_{$i}" value="{$data_id}" />
-		<select class="champ_donnee" id="cb_champ_aff_{$i}" name="display_champ_aff_{$i}" onchange="change_value_input(this)">
+		<select class="champ_donnee" id="cb_champ_aff_{$i}" name="display_champ_aff_{$i}" onchange="change_value_input(this)" required>
 			<option value="">Sélectionnez un champ</option>
 			<optgroup label="Informations sur la {$report_type}">
 			{$cb_general_infos}
@@ -191,7 +191,7 @@ function makeDataToDisplay($data, $i, $dtsfd, $report_type) {
 			</optgroup>
 		</select>
 		<input type="text" class="champ_donnee" id="input_name_champ_aff_{$i}" name="name_champ_aff_{$i}" title="Les caractères interdits sont . , ; \ /"
-			 		value="{$data_display_name}" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée"/>
+			 		value="{$data_display_name}" pattern="[^.,;/\\]*" placeholder="Dénomination de la donnée" required/>
 		<div class="reporting_arrow_div" title="Glisser-déposer pour changer l'ordre des données (colonnes du rapport)">
 			<img alt="Glisser-déposer" src="../ressources/move.png">
 		</div>

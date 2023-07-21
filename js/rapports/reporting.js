@@ -154,11 +154,12 @@ function add_group_(parent, profondeur=0) {
     if (nb < 10) { nb = "00" + nb; }
     else if (nb < 100) { nb = "0" + nb; }
     $(inserted_child).attr("id", $(inserted_child).attr("id") + nb);
-    if ((profondeur+1) % 2 == 0)
-        $(inserted_child).addClass("operation_even");
     // Ajout de l'indice pour chaque element que contient l'enfant
     for (let i=0; i < inserted_child.children().length; i++) {
         maj_id_and_name_group(inserted_child.children()[i], nb, profondeur);
+    }
+    if ((profondeur+1) % 2 == 0) {
+        $(inserted_child).find(".div_operation_int_int").addClass("operation_even");
     }
     // Ajout de l'enfant dans le grandparent
     let nb_parent = ($(parent).attr("id")).slice(-3);
