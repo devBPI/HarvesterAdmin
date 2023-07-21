@@ -103,7 +103,7 @@ class RapportTreeComposant
 		<select aria-label="Opérateur du groupe" name="operator_group_{$i}" class="group_operator {$racine}">
 			<option value="OR" {$or_selected}>OR</option>
 			<option value="AND" {$and_selected}>AND</option>
-			<option value="EXCEPT" {$except_selected}>EXCEPT</option>
+			<option value="EXCEPT" {$except_selected} disabled>EXCEPT</option>
 		</select>
 		<input type="hidden" id="nb_children_operator_group_{$i}" name="nb_children_operator_group_{$i}" value="{$nb_children_group}">
 		<input type="hidden" id="nb_children_operator_criteria_{$i}" name="nb_children_operator_criteria_{$i}" value="{$nb_children_criteria}">

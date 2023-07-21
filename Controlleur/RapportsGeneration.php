@@ -402,6 +402,7 @@ else {
 			$requete_generee = $select.$from.$where.$end_query;
 			$report["result"] = Gateway::selectNoError($requete_generee);
 			//$report["result"] = -1;
+			$ind_annexes = 0;
 
 			if ($report["result"] && $report["result"] != -1) {
 				if ($join_notice) {
@@ -409,12 +410,18 @@ else {
 						$nb = Gateway::getNumberNotices($line["task_id"]);
 						$report["result"][$key][$display_name_notice] = $nb > 0 ? $nb : "";
 					}
+					$requetes_annexes[$ind_annexes++]["query"] = "SELECT COUNT(n.id)
+						FROM configuration.harvest_task ht, configuration.harvest_configuration hc, public.notice n
+    					WHERE ht.configuration_id=hc.id AND hc.id=n.configuration_id AND (n.harvesting_date BETWEEN ht.start_time AND ht.end_time) AND ht.id={task_id}";
 				}
 				if ($join_external_link) {
 					foreach ($report["result"] as $key => $line) {
 						$nb = Gateway::getNumberExternalLink($line["task_id"]);
 						$report["result"][$key][$display_name_external_link] = $nb > 0 ? $nb : "";
 					}
+					$requetes_annexes[$ind_annexes++]["query"] = "SELECT COUNT(el.id)
+						FROM configuration.harvest_task ht, configuration.harvest_configuration hc, public.external_link el
+    					WHERE ht.configuration_id=hc.id AND hc.id=el.configuration_id AND (el.harvesting_date BETWEEN ht.start_time AND ht.end_time) AND ht.id={task_id}";
 				}
 				foreach ($report["result"] as $key => $line) {
 					unset($report["result"][$key]["task_id"]);

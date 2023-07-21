@@ -73,7 +73,7 @@ else {
 
 			<!-- Section critères du rapport -->
 			<div class="border_div param_content_div">
-				<fieldset class="param_fieldset">
+				<fieldset class="param_fieldset" style="min-width:875px">
 					<legend>Critères</legend>
 					<div id="criteres_rapport">
 						<?php if ($configuration != null) {
@@ -88,7 +88,7 @@ else {
 									<select aria-label="Opérateur du groupe" name="operator_group_000" class="group_operator racine">
 										<option value="OR">OR</option>
 										<option value="AND">AND</option>
-										<option value="EXCEPT">EXCEPT</option>
+										<option value="EXCEPT" disabled>EXCEPT</option>
 									</select>
 									<input type="hidden" id="nb_children_operator_group_000" name="nb_children_operator_group_000" value="0">
 									<input type="hidden" id="nb_children_operator_criteria_000" name="nb_children_operator_criteria_000" value="0">
@@ -145,7 +145,7 @@ else {
 		<select aria-label="Opérateur du groupe" name="operator_group_" class="group_operator">
 			<option value="OR">OR</option>
 			<option value="AND">AND</option>
-			<option value="EXCEPT">EXCEPT</option>
+			<option value="EXCEPT" disabled>EXCEPT</option>
 		</select>
 		<input type="hidden" id="nb_children_operator_group_" name="nb_children_operator_group_" value="0">
 		<input type="hidden" id="nb_children_operator_criteria_" name="nb_children_operator_criteria_" value="0">

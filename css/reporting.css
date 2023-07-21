@@ -256,3 +256,37 @@ input[type=submit].buttonlinkdanger:hover {
     font-weight: bold;
     border-radius: 0;
 }
+
+
+
+.generated_query {
+    border: 1px solid black;
+    margin-top: 2em;
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.title_query {
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: lightgrey;
+    letter-spacing: .1em;
+    margin-top:0;
+    padding: 5px 0;
+    word-wrap: break-word;
+}
+
+.title_query.title_main_query {
+    background-color: #56acde;
+}
+
+.generated_query p {
+    padding: 0 10px;
+    width: auto;
+    word-wrap: break-word;
+}
+
+.generated_query p .first_keyword {
+    font-weight: bold;
+}
