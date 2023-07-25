@@ -1,7 +1,7 @@
 <?php
 
-require_once("../Composant/ComboBox.php");
-require_once("../PDO/Gateway.php");
+include_once("../Composant/ComboBox.php");
+include_once("../PDO/Gateway.php");
 
 // ------------------------------------------------------------------------------ Pour Ajax
 // Remplir ComboBox avec les noms de configuration

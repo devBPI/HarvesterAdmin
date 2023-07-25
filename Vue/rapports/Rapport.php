@@ -13,7 +13,7 @@
 <body>
 <?php
 include('../Vue/common/Header.php');
-if ($type=="processus") $page = "RapportsProcessus";
+if ($type=="processus") $page = "RapportsMoissons";
 else $page = "RapportsDonnees";
 $nb = 0;
 
@@ -43,7 +43,7 @@ if (isset($requetes_annexes)) {
 <div class="content">
 	<div class="button_top_div">
 		<?php if ($type == "processus") { ?>
-			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les processus</a>
+			<a href="../../Controlleur/Rapports.php?id=moissons" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les moissons</a>
 		<?php } else { ?>
 			<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux rapports sur les métadonnées</a>
 		<?php } ?>

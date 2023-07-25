@@ -1,6 +1,6 @@
 <?php
 
-/* Code commun à RapportsDonneesEdition.php et RapportsProcessusEdition.php */
+/* Code commun à RapportsDonneesEdition.php et RapportsMoissonsEdition.php */
 
 require_once ("../PDO/Gateway.php");
 
@@ -142,7 +142,7 @@ if (!isset($_GET["viewonly"])) {
 		}
 	}
 
-	list($operators, $operators_short, $data_to_show) = extracted($data_type);
+	list($operators, $operators_short, $data_to_show) = getOperatorsDataToShow($data_type);
 	$data_to_show_for_display["general_infos"] = Gateway::getDataToShowByGroup($data_type, true, "general_infos");
 	$data_to_show_for_display["follow_up"] = Gateway::getDataToShowByGroup($data_type, true, "follow_up");
 

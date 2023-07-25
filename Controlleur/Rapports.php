@@ -30,10 +30,10 @@ if (isset($_POST["submit_type"]) && $_POST["submit_type"] == "Supprimer le rappo
 	}
 }
 
-if (isset($_GET["id"]) && $_GET["id"]=="processus") {
+if (isset($_GET["id"]) && $_GET["id"]=="moissons") {
 	$configurations = Gateway::getReports("PROCESS");
 	$type = "processus";
-	$section = "Rapports sur les processus";
+	$section = "Rapports sur les moissons";
 } else {
 	$configurations = Gateway::getReports("METADATA");
 	$type = "donnees";

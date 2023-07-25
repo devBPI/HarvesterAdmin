@@ -63,7 +63,7 @@ function display_related_operator(element) {
             // Afficher combobox des noms de configuration au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             $.ajax({
-                url: "../Composant/RapportComposant.php",
+                url: "../../Composant/RapportComposant.php",
                 type: "post",
                 data: {champs: "id_name"},
                 success: function (response) {
@@ -74,7 +74,7 @@ function display_related_operator(element) {
             // Afficher combobox des statuts possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             $.ajax({
-                url: "../Composant/RapportComposant.php",
+                url: "../../Composant/RapportComposant.php",
                 type: "post",
                 data: {champs: "status"},
                 success: function (response) {
@@ -85,7 +85,7 @@ function display_related_operator(element) {
             // Afficher combobox des types / genres de notices possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             $.ajax({
-                url: "../Composant/RapportComposant.php",
+                url: "../../Composant/RapportComposant.php",
                 type: "post",
                 data: {champs: "resource_type"},
                 success: function (response) {
@@ -96,7 +96,7 @@ function display_related_operator(element) {
             // Afficher combobox des connecteurs possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             $.ajax({
-                url: "../Composant/RapportComposant.php",
+                url: "../../Composant/RapportComposant.php",
                 type: "post",
                 data: {champs: "grabber_type"},
                 success: function (response) {
@@ -107,7 +107,7 @@ function display_related_operator(element) {
             // Afficher combobox des bases de recherches possibles au lieu de input_valeur_cond
             // Récupérer grâce à ajax
             $.ajax({
-                url: "../Composant/RapportComposant.php",
+                url: "../../Composant/RapportComposant.php",
                 type: "post",
                 data: {champs: "search_base"},
                 success: function (response) {

@@ -5,7 +5,7 @@ ini_set('xdebug.var_display_max_children', 256);
 ini_set('xdebug.var_display_max_data', 1024);
 
 
-/* Code commun à RapportsDonneesEdition.php et RapportsProcessusEdition.php */
+/* Code commun à RapportsDonneesEdition.php et RapportsMoissonsEdition.php */
 
 require_once ("../PDO/Gateway.php");
 require_once ("../Composant/RapportComposant.php");

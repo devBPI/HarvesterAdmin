@@ -11,7 +11,7 @@ $section = "Paramétrage des rapports :<br>";
 
 $type = "processus";
 
-$maj_type = "Processus";
+$maj_type = "Moissons";
 
 $data_type = "PROCESS";
 

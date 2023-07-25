@@ -32,7 +32,7 @@ function reportToCsv($filename, $headers, $data) {
 }
 
 function buildRegularWhere($criteria, $where, $operator, $increment_non_vide) {
-	// Autres cas de la construction du where (commun à Processus et Métadonnées)
+	// Autres cas de la construction du where (commun à Moissons et Métadonnées)
 	if ($increment_non_vide == 0) {
 		return $where . $criteria["data_table"] . "." . $criteria["table_field"]
 			. $criteria["query_code"] . "E'" . str_replace("'", "\'", $criteria["value_to_compare"]) . "'";
@@ -339,7 +339,7 @@ else {
 				$query_empty_or_error = true;
 			}
 		}
-		// --------------------------------- PROCESSUS
+		// --------------------------------- MOISSONS
 		if ($type == "processus") {
 
 			$select = "SELECT configuration.harvest_task.id AS task_id";

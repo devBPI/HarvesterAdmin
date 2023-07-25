@@ -12,12 +12,11 @@
 
 <body>
 <?php
-require_once("../Composant/ComboBox.php");
 include_once("../Vue/common/Header.php");
 require_once ("../Composant/RapportComposant.php");
 require_once ("../Composant/RapportTreeComposant.php");
 if (isset($type) && $type == "processus") {
-	$page = "Processus";
+	$page = "Moissons";
 	$what = "moisson";
 }
 else {
@@ -28,7 +27,7 @@ else {
 <div class="content">
 	<div class="button_top_div">
 		<?php if ($type == "processus") { ?>
-			<a href="../../Controlleur/Rapports.php?id=processus" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les processus</a>
+			<a href="../../Controlleur/Rapports.php?id=moissons" class="buttonlink" style="float:none; height:16px">« Retour aux rapports sur les moissons</a>
 		<?php } else { ?>
 			<a href="../../Controlleur/Rapports.php?id=donnees" class="buttonlink" style="float:none">« Retour aux rapports sur les métadonnées</a>
 		<?php } ?>
@@ -88,7 +87,6 @@ else {
 									<select aria-label="Opérateur du groupe" name="operator_group_000" class="group_operator racine">
 										<option value="OR">OR</option>
 										<option value="AND">AND</option>
-										<option value="EXCEPT" disabled>EXCEPT</option>
 									</select>
 									<input type="hidden" id="nb_children_operator_group_000" name="nb_children_operator_group_000" value="0">
 									<input type="hidden" id="nb_children_operator_criteria_000" name="nb_children_operator_criteria_000" value="0">
@@ -145,7 +143,6 @@ else {
 		<select aria-label="Opérateur du groupe" name="operator_group_" class="group_operator">
 			<option value="OR">OR</option>
 			<option value="AND">AND</option>
-			<option value="EXCEPT" disabled>EXCEPT</option>
 		</select>
 		<input type="hidden" id="nb_children_operator_group_" name="nb_children_operator_group_" value="0">
 		<input type="hidden" id="nb_children_operator_criteria_" name="nb_children_operator_criteria_" value="0">
@@ -264,10 +261,9 @@ else {
 
     $(document).ready(function() {
         disable_input();
-        $(".champ option[value='harvest_number_of_inserted_in_notices']").attr("disabled", true); // Pour dev, a enlever a un certain moment
-        $(".champ option[value='harvest_number_of_inserted_in_external_link']").attr("disabled", true); // Pour dev, a enlever a un certain moment
-        $(".champ option[value='notice_date_publishing_count']").attr("disabled", true); // Pour dev, a enlever a un certain moment
-        $(".champ option[value='notice_number_of_rows']").attr("disabled", true); // Pour dev, a enlever a un certain moment
+        $(".champ option[value='harvest_number_of_inserted_in_notices']").remove();
+        $(".champ option[value='harvest_number_of_inserted_in_external_link']").remove();
+        $(".champ option[value='notice_number_of_rows']").remove();
     });
 </script>
 <script src="/js/rapports/reporting.js"></script>

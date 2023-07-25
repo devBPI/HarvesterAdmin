@@ -12,7 +12,7 @@
 <body>
 <?php
 include('../Vue/common/Header.php');
-if ($type=="processus") $page = "RapportsProcessus";
+if ($type=="processus") $page = "RapportsMoissons";
 else $page = "RapportsDonnees";
 ?>
 <div class="content">
@@ -47,7 +47,7 @@ else $page = "RapportsDonnees";
 		<tr>
 			<td colspan="4" style="text-align:left">
 				<a href="../Controlleur/<?= $page ?>Edition.php">
-					<img src="../../ressources/add.png" alt="Ajouter une configuration" style="width:30px;height:30px">
+					<img src="../../ressources/add.png" alt="Ajouter une configuration" title="Ajouter une configuration" style="width:30px;height:30px">
 				</a>
 			</td>
 		</tr>

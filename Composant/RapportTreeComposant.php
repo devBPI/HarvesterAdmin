@@ -92,18 +92,15 @@ class RapportTreeComposant
 
 			$or_selected = "";
 			$and_selected = "";
-			$except_selected = "";
 
 			if ($op == "OR") $or_selected = "selected";
 			else if ($op == "AND") $and_selected = "selected";
-			else if ($op == "EXCEPT") $except_selected = "selected";
 			echo <<<HTML
 <div id="operation_{$i}" class="div_operation {$operation_even} {$racine}">
 	<div class="div_operation_ext">
 		<select aria-label="Opérateur du groupe" name="operator_group_{$i}" class="group_operator {$racine}">
 			<option value="OR" {$or_selected}>OR</option>
 			<option value="AND" {$and_selected}>AND</option>
-			<option value="EXCEPT" {$except_selected} disabled>EXCEPT</option>
 		</select>
 		<input type="hidden" id="nb_children_operator_group_{$i}" name="nb_children_operator_group_{$i}" value="{$nb_children_group}">
 		<input type="hidden" id="nb_children_operator_criteria_{$i}" name="nb_children_operator_criteria_{$i}" value="{$nb_children_criteria}">

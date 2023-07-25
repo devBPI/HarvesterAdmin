@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 	<meta charset="utf-8" />
@@ -38,7 +39,7 @@
 
                 dl.click();
 
-               window.close();
+            	window.close();
 			}
 		});
     }
