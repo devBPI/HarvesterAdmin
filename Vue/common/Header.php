@@ -58,7 +58,7 @@ if (! $ini) {
 							<a href="#">Rapports</a>
 							<input type="checkbox" id="drop-5"/>
 							<ul>
-								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/Rapports.php?id=processus';" href="#">Processus</a></li>
+								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/Rapports.php?id=moissons';" href="#">Moissons</a></li>
 								<li class="envBackgroundColor"><a onclick="window.location='../Controlleur/Rapports.php?id=donnees';" href="#">Données collectées</a></li>
 							</ul>
 						</li>
