@@ -1,23 +1,3 @@
-
-
-function onSubmit() {
-    let elts = document.querySelectorAll("input[type=hidden]");
-    for (let elt of elts ) {
-        if ((elt.name).includes("nb_children_operator_") && !(elt.name).includes("nb_children_operator_group_")
-            && !(elt.name).includes("nb_children_operator_criteria_") && (elt.name) != "nb_children_operator_" && (elt.value) == "0") {
-            alert("Erreur : Il existe un groupe vide.");
-            return false;
-        }
-        if ((elt.name).includes("nb_children_operator_") && (elt.name).includes("nb_children_operator_group_")
-            && (elt.value) == "1") {
-            alert("Erreur : Il existe un groupe ne contenant qu'un seul groupe.");
-            return false;
-        }
-    }
-    return true;
-}
-
-
 // jQuery pour l'accessibilité des liens d'ajout (navigation au clavier)
 $("a").on("keypress", function(elt) {
     if (elt.which == 32 || elt.which == 13) {
