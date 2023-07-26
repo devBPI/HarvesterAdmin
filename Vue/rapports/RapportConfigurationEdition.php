@@ -249,6 +249,7 @@ else {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="/js/pop_up.js"></script>
 <script src="../js/toTop.js"></script>
 <script type="text/javascript">
     // Script d'initialisation des compteurs et numéros d'identifiants
@@ -259,6 +260,7 @@ else {
     let cpt_criteres = <?= isset($configuration)?$configuration["nb_criterias"]:0 ?>; // Compteur de critères du rapport
     let cpt_donnees_affs = <?= isset($configuration)?count($configuration["data_to_display"]):0 ?>; // Compteur de données à afficher
     let cpt_groupes = <?= isset($configuration)?$configuration["nb_groups"]:0 ?>; // Compteur de groupes
+	let page_type = "reporting";
 
     $(document).ready(function() {
         disable_input();
@@ -268,6 +270,6 @@ else {
     });
 </script>
 <script src="/js/rapports/reporting.js"></script>
-<script src="/js/pop_up.js"></script>
+<script src="/js/tree_reporting_filter.js"></script>
 
 </html>

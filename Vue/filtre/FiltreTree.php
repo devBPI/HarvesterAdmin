@@ -56,7 +56,7 @@ include('../Vue/common/Header.php');
 						<div id="div_operation_sub_int_-01" class="prof_-01"></div>
 						<div id="div_add_group_critere_-01">
 							<a tabindex="0" id="a_add_group_-01" class="div_add_group" onclick="add_group(this.parentElement, -1);">+ Ajouter un groupe</a>
-							<a tabindex="0" id="a_add_critere_-01" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'filter')">+ Ajouter un prédicat</a>
+							<a tabindex="0" id="a_add_critere_-01" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'critere')">+ Ajouter un prédicat</a>
 						</div>
 <?php } ?>
 					</div>
@@ -87,7 +87,7 @@ include('../Vue/common/Header.php');
 			<div id="div_operation_sub_int_" class="prof_"></div>
 			<div id="div_add_group_critere_">
 				<a tabindex="0" id="a_add_group_" class="div_add_group">+ Ajouter un groupe</a>
-				<a tabindex="0" id="a_add_critere_" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'filter')">+ Ajouter un prédicat</a>
+				<a tabindex="0" id="a_add_critere_" class="div_add_critere" onclick="add_critere_or_donnee(this.parentElement.parentElement, 'critere')">+ Ajouter un prédicat</a>
 				<button class="but delete" type="button" title="Supprimer un groupe et son contenu">
 					<img alt="Supprimer un groupe" src="../ressources/cross.png" style="width:30px;height:30px">
 				</button>
@@ -97,7 +97,7 @@ include('../Vue/common/Header.php');
 </div>
 
 <!-- élément reproductible pour l'ajout de prédicats -->
-<div id="predicat_" style="display: none" class="div_predicate">
+<div id="critere_rapport_" style="display: none" class="div_predicate">
 	<table class="table-config">
 		<tr>
 			<th style="width:40%">Prédicat</th>
@@ -118,7 +118,7 @@ include('../Vue/common/Header.php');
 			<td></td>
 			<td></td>
 	</table>
-	<button class="but delete" type="button" title="Supprimer un prédicat" onclick="delete_critere_or_donnee(this.parentElement, 'filter')">
+	<button class="but delete" type="button" title="Supprimer un prédicat" onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
 		<img alt="Supprimer un prédicat" src="../ressources/cross.png" style="width:30px;height:30px">
 	</button>
 </div>
@@ -148,7 +148,8 @@ include('../Vue/common/Header.php');
     let nb_groupes = <?= isset($nb_criterias)&&isset($nb_groups)?$nb_criterias+$nb_groups+1:1 ?>; // Incrément pour l'identifiant / le nom des groupes
     let cpt_criteres = <?= $nb_criterias ?? 0 ?>; // Compteur de critères du rapport
     let cpt_groupes = <?= $nb_groups ?? 0 ?>; // Compteur de groupes
+	let page_type = "filter";
 </script>
-<script src="../../js/tree.js"></script>
+<script src="/js/tree_reporting_filter.js"></script>
 </body>
 </html>

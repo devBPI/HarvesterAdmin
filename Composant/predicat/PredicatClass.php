@@ -58,7 +58,7 @@ HTML;
 			<td>{$value["val"]}</td>
 		</tr>
 	</table>
-	<button class="but delete" type="button" title="Supprimer un critère" onclick="delete_critere_or_donnee(this.parentElement, 'filter')">
+	<button class="but delete" type="button" title="Supprimer un critère" onclick="delete_critere_or_donnee(this.parentElement, 'critere')">
 		<img alt="Supprimer un prédicat" src="../ressources/cross.png" style="width:30px;height:30px">
 	</button>
 </div>

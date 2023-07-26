@@ -62,7 +62,7 @@ class FiltreTreeComposant
 				$title_group = "title=\"Ce groupe est complet\"";
 			} else {
 				$event_group = "onclick=\"add_group(this.parentElement, {$profondeur} + 1)\"";
-				$event_criteria = "onclick=\"add_critere_or_donnee(this.parentElement.parentElement, 'filter')\"";
+				$event_criteria = "onclick=\"add_critere_or_donnee(this.parentElement.parentElement, 'critere')\"";
 			}
 
 			/* Recopie RapportTreeComposant */
