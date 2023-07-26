@@ -8,7 +8,7 @@ class TabConfigsAssociees
 	static function makeTab($configurations) {
 		$str = '
 		<div class="border_div" style="margin-top:5%">
-		<table class="table-backoffice" style="table-layout:initial">
+		<table class="table-backoffice tab_config_associee" style="table-layout:initial">
 			<tr style="border-bottom: 1px solid black">
 				<th colspan="2" style="width:100%; background-color:#56acde">Configurations associées</th>
 			</tr>';
@@ -21,7 +21,7 @@ class TabConfigsAssociees
 			}
 		} else {
 			$str = $str . '<tr style="border-top: 1px solid white">
-				<td colspan="2" style="text-align:left">Aucune</td>
+				<td colspan="2">Aucune</td>
 				</tr>';
 		}
 		$str = $str . '</table>

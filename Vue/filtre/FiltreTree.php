@@ -24,7 +24,7 @@ include('../Vue/common/Header.php');
 
 <body>
 <div class="content">
-	<form action="FiltreTree.php?id=<?= $id ?>" method="post">
+	<form action="FiltreTree.php?id=<?= $id ?>" method="post" onsubmit="return onSubmit()">
 		<div class="triple-column-container">
 			<div class="column">
 				<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>

@@ -5,12 +5,12 @@ function onSubmit() {
     for (let elt of elts ) {
         if ((elt.name).includes("nb_children_operator_") && !(elt.name).includes("nb_children_operator_group_")
             && !(elt.name).includes("nb_children_operator_criteria_") && (elt.name) != "nb_children_operator_" && (elt.value) == "0") {
-            alert("Erreur : Il existe un groupe de critères vide.");
+            alert("Erreur : Il existe un groupe vide.");
             return false;
         }
         if ((elt.name).includes("nb_children_operator_") && (elt.name).includes("nb_children_operator_group_")
             && (elt.value) == "1") {
-            alert("Erreur : Il existe un groupe ne contenant qu'un seul groupe de critères.");
+            alert("Erreur : Il existe un groupe ne contenant qu'un seul groupe.");
             return false;
         }
     }

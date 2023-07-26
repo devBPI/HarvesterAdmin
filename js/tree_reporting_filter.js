@@ -1,5 +1,43 @@
 var seuil = 5;
 
+function onSubmit() {
+    let elts = document.querySelectorAll("input[type=hidden]")
+    if (page_type == "reporting") {
+        for (let elt of elts) {
+            if ((elt.name).includes("nb_children_operator_") && !(elt.name).includes("nb_children_operator_group_")
+                && !(elt.name).includes("nb_children_operator_criteria_") && (elt.name) != "nb_children_operator_" && (elt.value) == "0") {
+                alert("Erreur : Il existe un groupe vide.");
+                return false;
+            }
+            if ((elt.name).includes("nb_children_operator_") && (elt.name).includes("nb_children_operator_group_")
+                && (elt.value) == "1") {
+                alert("Erreur : Il existe un groupe ne contenant qu'un seul groupe.");
+                return false;
+            }
+        }
+        return true;
+    } else {
+        if (elts.length == 3 && document.querySelectorAll("select").length == 2) {
+            alert("Erreur : vous ne pouvez soumettre un formulaire vide.");
+            return false;
+        }
+        for (let elt of elts) {
+            if ((elt.name).includes("nb_children_operator_") && !(elt.name).includes("nb_children_operator_group_")
+                && !(elt.name).includes("nb_children_operator_criteria_") && (elt.name) != "nb_children_operator_" && (elt.value) == "0") {
+                alert("Erreur : Il existe un groupe vide.");
+                return false;
+            }
+            if ((elt.name).includes("nb_children_operator_") && (elt.name).includes("nb_children_operator_group_")
+                && (elt.value) == "1") {
+                alert("Erreur : Il existe un groupe ne contenant qu'un seul groupe / qu'un seul prédicat.");
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
 // ----------------------- UTILITAIRES ------------------------
 // Retourne le numéro de la section
 function getNumber(element) {

@@ -261,6 +261,11 @@ body {
     padding: 5px;
 }
 
+.table-backoffice.tab_config_associee td {
+    padding-left: 5%;
+    text-align: left;
+}
+
 /* Alternance des couleurs de lignes */
 .table-backoffice tr:nth-child(even) {
     background-color: #f2f2f2
