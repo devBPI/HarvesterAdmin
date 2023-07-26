@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="../css/accueilStyle.css">
 	<link rel="stylesheet" href="../css/formStyle.css">
 	<link rel="stylesheet" href="../css/reporting.css">
+	<link rel="stylesheet" href="../css/tree.css">
 	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css">
 	<title>Paramétrage des rapports</title>
 

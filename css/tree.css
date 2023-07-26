@@ -1,0 +1,100 @@
+.div_predicate {
+    display: flex;
+    flex-grow: 1;
+}
+.div_predicate .table-config {
+    width: -webkit-fill-available;
+}
+
+.div_predicate button {
+    width: 45px;
+}
+
+
+.delete {
+    margin: auto;
+}
+
+.div_add_group {
+    color: #b40626;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-right: 2px;
+}
+
+.div_add_critere {
+    color: #2196F3;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-left: 2px;
+}
+
+.a_disabled {
+    color: #cccccc;
+    cursor: not-allowed;
+}
+
+.div_operation {
+    display:flex;
+    flex-grow: 2;
+    vertical-align: middle;
+    align-items: center;
+    padding:5px;
+    margin-bottom:5px;
+}
+
+.div_operation.racine .div_operation_int_int {
+    border: 2px solid black;
+}
+
+.div_operation_ext {
+    height: 45px;
+    margin-right: -50px;
+    z-index: 2;
+}
+
+.div_operation_int {
+    display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.div_operation_dotted {
+    width: 80px;
+    border: 2px dashed grey;
+    border-right: none;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.div_operation_int_int {
+    width: 100%;
+    border:1px solid black;
+    padding: 5px;
+    background-color: rgba(107, 165, 198, 0.295);
+    z-index: 2;
+}
+
+.div_operation_int_int.operation_even {
+    background-color: rgba(255, 255, 255, 0.295);
+}
+
+.div_operation.racine .group_operator.racine {
+    color: #2196F3;
+}
+
+.group_operator {
+    position: relative;
+    border: 1px solid black;
+    z-index: 1;
+    font-weight: bold;
+    border-radius: 0;
+}
+
+.param_content_div {
+    overflow-y: auto;
+    background-color: whitesmoke;
+}

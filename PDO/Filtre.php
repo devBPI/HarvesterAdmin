@@ -246,15 +246,12 @@ class Filtre {
 		{
 			return;
 		}
-		if($data['operator']!='OPERATION')
-		{
-			$id=self::insertTreeNode($id,$data['operator']);
-			self::iT($data['gauche'],$id);
-			self::iT($data['droite'],$id);
-		}
-		else
-		{
-			self::insertTreeLeaf($id,$data['predicat']);
+		if($data["operator"]!='OPERATION') {
+			$id=self::insertTreeNode($id,$data["operator"]);
+			self::iT($data[0],$id); // Gauche
+			self::iT($data[1],$id); // Droite
+		} else {
+			self::insertTreeLeaf($id,$data["code"]);
 		}
 	}
 
@@ -262,34 +259,26 @@ class Filtre {
 	{
 		self::deleteTree($id); // Supprime l'arborescence sans supprimer la racine
 		// Cas où la racine n'existe pas encore
-		if(empty($id))
-		{
-			if($data['operator']!='OPERATION')
-			{
-				$idR=self::insertTreeNode('',$data['operator']);
-				self::iT($data['gauche'],$idR);
-				self::iT($data['droite'],$idR);
+		if (empty($id)) {
+			if ($data["operator"] != "OPERATION") {
+				$idR = self::insertTreeNode('',$data["operator"]);
+				self::iT($data[0],$idR); // Gauche
+				self::iT($data[1],$idR); // Droite
 				$id=$idR;
-			}
-			else
-			{
-				$id=self::insertTreeLeaf("",$data['predicat']);
+			} else {
+				$id=self::insertTreeLeaf("",$data["code"]); // Code = prédicat
 			}
 			return $id;
 		}
 		// Cas où la racine existe
-		else
-		{
-			if($data['operator']!='OPERATION')
-			{
-				self::insertTreeNode('',$data['operator'],$id);
-				self::iT($data['gauche'],$id);
-				self::iT($data['droite'],$id);
-			}
-			else
-			{
+		else {
+			if ($data["operator"] != "OPERATION") {
+				self::insertTreeNode('',$data["operator"],$id);
+				self::iT($data[0],$id); // Gauche
+				self::iT($data[1],$id); // Droite
+			} else {
 				//var_dump($data['predicat'] . $id);
-				self::insertTreeLeaf("",$data['predicat'],$id);
+				self::insertTreeLeaf("",$data["code"],$id); // Code = prédicat
 			}
 			return null;
 		}

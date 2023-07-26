@@ -83,6 +83,11 @@ p {
 nav {
     margin: 0;
     padding: 0;
+    z-index: 10;
+}
+
+.title_menu_div, .entete_tricolor_div {
+    z-index: 15;
 }
 
 #logo {
@@ -181,11 +186,6 @@ li > a:only-child:after {
 
     nav {
         margin: 0;
-        z-index: 10;
-    }
-
-    .title_menu_div, .entete_tricolor_div {
-        z-index: 15;
     }
 
     .toggle + a, .menu {

@@ -8,7 +8,7 @@ $(document).ready(function(){
 	Array.prototype.forEach.call(doc,function(element){
 		elt=element;
 		var request = $.ajax({
-			url: "../Composant/Predicat.php",
+			url: "../Composant/predicat/Predicat.php",
 			type: "post",
 			data:'num='+nb,
 			success: function(response){
@@ -28,7 +28,7 @@ function init_predicate(element){
 		$_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
 	}
 	var request = $.ajax({
-		url: "../Composant/Predicat.php",
+		url: "../Composant/predicat/Predicat.php",
 		type: "post",
 		data:'id='+$_GET['id']+'&num='+nb_op,
 		success: function(response){
