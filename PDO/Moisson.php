@@ -5,7 +5,7 @@ class Moisson
 {
 
     /**
-     * @param $id id de la configuration
+     * @param $id integer id de la configuration
      * @return bool|null
      */
     static function insertMoisson($id)
@@ -14,8 +14,8 @@ class Moisson
     }
 
     /**
-     * @param $id id de la configuration
-     * @param $status status de la moisson
+     * @param $id integer id de la configuration
+     * @param $status string status de la moisson
      * @return bool|void
      */
     static function insertMoissonWithStatus($id, $status)
@@ -24,9 +24,9 @@ class Moisson
     }
 
     /** Supprime une moisson de l'historique des moissons
-     * @param $id id de la moisson
-     * @return bool|void
-     */
+     * @param $id integer id de la moisson
+     * @return bool
+	 */
     static function deleteMoisson($id)
     {
         return pg_query(Gateway::getConnexion(), "DELETE FROM configuration.harvest_task WHERE id=".$id);;
@@ -54,7 +54,7 @@ class Moisson
     }
     /** Retourne le dernier status de la moisson
      * @param $id l'id de la moisson dont on souhaite le status
-     * @return chaîne de caractère correspondant au status | void si échec de la requête
+     * @return string correspondant au status | void si échec de la requête
      */
     static function getMoissonStatus($id)
     {
@@ -111,9 +111,9 @@ class Moisson
     }
 
     /** Renvoie une page de tâches de moissonnages
-     * @param $order ordre d'affichage souhaité
-     * @param $size nombre de résultats par page
-     * @param $page page à récupérer (sert à calculer l'offset correspondant)
+     * @param $order string ordre d'affichage souhaité
+     * @param $size integer nombre de résultats par page
+     * @param $page integer page à récupérer (sert à calculer l'offset correspondant)
      * @return array|false|void selon la réussite de la requête
      */
     static function getTasksPagined($order, $size=20, $page=1)

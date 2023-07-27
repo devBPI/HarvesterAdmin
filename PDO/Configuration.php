@@ -153,7 +153,7 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
 
 	/** Retourne le profil de la configuration
 	 * @param $id id de la configuration
-	 * @return array|false|void
+	 * @return array|void
 	 */
     static function getProfileConfig($id)
     {
