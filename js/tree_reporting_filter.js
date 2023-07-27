@@ -47,12 +47,10 @@ function getNumber(element) {
 function maj_id_and_name_group(child_of_inserted_child, nb, profondeur) {
     if (child_of_inserted_child.className == "div_add_group") {
         if (profondeur < (seuil - 1)) {
-            console.log("dong ding : " + profondeur);
             $(child_of_inserted_child).on("click", function () {
                 return add_group(this.parentElement, profondeur + 1);
             });
         } else {
-            console.log("ding dong : " + profondeur);
             $(child_of_inserted_child).attr("title", "Seuil de profondeur de l'arbre atteint");
             $(child_of_inserted_child).addClass("a_disabled");
         }
