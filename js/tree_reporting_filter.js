@@ -46,11 +46,13 @@ function getNumber(element) {
 
 function maj_id_and_name_group(child_of_inserted_child, nb, profondeur) {
     if (child_of_inserted_child.className == "div_add_group") {
-        if (profondeur < (seuil - 1))
+        if (profondeur < (seuil - 1)) {
+            console.log("dong ding : " + profondeur);
             $(child_of_inserted_child).on("click", function () {
                 return add_group(this.parentElement, profondeur + 1);
             });
-        else {
+        } else {
+            console.log("ding dong : " + profondeur);
             $(child_of_inserted_child).attr("title", "Seuil de profondeur de l'arbre atteint");
             $(child_of_inserted_child).addClass("a_disabled");
         }
@@ -321,7 +323,13 @@ function reactivation_add_group(nb_parent, profondeur) {
     $("#a_add_group_" + nb_parent).removeAttr("title");
     $("#a_add_group_" + nb_parent).removeClass("a_disabled");
     $("#a_add_group_" + nb_parent).off( "click");
-    $("#a_add_group_" + nb_parent).on("click", function () {
-        return add_group(this.parentElement, profondeur + 1);
-    });
+    if (page_type == "filter" && nb_parent == "-01") {
+        $("#a_add_group_" + nb_parent).on("click", function () {
+            return add_group(this.parentElement, 0);
+        });
+    } else {
+        $("#a_add_group_" + nb_parent).on("click", function () {
+            return add_group(this.parentElement, profondeur + 1);
+        });
+    }
 }
