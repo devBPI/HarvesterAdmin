@@ -12,7 +12,7 @@ require '../Composant/ComboBox.php';
 	<link rel="stylesheet" href="../css/style.css" />
 	<link rel="stylesheet" href="../css/composants.css" />
 	<link rel="stylesheet" href="../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../css/tradStyle.css" />
+	<link rel="stylesheet" href="../css/filtres_traductions/tradStyle.css" />
 	<title>Traduction</title>
 </head>
 

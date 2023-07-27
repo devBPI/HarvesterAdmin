@@ -1,6 +1,5 @@
 <?php
 require_once ("../PDO/Gateway.php");
-require_once ("../Composant/FiltreTreeComposant.php");
 
 class PredicatClass {
 	/**

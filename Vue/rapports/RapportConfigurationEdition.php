@@ -15,7 +15,7 @@
 <?php
 include_once("../Vue/common/Header.php");
 require_once ("../Composant/RapportComposant.php");
-require_once ("../Composant/RapportTreeComposant.php");
+require_once ("../Composant/TreeComposant.php");
 if (isset($type) && $type == "processus") {
 	$page = "Moissons";
 	$what = "moisson";
@@ -78,9 +78,9 @@ else {
 					<div id="criteres_rapport">
 						<?php if ($configuration != null) {
 							if ($type == "processus") {
-								RapportTreeComposant::tree_display($configuration["criterias_tree"],0, ["data_type" => "PROCESS", "tree_type" => "report"]);
+								TreeComposant::tree_display($configuration["criterias_tree"],0, ["data_type" => "PROCESS", "tree_type" => "report"]);
 							} else {
-								RapportTreeComposant::tree_display($configuration["criterias_tree"], 0, ["data_type" => "METADATA", "tree_type" => "report"]);
+								TreeComposant::tree_display($configuration["criterias_tree"], 0, ["data_type" => "METADATA", "tree_type" => "report"]);
 							}
 						} else { ?>
 							<div id="operation_000" class="div_operation racine">

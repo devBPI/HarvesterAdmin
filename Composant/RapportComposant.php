@@ -225,7 +225,8 @@ function insert_criterias_processus($criterias, $data_to_show, $operators, $oper
 function insert_criterias_donnees($criterias, $data_to_show, $operators, $operators_short, $j=1): string
 {
 	$str = "";
-	$i = "00" . $j;
+	if ($j < 10) { $i = "00" . $j; }
+	else if ($j < 100) { $i = "0" . $j; }
 	foreach ($criterias as $criteria) {
 		if($criteria["display_value"] == "notice_type") {
 			$str = $str . makeCriteria($criteria, $i, "ressource", $data_to_show, $operators_short);

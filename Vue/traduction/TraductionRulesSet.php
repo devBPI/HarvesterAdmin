@@ -16,7 +16,7 @@ if (!$ini) {
 	<link rel="stylesheet" href="../css/accueilStyle.css"/>
 	<link rel="stylesheet" href="../css/composants.css"/>
 	<link rel="stylesheet" href="../css/selectStyle.css"/>
-	<link rel="stylesheet" href="../css/tradStyle.css"/>
+	<link rel="stylesheet" href="../css/filtres_traductions/tradStyle.css"/>
 
 	<title>Règles de traduction</title>
 </head>

@@ -61,8 +61,8 @@ else $page = "Donnees";
 		<fieldset class="param_fieldset">
 			<legend>Critères</legend>
 			<div id="criteres_rapport">
-				<?php require_once("../Composant/RapportTreeComposant.php");
-					RapportTreeComposant::tree_display($configuration["criterias_tree"], 0, ["data_type" => "METADATA", "tree_type" => "report", "for_what" => "viewonly"]);
+				<?php require_once("../Composant/TreeComposant.php");
+					TreeComposant::tree_display($configuration["criterias_tree"], 0, ["data_type" => "METADATA", "tree_type" => "report", "for_what" => "viewonly"]);
 				?>
 			</div>
 		</fieldset>

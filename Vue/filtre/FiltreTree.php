@@ -9,7 +9,7 @@ if (! $ini) {
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../css/composants.css">
-	<link rel="stylesheet" href="../../css/filtreStyle.css">
+	<link rel="stylesheet" href="../../css/filtres_traductions/filtreStyle.css">
 	<link rel="stylesheet" href="../../css/accueilStyle.css">
 	<link rel="stylesheet" href="../../css/formStyle.css">
 	<link rel="stylesheet" href="../../css/tree.css">
@@ -45,8 +45,8 @@ include('../Vue/common/Header.php');
 					<div class="div_operation_int_int" style="border: none; background-color: unset">
 <?php if(isset($data)) { ?>
 					<div id="div_operation_sub_int_-01" class="prof_-01">
-<?php include("../Composant/FiltreTreeComposant.php");
-	FiltreTreeComposant::tree_display($data, 0, ["tree_type" => "filter"]); ?>
+<?php include("../Composant/TreeComposant.php");
+	TreeComposant::tree_display($data, 0, ["tree_type" => "filter"]); ?>
 					</div>
 						<div id="div_add_group_critere_-01">
 							<a tabindex="0" id="a_add_group_-01" class="div_add_group a_disabled">+ Ajouter un groupe</a>

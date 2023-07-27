@@ -12,8 +12,8 @@ require '../Composant/ComboBox.php';
 	<link rel="stylesheet" href="../css/style.css" />
 	<link rel="stylesheet" href="../css/composants.css" />
 	<link rel="stylesheet" href="../css/accueilStyle.css" />
-	<link rel="stylesheet" href="../css/filtreStyle.css" />
-	<link rel="stylesheet" href="../css/tradStyle.css" />
+	<link rel="stylesheet" href="../css/filtres_traductions/filtreStyle.css" />
+	<link rel="stylesheet" href="../css/filtres_traductions/tradStyle.css" />
 	<title>Filtre</title>
 </head>
 
