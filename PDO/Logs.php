@@ -34,21 +34,4 @@ class Logs
 		return @pg_fetch_all($query)[0]['count'];
 	}
 
-	static function getLog($limit,$start_from)
-	{
-		$query = pg_query (Gateway::getConnexion(), "SELECT * FROM logging.logs ORDER BY id DESC LIMIT ".$limit." OFFSET ".$start_from.";");
-		/*if (!$query)
-		{
-			echo "Erreur durant la requête de getLog .\n";
-			exit;
-		}*/
-		return pg_fetch_all($query);
-	}
-
-	static function countLog()
-	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT COUNT(id) FROM logging.logs");
-		return pg_fetch_all($query);
-	}
-
 }

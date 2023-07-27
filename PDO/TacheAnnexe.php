@@ -49,18 +49,6 @@ class TacheAnnexe
 		return pg_fetch_all($sql)[0]['count'];
 	}
 
-	static function getSideTasks($order)
-	{
-		$query = pg_query (Gateway::getConnexion(), "SELECT status,t.id, name, parameter, creation_date, modification_date, message, start_time,end_time, total_effective_duration_sec FROM configuration.side_task t
-		ORDER BY ".$order);
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getSideTasks .\n";
-			exit;
-		}
-		return pg_fetch_all($query);
-	}
-
 	/** Retourne une page des tâches annexes
 	 * @param $order int ordre souhaité pour l'affichage des données
 	 * @param $size int nombre de résultats par page

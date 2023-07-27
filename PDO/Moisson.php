@@ -224,17 +224,6 @@ class Moisson
 
     }
 
-    static function getHarvestDate($id)
-    {
-        $query = pg_query(Gateway::getConnexion(),"SELECT modification_date FROM configuration.harvest_task where configuration_id=".$id." AND status='INDEXED' ORDER BY modification_date DESC");
-        if (!$query)
-        {
-            echo "Erreur durant la requête de getHarvestDate .\n";
-            exit;
-        }
-        return pg_fetch_all($query)[0]['modification_date'];
-    }
-
     static function reloadMoisson($id) {
         $suppr_ok = self::deleteMoisson($id);
         if (self::deleteMoisson($id)) return self::insertMoisson($id);

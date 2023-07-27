@@ -181,21 +181,6 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
         return $resultat;
     }
 
-    static function getProfile()
-    {
-        $query = pg_query(Gateway::getConnexion(), "SELECT m.configuration_id, b.name as public_name, p.description
-	FROM configuration.configuration_profile_mapping m
-	JOIN configuration.user_profile p on M.profile_code = p.code
-	JOIN configuration.harvest_configuration h on h.id = m.configuration_id
-    LEFT JOIN configuration.search_base b on b.code = h.search_base_code;");
-        if (!$query)
-        {
-            echo "Erreur durant la requête de getProfile .\n";
-            exit;
-        }
-        return pg_fetch_all($query);
-    }
-
     /** Chargement des configurations avec un fichier à uploader
      * @return array|false|void
      */

@@ -57,7 +57,7 @@ if(isset($_POST['formIgnoreValues']) && ($_POST['formIgnoreValues']!='')){
 
 // Si reload (voir HistoriqueMoisson.php)
 if (isset($_POST['suppr']) && $_POST['suppr']) {
-	Moisson::deleteMoisson($_POST['suppr']);
+	Gateway::deleteMoisson($_POST['suppr']);
 	$action='launch_without_file';
 }
 switch ($action) {

@@ -60,7 +60,6 @@ class Gateway
 	static function getHarvestConfigurationDifferential($id){ return Configuration::getHarvestConfigurationDifferential($id); }
 	static function getInfoConfig($id) { return Configuration::getInfoConfig($id); }
 	static function getProfileConfig($id) { return Configuration::getProfileConfig($id); }
-	static function getProfile() { return Configuration::getProfile(); }
 	static function getConfigurationsWithFileToUpload() { return Configuration::getConfigurationsWithFileToUpload(); }
 	static function getConfigurationsWithFilesToUpload() { return Configuration::getConfigurationsWithFilesToUpload(); }
 	static function getConfigurationsWithoutFileToUpload() { return Configuration::getConfigurationsWithoutFileToUpload(); }
@@ -87,21 +86,16 @@ class Gateway
 	static function updateTrad($data,$id) { Traduction::updateTrad($data,$id); }
 	static function getTranslationCategory() { return Traduction::getTranslationCategory(); }
 	static function getDestination($category) { return Traduction::getDestination($category); }
-	static function getAllDestination() { return Traduction::getAllDestination(); }
 	static function updateDestination($data,$cmp,$category) { Traduction::updateDestination($data,$cmp,$category); }
 	static function deleteDestination($data) { Traduction::deleteDestination($data); }
-	static function getTrads($name) { return Traduction::getTrads($name); }
 	static function getRulesSet() { return Traduction::getRulesSet(); }
 	static function updateTranslationRule($data,$name) { Traduction::updateTranslationRule($data,$name); }
-	static function getTranslationSetId($name) { return Traduction::getTranslationSetId($name); }
-	static function getNewRules() { return Traduction::getNewRules(); }
 	static function updateTranslationConfiguration($id,$data) { return Traduction::updateTranslationConfiguration($id,$data); }
 	static function updateRulesSet($data,$cmp) { Traduction::updateRulesSet($data,$cmp); }
 	static function deleteRulesSet($data) { Traduction::deleteRulesSet($data); }
 	static function deleteCategory($data) { Traduction::deleteCategory($data); }
 	static function getSetByConf($id) { return Traduction::getSetByConf($id); }
 	static function getCategories() { return Traduction::getCategories(); }
-	static function getCategoryBySet($set) { return Traduction::getCategoryBySet($set); }
 	static function updateCategory($data,$cmp) { Traduction::updateCategory($data,$cmp); }
 	static function getConfigurationBySet($id) { return Traduction::getConfigurationBySet($id); }
 	static function getCategoryBySetId($id) { return Traduction::getCategoryBySetId($id); }
@@ -124,36 +118,27 @@ class Gateway
 	static function getTasksForCartridge($confid) { return Moisson::getTasksForCartridge($confid); }
 	static function getPlanifsForCartridge($confid) { return Moisson::getPlanifsForCartridge($confid); }
 	static function insertDate($m, $h, $day, $jour, $id) { return Moisson::insertDate($m,$h,$day,$jour,$id); }
-	static function getHarvestDate($id) { return Moisson::getHarvestDate($id); }
 	static function reloadMoisson($id) { return Moisson::reloadMoisson($id); }
 	static function getAllStatus() { return Moisson::getAllStatus(); }
 
 	// ------------------------------- Filtre
 	static function getRuleNameRootEntity($id) { return Filtre::getRuleNameRootEntity($id); }
 	static function getRuleEntity($id) { return Filtre::getRuleEntity($id); }
-	static function updateRuleName($name, $id) { Filtre::updateRuleName($name, $id); }
 	static function getRuleTree($id) { return Filtre::getRuleTree($id); }
-	static function grt($id) { return Filtre::grt($id); }
-	static function getTreeNode($id) { return Filtre::getTreeNode($id); }
 	static function deleteTree($id) { Filtre::deleteTree($id); }
 	static function insertTreeNode($parent_id,$op,$id=NULL) { return Filtre::insertTreeNode($parent_id, $op, $id); }
 	static function insertTreeLeaf($parent_id,$predicat,$id=NULL) { return Filtre::insertTreeLeaf($parent_id, $predicat, $id); }
-	static function insertPredicate($property,$function,$value,$code=NULL) { return Filtre::insertPredicate($property,$function,$value,$code); }
 	static function iT($data,$id) { Filtre::iT($data, $id); }
 	static function insertTree($data,$id) { return Filtre::insertTree($data, $id); }
 	static function getFilterRules() { return Filtre::getFilterRules(); }
 	static function getFilterRuleOrderBy32() { return Filtre::getFilterRuleOrderBy32(); }
 	static function getFilterByConf($id) { return Filtre::getFilterByConf($id); }
-	static function updateFilterRule($data,$id) { Filtre::updateFilterRule($data, $id); }
 	static function updatePredicats($data) { return Filtre::updatePredicats($data); }
 	static function setRoot($id,$idR) { Filtre::setRoot($id, $idR); }
-	static function updateRuleTree($data) { Filtre::updateRuleTree($data); }
 	static function updateFilterRules($data) { return Filtre::updateFilterRules($data); }
 	static function updateFilterConfiguration($id,$donnee) { return Filtre::updateFilterConfiguration($id, $donnee); }
 	static function getFilterCode() { return Filtre::getFilterCode(); }
 	static function getPredicat($id) { return Filtre::getPredicat($id); }
-	static function getPredicatByCode($code) { return Filtre::getPredicatByCode($code); }
-	static function getPredicats() { return Filtre::getPredicats(); }
 	static function getPredicatsOrderByCode() { return Filtre::getPredicatsOrderByCode(); }
 	static function getPredicatsOrderByEntityCode() { return Filtre::getPredicatsOrderByEntityCode(); }
 	static function getPredicatsByEntity($entity) { return Filtre::getPredicatsByEntity($entity); }
@@ -166,7 +151,6 @@ class Gateway
 	static function insertSideTask($name, $parameter) { return TacheAnnexe::insertSideTask($name, $parameter); }
 	static function insertSideTaskDate($m, $h, $day, $jour, $name, $parameter) { return TacheAnnexe::insertSideTaskDate($m, $h, $day, $jour, $name, $parameter); }
 	static function countSideTasks() { return TacheAnnexe::countSideTasks(); }
-	static function getSideTasks($order) { return TacheAnnexe::getSideTasks($order); }
 	static function getSideTasksPagined($order,$size,$page) { return TacheAnnexe::getSideTasksPagined($order,$size,$page); }
 
 
@@ -181,8 +165,6 @@ class Gateway
 
 	static function countLogs($niv) { return Logs::countLogs($niv); }
 	static function getLogs($niv,$start) { return Logs::getLogs($niv, $start); }
-	static function getLog($limit,$start_from) { return Logs::getLog($limit, $start_from); }
-	static function countLog() { return Logs::countLog(); }
 
 	// ------------------------------- Rapports
 
@@ -243,18 +225,6 @@ class Gateway
 			return -1;
 		}
 		return pg_fetch_all($query);
-	}
-
-	static function getGraberName($id)
-	{
-		$query = pg_query (self::getConnexion(), "SELECT G.name FROM configuration.grabber G, configuration.harvest_grab_configuration H
-		WHERE G.id = H.grabber_id and H.id =".$id.";");
-		/*if (!$query)
-		{
-			echo "Erreur durant la requête de getGraberName .\n";
-			exit;
-		}*/
-		return pg_fetch_all($query)[0]['name'];
 	}
 
 	static function insert($str)

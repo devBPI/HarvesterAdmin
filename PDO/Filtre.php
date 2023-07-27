@@ -37,25 +37,6 @@ class Filtre {
 		return pg_fetch_all($query);
 	}
 
-	static function updateFilterRule($data,$id)
-	{
-		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rules_set_mapping WHERE translation_rules_set_id=".$id);
-		pg_query(Gateway::getConnexion(),"DELETE FROM configuration.translation_rule WHERE id not in 
-			(SELECT translation_rule_id FROM configuration.translation_rules_set_mapping)");
-		foreach($data as $row)
-		{
-			$var = str_replace("'","''",$row['rep']);
-			$input = str_replace("'","''",$row['input']);
-			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rule(input_value,destination_id) 
-				VALUES('".$input."',(SELECT id FROM configuration.translation_destination WHERE value = '".$var."'))");
-		}
-		$ids=self::getNewRules();
-		foreach($ids as $rowid)
-		{
-			pg_query(Gateway::getConnexion(),"INSERT INTO configuration.translation_rules_set_mapping VALUES(".$id.",".$rowid['id'].")");
-		}
-	}
-
 	/** Insert/Modifie/Supprime des regles de filtrage
 	 * @param $data array de noeuds
 	 * @return array liste des erreurs
@@ -154,34 +135,6 @@ class Filtre {
 		}
 
 		return $data;
-	}
-
-	static function updateRuleTree($data)
-	{
-		$ids = pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate"));
-		foreach($ids as $id)
-		{
-			if(array_key_exists($id['id'],$data))
-			{
-				$d=$data[$id['id']];
-				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_predicate SET code='".$d['code']."' , property='".$d['property']."' , entity = 
-					(SELECT entity FROM configuration.entity_properties WHERE property='".$d['code']."') , function_code='".$d['function_code']."' 
-					, value_to_compare='".$d['value']."' WHERE id=".$id['id']);
-			}
-			else
-			{
-				pg_query(Gateway::getConnexion(),"UPDATE configuration.filter_rule_tree_node SET filter_predicate_id=NULL WHERE filter_predicate_id =".$id['id']);
-				pg_query(Gateway::getConnexion(),"DELETE FROM configuration.filter_predicate WHERE id =".$id['id']);
-			}
-		}
-		foreach($data as $k => $d)
-		{
-			if($k<0)
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(code,property,entity,function_code,value_to_compare) VALUES('".$d['code']."', '".$d['property']."', 
-					(SELECT entity FROM configuration.entity_properties WHERE property='".$d['code']."'), '".$d['function_code']."', '".$d['value']."')");
-			}
-		}
 	}
 
 	/** Supprime l'arbre dont la racine est $id, sans supprimer la racine
@@ -461,28 +414,6 @@ class Filtre {
 		return $array_error;
 	}
 
-	static function insertPredicat($property,$function,$value,$code=NULL)
-	{
-		$id=@pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate WHERE
-			property='".$property."' AND function_code='".$function."' AND value_to_compare='".$value."'"))[0]['id'];
-		if(empty($id))
-		{
-			if($code==null)
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(entity,property,function_code,value_to_compare) VALUES(
-				(SELECT entity FROM configuration.entity_properties WHERE property='".$property."'),'".$property."','".$function."','".$value."')");
-				$id=pg_fetch_all(pg_query(Gateway::getConnexion(),"SELECT max(id) FROM configuration.filter_predicate"))[0]['max'];
-			}
-			else
-			{
-				pg_query(Gateway::getConnexion(),"INSERT INTO configuration.filter_predicate(code,entity,property,function_code,value_to_compare) VALUES(".$code."
-					(SELECT entity FROM configuration.entity_properties WHERE property='".$property."'),'".$property."','".$function."','".$value."')");
-				return;
-			}
-		}
-		return $id;
-	}
-
 	static function deletePredicat($predicate_id) {
 		$query = pg_query(Gateway::getConnexion(), "SELECT id FROM configuration.filter_rule_tree_node WHERE filter_predicate_id=".intval($predicate_id));
 		// Suppression de tous les sous-arbres ou apparaissent le predicat
@@ -503,17 +434,6 @@ class Filtre {
 	static function getPredicatByCode($code){
 		$query = pg_query(Gateway::getConnexion(),"SELECT id FROM configuration.filter_predicate WHERE code='".$code."'");
 		return pg_fetch_all($query)[0]["id"];
-	}
-
-	static function getPredicats()
-	{
-		$query = pg_query(Gateway::getConnexion(),"SELECT id,code, entity, property, function_code, value_to_compare AS val FROM configuration.filter_predicate");
-		if (!$query)
-		{
-			echo "Erreur durant la requête de getPredicats .\n";
-			exit;
-		}
-		return pg_fetch_all($query);
 	}
 
 	static function getPredicatsOrderByCode()
