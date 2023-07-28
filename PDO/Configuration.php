@@ -98,7 +98,7 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
     }
 
     /** Retourne le différentiel et le nom de la configuration $id
-     * @param $id id de la configuration
+     * @param $id integer id de la configuration
      * @return array|false|void
      */
     static function getHarvestConfigurationDifferential($id)
@@ -152,7 +152,7 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
     }
 
 	/** Retourne le profil de la configuration
-	 * @param $id id de la configuration
+	 * @param $id integer id de la configuration
 	 * @return array|void
 	 */
     static function getProfileConfig($id)
@@ -243,7 +243,7 @@ where configuration.harvest_configuration.".$table."_id=".$id.";");
     }
 
 	/** Compte le nombre de configurations
-	 * @param $str requête SQL
+	 * @param $str string requête SQL
 	 * @return mixed|void le nombre de configurations trouvées
 	 */
 	static function countHarvestConfiguration($str)

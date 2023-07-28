@@ -15,7 +15,7 @@ class TacheAnnexe
 	}
 
 	/** Supprime la tâche annexe
-	 * @param $id id de la tâche annexe a supprimer
+	 * @param $id integer id de la tâche annexe a supprimer
 	 * @return false si la requête a échoué | resource sinon
 	 */
 	static function deleteSideTaskPlanif($id)

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
@@ -9,7 +10,6 @@
 	<link rel="stylesheet" href="../css/tree.css">
 	<link rel="stylesheet" href="../css/environments/<?= strtolower($ini['version']) ?>-style.css">
 	<title>Paramétrage des rapports</title>
-
 </head>
 
 <body>
@@ -38,7 +38,7 @@ else $page = "Donnees";
 	<?php if (isset($configuration) && $configuration!=null) { ?>
 	<!-- Section titre du rapport -->
 	<div class="border_div param_content_div" style="padding:5px;">
-		<table class="report_config_table" style="width: 100%">
+		<table class="report_config_table" style="width:100%;line-height:0">
 			<tbody>
 			<tr>
 				<td style="width:200px">

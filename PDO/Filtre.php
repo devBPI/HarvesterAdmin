@@ -138,7 +138,7 @@ class Filtre {
 	}
 
 	/** Supprime l'arbre dont la racine est $id, sans supprimer la racine
-	 * @param $id id de la racine
+	 * @param $id integer id de la racine
 	 * @return void
 	 */
 	static function deleteTree($id)

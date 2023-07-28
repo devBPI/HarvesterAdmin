@@ -1,0 +1,19 @@
+input[type=submit]:hover {
+    background-color: #6ba5c6;
+}
+
+.label_and_input_div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: right;
+}
+
+.label_and_input_div label {
+    width:25%;
+    padding-right:2px;
+}
+
+.label_and_input_div input[type=text], .label_and_input_div input[type=password] {
+    width:40%;
+}
