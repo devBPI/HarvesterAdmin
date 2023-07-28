@@ -12,7 +12,7 @@ if (!$ini) {
 ?>
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/environments/<?php echo $ini['version']; ?>-style.css">
+	<link rel="stylesheet" href="css/environments/<?= strtolower($ini['version']); ?>-style.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/index-style.css">
 	<link rel="stylesheet" href="css/composants.css">
