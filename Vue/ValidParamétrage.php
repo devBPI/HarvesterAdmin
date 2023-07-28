@@ -86,11 +86,11 @@ $def_preview = implode(PHP_EOL,$properties_list);
     <div class="double-eq-column-container">
         <div class="column-full" style="text-align:left">
             <H3>Original</H3>
-            <textarea id="code_original" name="code_original"><?php echo (isset($def))? $def:"";?></textarea>
+            <textarea aria-label="Code original" id="code_original" name="code_original"><?php echo (isset($def))? $def:"";?></textarea>
         </div>
         <div class="column-full" style="text-align:left">
             <H3>Prévisualisation</H3>
-            <textarea id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
+            <textarea aria-label="Aperçu du code" id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
         </div>
     </div>	
 </div>

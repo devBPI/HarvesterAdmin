@@ -38,8 +38,8 @@ switch ($action) {
                 }
             } else {
                 ?>
-<div id="divAccepter" style="width: 100%;">
-	<font color="red">Veuillez remplir tous les champs.</font>
+ <div id="divAccepter" class="avertissement">
+    <p>Veuillez remplir tous les champs.</p>
 </div>
 <?php
             }
@@ -63,8 +63,8 @@ switch ($action) {
                 }
             } else {
                 ?>
-<div id="divAccepter" style="top: 0%; width: 100%;">
-	<font color="red">Veuillez remplir tous les champs.</font>
+<div id="divAccepter" class="avertissement">
+    <p>Veuillez remplir tous les champs.</p>
 </div>
 <?php
             }
@@ -93,8 +93,8 @@ switch ($action) {
                 }
             } else {
                 ?>
-<div id="divAccepter" style="width: 100%;">
-	<font color="red">Veuillez remplir tous les champs.</font>
+<div id="divAccepter" class="avertissement">
+    <p>Veuillez remplir tous les champs.</p>
 </div>
 <?php
             }
@@ -121,8 +121,8 @@ switch ($action) {
                 }
             } else {
                 ?>
-<div id="divAccepter" style="width: 100%;">
-	<font color="red">Veuillez remplir tous les champs.</font>
+<div id="divAccepter" class="avertissement">
+    <p>Veuillez remplir tous les champs.</p>
 </div>
 <?php
             }

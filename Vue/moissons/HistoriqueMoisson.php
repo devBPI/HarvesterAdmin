@@ -118,7 +118,7 @@ $url = "HistoriqueMoisson.php?&order=";
 				<td data-label="Progression"><?= $progression ?></td>
 				<td data-label="Statut">
 <?php 			if(preg_match('/(ERROR)/',$task['status'])) { ?>
-					<div name="error-form-div">
+					<div>
 <?php				if($task['has_no_more_recent_indexed'] == 'true' OR $task['has_no_more_recent_indexed'] == 't' ){ // CTLG-400 (pour se preserver de la double-relance du INDEX_ERROR)
 						// Libelle Statut (en gras car pas de plus recent indexe) ?>
 						<div style="color:red;font-weight:bold"><?= $task['status'] ?></div>

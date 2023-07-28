@@ -35,7 +35,7 @@ $i = 0;
 			<tr class="hidden_field">
 				<td class="td_email">
 					<input type="hidden" id="input_old_id_" name="old_id_" value="null"/>
-					<input type="email" id="input_id_" name="id_" placeholder="mail@nom-de-domaine.fr" value=""/>
+					<input aria-label="Adresse mail" type="email" id="input_id_" name="id_" placeholder="mail@nom-de-domaine.fr" value=""/>
 				</td>
 				<td class="td_switch" style="width:15%;text-align:right">
 					<label class="switch">
@@ -45,7 +45,7 @@ $i = 0;
 				</td>
 				<td class="td_label"><label for="input_is_enabled_" id="label_">Activée</label></td>
 				<td class="td_cross">
-					<button class="but" type="button" title="Supprimer un destinataire" onclick="delete_field(this.parentElement.parentElement)"><img src="../ressources/cross.png" width="30px" height="30px">
+					<button class="but" type="button" title="Supprimer un destinataire" onclick="delete_field(this.parentElement.parentElement)"><img alt="Supprimer un destinataire" src="../ressources/cross.png" width="30px" height="30px">
 					</button>
 				</td>
 			</tr>
@@ -63,7 +63,7 @@ $i = 0;
 				<tr>
 					<td class="td_email">
 						<input type="hidden" id="input_old_id_<?= $i ?>" name="old_id_<?= $i ?>" value="<?= $recipient["mail"] ?>" required/>
-						<input type="email" id="input_id_<?= $i ?>" <?= $recipient_class ?> name="id_<?= $i ?>" placeholder="mail@nom-de-domaine.fr" value="<?= $recipient["new_mail"] ?>" required/>
+						<input aria-label="Adresse mail" type="email" id="input_id_<?= $i ?>" <?= $recipient_class ?> name="id_<?= $i ?>" placeholder="mail@nom-de-domaine.fr" value="<?= $recipient["new_mail"] ?>" required/>
 					</td>
 <?php if($recipient["is_enabled"]=="t") { ?>
 					<td class="td_switch" style="width:15%;text-align:right">
@@ -88,7 +88,7 @@ $i = 0;
 <?php } ?>
 					<td class="td_cross">
 						<button class="but" type="button" title="Supprimer un destinataire" onclick="delete_field(this.parentElement.parentElement)">
-							<img src="../ressources/cross.png" width="30px" height="30px">
+							<img alt="Supprimer un destinataire" src="../ressources/cross.png" width="30px" height="30px">
 						</button>
 					</td>
 				</tr>
@@ -97,7 +97,7 @@ $i = 0;
 					<td colspan="3"></td>
 					<td class="td_cross">
 						<button class="ajout but" type="button" title="Ajouter une ligne" onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement, 'alertes_parametrage')">
-							<img src="../ressources/add.png" width="30px" height="30px"/>
+							<img alt="Ajouter un destinataire" src="../ressources/add.png" width="30px" height="30px"/>
 						</button>
 					</td>
 				</tr>

@@ -16,10 +16,12 @@
 	<div class="content" style="width:90%">
 		<table class="table-config">
 			<thead>
-			<th scope="col" style="width:20%">ID</th>
-			<th scope="col" style="width:10%"><a class="button" href="JournalLogs.php?niv=<?php echo $niv;?>">Niveau</a></th>
-			<th scope="col" style="width:10%">Date</th>
-			<th scope="col" style="width:60%">Message</th>
+			<tr>
+				<th scope="col" style="width:20%">ID</th>
+				<th scope="col" style="width:10%"><a class="button" href="JournalLogs.php?niv=<?php echo $niv;?>">Niveau</a></th>
+				<th scope="col" style="width:10%">Date</th>
+				<th scope="col" style="width:60%">Message</th>
+			</tr>
 			</thead>
 			<?php if($data) {
 			foreach($data as $alerte) {

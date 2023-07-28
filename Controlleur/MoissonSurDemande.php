@@ -1,8 +1,4 @@
-
-
-<!--------- CHLOE : NE PAS OUBLIER DE DECOMMENTER LES LIGNES AVEC COMMENTAIRE "02/06" AVANT DE TESTER MOISSON AVEC FICHIERS -->
-
-<html style="overflow-y: auto; overflow-x: hidden;">
+<html lang="fr" style="overflow-y: auto; overflow-x: hidden;">
 <?php
 session_start();
 
@@ -80,7 +76,7 @@ switch ($action) {
 		} else {
 			?>
 			<div id="divAccepter" style="width: 100%;">
-				<font color="red">Veuillez renseigner une configuration de moisson a lancer.</font>
+				<span style="color:red">Veuillez renseigner une configuration de moisson a lancer.</span>
 			</div>
 			<?php
 		}

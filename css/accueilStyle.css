@@ -171,20 +171,6 @@ input[type=file] {
     background-color: #6ba5c6;
 }
 
-.buttontable {
-    background-color: #77b8dd;
-    color: white;
-    padding: 5px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    font-size: 14px;
-    width: 100%;
-    margin-top: 105px;
-}
-
 .button-hover {
     opacity: 0;
 }
@@ -283,7 +269,7 @@ tr:hover .button-hover {
 }
 
 @media screen and (max-width: 600px) {
-    .col-10, .col-20, .col-25, .col-30, .col-40, .col-50, .col-75, .col-90, input[type=submit], input[type=file], .buttonlink, .buttontable {
+    .col-10, .col-20, .col-25, .col-30, .col-40, .col-50, .col-75, .col-90, input[type=submit], input[type=file], .buttonlink {
         width: 100%;
         margin-top: 0;
     }

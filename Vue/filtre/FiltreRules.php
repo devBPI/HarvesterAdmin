@@ -35,15 +35,16 @@ include ('../Vue/common/Header.php');
 						{ ?>
 							<table class='table-config'>
 								<tr>
-									<th scope="col" width=50%>Nom</th>
-									<th scope="col" width=40%>Entité</th>
-									<th scope="col" width=10%/></tr>
+									<th scope="col" style="width:50%">Nom</th>
+									<th scope="col" style="width:40%">Entité</th>
+									<th scope="col" style="width:10%"></th>
+								</tr>
 								<tr class='hidden_field'>
 									<td>
-										<input type='text' name='namenew'/>
+										<input type='text' aria-label="Nom de la règle" name='namenew'/>
 									</td>
 									<td>
-										<select name='entitynew'><option value='0'>Sélectionnez une entité</option>
+										<select aria-label="Entité sur laquelle porte la règle" name='entitynew'><option value='0'>Sélectionnez une entité</option>
 										<?php foreach($entities as $e)
 										{
 											echo "<option value='".$e."'>".$e."</option>";
@@ -51,7 +52,9 @@ include ('../Vue/common/Header.php');
 										</select>
 									</td>
 									<td>
-										<button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button>
+										<button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'>
+											<img alt="Supprimer une cible" src='../ressources/cross.png' width='30px' height='30px'>
+										</button>
 									</td>
 								</tr>
 							<?php if(!empty($data))
@@ -66,32 +69,32 @@ include ('../Vue/common/Header.php');
 											foreach ($array_error as $error) {
 											if ($error["id"] == $value["name"]) {
 											$est_error = true; ?>
-											<input type="text" class="input-error" name="name<?= $value['id'] ?>" value="<?= $value['name']?>"/>
+											<input type="text" aria-label="Nom de la règle en erreur" class="input-error" name="name<?= $value['id'] ?>" value="<?= $value['name']?>"/>
 
 												<?php
 											}
 											}
 										}
 										if (!$est_error) { ?>
-											<input type="text" name="name<?= $value['id'] ?>" value="<?= $value['name']?>"/>
+											<input type="text" aria-label="Nom de la règle" name="name<?= $value['id'] ?>" value="<?= $value['name']?>"/>
 
 										<?php } ?>
 										</td>
-										<td><select name='entity<?= $k?>'><option value='0'>Sélectionnez une entité</option>
+										<td><select aria-label="Entité sur laquelle porte la règle" name='entity<?= $k?>'><option value='0'>Sélectionnez une entité</option>
 										<?php foreach($entities as $e)
 										{
 											echo "<option value='".$e."' ".(($e==$value['entity'])?'selected':'').">".$e."</option>";
 										}?>
 										</select></td>
-										<td><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></td>
+										<td><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement.parentElement)'><img alt="Supprimer une cible" src='../ressources/cross.png'/ width='30px' height='30px'></button></td>
 									</tr>
 								<?php }
 							}
 							else
 							{
-								echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img src='../ressources/cross.png'/ width='30px' height='30px'></button></div>";
+								echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img alt='Supprimer une cible' src='../ressources/cross.png' width='30px' height='30px'></button></div>";
 							}?>
-							<tr style='background-color:#dbe0e0' id='add_row'><td><button class='ajout but' type='button' title='Ajouter' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)' style='float:left'><img src='../ressources/add.png' width='30px' height='30px'/></button></td><td/><td><input name='submitted' type='hidden'><input type='submit' value='Valider'/></td></tr></table>
+							<tr style='background-color:#dbe0e0' id='add_row'><td><button class='ajout but' type='button' title='Ajouter' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)' style='float:left'><img alt="Ajouter" src='../ressources/add.png' width='30px' height='30px'/></button></td><td></td><td><input name='submitted' type='hidden'><input type='submit' value='Valider'/></td></tr></table>
 					</div>
 				<?php }
 				else {

@@ -76,32 +76,32 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 
 		<div class="triple-column-container">
 			<div class="column">
-				<h3>Quotidienne</h3>
+				<h3><label for="heureQuot">Quotidienne</label></h3>
 				<select id="heureQuot" name="heureQuot">
 					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
 				<input type="submit" name="quot" value="Valider">
 			</div>
 			<div class="column">
-				<h3>Hebdomadaire</h3>
+				<h3><label for="heureHebdo">Hebdomadaire</label></h3>
 				<select id="heureHebdo" name="heureHebdo">
 					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
-				<select id="jourHebdo" name="jourHebdo">
+				<select aria-label="Jour de tâche hebdomadaire" id="jourHebdo" name="jourHebdo">
 					<?= Combobox::makeComboBoxJour() ?>
 				</select>
 				<input type="submit" name="hebdo" value="Valider">
 			</div>
 			<div class="column">
-				<h3>Mensuelle</h3>
+				<h3><label for="heureMonth">Mensuelle</label></h3>
 				<!-- <input type="text" id="datepicker" size="30" readonly> -->
 				<select id="heureMonth" name="heureMonth">
 					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
-				<select id="jourMonth" name="jourMonth">
+				<select aria-label="Jour de tâche mensuelle" id="jourMonth" name="jourMonth">
 					<?= Combobox::makeComboBoxJour() ?>
 				</select>
-				<select id="semaine" name="semaine">
+				<select aria-label="Semaine de tâche mensuelle" id="semaine" name="semaine">
 					<?= Combobox::makeComboBoxSemaine() ?>
 				</select>
 				<input type="submit" name="month" value="Valider">

@@ -28,14 +28,13 @@
 	<div class="entete" style="width:100%;height:7%">
 		<h2 style="text-align:center"><?php echo $ini['version'];?></h2>
 	</div>
-    <div style="box-shadow: 0px 0px 5px #555;background-color: white;width: 40%;height: auto;margin-left: auto;margin-right: auto;margin-top: 10%;margin-bottom: auto;padding-bottom:1%;">
-          <br>
-           <center><h2>Connexion</h2></center>
+    <div style="box-shadow: 0 0 5px #555;background-color: white;width: 40%;height: auto;margin: 10% auto auto;padding-bottom:1%;text-align: center">
+          <br><h2>Connexion</h2>
         <form action="index.php" method="post">
            <br>
-            <div class="right" style="margin-right:40%">Login : <input type="text" name="textLogin" /></div>
+			<div class="right" style="margin-right:40%"><label for="text_login">Login :</label><input type="text" id="text_login" name="textLogin" /></div>
             <br><br>
-            <div class="right" style="margin-right:40%">Mot de passe :<input type="password" name="textMdp" /></div>
+            <div class="right" style="margin-right:40%"><label for="text_mdp">Mot de passe :</label><input type="password" id="text_mdp" name="textMdp" /></div>
             <input type="submit" style="margin-top:6.5%;margin-left:35%; width:30%;position:static;" class="button primairy-color round" value="Connexion" />
         </form>
         <?php 
@@ -47,8 +46,8 @@
                 else
 		{
 	?>
-			<div id="divAccepter" style="width:100%;">
-			<center><font color="red">Login et/ou Mot de Passe inconnu</font></center>
+			<div id="divAccepter" class="avertissement">
+				<p>Login et/ou Mot de Passe inconnu</p>
 			</div>
 	<?php
                 }

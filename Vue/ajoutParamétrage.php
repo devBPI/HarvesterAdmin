@@ -61,7 +61,7 @@ include ('../Vue/common/Header.php');
                     <label for="mapping">Nom du mapping</label>
                 </div>
                 <div class="col-50">
-                    <input type="text" id="name" name="name" placeholder="nom du mapping..." />
+                    <input aria-label="Nom du mapping" type="text" id="name" name="name" placeholder="nom du mapping..." />
                 </div>
                 <div class="col-25">
                     <div onclick="openForm()" class="buttonlink" style="float:right">Valider le mapping</div>
@@ -70,7 +70,7 @@ include ('../Vue/common/Header.php');
         </div>
         <div class="column-full" style="text-align:left">
             <H3>Éditeur de texte</H3>
-            <textarea id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
+            <textarea aria-label="Editeur de texte" id="code_preview" name="code_preview"><?php echo (isset($def_preview))? $def_preview:"";?></textarea>
         </div>
 
         <div id="page-mask"></div>

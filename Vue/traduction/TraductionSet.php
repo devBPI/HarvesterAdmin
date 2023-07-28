@@ -39,9 +39,9 @@ include('../Vue/common/Header.php');
 
 	<div class="sizeable_table">
 		<div class="hidden_field">
-			<input type="text" name="t" style="width:300px;"/>
+			<input aria-label="" type="text" name="t" style="width:300px;"/>
 			<button class="but" type="button" title="Supprimer une cible" onclick="delete_field(this.parentElement)">
-				<img src="../ressources/cross.png" width="30px" height="30px">
+				<img alt="Supprimer une cible" src="../ressources/cross.png" width="30px" height="30px">
 			</button>
 		</div>
 		<?php if (isset($_GET["modify"]) && $_GET["modify"] == "false") { ?>
@@ -50,7 +50,7 @@ include('../Vue/common/Header.php');
 			<tr>
 				<th style="background-color:#56acde">Catégorie</th>
 				<th style="background-color:#56acde">
-					<select onchange="update_tab_cibles(this, <?= $rules_set["id"] ?>)" required>
+					<select aria-label="Catégorie de cibles" onchange="update_tab_cibles(this, <?= $rules_set["id"] ?>)" required>
 						<option value="">Sélectionnez une catégorie de cibles</option>
 						<?php foreach ($categories as $category) {
 							if ($category["id"] == $rules_set["category"]["id"]) { ?>
@@ -76,10 +76,10 @@ include('../Vue/common/Header.php');
 				<tbody id="interieur_tableau">
 				<tr class="hidden_field" id="new">
 					<td>
-						<input type="text" name="rule_input_value_"/>
+						<input aria-label="Source" type="text" name="rule_input_value_"/>
 					</td>
 					<td>
-						<select name="destination_">
+						<select aria-label="Destination" name="destination_">
 						<?php foreach ($cibles as $cible) {
 							if ($cible["category_id"] == $rules_set["category"]["id"]) { ?>
 							<option value="<?= $cible["id"] ?>"><?= $cible["value"] ?></option>
@@ -88,9 +88,8 @@ include('../Vue/common/Header.php');
 						</select>
 					</td>
 					<td class="td_cross">
-						<button class="but" type="button" title="Supprimer une cible"
-								onclick="delete_field(this.parentElement.parentElement)"><img src="../ressources/cross.png"
-																							  width="30px" height="30px"/>
+						<button class="but" type="button" title="Supprimer une cible" onclick="delete_field(this.parentElement.parentElement)">
+							<img alt="Supprimer" src="../ressources/cross.png" width="30px" height="30px"/>
 						</button>
 					</td>
 				</tr>
@@ -98,10 +97,10 @@ include('../Vue/common/Header.php');
 				foreach($rules as $key => $rule) { ?>
 					<tr>
 						<td>
-							<input type="text" name="rule_input_value_<?= $key ?>" value="<?= $rule["rule_input_value"] ?>"/>
+							<input aria-label="Source" type="text" name="rule_input_value_<?= $key ?>" value="<?= $rule["rule_input_value"] ?>"/>
 						</td>
 						<td>
-							<select name="destination_<?= $key ?>" required>
+							<select aria-label="Destination" name="destination_<?= $key ?>" required>
 								<?php foreach ($cibles as $cible) {
 									if ($cible["category_id"] == $rules_set["category"]["id"]) {
 										if ($cible["id"] == $rule["cible_id"]) { ?>
@@ -114,9 +113,8 @@ include('../Vue/common/Header.php');
 							</select>
 						</td>
 						<td class="td_cross">
-							<button class="but" type="button" title="Supprimer une cible"
-									onclick="delete_field(this.parentElement.parentElement)"><img src="../ressources/cross.png"
-																								  width="30px" height="30px"/>
+							<button class="but" type="button" title="Supprimer une cible" onclick="delete_field(this.parentElement.parentElement)">
+								<img alt="Supprimer une cible" src="../ressources/cross.png" width="30px" height="30px"/>
 							</button>
 						</td>
 					</tr>
@@ -127,9 +125,9 @@ include('../Vue/common/Header.php');
 					<td></td>
 					<td></td>
 					<td class="td_cross">
-						<button class="ajout but" type="button" title="Ajouter une ligne"
-								onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
-							<img src="../ressources/add.png" width="30px" height="30px"/></button>
+						<button class="ajout but" type="button" title="Ajouter une ligne" onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
+							<img alt="Ajouter une ligne" src="../ressources/add.png" width="30px" height="30px"/>
+						</button>
 					</td>
 				</tr>
 				</tbody>
@@ -148,11 +146,11 @@ include('../Vue/common/Header.php');
 			if ($rules_set["category"]["id"] != -1) {
 			foreach ($categories as $category) {
 			if ($category["id"] == $rules_set["category"]["id"]) { ?>
-					<input type="text" value="<?= $category["name"] ?>" readonly>
+					<input aria-label="Catégorie de cibles" type="text" value="<?= $category["name"] ?>" readonly>
 			<?php }
 			}
 			} else { ?>
-				<input type="text" value="Aucune catégorie de cibles" readonly>
+				<input aria-label="Catégorie de cibles" type="text" value="Aucune catégorie de cibles" readonly>
 			<?php } ?>
 			</th>
 		</tr>

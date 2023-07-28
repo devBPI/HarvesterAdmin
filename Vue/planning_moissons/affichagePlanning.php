@@ -1,9 +1,9 @@
 <div style="overflow-y: auto; height:300px">
 <table class="table-planning">
-	<th width=40%>Périodicité</th>
-	<th width=20%>Heure</th>
-	<th width=30% style="overflow:visible">Configuration</th>
-	<th width=10%></th>
+	<th style="width:40%">Périodicité</th>
+	<th style="width:20%">Heure</th>
+	<th style="width:30%;overflow:visible">Configuration</th>
+	<th style="width:10%"></th>
 	<?php
 	if($dowData[$dow]) {
 		foreach ($dowData[$dow] as $var) {
@@ -65,7 +65,7 @@
 					onsubmit="return confirm('Voulez vous vraiment supprimer cette planification ?');"
 					action="../../Controlleur/PlanningMoisson.php?id=<?php echo $var['id']; ?>"
 					method="post">
-					<input type="image" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
+					<input type="image" alt="Supprimer la planification" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
 				</form>
 				</tr>
 		<?php

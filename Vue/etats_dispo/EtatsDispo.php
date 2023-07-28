@@ -54,23 +54,23 @@ if (!$ini) {
 			<tr>
 				<FORM action="EtatsDispo.php?add=true" method="post"
 					  onsubmit="return confirm('Voulez vous vraiment ajouter ce status ?');">
-					<td scope="row" data-label="Code">
-						<TEXTAREA name="code"></TEXTAREA>
+					<td data-label="Code">
+						<textarea aria-label="Code" name="code"></textarea>
 					</td>
 					<td data-label="Disponibilité">
-						<select name="list_dispo" style="width: 100%">
+						<select aria-label="Disponibilité" name="list_dispo" style="width: 100%">
 							<option value=""></option>
 							<option value="D">D</option>
 						</select>
 					</td>
 					<td data-label="À moissonner">
-						<select name="to_harvest" style="width: 100%">
+						<select aria-label="À moissonner" name="to_harvest" style="width: 100%">
 							<option value="t">True</option>
 							<option value="f">False</option>
 						</select>
 					</td>
 					<td data-label="Label">
-						<TEXTAREA name="label"></TEXTAREA>
+						<textarea aria-label="Label" name="label"></textarea>
 					</td>
 					<th><input type='submit' class='button primairy-color' style='width:100%' value="Ajouter"/></th>
 				</FORM>
@@ -81,7 +81,7 @@ if (!$ini) {
 				<tr>
 					<td data-label="Code"> <?= $var['code'] ?></td>
 					<td data-label="Disponibilité">
-						<select name="list_dispo" style="width: 100%">
+						<select aria-label="Disponibilité" name="list_dispo" style="width: 100%">
 							<option value=""
 								<?php echo ($var['dispo_flag'] == "") ? 'selected' : ''; ?>></option>
 							<option value="D"
@@ -90,7 +90,7 @@ if (!$ini) {
 						</select>
 					</td>
 					<td data-label="À moissonner">
-						<select name="to_harvest" style="width: 100%">
+						<select aria-label="À moissonner" name="to_harvest" style="width: 100%">
 							<option value="t"
 								<?php echo ($var['select_to_harvest'] == "t") ? 'selected' : ''; ?>>
 								True
@@ -101,16 +101,16 @@ if (!$ini) {
 							</option>
 						</select>
 					</td>
-					<td data-label="Label"><TEXTAREA name="label"><?= $var['label'] ?></TEXTAREA></td>
+					<td data-label="Label"><textarea aria-label="Label" name="label"><?= $var['label'] ?></textarea></td>
 					<th>
 						<input type='submit' class='button primairy-color' style='width:100%' value="Modifier"/>
 					</th>
 					</FORM>
-					<form onsubmit="return confirm('Voulez vous vraiment supprimer ce status ?');"
+					<form onsubmit="return confirm('Voulez vous vraiment supprimer ce statut ?');"
 						  action="EtatsDispo.php?delete=<?= $var['code'] ?>" method="post">
-						<td style="background-color:#1fe0;"><input type="image" id="cross" name="cross"
-																   src="../../ressources/cross.png" width="20px"
-																   height="20px"></td>
+						<td style="background-color:#1fe0;">
+							<input type="image" id="cross" name="cross" alt="Supprimer un statut" src="../../ressources/cross.png" width="20px" height="20px">
+						</td>
 					</form>
 				</tr>
 			<?php }

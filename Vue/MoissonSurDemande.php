@@ -58,7 +58,7 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 			<h3 style="margin:0 auto;">Lancement sans fichier</h3>
 			<div class="row">
 				<div class="col-50">
-				<select id="configuration-select-whithout-file" name="configuration-select-whithout-file" onChange="disableMsgAborted()" required>
+				<select aria-label="Configuration" id="configuration-select-whithout-file" name="configuration-select-whithout-file" onChange="disableMsgAborted()" required>
     					<option value="" disabled selected>Choisissez une configuration</option>
     					<?php
     					$i = 0;
@@ -105,7 +105,7 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 					Ajouter des fichiers</label>
 				</div>
 				<div class="column" style="height:80px">
-					<select id="configuration-select-whith-files" name="configuration-select-whith-files" onchange='changeCSV(this)' required>
+					<select aria-label="Configuration" id="configuration-select-whith-files" name="configuration-select-whith-files" onchange='changeCSV(this)' required>
 						<option value="" disabled selected>Choisissez une configuration</option>
 						<?php
 						$i = 0;

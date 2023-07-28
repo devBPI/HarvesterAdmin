@@ -4,8 +4,7 @@ function closeForm() {
 }
 
 function deleteRow(){
-    var id = document.getElementById("formID").value;
-    document.getElementById("formDelete").value=id;
+    document.getElementById("formDelete").value=document.getElementById("formID").value;
 }
 
 function moveRowUp(i){

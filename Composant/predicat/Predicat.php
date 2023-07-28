@@ -10,7 +10,7 @@ $ruleEntity = Gateway::getRuleEntity($_GET['id'])['entity'];
 $predicats = Gateway::getPredicatsByEntity($ruleEntity);
 $num=(isset($_POST['num']))?$_POST['num']:$GLOBALS['nb'];
 ?>
-<tr><th width='40%'>Prédicat</th><th>Entité</th><th>Champ</th><th>Fonction</th><th>Valeur</th></tr>
+<tr><th style="width:40%">Prédicat</th><th>Entité</th><th>Champ</th><th>Fonction</th><th>Valeur</th></tr>
 
 <?php
 if(isset($d) && $d!=null) {
@@ -20,8 +20,8 @@ if(isset($d) && $d!=null) {
 		?>
 		<tr class="entity" id="<?= $value['property'] ?>">
 			<td>
-				<select onchange='update_predicat(this, <?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required>
-					<option value=''>Choississez un prédicat</option>
+				<select aria-label="Prédicat" onchange='update_predicat(this, <?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required>
+					<option value="">Choississez un prédicat</option>
 		<?php foreach($predicats as $p) { ?>
 			<option value='<?= $p["code"] ?>' <?= (($p['code']==$value['code'])?'selected':'') ?> ><?= $p["code"] ?></option>
 		<?php } ?>
@@ -37,8 +37,8 @@ if(isset($d) && $d!=null) {
 	else { ?>
 		<tr class="entity" id="new">
 			<td>
-				<select onchange='update_predicat(this,<?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required>
-					<option value=''>Choississez un prédicat</option>
+				<select aria-label="Prédicat" onchange='update_predicat(this,<?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required>
+					<option value="">Choississez un prédicat</option>
 		<?php foreach($predicats as $p) { ?>
 			<option value='<?= $p["code"] ?>'><?= $p["code"] ?></option>
 		<?php } ?>
@@ -48,9 +48,9 @@ if(isset($d) && $d!=null) {
 	<?php }
 }
 else { ?>
-	<tr class='entity' id='new'>
+	<tr class="entity" id="new">
 	<td>
-	<select onchange='update_predicat(this,<?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required><option value=''>Choississez un prédicat</option>
+	<select aria-label="Prédicat" onchange='update_predicat(this,<?= json_encode($predicats, JSON_HEX_APOS) ?>)' name='entity<?= $num ?>' required><option value="">Choississez un prédicat</option>
 		<?php foreach($predicats as $p) { ?>
 			<option value='<?= $p['code'] ?>'><?= $p['code'] ?></option>
 		<?php } ?>

@@ -69,7 +69,7 @@
         
         
         <tr>
-            <td scope="row" data-label="ID"><?= $var['id'] ?></td>
+            <td data-label="ID"><?= $var['id'] ?></td>
             <td data-label="Code"><?= str_replace("_", "_<wbr>", $var['code']) ?></td>
             <td data-label="Nom Abrégé"><a
                 href="../Vue/FicheIndividuelle.php?param=<?= $var['id'] ?>"><?= str_replace("_", "_<wbr>", $var['name']) ?></a></td>

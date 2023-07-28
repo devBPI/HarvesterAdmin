@@ -1,4 +1,3 @@
-<!-- Il y a différentes div et boutons de menus car je n'ai encore décidé lesquels j'utiliserai -->
 <html lang="fr">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
@@ -15,11 +14,11 @@ foreach ($array as $item) {
 }
 ?>
 <head>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../css/style.css" />
-<link rel="stylesheet" href="../css/composants.css" />
-<link rel="stylesheet" href="../css/accueilStyle.css" />
-<title>Tâche Annexe sur Demande</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/composants.css" />
+	<link rel="stylesheet" href="../css/accueilStyle.css" />
+	<title>Tâche Annexe sur Demande</title>
 </head>
 <body id="haut">
 
@@ -45,7 +44,7 @@ foreach ($array as $item) {
 					</select>
 				</div>
 				<div class="col-25">
-					<input type="submit" name="launch" value="Démarrer maintenant">
+					<input type="submit" name="launch" style="margin-left:5px" value="Démarrer maintenant">
 				</div>
 			</div>
 			<div class="row" id="parametre" style="display:none">

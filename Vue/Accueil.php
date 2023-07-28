@@ -30,7 +30,7 @@
 								<label for="connecteur">Connecteur</label>
 							</div>
 							<div class="col-75">
-								<select id="list_grabber" name="list_grabber">
+								<select aria-label="Liste des connecteurs" id="list_grabber" name="list_grabber">
 									<option value="0">Choisissez un connecteur</option>
 									<?php
 										$i = 0;
@@ -60,7 +60,7 @@
 									<?= $alert['level'] ?></span> - <wbr/><?= $alert['category'] ?>
 						</div>
 						<div class="alertes_du_jour_right" onclick="openFormWithMsg('<?= $alert['message'] ?>')">
-							<img style="cursor:pointer" src="../ressources/message.png" width="20px" height="20px"/>
+							<img style="cursor:pointer" alt="Message d'alerte" src="../ressources/message.png" width="20px" height="20px"/>
 						</div>
 					</div>
 						<?php } ?>

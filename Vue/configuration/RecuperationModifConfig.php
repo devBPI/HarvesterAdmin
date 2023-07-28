@@ -68,7 +68,7 @@
 									<option value="">Sélectionnez un filtre</option>
 									<?= ComboBox::makeComboBox($exclusion, $dataConf['filter_id'] ?? null) ?>
 								</select>
-								<a href="javascript:void(0);" class="filtre_add" title="Ajouter une exclusion"><img src="../ressources/add.png"/></a>
+								<a href="javascript:void(0);" class="filtre_add" title="Ajouter une exclusion"><img alt="Ajouter une exclusion" src="../ressources/add.png"/></a>
 							</div>
 						</div></td>
 					</tr>
@@ -134,28 +134,28 @@
 						<div class='sizeable_table'>
 							<div class='hidden_field'>
 								<textarea id="form_parcours" name="form_parcours"></textarea>
-								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img src="../ressources/cross.png" width="30px" height="30px"></button>
+								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img alt="Supprimer un parcours" src="../ressources/cross.png" width="30px" height="30px"></button>
 							</div>
 						<div>
 						<?php if(!empty($dataConf['parcours'])){ ?>
 							<div>
-								<textarea id="parcours" name="parcours0"><?= $dataConf["parcours"][0]["parcours"] ?></textarea>
-								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img src="../ressources/cross.png" width="30px" height="30px"></button>
+								<textarea aria-label="Parcours" id="parcours" name="parcours0"><?= $dataConf["parcours"][0]["parcours"] ?></textarea>
+								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img alt="Supprimer un parcours" src="../ressources/cross.png" width="30px" height="30px"></button>
 							</div>
 							<?php for($i=1;$i<count($dataConf['parcours']);$i++) { ?>
 							<div>
-								<textarea id="parcours" name="parcours<?= $i ?>"><?= $dataConf['parcours'][$i]['parcours'] ?></textarea>
-								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img src="../ressources/cross.png" width="30px" height="30px"></button>
+								<textarea aria-label="Parcours" id="parcours" name="parcours<?= $i ?>"><?= $dataConf['parcours'][$i]['parcours'] ?></textarea>
+								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img alt="Supprimer un parcours" src="../ressources/cross.png" width="30px" height="30px"></button>
 							</div>
 							<?php }
 						}
 						else { ?>
 							<div>
-								<textarea id="parcours" name="parcours0"></textarea>
-								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img src="../ressources/cross.png" width="30px" height="30px"></button>
+								<textarea aria-label="Parcours" id="parcours" name="parcours0"></textarea>
+								<button class="but" type="button" title="Supprimer un parcours" onclick="delete_field(this.parentElement)"><img alt="Supprimer un parcours" src="../ressources/cross.png" width="30px" height="30px"></button>
 							</div>
 						</div>
-						<button class="ajout but" type="button" title="Ajouter un parcours" onclick="add_new_field(this.parentElement)"><img src="../ressources/add.png" width="30px" height="30px"/></button>
+						<button class="ajout but" type="button" title="Ajouter un parcours" onclick="add_new_field(this.parentElement)"><img alt="Ajouter un parcours" src="../ressources/add.png" width="30px" height="30px"/></button>
 						<?php } ?>
 					</div></td>
 					</tr>
@@ -164,17 +164,17 @@
 						<td class="right_column"><input type="text" id="form_format_natif" name="form_format_natif" /></td>
 					</tr>
 					<tr>
-						<td class="left_column"><label for="form_acces">Accès :</label></td>
+						<td class="left_column"><label>Accès :</label></td>
 						<td class="right_column">
-							<input type="checkbox" name="INTERNAL" value="INTERNAL" <?php foreach ($dataConf['profile'] as $access) { if ($access == "INTERNAL") echo "checked"; } ?>>Profil Interne (hors WIFI-Bpi)</input>
-							<input type="checkbox" name="WIFI-BPI" value="WIFI-BPI" <?php foreach ($dataConf['profile'] as $access) { if ($access == "WIFI-BPI") echo "checked"; } ?>>Wifi de la BPI</input>
-							<input type="checkbox" name="EXTERNAL" value="EXTERNAL" <?php foreach ($dataConf['profile'] as $access) { if ($access == "EXTERNAL") echo "checked"; } ?>>Profil Externe (hors WIFI-Bpi)</input>
+							<input aria-label="Accès interne" type="checkbox" name="INTERNAL" value="INTERNAL" <?php foreach ($dataConf['profile'] as $access) { if ($access == "INTERNAL") echo "checked"; } ?>>Profil Interne (hors WIFI-Bpi)</input>
+							<input aria-label="Accès wifi bpi" type="checkbox" name="WIFI-BPI" value="WIFI-BPI" <?php foreach ($dataConf['profile'] as $access) { if ($access == "WIFI-BPI") echo "checked"; } ?>>Wifi de la BPI</input>
+							<input aria-label="Accès externe" type="checkbox" name="EXTERNAL" value="EXTERNAL" <?php foreach ($dataConf['profile'] as $access) { if ($access == "EXTERNAL") echo "checked"; } ?>>Profil Externe (hors WIFI-Bpi)</input>
 						</td>
 					</tr>
 					<tr>
 						<td class="left_column"><label for="form_commentaires">Commentaires :</label></td>
 						<td class="right_column">
-							<textarea style="box-shadow: 0px 0px 0px;" id="form_commentaires" name="form_commentaires" rows=10 cols=50>
+							<textarea style="box-shadow: 0 0 0;" id="form_commentaires" name="form_commentaires" rows=10 cols=50>
 							<?= (! empty($dataConf['note'])) ? $dataConf['note'] : "" ?>
 							</textarea>
 						</td>

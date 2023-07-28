@@ -106,7 +106,7 @@
             else {
                 ?>
                 <div id="divAccepter" style="top:-3%; left:0%;width:100%; position:absolute;">
-                <font color="red">Erreur durant la requête (Veuillez vérifier les données saisies)</font>
+                <span style="color:red">Erreur durant la requête (Veuillez vérifier les données saisies)</span>
                 </div>
                 <?php
             }
@@ -115,7 +115,7 @@
         else {
         ?>
         <div id="divAccepter" style="top:-3%; left:0%;width:100%; position:absolute;">
-            <font color="red">Veuillez remplir tous les champs.</font>
+            <span style="color:red">Veuillez remplir tous les champs.</span>
         </div>
         <?php
         }

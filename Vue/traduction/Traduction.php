@@ -26,7 +26,7 @@ include('../Vue/common/Header.php');
 			<div class="column">
 			<H3>Configurations et règles de traduction associées</H3>
 			<div class="cartouche-solo" style="width:auto;height:435px;padding:5%;">
-				<select id="rule" name="Trad">
+				<select aria-label="Configurations disponibles" id="rule" name="Trad">
 				<option value="0">Choisissez une configuration</option>
 					<?= Combobox::makeComboBox($data) ?>
 				</select>

@@ -5,7 +5,7 @@
     font-size: medium;
     font-style: normal;
     font-weight: bold;
-	padding: 10 10;
+	padding: 10px 10px;
 }
 .select-selected:after {
   position: absolute;
@@ -14,7 +14,7 @@
   right: 10px;
   width: 0;
   height: 0;
-  border: 6px solid transparent;
+  border: 6px solid;
   border-color: #fff transparent transparent transparent;
 }
 .select-selected.select-arrow-active:after {

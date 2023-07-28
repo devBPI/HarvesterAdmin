@@ -25,14 +25,16 @@ require '../Composant/ComboBox.php';
 			<div class="column">
 			<h3>Configurations et leurs règles</h3>
 				<div style="height:450px;width:auto;margin-bottom:30px">
-					<select id="rule" name="Filter" class="select-hide" onchange="changeHref(this)">
+					<select id="rule" aria-label="Configuration" name="Filter" class="select-hide" onchange="changeHref(this)">
 					<option value="0">Choisissez une configuration</option>
 						<?= Combobox::makeComboBox($data) ?>
 					</select>
 					<div style="overflow-y: auto; height:409px; background-color:#f8f8f8">
 						<table class="table-planning" id="conf">
-							<th width=30%>Entité</th>
-							<th width=70%>Règles de filtrage</th>
+							<tr>
+								<th style="width:30%">Entité</th>
+								<th style="width:70%">Règles de filtrage</th>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -52,7 +54,7 @@ require '../Composant/ComboBox.php';
 							{ ?>
 							<tr style="border:none">
 								<td><?= str_replace("_", "_<wbr>", $r["entity"]) ?></td><td><?= $r["name"] ?></td>
-								<td><a href="../Controlleur/FiltreTree.php?id=<?= $r["id"] ?>" title="éditer"><img src="../ressources/edit.png" width="30px" height="30px"/></a></td>
+								<td><a href="../Controlleur/FiltreTree.php?id=<?= $r["id"] ?>" title="éditer"><img alt="Editer" src="../ressources/edit.png" width="30px" height="30px"/></a></td>
 								</tr>
 							<?php } ?>
 					</table>

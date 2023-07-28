@@ -1,5 +1,4 @@
-<!-- Il y a différentes div et boutons de menus car je n'ai encore décidé lesquels j'utiliserai -->
-<html style="overflow-y: auto; overflow-x: hidden;">
+<html lang="fr" style="overflow-y: auto; overflow-x: hidden;">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {
@@ -39,8 +38,8 @@ switch ($action) {
                 }
             } else {
                 ?>
-                <div id="divAccepter" style="width: 100%;">
-                	<font color="red">Veuillez remplir tous les champs.</font>
+                <div id="divAccepter" class="avertissement">
+                	<p>Veuillez remplir tous les champs.</p>
                 </div>
 				<?php
             }

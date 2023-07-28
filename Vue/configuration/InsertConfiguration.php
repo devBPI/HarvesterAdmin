@@ -171,17 +171,16 @@ if ($action == 'insert') {
             ?>
 <div id="divAccepter"
 	style="top: -3%; left: 0%; width: 100%; position: absolute;">
-	<font color="red">Erreur durant la requête (Veuillez vérifier les
-		données rentrées)</font>
+	<span style="color:red">Erreur durant la requête (Veuillez vérifier les
+		données rentrées)</span>
 </div>
 <?php
         }
     } 
     else {
         ?>
-<div id="divAccepter"
-	style="top: -3%; left: 0%; width: 100%; position: absolute;">
-	<font color="red">Veuillez remplir tous les champs.</font>
+<div id="divAccepter" style="top: -3%; left: 0%; width: 100%; position: absolute;">
+	<span style="color:red">Veuillez remplir tous les champs.</span>
 </div>
 <?php
     }

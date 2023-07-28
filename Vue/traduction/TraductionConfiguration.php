@@ -57,8 +57,8 @@ include('../Vue/common/Header.php');
 		<table class="table-config">
 			<tbody>
 			<tr class="hidden_field">
-				<td scope="row" data-label="Entité">
-					<select name="entity" onchange="display_entity(this)">
+				<td data-label="Entité">
+					<select aria-label="Entité" name="entity" onchange="display_entity(this)">
 						<option value="">Sélectionnez une entité</option>
 						<?php foreach ($entities as $e) {
 							echo "<option value='" . $e . "'>" . $e . "</option>";
@@ -66,22 +66,22 @@ include('../Vue/common/Header.php');
 
 					</select>
 				</td>
-				<td/>
+				<td></td>
 				<td data-label="Règles de traduction">
-					<select name="set">
+					<select aria-label="Ensemble de règles" name="set">
 						<option value="">Sélectionnez un ensemble de règles</option>
 						<?= ComboBox::makeComboBox($data) ?>
 
 				</td>
 				<td>
-					<input type="checkbox" name="trim"/>
+					<input aria-label="Suppression des espaces" type="checkbox" name="trim"/>
 				</td>
 				<td>
-					<input type="checkbox" name="case"/>
+					<input aria-label="Sensibilité à la casse" type="checkbox" name="case"/>
 				</td>
 				<td>
 					<button class="but" type="button" title="Supprimer un set" onclick='delete_field(this.parentElement.parentElement)'>
-						<img src="../../ressources/cross.png" width="30px" height="30px"></button>
+						<img alt="Supprimer un set" src="../../ressources/cross.png" width="30px" height="30px"></button>
 				</td>
 			</tr>
 			<?php
@@ -97,7 +97,7 @@ include('../Vue/common/Header.php');
 								if ($error["id"] == $value["property"]) {
 									$est_error = true; ?>
 
-									<select name="entity<?= $key ?>" class="input-error" onchange="display_entity(this)" required>
+									<select aria-label="Entité en erreur" name="entity<?= $key ?>" class="input-error" onchange="display_entity(this)" required>
 										<option value="">Sélectionnez une entité</option>
 										<?php foreach ($entities as $e) {
 											echo "<option value='" . $e . "' " . (($e == $value['entity']) ? 'selected' : '') . ">" . $e . "</option>";
@@ -109,7 +109,7 @@ include('../Vue/common/Header.php');
 							}
 						}
 						if (!$est_error) { ?>
-						<select name="entity<?= $key ?>" onchange="display_entity(this)" required>
+						<select aria-label="Entité" name="entity<?= $key ?>" onchange="display_entity(this)" required>
 							<option value="">Sélectionnez une entité</option>
 							<?php foreach ($entities as $e) {
 								echo "<option value='" . $e . "' " . (($e == $value['entity']) ? 'selected' : '') . ">" . $e . "</option>";
@@ -119,21 +119,21 @@ include('../Vue/common/Header.php');
 						<?php } ?>
 
 					</td>
-					<td/>
+					<td></td>
 					<td data-label="Règles de traduction">
-						<select name="set<?= $key ?>" required>
+						<select aria-label="Ensemple de règles" name="set<?= $key ?>" required>
 							<option value="">Sélectionnez un ensemble de règles</option>
 							<?= ComboBox::makeComboBox($data, $value['id']) ?>
 
 						</select>
 					</td>
-					<td data-label="Insensible à la casse"><input type="checkbox" name="case<?= $key ?>" <?= (($value['case'] == 'f') ? '' : 'checked') ?>/>
+					<td data-label="Insensible à la casse"><input aria-label="Sensibilité à la casse" type="checkbox" name="case<?= $key ?>" <?= (($value['case'] == 'f') ? '' : 'checked') ?>/>
 					</td>
-					<td data-label="Suppression des espaces"><input type="checkbox" name="trim<?= $key ?>" <?= (($value['trim'] == 'f') ? '' : 'checked') ?>/>
+					<td data-label="Suppression des espaces"><input aria-label="Suppression des espaces" type="checkbox" name="trim<?= $key ?>" <?= (($value['trim'] == 'f') ? '' : 'checked') ?>/>
 					</td>
 					<td>
 						<button class="but" type="button" title="Supprimer un set" onclick="delete_field(this.parentElement.parentElement)">
-							<img src="../../ressources/cross.png" width="30px" height="30px"/>
+							<img alt="Supprimer un set" src="../../ressources/cross.png" width="30px" height="30px"/>
 						</button>
 					</td>
 				</tr>
@@ -142,7 +142,7 @@ include('../Vue/common/Header.php');
 
 			<tr class="entity" id="new">
 				<td data-label="Entité">
-					<select name="entity" onchange="display_entity(this)" required>
+					<select aria-label="Entité" name="entity" onchange="display_entity(this)" required>
 						<option value="">Sélectionnez une entité</option>
 						<?php foreach ($entities as $e) {
 							echo "<option value='" . $e . "'>" . $e . "</option>";
@@ -150,23 +150,23 @@ include('../Vue/common/Header.php');
 
 					</select>
 				</td>
-				<td/>
+				<td></td>
 				<td data-label="Règles de traduction">
-					<select name="set-1" required>
+					<select aria-label="Ensemble de règles" name="set-1" required>
 						<option value="0">Sélectionnez un ensemble de règles</option>
 						<?= ComboBox::makeComboBox($data) ?>
 
 					</select>
 				</td>
 				<td data-label="Insensible à la casse">
-					<input type="checkbox" name="case"/>
+					<input aria-label="Sensible à la casse" type="checkbox" name="case"/>
 				</td>
-				<td>
-					<input type="checkbox" name="trim"/>
+				<td data-label="Suppression des espaces">
+					<input aria-label="Suppression des espaces" type="checkbox" name="trim"/>
 				</td>
 				<td>
 					<button class="but" type="button" title="Supprimer un set" onclick="delete_field(this.parentElement.parentElement)">
-						<img src="../../ressources/cross.png" width="30px" height="30px"/></button>
+						<img alt="Supprimer un set" src="../../ressources/cross.png" width="30px" height="30px"/></button>
 				</td>
 			</tr>
 			<?php } ?>
@@ -179,7 +179,7 @@ include('../Vue/common/Header.php');
 				<td></td>
 				<td>
 					<button class="ajout but" type="button" title="Ajouter une traduction" onclick="add_new_field(this.parentElement.parentElement.parentElement.parentElement)">
-						<img src="../../ressources/add.png" width="30px" height="30px"/>
+						<img alt="Ajouter une traduction" src="../../ressources/add.png" width="30px" height="30px"/>
 					</button>
 				</td>
 			</tr>

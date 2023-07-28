@@ -43,7 +43,7 @@ include('../Vue/common/Header.php');
 		<?php } ?>
 		<form action="FiltreConfiguration.php?modify=<?= $id ?>" method="post" id="conf" onsubmit="return confirm('Voulez vous vraiment modifier ces règles ?');">
 			<table class="table-config" id="conf">
-				<tr><th width=30%>Entité</th><th width=50%>Règles de filtrage</th><th></th></tr>
+				<tr><th style="width:30%">Entité</th><th style="width:50%">Règles de filtrage</th><th></th></tr>
 				<tr class="hidden_field"><?php
 						echo "<td><select name='entity' onchange='display_rules(this)'><option value=''>Sélectionnez une entité</option>";
 						foreach($entities as $e)
@@ -83,10 +83,10 @@ include('../Vue/common/Header.php');
 						}
 						echo "</select></td><td><select name='rule' hidden><option value=''>Sélectionnez une entité</option>";
 						echo "</select></td>
-						<td style='text-align:right'><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
+						<td style='text-align:right'><button class='but' type='button' title='Supprimer un set' onclick='suppRegle(this)'><img alt='Supprimer la règle' src='../../ressources/cross.png'/ width='30px' height='30px'></button></td></tr>";
 					}
 				?>
-				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td style='text-align:right'><button class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
+				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td style='text-align:right'><button class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img alt="Ajouter une règle" src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
 			</table>
 			<div class="button_end_div">
 				<input type="submit" value="Modifier les associations" class="button primairy-color round"/>
