@@ -39,7 +39,7 @@
 				$calcul_jour->modify($rec_day.' '.$dayname.' of next month');
 			}
 			setlocale(LC_TIME, array('fr_FR.utf8','fra'));
-			$date_moisson = utf8_encode(strftime('%d %B', $calcul_jour->getTimeStamp()));
+			$date_moisson = strftime('%d %B', $calcul_jour->getTimeStamp());
 			echo '('.$date_moisson.')</td>';
 		}
 		?>
