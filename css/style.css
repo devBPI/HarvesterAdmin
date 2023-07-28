@@ -87,8 +87,9 @@ th.button{
 	float:left;
 	margin-left:5%;
 }
-.round{
+.round {
 	border-radius: 25px;
+	height: 30px;
 }
 .progress{
 	width: 100%;
