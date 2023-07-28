@@ -94,7 +94,7 @@ include ('../Vue/common/Header.php');
 							{
 								echo "<div><input type='text' name='-1'/><button class='but' type='button' title='Supprimer une cible' onclick='delete_field(this.parentElement)'><img alt='Supprimer une cible' src='../ressources/cross.png' width='30px' height='30px'></button></div>";
 							}?>
-							<tr style='background-color:#dbe0e0' id='add_row'><td><button class='ajout but' type='button' title='Ajouter' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)' style='float:left'><img alt="Ajouter" src='../ressources/add.png' width='30px' height='30px'/></button></td><td></td><td><input name='submitted' type='hidden'><input type='submit' value='Valider'/></td></tr></table>
+							<tr style='background-color:#dbe0e0' id='add_row'><td><button class='ajout but' type='button' title='Ajouter' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)' style='float:left'><img alt="Ajouter" src='../ressources/add.png' width='30px' height='30px'/></button></td><td colspan="2" style="text-align: right"><input name='submitted' type='hidden'><input type='submit' value='Valider'/></td></tr></table>
 					</div>
 				<?php }
 				else {

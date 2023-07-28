@@ -76,7 +76,7 @@ class TabTraductionRulesCategory
 				</table>
 			</div>
 			<div class="button_end_div">
-				<input type="submit" value="Enregistrer" class="button primairy-color round"/>
+				<input type="submit" value="Enregistrer" class="button primairy-color"/>
 			</div>
 		</form>
 	</div>';

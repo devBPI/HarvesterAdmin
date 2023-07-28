@@ -37,7 +37,7 @@ if (!$ini) {
 					<input type="password" id="text_mdp" name="textMdp">
 				</div>
 			</div>
-			<input type="submit" style="margin-top:6.5%;width:30%;" class="button primairy-color round" value="Connexion"/>
+			<input type="submit" style="margin-top:6.5%;width:30%;" class="button primairy-color" value="Connexion"/>
 		</form>
 <?php
 		if (isset($_POST['textLogin'], $_POST['textMdp'])) {

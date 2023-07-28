@@ -100,7 +100,7 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 			<h3>Lancement avec fichier(s)</h3>
 			<div class="triple-column-container">
 				<div class="column" style="height:80px">
-					<label for="input_files_0" class="custom-file-upload" style="float:left">
+					<label for="input_files_0" class="submit-button" style="float:left">
 					<input class='file-input' type="file" accept=".txt,.csv" id="input_files_0" name="input_files[]" style="display:none" onchange="newInput(this)" onclick="appendInput(this)" multiple />
 					Ajouter des fichiers</label>
 				</div>
@@ -204,7 +204,7 @@ $datawithfile = Gateway::getConfigurationsWithFileToUpload();
 		function appendInput(obj) {	
 			$(obj).hide();
 			$(obj).parent().hide();
-			$(obj).parent().parent().append("<label for='input_files_" + nbButton + "' class='custom-file-upload' style='float:left'><input class='file-input' type='file' accept='.txt,.csv' id='input_files_" + nbButton + "' name='input_files[]' style='display:none' onchange='newInput(this)' onclick='appendInput(this)' multiple />Ajouter des fichiers</label>");
+			$(obj).parent().parent().append("<label for='input_files_" + nbButton + "' class='submit-button' style='float:left'><input class='file-input' type='file' accept='.txt,.csv' id='input_files_" + nbButton + "' name='input_files[]' style='display:none' onchange='newInput(this)' onclick='appendInput(this)' multiple />Ajouter des fichiers</label>");
 			nbButton++;
 		}
 

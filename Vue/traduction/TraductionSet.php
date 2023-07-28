@@ -133,7 +133,7 @@ include('../Vue/common/Header.php');
 				</tbody>
 				</table>
 			<div class="button_end_div">
-				<input type="submit" value="Valider les modifications" class="button primairy-color round"/>
+				<input type="submit" value="Valider les modifications" class="button primairy-color"/>
 			</div>
 		</form>
 		<?php } else { ?>

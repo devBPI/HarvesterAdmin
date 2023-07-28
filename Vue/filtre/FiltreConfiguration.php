@@ -22,15 +22,15 @@ include('../Vue/common/Header.php');
 <body>
 	<div class="content">
 		<div class="triple-column-container">
-				<div>
-					<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
+			<div class="button_top_div_with_margin">
+				<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
+			</div>
+			<div class="column">
+				<div class="config_name_and_sub_title">
+					<h3 class="config_name">Configuration : <?= $configname['name'] ?></h3>
+					<p class="sub_title"></p>
 				</div>
-				<div class="column">
-					<div class="config_name_and_sub_title">
-						<h3 class="config_name">Configuration : <?= $configname['name'] ?></h3>
-						<p class="sub_title"></p>
-					</div>
-				</div>
+			</div>
 		</div>
 		<?php if (!empty($array_error)) { ?>
 			<div class="avertissement">
@@ -88,8 +88,8 @@ include('../Vue/common/Header.php');
 				?>
 				<tr style="background-color:#dbe0e0" id="add_row"><td></td><td></td><td style='text-align:right'><button class='ajout but' type='button' title='Ajouter une règle' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement)'><img alt="Ajouter une règle" src='../../ressources/add.png' width='30px' height='30px'/></button></td></tr>
 			</table>
-			<div class="button_end_div">
-				<input type="submit" value="Modifier les associations" class="button primairy-color round"/>
+			<div class="button_end_div_with_margin">
+				<input type="submit" value="Modifier les associations" class="button primairy-color"/>
 			</div>
 		</form>
 	</div>

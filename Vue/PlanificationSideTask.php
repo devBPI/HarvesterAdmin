@@ -37,10 +37,8 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 ?>
 
 <div class="content">
-	<div class="triple-column-container" style="height:50px">
-		<div>
-			<a href="../Controlleur/PlanningTachesAnnexes.php" class="buttonlink">&laquo; Retour</a>
-		</div>
+	<div class="button_top_div_with_margin">
+		<a href="../Controlleur/PlanningTachesAnnexes.php" class="buttonlink">&laquo; Retour au planning</a>
 	</div>
 	<FORM method="post" action="PlanificationSideTask.php" onsubmit="return confirm('Voulez vous vraiment ajouter cette planification ?');">
 		<div class="cartouche-solo" style="width:auto;height:auto;padding:5%;">
@@ -55,7 +53,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 					</select>
 				</div>
 				<div class="col-25">
-					<input type="submit" name="now" value="Démarrer maintenant">
+					<input style="margin-left:5px" type="submit" name="now" value="Démarrer maintenant">
 				</div>
 			</div>
 			<div class="row" id="parametre">
@@ -74,13 +72,13 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 			</div>
 		</div>
 
-		<div class="triple-column-container">
+		<div class="triple-column-container" style="align-items: start">
 			<div class="column">
 				<h3><label for="heureQuot">Quotidienne</label></h3>
 				<select id="heureQuot" name="heureQuot">
 					<?= Combobox::makeComboBoxHeure() ?>
 				</select>
-				<input type="submit" name="quot" value="Valider">
+				<input type="submit" name="quot" style="width:90%;margin-top:5px" value="Valider">
 			</div>
 			<div class="column">
 				<h3><label for="heureHebdo">Hebdomadaire</label></h3>
@@ -90,7 +88,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<select aria-label="Jour de tâche hebdomadaire" id="jourHebdo" name="jourHebdo">
 					<?= Combobox::makeComboBoxJour() ?>
 				</select>
-				<input type="submit" name="hebdo" value="Valider">
+				<input type="submit" name="hebdo" style="width:90%;margin-top:5px" value="Valider">
 			</div>
 			<div class="column">
 				<h3><label for="heureMonth">Mensuelle</label></h3>
@@ -104,7 +102,7 @@ if (isset($_POST["now"]) || isset($_POST["quot"]) || isset($_POST["hebdo"]) || i
 				<select aria-label="Semaine de tâche mensuelle" id="semaine" name="semaine">
 					<?= Combobox::makeComboBoxSemaine() ?>
 				</select>
-				<input type="submit" name="month" value="Valider">
+				<input type="submit" name="month" style="width:90%;margin-top:5px" value="Valider">
 			</div>
 		</div>
 	</FORM>

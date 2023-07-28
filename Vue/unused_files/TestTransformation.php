@@ -27,7 +27,7 @@ if (! $ini) {
 		<div class="left" style="width:40%">Patern<TEXTAREA id="patern" style="width:100%;height:40%;border:solid 1px black"></TEXTAREA>
 		</div>
 		<div style="margin-left:48.5%">
-			<input id="boutton" type="submit" class="button primairy-color round" onclick="traduction()"/>
+			<input id="boutton" type="submit" class="button primairy-color" onclick="traduction()"/>
 		</div>
 	</FORM>
 

@@ -21,16 +21,12 @@ include('../Vue/common/Header.php');
 
 <body>
 <div class="content">
-	<div class="triple-column-container">
-		<div class="column" style="height:80px">
-			<a href="../../Controlleur/Traduction.php" class="buttonlink">&laquo; Retour aux traductions</a>
-		</div>
-		<div class="column">
-			<div class="config_name_and_sub_title">
-				<h3 class="config_name">Configuration : <?= $name ?></h3>
-				<p class="sub_title"></p>
-			</div>
-		</div>
+	<div class="config_name_and_sub_title">
+		<h3 class="config_name">Configuration : <?= $name ?></h3>
+		<p class="sub_title"></p>
+	</div>
+	<div class="button_top_div_with_margin">
+		<a href="../../Controlleur/Traduction.php" class="buttonlink">&laquo; Retour aux traductions</a>
 	</div>
 	<?php if (isset($array_error) && count($array_error) > 0) { ?>
 		<div>
@@ -185,7 +181,7 @@ include('../Vue/common/Header.php');
 			</tr>
 			</tbody>
 		</table>
-		<div class="button_end_div">
+		<div class="button_end_div_with_margin">
 			<input type="submit" value="Modifier les associations" class="buttonlink"/>
 		</div>
 	</form>

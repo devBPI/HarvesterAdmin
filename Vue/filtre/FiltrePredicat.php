@@ -141,9 +141,9 @@ if (! $ini) {
 						<button class='ajout but' type='button' title='Ajouter un prédicat' onclick='add_new_field(this.parentElement.parentElement.parentElement.parentElement, "filtre_predicat")'>
 							<img alt="Ajouter un prédicat" src='../../ressources/add.png' width='30px' height='30px'/></button>
 					</td>
-					<td></td><td></td><td></td><td></td>
-					<td>
-						<input type='submit' value='Enregistrer'/>
+					<td></td><td></td><td></td>
+					<td colspan="2" style="text-align: right">
+						<input type="submit" value="Enregistrer"/>
 					</td>
 				</tr>
 			</table>

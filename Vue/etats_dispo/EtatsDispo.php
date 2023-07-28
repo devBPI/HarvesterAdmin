@@ -10,47 +10,39 @@ if (!$ini) {
 	<link rel="stylesheet" href="../../css/style.css"/>
 	<link rel="stylesheet" href="../../css/composants.css"/>
 	<link rel="stylesheet" href="../../css/accueilStyle.css"/>
-	<!-- ajout du ou des fichiers CSS-->
 	<title>États de Disponibilité</title>
 </head>
 <body>
 <?php include('../Vue/common/Header.php'); ?>
 
 <div class="content" style="width:90%">
-	<div class="column" style="height:80px;float:right">
+	<div class="button_top_div_with_margin" style="float:right">
 		<?php
 		if ($modify == "false") {
-			echo "<a href='EtatsDispo.php?modify=true' class='buttonlink' style='background-color:#77b8dd'>Modifier</a>";
+			echo "<a href='EtatsDispo.php?modify=true' class='submit-button'>Modifier les états de disponibilité</a>";
 		} else {
-			echo "<a href='EtatsDispo.php?modify=false' class='buttonlink' style='background-color:#77b8dd'>Finir modification</a>";
+			echo "<a href='EtatsDispo.php?modify=false' class='submit-button'>Finir les modifications</a>";
 		}
 		?>
 	</div>
 	<table class="table-config">
 		<thead>
-		<tr> <?php if ($modify == "true") { ?>
-				<th id="th_cell_code" class="order_asc" style="width:10%;cursor:default;">Code</th>
-				<th id="th_cell_dispo" class="order_asc" style="width:20%;cursor:default;">Disponibilité</th>
-				<th id="th_cell_to_harvest" class="order_asc" style="width:20%;cursor:default;">À moissonner</th>
-				<th id="th_cell_label" class="order_asc" style="width:20%;cursor:default;">Label</th>
-			<?php } else { ?>
-				<th id="th_cell_code" class="order_asc" style="width:10%;cursor:pointer;" onclick="maj_col('code')">
-					Code
-				</th>
-				<th id="th_cell_dispo" class="order_asc" style="width:20%;cursor:pointer;" onclick="maj_col('dispo')">
-					Disponibilité
-				</th>
-				<th id="th_cell_to_harvest" class="order_asc" style="width:20%;cursor:pointer;"
-					onclick="maj_col('to_harvest')">À moissonner
-				</th>
-				<th id="th_cell_label" class="order_asc" style="width:20%;cursor:pointer;" onclick="maj_col('label')">
-					Label
-				</th>
-			<?php } ?>
+		<tr>
+<?php	if ($modify == "true") { ?>
+			<th id="th_cell_code" class="order_asc" style="width:10%;cursor:default;">Code</th>
+			<th id="th_cell_dispo" class="order_asc" style="width:20%;cursor:default;">Disponibilité</th>
+			<th id="th_cell_to_harvest" class="order_asc" style="width:20%;cursor:default;">À moissonner</th>
+			<th id="th_cell_label" class="order_asc" style="width:20%;cursor:default;">Label</th>
+<?php	} else { ?>
+			<th id="th_cell_code" class="order_asc" style="width:10%;cursor:pointer;" onclick="maj_col('code')">Code</th>
+			<th id="th_cell_dispo" class="order_asc" style="width:20%;cursor:pointer;" onclick="maj_col('dispo')">Disponibilité</th>
+			<th id="th_cell_to_harvest" class="order_asc" style="width:20%;cursor:pointer;" onclick="maj_col('to_harvest')">À moissonner</th>
+			<th id="th_cell_label" class="order_asc" style="width:20%;cursor:pointer;" onclick="maj_col('label')">Label</th>
+<?php	} ?>
 		</tr>
 		</thead>
 		<tbody id="emplacement_tableau">
-		<?php if ($modify == "true") { ?>
+<?php 	if ($modify == "true") { ?>
 			<tr>
 				<FORM action="EtatsDispo.php?add=true" method="post"
 					  onsubmit="return confirm('Voulez vous vraiment ajouter ce status ?');">
@@ -113,7 +105,7 @@ if (!$ini) {
 						</td>
 					</form>
 				</tr>
-			<?php }
+<?php			}
 		} ?>
 		</tbody>
 	</table>

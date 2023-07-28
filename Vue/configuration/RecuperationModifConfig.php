@@ -182,7 +182,7 @@
 					<tr><td class="tab_fiche_individuelle_separation" colspan="2"></td></tr>
 				<tr>
 					<td colspan="2">
-						<input class="button primairy-color round" type="submit" name="update" value="Valider les modifications"/>
+						<input class="button primairy-color" type="submit" name="update" value="Valider les modifications"/>
 					</td>
 				</tr><?php include '../Controlleur/UpdateConfiguration.php'; ?>
 				</tbody>
