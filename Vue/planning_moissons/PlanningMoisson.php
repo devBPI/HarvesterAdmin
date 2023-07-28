@@ -1,4 +1,3 @@
-<html lang="fr">
 <?php
 $ini = @parse_ini_file("../etc/configuration.ini", true);
 if (! $ini) {

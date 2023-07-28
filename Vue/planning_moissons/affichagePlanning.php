@@ -14,7 +14,7 @@
 		} else {
 			switch($var['dom']){
 				case 1:
-					echo '<td style="background-color:seagreen">'.$var['dom'].'er '.$journame.'</td>';
+					echo '<td style="background-color:seagreen">'.$var['dom'].'er '.$journame.'</br>';
 					$rec_day = 'first';
 					break;
 				case 2:
@@ -67,7 +67,8 @@
 					method="post">
 					<input type="image" alt="Supprimer la planification" id="cross" name="cross" src="../../ressources/cross.png" width="20px" height="20px">
 				</form>
-				</tr>
+			</td>
+		</tr>
 		<?php
 
 		}
