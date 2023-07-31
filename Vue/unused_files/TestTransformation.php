@@ -22,9 +22,9 @@ if (! $ini) {
 	<div style="margin-top:5%">
 		<div class="right" style="width:40%;height:82.4%;">Sortie<div style="background-color:white;width:100%;height:100%;border:solid 1px black"><pre id="output"></pre></div>
 		</div>
-		<div class="left" style="width:40%">Entrée<TEXTAREA id="input" style="width:100%;height:40%;border:solid 1px black"></TEXTAREA>
+		<div class="left" style="width:40%">Entrée<TEXTAREA aria-label="" id="input" style="width:100%;height:40%;border:solid 1px black"></TEXTAREA>
 		</div>
-		<div class="left" style="width:40%">Patern<TEXTAREA id="patern" style="width:100%;height:40%;border:solid 1px black"></TEXTAREA>
+		<div class="left" style="width:40%">Patern<TEXTAREA aria-label="" id="patern" style="width:100%;height:40%;border:solid 1px black"></TEXTAREA>
 		</div>
 		<div style="margin-left:48.5%">
 			<input id="boutton" type="submit" class="button primairy-color" onclick="traduction()"/>

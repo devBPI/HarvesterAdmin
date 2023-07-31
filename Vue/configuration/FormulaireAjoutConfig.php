@@ -29,65 +29,49 @@
 						<label for="codeconfig">Code de configuration (*)</label>
 					</div>
 					<div class="col-50">
-						<input type="text" name="textCodeConfig" />
+						<input type="text" id="codeconfig" name="textCodeConfig" required>
 					</div>
 				</div>
-				<?php
-				echo "Nom abrégé * : "?> <input type="text" name="textName" />
-				<?php
-				echo "Nom Public * : ";
-				?>
-				<input type="text" name="textNomPublic" />
-				URL Publique * :
-				<input type="text" name="textUrlPublique" />
-				Connecteur * :
-				<select id='list_grabber' name='list_grabber'><option value='0'>Aucun choisi</option>
+				<label for="nomabrege">Nom abrégé * :</label><input type="text" id="nomabrege" name="textName" required>
+				<label for="nompublic">Nom Public * :</label><input type="text" id="nompublic" name="textNomPublic" required>
+				<label for="urlpublique">URL Publique * :</label><input type="text" id="urlpublique" name="textUrlPublique" required>
+				<label for="connecteur">Connecteur * :</label>
+				<select id="list_grabber" id="connecteur" name="list_grabber" required>
+					<option value="">Sélectionnez un connecteur</option>
 					<?= ComboBox::makeComboBox($grabber); ?>
 				</select>
-				Nom Mapping * :
-				<select id='list_mapping' name='list_mapping'><option value='0'>Aucun choisi</option>
+				<label for="nommapping">Nom Mapping * :</label>
+				<select id="list_mapping" id="nommapping" name="list_mapping" required>
+					<option value="">Sélectionnez un mapping</option>
 					<?= ComboBox::makeComboBox($mapping); ?>
 				</select>
-				Nom Filtre :
-				<select id='list_exclusion' name='list_exclusion'><option value='0'>Aucun choisi</option>
+				<label for="nomfiltre">Nom Filtre :</label>
+				<select id="list_exclusion" id="nomfiltre" name="list_exclusion">
+					<option value="">Sélectionnez un filtre</option>
 					<?= ComboBox::makeComboBox($filtre); ?>
 				</select>
-				Nom Traduction :
-				<select id='list_translation' name='list_translation'><option value='0'>Aucun choisi</option>
+				<label for="nomtrad">Nom Traduction :</label>
+				<select id="list_translation" id="nomtrad" name="list_translation">
+					<option value="">Sélectionnez une traduction</option>
 					<?= ComboBox::makeComboBox($traduction); ?>
 				</select>
-				Url :<input type="text" name="textUrl" size="78" />
-				Url set : <input type="text" name="textUrlSet" size="78" />
-				<?php
-				echo "Separateur CSV : ";
-				?> <input type="text" name="textSeparateur" />
-					<?php
-					echo "Differentiel : ";
-					?>
-					<input type="radio" name="differential" value="false" checked> Non-Différentiel
-					<input type="radio" name="differential" value="true" disabled="disabled"> Différentiel
-				<?php
-				echo "Nombre de tentatives : ";
-				?> <input type="text" name="textAttempts" />
-				<?php
-				echo "Timeout : ";
-				?> <input type="text" name="texTimeout" />
-				<?php
-				echo "Préfixe business ID * : ";
-				?> <input type="text" name="textBusiness" /> 
-					<?php
-					echo "Subordonnée à :";
-					//include '../Vue/combobox/ComboBoxConfigs.php';
-					?>
-					<select>
-						<option value="-1">Aucune subordonnée choisie</option>
-					</select>
-					Format Natif des données exposées : <input type="text" name="textFormatNatif" />
-					Commentaire :
-					<TEXTAREA style="box-shadow: 0px 0px 0px;" id="textNote" name="textNote" rows=10 cols=50></TEXTAREA>
-				<?php
-				include '../Vue/configuration/InsertConfiguration.php';
-				?>
+				<label for="urltext">Url : </label><input type="text" id="urltext" name="textUrl" size="78" />
+				<label for="urlset">Url set : </label><input type="text" id="urlset" name="textUrlSet" size="78" />
+				<label for="separateur">Separateur CSV : </label><input type="text" id="separateur" name="textSeparateur" />
+				<label> Differentiel : </label>
+				<input type="radio" aria-label="Non-différentiel" name="differential" value="false" checked> Non-Différentiel
+				<input type="radio" aria-label="Différentiel" name="differential" value="true" disabled="disabled"> Différentiel
+				<label for="nbtempt">Nombre de tentatives : </label><input type="text" id="nbtempt" name="textAttempts" />
+				<label for="timeout">Timeout : </label><input type="text" id="timeout" name="texTimeout" />
+				<label for="prefixe">Préfixe business ID * :</label><input type="text" id="prefixe" name="textBusiness" required/>
+				<label for="subordonnee">Subordonnée à : </label>
+					<?php //include '../Vue/combobox/ComboBoxConfigs.php';?>
+				<select id="subordonnee">
+					<option value="-1">Sélectionnez une subordonnée</option>
+				</select>
+				<label for="formatnatif">Format Natif des données exposées : </label><input type="text" id="formatnatif" name="textFormatNatif" />
+				<label for="textNote">Commentaire : </label><textarea style="box-shadow: 0 0 0;" id="textNote" name="textNote" rows=10 cols=50></textarea>
+				<?php include '../Vue/configuration/InsertConfiguration.php'; ?>
 			</div>
 		</FORM>
 	</div>

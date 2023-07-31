@@ -132,7 +132,7 @@ foreach($properties_list as $property){
 		<form action="" method="post" style="padding:5%">
 			<div class="row">
 				<div class="col-25">
-					<label for="mapping">Nom du mapping</label>
+					<label for="mapping_name">Nom du mapping</label>
 				</div>
 				<div class="col-50">
 					<input type="text" id="mapping_name" name="mapping_name" placeholder="Nouveau nom du mapping..." value="<?php echo $nom ?>">
@@ -150,7 +150,7 @@ foreach($properties_list as $property){
 					<label for="mapping">Ajout</label>
 				</div>
 				<div class="col-25">
-					<select id="list_exist_entity_all" name="list_exist_entity_all">
+					<select aria-label="Liste des entités" id="list_exist_entity_all" name="list_exist_entity_all">
 						<option value="0">Choisissez une entité</option>
 						<?php
 						$i=0;
@@ -162,12 +162,12 @@ foreach($properties_list as $property){
 					</select>
 				</div>
 				<div class="col-25">
-					<select id="list_exist_propriety_all" name="list_exist_propriety_all" placeholder="Choississez une propriété à ajouter" required>
+					<select aria-label="Liste des propriétés" id="list_exist_propriety_all" name="list_exist_propriety_all" placeholder="Choississez une propriété à ajouter" required>
 						<option value="">Choisissez une propriété à ajouter</option>
 					</select>
 				</div>
 				<div class="col-30">
-					<input type="text" id="contentprop" name="textNom" placeholder="Contenu de la propriété..." required>
+					<input aria-label="Contenu de la propriété" type="text" id="contentprop" name="textNom" placeholder="Contenu de la propriété..." required>
 				</div>
 			</div>
 			<div class="row">
@@ -184,10 +184,10 @@ foreach($properties_list as $property){
 				</div>
 				<div class="col-20">
 					<input type="radio" id="custom" name="insert" value="custom">
-					<label for="auto-end">personnalisé</label>
+					<label for="custom">personnalisé</label>
 				</div>
 				<div class="col-20">
-					<input type="number" id="custom_insert" name="custom_insert" placeholder="numéro de ligne..." min="0" max="<?php echo count($properties_content) ?>" readonly/>
+					<input aria-label="Numéro de ligne" type="number" id="custom_insert" name="custom_insert" placeholder="numéro de ligne..." min="0" max="<?php echo count($properties_content) ?>" readonly/>
 				</div>
 				<div class="col-10">
 					<input type="submit" name="submit" style="background-color:#4bb947" value="Ajouter">
@@ -239,10 +239,10 @@ foreach($properties_list as $property){
 				</div>
 				<div class="row">
 					<div class="col-50">
-						<input type="text" name="property" value="" id="formPropriety" readonly>
+						<input aria-label="Propriété" type="text" name="property" value="" id="formPropriety" readonly>
 					</div>
 					<div class="col-50">
-						<input type="text" placeholder="contenu..." id="formContent" name="content" required>
+						<input aria-label="Contenu" type="text" placeholder="contenu..." id="formContent" name="content" required>
 					</div>
 				</div>
 				<div class="button_end_div_with_margin">

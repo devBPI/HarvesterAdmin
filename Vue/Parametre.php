@@ -29,7 +29,7 @@ session_destroy();
 					<label for="mapping">Nom du mapping</label>
 				</div>
 				<div class="col-50">
-					<select id="list_mapping" name="list_mapping">
+					<select aria-label="Liste des mappings" id="list_mapping" name="list_mapping">
 						<option value="0">Choisissez un mapping</option>
 						<?php
 							$i = 0;
@@ -69,7 +69,7 @@ session_destroy();
 	<?php if(isset($nom)): ?>
 		<div class="double-column-container">
 			<div class="column" style="height:600px">
-					<TEXTAREA id="textArea" name="textArea" rows=32 readonly><?php echo (isset($def))? $def:"";?></TEXTAREA>
+					<TEXTAREA aria-label="Définition" id="textArea" name="textArea" rows=32 readonly><?php echo (isset($def))? $def:"";?></TEXTAREA>
 			</div>
 			<div class="column" style="height:600px">
 					<?php include '../Vue/configuration/affichageNomConfigs.php'; ?>
