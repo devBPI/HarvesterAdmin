@@ -46,7 +46,7 @@ $i = 0;
 					<span class="slider" id="slider_<?= $i ?>"></span>
 					</label>
 				</td>
-				<td class="td_label">
+				<td class="td_label" style="width:40%">
 					<label for="input_is_enabled_<?= $i ?>" id="label_<?= $i ?>">Activée</label>
 				</td>
 <?php } else { ?>
