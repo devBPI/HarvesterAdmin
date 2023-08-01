@@ -64,10 +64,8 @@
     }
     echo "<th scope=\"col\" class='button primairy-color full-width' style='height:35px'>Dernière moisson" . $arrow . "</th>";
     echo "</tr></thead>";
-    foreach ($conf as $var) {
-        ?>
-        
-        
+    if (isset($conf) && is_array($conf)) {
+    foreach ($conf as $var) { ?>
         <tr>
             <td data-label="ID"><?= $var['id'] ?></td>
             <td data-label="Code"><?= str_replace("_", "_<wbr>", $var['code']) ?></td>
@@ -87,5 +85,5 @@
                     echo $diff->format('Il y a %d jours ');
                 } ?></td>
         </tr>
-    <?php } ?>
+<?php   } } ?>
 </table>
