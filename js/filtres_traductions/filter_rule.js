@@ -43,7 +43,7 @@ function update_operation(element, profondeur= 0)
 	}
 }
 
-function update_predicat(element,array)
+function update_predicat(element,array, vizualisation=false)
 {
 	var p = element.parentElement;
 	var selected = element.options[element.selectedIndex].text;
@@ -54,6 +54,9 @@ function update_predicat(element,array)
 			p.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<td>' + predicat.function_code.replace("_", "_<wbr>") + '</td>';
 			p.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<td>' + predicat.val.replace("_", "_<wbr>") + '</td>';
 		}
+	}
+	if (vizualisation) {
+		vivizualisation();
 	}
 	id_new++;
 }

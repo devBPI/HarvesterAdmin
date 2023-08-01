@@ -25,3 +25,26 @@
 	margin-bottom: 5px;
 	border: 1px solid black;
 }
+
+#vivizualisation {
+	padding: 0 15px 15px;
+	background-color: whitesmoke;
+	border: 1px solid black;
+	width: auto;
+}
+
+#vivizualisation h4 {
+	width: auto;
+	background-color: #77b8dd;
+	padding: 10px 10px 10px 25px;
+	margin-left: -15px;
+	margin-top: 10px;
+	color: white;
+	text-transform: uppercase;
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+#vivizualisation p {
+	text-align: left;
+}

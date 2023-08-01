@@ -38,6 +38,14 @@ function onSubmit() {
 }
 
 
+function vivizualisation() {
+    let everything = [];
+    $("form select option:selected").each(function() {
+        everything.push($(this).html());
+    });
+    $("#vivizualisation").html("<h4>Visualisation de l'arbre de la règle</h4><p>" + magicTree(makeTree(everything)) + "</p");
+}
+
 // ----------------------- UTILITAIRES ------------------------
 // Retourne le numéro de la section
 function getNumber(element) {
@@ -196,6 +204,7 @@ function delete_group(parent, profondeur_grandparent) {
     child_op.val(parseInt(child_op.val()) - 1);
     parent.remove();
     if (page_type == "reporting") disable_input();
+    if (page_type == "filter") vivizualisation();
 }
 
 function add_critere_or_donnee(parent, type) {
@@ -209,6 +218,9 @@ function add_critere_or_donnee(parent, type) {
         }
     } else {
         add_critere_or_donnee_(parent, type);
+    }
+    if (page_type == "filter") {
+        vivizualisation();
     }
 }
 
@@ -292,6 +304,7 @@ function delete_critere_or_donnee(parent, type) {
     }
     parent.remove();
     if (page_type != "filter") disable_input();
+    if (page_type == "filter") vivizualisation();
 }
 
 function deactivation_add_critere(nb_parent) {

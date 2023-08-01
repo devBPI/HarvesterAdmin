@@ -13,7 +13,7 @@ if (! $ini) {
 	<link rel="stylesheet" href="../../css/accueilStyle.css">
 	<link rel="stylesheet" href="../../css/formStyle.css">
 	<link rel="stylesheet" href="../../css/tree.css">
-	<title><?= $name ?></title>
+	<title><?= $name ?? "" ?></title>
 </head>
 
 <?php
@@ -24,7 +24,7 @@ include('../Vue/common/Header.php');
 
 <body>
 <div class="content">
-	<form action="FiltreTree.php?id=<?= $id ?>" method="post" onsubmit="return onSubmit()">
+	<form action="FiltreTree.php?id=<?= $id ?? "" ?>" method="post" onsubmit="return onSubmit()">
 		<div class="triple-column-container">
 			<div class="column">
 				<a href="../../Controlleur/Filtre.php" class="buttonlink">&laquo; Retour aux filtres</a>
@@ -32,7 +32,7 @@ include('../Vue/common/Header.php');
 			<div class="column">
 				<div class="config_name_and_sub_title">
 					<h3 class="config_name"><?= $name ?></h3>
-					<p class="sub_title">Portant sur l'entité <?= $entity ?> </p>
+					<p class="sub_title">Portant sur l'entité <?= $entity ?? "" ?> </p>
 				</div>
 			</div>
 			<div class="column" style="text-align:right">
@@ -65,8 +65,9 @@ include('../Vue/common/Header.php');
 		</div>
 	</form>
 
-<?= TabConfigsAssociees::makeTab($configurations) ?>
+	<div id="vivizualisation"></div>
 
+<?= TabConfigsAssociees::makeTab($configurations) ?>
 </div>
 
 
@@ -108,7 +109,7 @@ include('../Vue/common/Header.php');
 		</tr>
 		<tr class="entity" id="new_">
 			<td>
-				<select aria-label="Prédicat" name="entity_" onchange='update_predicat(this, <?= json_encode($predicats) ?>)' required>
+				<select aria-label="Prédicat" name="entity_" onchange='update_predicat(this, <?= json_encode($predicats) ?>, true)' required>
 					<option value="">Choississez un prédicat</option>
 <?= ComboBox::makeComboBox($predicats_formates) ?>
 				</select>
@@ -141,15 +142,63 @@ include('../Vue/common/Header.php');
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../../js/toTop.js"></script>
-<script src="../../js/filtres_traductions/predicate.js"></script>
-<script src="../../js/filtres_traductions/filter_rule.js"></script>
 <script type="text/javascript">
     let nb_criteres = <?= isset($nb_criterias)&&isset($nb_groups)?$nb_criterias+$nb_groups+1:1 ?>; // Incrément pour l'identifiant / le nom des champs de critères de sélection
     let nb_groupes = <?= isset($nb_criterias)&&isset($nb_groups)?$nb_criterias+$nb_groups+1:1 ?>; // Incrément pour l'identifiant / le nom des groupes
     let cpt_criteres = <?= $nb_criterias ?? 0 ?>; // Compteur de critères du rapport
     let cpt_groupes = <?= $nb_groups ?? 0 ?>; // Compteur de groupes
 	let page_type = "filter";
+
+	$(document).ready(function() {
+        let everything = [];
+        $("form select option:selected").each(function() {
+            everything.push($(this).html());
+		});
+        $("#vivizualisation").html("<h4>Visualisation de l'arbre de la règle</h4><p>" + magicTree(makeTree(everything)) + "</p");
+	});
+
+    function makeTree(everything, first = true) {
+        let head = everything.splice(0,1)[0];
+        let tree = [];
+        if (head != null && everything.length == 0 && first) {
+            tree[0] = head;
+		} else if (head != null && everything.length >= 0) {
+            if (head == "OR" || head == "AND") {
+				for (let i = 1; i <= 2; i++) {
+                    let child = everything.slice(0,1)[0];
+					if (child != "OR" && child != "AND") {
+						tree[i] = everything.splice(0,1)[0];
+                    } else {
+						tree[i] = makeTree(everything, false);
+					}
+                }
+                tree[0] = head;
+            } else {
+            	tree[0] = everything.splice(0,1)[0];
+            }
+        }
+        return tree;
+    }
+
+    function magicTree(everything) {
+        if (Array.isArray(everything)) {
+        	let head = everything.splice(0,1)[0];
+            if (head == null) head = "";
+            if (head == "OR" || head == "AND") {
+                if (head == "OR") head = "OU";
+                else head = "ET";
+                return "<b>(</b>" + magicTree(everything.slice(0,2)[0]) + " <b>" + head + "</b> " + magicTree(everything.slice(0,2)[1]) + "<b>)</b>";
+            } else {
+				return "<b>(</b>" + head + "<b>)</b>";
+            }
+        } else {
+            return everything;
+		}
+	}
+
 </script>
 <script src="/js/tree_reporting_filter.js"></script>
+<script src="../../js/filtres_traductions/predicate.js"></script>
+<script src="../../js/filtres_traductions/filter_rule.js"></script>
 </body>
 </html>

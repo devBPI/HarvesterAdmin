@@ -46,7 +46,7 @@ HTML;
 		</tr>
 		<tr class="entity" id="{$value['property']}">
 			<td>
-				<select name="entity_{$nb}" onchange='update_predicat(this, {$json_list})' required>
+				<select name="entity_{$nb}" onchange='update_predicat(this, {$json_list}, true)' required>
 					<option value="">Choississez un prédicat</option>
 					{$predicate_list}
 				</select>
