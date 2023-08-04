@@ -38,8 +38,8 @@
                 dl.download = filename + "__" + day + "-" + month + "-" + year + ".csv";
                 document.body.appendChild(dl);
                 dl.click();
-                document.body.appendChild(dl);
-            	window.close();
+                document.body.removeChild(dl);
+                new Promise(resolve => setTimeout(resolve, 10)).then(() => window.close());
 			}
 		});
     }
