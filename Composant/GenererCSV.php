@@ -36,9 +36,9 @@
                 let year = date.getFullYear();
                 dl.href = URL.createObjectURL(blobObject);
                 dl.download = filename + "__" + day + "-" + month + "-" + year + ".csv";
-
+                document.body.appendChild(dl);
                 dl.click();
-
+                document.body.appendChild(dl);
             	window.close();
 			}
 		});
