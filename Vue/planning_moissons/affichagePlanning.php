@@ -36,7 +36,7 @@
 					break;
 			}
 			$calcul_jour = new DateTime($rec_day.' '.$dayname.' of this month');
-			if ($calcul_jour <= new DateTime()) {
+			if ($calcul_jour < new DateTime()) {
 				$calcul_jour->modify($rec_day.' '.$dayname.' of next month');
 			}
 			setlocale(LC_TIME, array('fr_FR.utf8','fra'));
