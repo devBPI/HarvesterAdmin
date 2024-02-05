@@ -117,7 +117,7 @@ class Gateway
 	static function reprise($id) { Moisson::reprise($id); }
 	static function getTasksForCartridge($confid) { return Moisson::getTasksForCartridge($confid); }
 	static function getPlanifsForCartridge($confid) { return Moisson::getPlanifsForCartridge($confid); }
-	static function insertDate($m, $h, $day, $jour, $id) { return Moisson::insertDate($m,$h,$day,$jour,$id); }
+	static function insertDate($m, $h, $semaine, $jour, $id) { return Moisson::insertDate($m,$h,$semaine,$jour,$id); }
 	static function reloadMoisson($id) { return Moisson::reloadMoisson($id); }
 	static function getAllStatus() { return Moisson::getAllStatus(); }
 

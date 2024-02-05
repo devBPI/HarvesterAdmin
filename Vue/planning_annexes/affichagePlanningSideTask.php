@@ -26,7 +26,7 @@ if ($dowData[$dow]) {
 			$tasklabel = $tasklabel."-".$var['parameter'];
 		}
 
-		if ($var['dow'] == null && $var['dom'] == null) {
+		if ($var['dow'] == null && $var['dom'] == null && $var['dowim_restriction'] == null) {
 			$tasklabel = $tasklabel. " (Quotidienne)";
 		} ?>
 		<?= $tasklabel ?></td>

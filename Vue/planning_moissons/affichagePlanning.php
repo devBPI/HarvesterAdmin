@@ -9,28 +9,29 @@
 		foreach ($dowData[$dow] as $var) {
 			?><tr>
 		<?php
-		if($var['dom']==null){
+		if($var['dowim_restriction']==null){
 			echo '<td style="background-color:steelblue">Hebdomadaire</td>';
 		} else {
-			switch($var['dom']){
+		    // dowim = day of week in month 
+			switch($var['dowim_restriction']){
 				case 1:
-					echo '<td style="background-color:seagreen">'.$var['dom'].'er '.$journame.'</br>';
+					echo '<td style="background-color:seagreen">'.$var['dowim_restriction'].'er '.$journame.'</br>';
 					$rec_day = 'first';
 					break;
 				case 2:
-					echo '<td style="background-color:seagreen">'.$var['dom'].'ème '.$journame.'</br>';
+					echo '<td style="background-color:seagreen">'.$var['dowim_restriction'].'ème '.$journame.'</br>';
 					$rec_day = 'second';
 					break;
 				case 3:
-					echo '<td style="background-color:seagreen">'.$var['dom'].'ème '.$journame.'</br>';
+					echo '<td style="background-color:seagreen">'.$var['dowim_restriction'].'ème '.$journame.'</br>';
 					$rec_day = 'third';
 					break;
 				case 4:
-					echo '<td style="background-color:seagreen">'.$var['dom'].'ème '.$journame.'</br>';
+					echo '<td style="background-color:seagreen">'.$var['dowim_restriction'].'ème '.$journame.'</br>';
 					$rec_day = 'fourth';
 					break;
 				case 5:
-					echo '<td style="background-color:seagreen">'.$var['dom'].'ème '.$journame.'</br>';
+					echo '<td style="background-color:seagreen">'.$var['dowim_restriction'].'ème '.$journame.'</br>';
 					$rec_day = 'fifth';
 					break;
 			}
@@ -53,7 +54,7 @@
 			echo $var['h'] . ":" . $var['m'];
 			?></td>
 				<td><?php
-			if ($var['dow'] == null && $var['dom'] == null) {
+				if ($var['dow'] == null && $var['dom'] == null && $var['dowim_restriction'] == null) {
 				echo str_replace("_","_<wbr/>",$var['name']) . " (Quotidienne)";
 			} else {
 				echo str_replace("_","_<wbr/>",$var['name']);

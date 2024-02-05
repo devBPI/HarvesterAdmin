@@ -43,8 +43,8 @@ class Moisson
 
     static function getMoissonPlanifForEveryDayOfWeek($dow)
     {
-        $query = pg_query (Gateway::getConnexion(), "SELECT cron.configuration_id,cron.id,h,m,dow,dom,name FROM configuration.harvest_task_cron_line cron, configuration.harvest_configuration harvest
-			WHERE ((dow IS NULL AND dom IS NULL) OR dow=".$dow.") and cron.configuration_id = harvest.id ORDER BY h,m ASC");
+        $query = pg_query (Gateway::getConnexion(), "SELECT cron.configuration_id,cron.id,h,m,dow,dom,dowim_restriction, name FROM configuration.harvest_task_cron_line cron, configuration.harvest_configuration harvest
+			WHERE ((dow IS NULL AND dom IS NULL AND dowim_restriction IS NULL) OR (dow=".$dow.")) and cron.configuration_id = harvest.id ORDER BY h,m ASC");
         if (!$query)
         {
             echo "Erreur durant la requête de getMoisson .\n";
@@ -218,9 +218,10 @@ class Moisson
         }
     }
 
-    static function insertDate($m, $h, $day, $jour, $id)
+    static function insertDate($m, $h, $semaine, $jour, $id)
     {
-        return pg_query (Gateway::getConnexion(), "INSERT INTO configuration.harvest_task_cron_line(m,h,dom,mon,dow,configuration_id) VALUES (".$m.",".$h.",".$day.",NULL,".$jour.",".$id.") RETURNING id")or die ('Erreur insertDate'. pg_last_error(Gateway::getConnexion()));
+        $dayofweekinmonth = $semaine; // l'occurence du jour de la semaine dans le mois est associe au numero de semaine dans le mois
+        return pg_query (Gateway::getConnexion(), "INSERT INTO configuration.harvest_task_cron_line(m,h,dowim_restriction,mon,dow,configuration_id) VALUES (".$m.",".$h.",".$dayofweekinmonth.",NULL,".$jour.",".$id.") RETURNING id")or die ('Erreur insertDate'. pg_last_error(Gateway::getConnexion()));
 
     }
 

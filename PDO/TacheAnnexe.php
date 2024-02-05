@@ -4,8 +4,8 @@ class TacheAnnexe
 {
 	static function getSideTaskPlanifForEveryDayOfWeek($dow)
 	{
-		$query = pg_query (Gateway::getConnexion(), "SELECT cron.name, cron.parameter,cron.id,h,m,dow,dom FROM configuration.side_task_cron_line cron
-			WHERE ((dow IS NULL AND dom IS NULL)  OR dow=".$dow.") ORDER BY h,m ASC");
+		$query = pg_query (Gateway::getConnexion(), "SELECT cron.name, cron.parameter,cron.id,h,m,dow,dom, dowim_restriction FROM configuration.side_task_cron_line cron
+			WHERE ((dow IS NULL AND dom IS NULL AND dowim_restriction IS NULL)  OR dow=".$dow.") ORDER BY h,m ASC");
 		if (!$query)
 		{
 			echo "Erreur durant la requête de getSideTaskPlanif .\n";
@@ -28,9 +28,9 @@ class TacheAnnexe
 		return pg_query(Gateway::getConnexion(), "INSERT into configuration.side_task(name, parameter, status,creation_date, modification_date) values ('".$name."','".$parameter."','TO_PROCESS', NOW(),NOW());")or die ('Erreur insertSideTask'. pg_last_error(Gateway::getConnexion()));
 	}
 
-	static function insertSideTaskDate($m, $h, $day, $jour, $name, $parameter)
+	static function insertSideTaskDate($m, $h, $semaine, $jour, $name, $parameter)
 	{
-		return pg_query (Gateway::getConnexion(), "INSERT INTO configuration.side_task_cron_line(m,h,dom,mon,dow,name, parameter) VALUES (".$m.",".$h.",".$day.",NULL,".$jour.",'".$name."','".$parameter."') RETURNING id")or die ('Erreur insertSideTaskDate'. pg_last_error(Gateway::getConnexion()));
+	    return pg_query (Gateway::getConnexion(), "INSERT INTO configuration.side_task_cron_line(m,h,dowim_restriction,mon,dow,name, parameter) VALUES (".$m.",".$h.",".$semaine.",NULL,".$jour.",'".$name."','".$parameter."') RETURNING id")or die ('Erreur insertSideTaskDate'. pg_last_error(Gateway::getConnexion()));
 
 	}
 
