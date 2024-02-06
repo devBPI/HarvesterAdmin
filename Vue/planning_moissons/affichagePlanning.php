@@ -35,10 +35,15 @@
 					$rec_day = 'fifth';
 					break;
 			}
-			$calcul_jour = new DateTime($rec_day.' '.$dayname.' of this month');
-			if ($calcul_jour < new DateTime()) {
-				$calcul_jour->modify($rec_day.' '.$dayname.' of next month');
-			}
+			$calcul_jour = new DateTime($rec_day.' '.$dayname.' of this month'); // with time set to midnight
+			$today = new DateTime("today"); // this object represents current date/time with time set to midnight
+			
+			// Remarque : pour simplifier on dit que si le calcul du nieme jour du mois tombe aujourd'hui
+			// alors on laisse la date du jour (meme si l'heure de lancement est passee)
+			
+			if ($calcul_jour < new DateTime() && $calcul_jour != $today) { // si le nieme mardi (pour l'exemple) du mois est avant maintenant (passe)
+    			$calcul_jour->modify($rec_day.' '.$dayname.' of next month');
+	       	}
 			setlocale(LC_TIME, array('fr_FR.utf8','fra'));
 			$date_moisson = strftime('%d %B', $calcul_jour->getTimeStamp());
 			echo '('.$date_moisson.')</td>';
