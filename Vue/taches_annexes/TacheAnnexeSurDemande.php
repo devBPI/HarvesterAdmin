@@ -7,7 +7,7 @@ if (! $ini) {
 
 require '../Composant/ComboBox.php';
 
-$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL", "OPERATION_TRACE_STATS_FULLFILLMENT");  /* voir SideTaskName (java) pour les valeurs */
+$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL", "OPERATION_TRACE_STATS_FULLFILLMENT", "CLEAN_LOGGING_TABLES");  /* voir SideTaskName (java) pour les valeurs */
 $array_formatee = [];
 foreach ($array as $item) {
 	$array_formatee[] = ["id" => $item, "name" => $item];
