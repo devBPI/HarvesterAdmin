@@ -24,7 +24,7 @@ Gateway::connection();
 $codes = Gateway::getConfigCodes();
 $i;
 
-$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL");  /* voir SideTaskName (java) pour les valeurs */
+$array = array("PURGE", "CAROUSEL_FULLFILLMENT", "OPTIMIZE_DATABASE", "OPTIMIZE_INDEXES", "OPTIMIZE_FULL", "OPERATION_TRACE_STATS_FULLFILLMENT");  /* voir SideTaskName (java) pour les valeurs */
 $array_formatee = [];
 foreach ($array as $item) {
 	$array_formatee[] = ["id" => $item, "name" => $item];
